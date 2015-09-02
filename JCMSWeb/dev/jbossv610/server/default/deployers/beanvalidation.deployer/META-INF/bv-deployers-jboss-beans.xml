@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Bean Validator (jsr303) deployers.
+-->
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+  <!-- ValidatorFactory creator -->
+  <bean name="VFCreator" class="org.jboss.beanvalidation.deployers.ValidatorFactoryDeployer">
+    <constructor>
+      <parameter><inject bean="ValidatorFactoryFactory" /></parameter>
+    </constructor>
+    <property name="filter"><inject bean="VFDUFilter" /></property>
+  </bean>
+
+</deployment>

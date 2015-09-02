@@ -1,0 +1,376 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><h:outputText value="#{msgs['colonyManagement.litterList']}"/></title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js" >
+        </script>
+        <style type="text/css" media="screen">
+            .rf-cal-inp {
+                color:#000000 !important;
+                font:10px arial,sans-serif;
+            }
+        </style>
+    </h:head>
+    <h:body>  
+        <h:form id="litterListFormId">
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <div style="margin-left:10px;margin-right:10px">
+
+                <h1>
+                    <h:outputText value="#{msgs['colonyManagement.header']}" style="h1"/>
+                    </h1><hr />
+
+                <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5" width="100%"
+                             columnClasses="colonyManagementSideBar,detailPane">
+
+                    <h:panelGroup>
+                        <f:subview id="adminSideBar"><ui:include src="/colonyManagement/colonyManagementSideBar.xhtml"/></f:subview>
+                    </h:panelGroup>
+
+                    <!-- RIGHT SIDE OF PAGE -->
+                    <h:panelGroup  styleClass="formTitle">
+                        <h:outputText value="#{msgs['colonyManagement.litterList']}"></h:outputText>
+
+                        <!-- STATUS -->
+                        <a4j:status name="statusPage" >
+                            <f:facet name="start">
+                                <h:graphicImage  value="../images/bhi_ball.gif"/>
+                            </f:facet>
+                        </a4j:status>    
+
+                        <br />
+                        <br />
+                            <!-- Messages -->
+                        <rich:messages title="#{msgs['common.messages.reviewMsg']}"/>
+
+                        <rich:collapsiblePanel header="Search" 
+                                               styleClass="collapsibleSearchPanel" 
+                                               expanded="true" >
+                            <h:panelGrid columns="4" styleClass="searchTable" >
+                                <h:panelGroup>
+                                    <h:outputLabel value="#{msgs['litter#']}" id="lookForLitterTextId" />
+                                </h:panelGroup>                            
+                                <h:panelGroup>
+                                    &nbsp;&nbsp;
+                                    <h:inputText id="searchByLitterId" value="#{LitterList_Backing.litterSearch.litterID}" 
+                                                 maxlength="#{restrict['size.general.id']}"
+                                                 size="#{restrict['size.general.id']}" />
+                                </h:panelGroup>                            
+                                <h:panelGroup>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <h:outputLabel value="#{msgs['litter.matingID']}" id="lookForMatingId" />
+                                </h:panelGroup>                            
+                                <h:panelGroup>
+                                    &nbsp;&nbsp;
+                                    <h:selectOneMenu id="matingIDFilter" value="#{LitterList_Backing.litterSearch.matingFilter}" >
+                                        <f:selectItems value="#{LitterList_Backing.selectItemWrapper.integerFilters}"/>
+                                    </h:selectOneMenu>
+                                    &nbsp;&nbsp;
+                                    <h:inputText id="searchByMatingID" value="#{LitterList_Backing.litterSearch.matingID}"
+                                                 maxlength="#{restrict['size.general.id']}"
+                                                 size="#{restrict['size.general.id']}" /> 
+                                </h:panelGroup>                            
+                                <h:panelGroup>
+                                    <h:outputLabel value="Born After" />                                       
+                                </h:panelGroup>                            
+                                <h:panelGroup>
+                                    &nbsp;&nbsp;
+                                    <rich:calendar id="litterBirthDate"
+                                                   value="#{LitterList_Backing.litterSearch.birthDate}"
+                                                   inputSize="#{msgs['common.minMaxSize']}"
+                                                   datePattern="#{LitterList_Backing.date_format}" 
+                                                   showInput="true"
+                                                   showWeeksBar="true"
+                                                   enableManualInput="true">
+                                    </rich:calendar>
+                                </h:panelGroup>                            
+                                <h:panelGroup>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <h:outputLabel value="#{msgs['strain']}" id="strainId" />
+                                </h:panelGroup>                            
+                                <h:panelGroup>
+                                    &nbsp;&nbsp;
+                                    <h:selectOneMenu  value="#{LitterList_Backing.litterSearch.strain}" >
+                                        <f:selectItems value="#{LitterList_Backing.selectItemWrapper.activeStrainsOptional}"/>
+                                        <f:converter converterId="strainConverter" />
+                                    </h:selectOneMenu>
+                                </h:panelGroup>   
+                            </h:panelGrid>
+                            <h:panelGrid styleClass="searchTable">
+                                <h:panelGroup>
+                                    <h:outputLabel value="#{msgs['owner']} Filter"/>
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                </h:panelGroup>
+                                <rich:pickList value="#{LitterList_Backing.litterSearch.owners}" 
+                                               disabled="false"  >
+                                    <f:selectItems value="#{LitterList_Backing.selectItemWrapper.colonyManageOwnerItems}"/>
+                                    <f:converter converterId="ownerConverter" />
+                                </rich:pickList>
+                            </h:panelGrid>
+                            <h:panelGrid styleClass="searchTable">
+                                <br />
+                                <h:panelGroup id="grpFilterActions">   
+                                    <a4j:commandButton
+                                        id="litterSearchId"
+                                        value="#{msgs['line.search']}"
+                                        action="#{LitterList_Backing.litterSearchAction}"
+                                        styleClass="mediumButton"
+                                        type="submit"
+                                        render="litterSearchResultsGridId, litterResultsTextId, ownersId" 
+                                        status="statusPage"/>
+                                    &nbsp;&nbsp;
+                                    <a4j:commandButton
+                                        id="clearId"
+                                        value="#{msgs['filter.clear']}"
+                                        action="#{LitterList_Backing.litterListAction}"
+                                        oncomplete="document.getElementById('matingListFormId:lookForMatingId').focus();"
+                                        styleClass="mediumButton"
+                                        render="searchResultsGridId,lookForMatingId" 
+                                        status="statusPage"/>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </rich:collapsiblePanel>
+                        <br />
+
+                        <h:panelGrid columns="1" id="litterSearchResultsGridId">
+                            <h:panelGroup id="litterResultsId">
+                                <h:outputText id="litterResultsTextId"
+                                              rendered="#{LitterList_Backing.isResultCountDisplayed}"
+                                              value="#{msgs['search.results']} #{LitterList_Backing.litterDataModel.rowCount}" />
+                                <a4j:status name="statusTable">
+                                    <f:facet name="start">
+                                        &nbsp;&nbsp;
+                                        <h:graphicImage  value="../images/bhi_ball.gif"/>
+                                    </f:facet>
+                                </a4j:status>    
+                            </h:panelGroup>
+
+                            <h:panelGroup id="resultsPanelId"
+                                          rendered="#{LitterList_Backing.litterDataModel.rowCount > 0}">
+                                <hr />
+
+                                <rich:dataTable 
+                                    id="resultsTableID"
+                                    value="#{LitterList_Backing.litterDataModel}"
+                                    var="litterInfo"
+                                    styleClass="maxSizeDataTable"
+                                    rows="15"
+                                    sortMode="single"
+                                    headerClass="tableSortHeader" >
+
+                                    <f:facet name="footer" class="dataScroller">
+                                        <rich:dataScroller for="resultsTableID" maxPages="5" renderIfSinglePage="false" />
+                                    </f:facet>                     
+                                    
+                                    <rich:column id="actions">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['common.actions']}" />
+                                        </f:facet>
+                                        <h:commandLink id="editLink" title="#{msgs['common.edit']}"
+                                                           styleClass="smallText"
+                                                           action="#{Litter_Backing.editAction}">
+                                            <h:graphicImage value="/images/edit.gif" style="border:0" />
+                                            <f:param name="paramLitterKey" value="#{litterInfo.litterKey}" />
+                                        </h:commandLink>
+                                    </rich:column>
+
+                                    <rich:column width="18" id="litterId"
+                                                 sortBy="#{litterInfo.litterID}"
+                                                 sortOrder="#{sortingBean.column1Order}"
+                                                 filterValue="#{filterBean.column1Filter}" 
+                                                 filterExpression="#{fn:containsIgnoreCase(litterInfo.litterID, filterBean.column1Filter)}" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['litter.litter#']}" />
+                                            <br />
+                                            <a4j:commandButton image="#{sortingBean.column1Image}" 
+                                                               render="resultsTableID" 
+                                                               action="#{sortingBean.sortByColumn1}" 
+                                                               status="statusTable"/>
+                                            <br />
+                                            <h:inputText value="#{filterBean.column1Filter}" styleClass="w100">
+                                                <a4j:ajax event="blur" render="resultsTableID" status="statusTable" />
+                                            </h:inputText>
+                                        </f:facet>
+                                        <h:outputText value="#{litterInfo.litterID}" />
+                                    </rich:column>                                       
+
+                                    <rich:column width="14" id="matingId"
+                                                 sortBy="#{litterInfo.matingKey.matingID}"
+                                                 sortOrder="#{sortingBean.column2Order}"
+                                                 filterValue="#{filterBean.column2Filter}" 
+                                                 filterExpression="#{fn:containsIgnoreCase(litterInfo.matingKey.matingID, filterBean.column2Filter)}" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['litter.matingID']}" />
+                                            <br />
+                                            <a4j:commandButton image="#{sortingBean.column2Image}" 
+                                                               render="resultsTableID" 
+                                                               action="#{sortingBean.sortByColumn2}" 
+                                                               status="statusTable"/>
+                                            <br />
+                                            <h:inputText value="#{filterBean.column2Filter}" styleClass="w100">
+                                                <a4j:ajax event="blur" render="resultsTableID" status="statusTable" />
+                                            </h:inputText>
+                                        </f:facet>
+                                        <h:outputText value="#{litterInfo.matingKey.matingID}" />
+                                    </rich:column>
+
+                                    <rich:column width="15" id="birthDate"
+                                                 sortBy="#{litterInfo.birthDate}"
+                                                 sortOrder="#{sortingBean.column3Order}"
+                                                 filterValue="#{filterBean.column3Filter}" 
+                                                 filterExpression="#{fn:containsIgnoreCase(litterInfo.birthDate, filterBean.column3Filter)}" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['litter.birthDate']}" id="birthDateId" />
+                                            <br />
+                                            <a4j:commandButton image="#{sortingBean.column3Image}" 
+                                                               render="resultsTableID" 
+                                                               action="#{sortingBean.sortByColumn3}" 
+                                                               status="statusTable"/>
+                                            <br />
+                                            <h:inputText value="#{filterBean.column3Filter}" styleClass="w100">
+                                                <a4j:ajax event="blur" render="resultsTableID" status="statusTable" />
+                                            </h:inputText>
+                                        </f:facet>
+                                        <rich:calendar value="#{litterInfo.birthDate}" disabled="true"
+                                                       datePattern="#{MouseList_Backing.date_format}"/>
+                                    </rich:column>
+
+                                    <rich:column width="15" id="status"
+                                                 sortBy="#{litterInfo.status}"
+                                                 sortOrder="#{sortingBean.column4Order}"
+                                                 filterValue="#{filterBean.column4Filter}" 
+                                                 filterExpression="#{fn:containsIgnoreCase(litterInfo.status, filterBean.column4Filter)}" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['litter.status']}" id="litterStatusId" />
+                                            <br />
+                                            <a4j:commandButton image="#{sortingBean.column4Image}" 
+                                                               render="resultsTableID" 
+                                                               action="#{sortingBean.sortByColumn4}" 
+                                                               status="statusTable"/>
+                                            <br />
+                                            <h:inputText value="#{filterBean.column4Filter}" styleClass="w100">
+                                                <a4j:ajax event="blur" render="resultsTableID" status="statusTable" />
+                                            </h:inputText>
+                                        </f:facet>
+                                        <h:outputText value="#{litterInfo.status}" />
+                                    </rich:column>
+
+                                    <rich:column width="30" id="strain"
+                                                 sortBy="#{litterInfo.matingKey.strainKey.strainName}"
+                                                 sortOrder="#{sortingBean.column5Order}"
+                                                 filterValue="#{filterBean.column5Filter}" 
+                                                 filterExpression="#{fn:containsIgnoreCase(litterInfo.matingKey.strainKey.strainName, filterBean.column5Filter)}" >
+                                            <f:facet name="header">
+                                                <h:panelGroup>
+                                                    <h:outputText value="#{msgs['strain']}" />
+                                                    <br />
+                                                    <a4j:commandButton image="#{sortingBean.column5Image}" 
+                                                                       render="resultsTableID" 
+                                                                       action="#{sortingBean.sortByColumn5}" 
+                                                                       status="statusTable"/>
+                                                    <br />
+                                                    <h:inputText value="#{filterBean.column5Filter}" styleClass="w100">
+                                                        <a4j:ajax event="blur" render="resultsTableID" status="statusTable" />
+                                                    </h:inputText>
+                                                </h:panelGroup>
+                                            </f:facet>
+                                            <h:outputText value="#{litterInfo.matingKey.strainKey.strainName}" />
+                                    </rich:column>
+
+                                    <rich:column width="12" id="totalBorn"
+                                                 sortBy="#{litterInfo.totalBorn}"
+                                                 sortOrder="#{sortingBean.column6Order}"
+                                                 filterValue="#{filterBean.column6Filter}" 
+                                                 filterExpression="#{fn:containsIgnoreCase(litterInfo.totalBorn, filterBean.column6Filter)}" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['litter.totalBorn']}" id="littertotalBornId" />
+                                            <br />
+                                            <a4j:commandButton image="#{sortingBean.column6Image}" 
+                                                               render="resultsTableID" 
+                                                               action="#{sortingBean.sortByColumn6}" 
+                                                               status="statusTable"/>
+                                            <br />
+                                            <h:inputText value="#{filterBean.column6Filter}" styleClass="w100">
+                                                <a4j:ajax event="blur" render="resultsTableID" status="statusTable" />
+                                            </h:inputText>
+                                        </f:facet>
+                                        <h:outputText value="#{litterInfo.totalBorn}" />
+                                    </rich:column>
+
+                                    <rich:column width="12" id="numMale"
+                                                 sortBy="#{litterInfo.numMale}"
+                                                 sortOrder="#{sortingBean.column7Order}"
+                                                 filterValue="#{filterBean.column7Filter}" 
+                                                 filterExpression="#{fn:containsIgnoreCase(litterInfo.numMale, filterBean.column7Filter)}" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['litter.numMale']}" id="litternumMaleId" />
+                                            <br />
+                                            <a4j:commandButton image="#{sortingBean.column7Image}" 
+                                                               render="resultsTableID" 
+                                                               action="#{sortingBean.sortByColumn7}" 
+                                                               status="statusTable"/>
+                                            <br />
+                                            <h:inputText value="#{filterBean.column7Filter}" styleClass="w100">
+                                                <a4j:ajax event="blur" render="resultsTableID" status="statusTable" />
+                                            </h:inputText>
+                                        </f:facet>
+                                        <h:outputText value="#{litterInfo.numMale}" />
+                                    </rich:column>
+
+                                    <rich:column width="12" id="numFemale"
+                                                 sortBy="#{litterInfo.numFemale}"
+                                                 sortOrder="#{sortingBean.column8Order}"
+                                                 filterValue="#{filterBean.column8Filter}" 
+                                                 filterExpression="#{fn:containsIgnoreCase(litterInfo.numFemale, filterBean.column8Filter)}" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['litter.numFemale']}" id="litternumFemaleId" />
+                                            <br />
+                                            <a4j:commandButton image="#{sortingBean.column8Image}" 
+                                                               render="resultsTableID" 
+                                                               action="#{sortingBean.sortByColumn8}" 
+                                                               status="statusTable"/>
+                                            <br />
+                                            <h:inputText value="#{filterBean.column8Filter}" styleClass="w100">
+                                                <a4j:ajax event="blur" render="resultsTableID" status="statusTable" />
+                                            </h:inputText>
+                                        </f:facet>
+                                        <h:outputText value="#{litterInfo.numFemale}" />
+                                    </rich:column>
+
+                                </rich:dataTable>
+                            </h:panelGroup>
+                        </h:panelGrid>  
+                    </h:panelGroup>
+                </h:panelGrid>                            
+            </div>
+        </h:form>
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+        </h:body>
+    </html>

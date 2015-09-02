@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+   version="2.5">
+   <!-- ======================== Introduction ============================== -->
+   <!-- This document defines default values for the Mojarra-1.2 JSF config  -->
+   <!--                                                                      -->
+   <!-- WARNING:  Do not configure application-specific resources here!      -->
+   <!-- They should go in the "/WEB-INF/web.xml" file in your application.   -->
+
+   <!-- =========== Common Context Params ================================== -->
+
+   <!-- Regular expression to determine if two different URLs actually point -->
+   <!-- to the same jar file.  This keeps faces-config files from being      -->
+   <!-- read twice.                                                          -->
+   <context-param>
+     <param-name>com.sun.faces.duplicateJARPattern</param-name>
+     <param-value>^tmp\d+(\S*\.jar)</param-value>
+   </context-param>
+    
+   <!-- JBossInjectionProvider provides resource injection for managed beans. -->
+   <!-- See JSF 1.2 spec section 5.4 for details.                             -->
+   <context-param>
+     <param-name>com.sun.faces.injectionProvider</param-name>
+     <param-value>org.jboss.web.jsf.integration.injection.JBossDelegatingInjectionProvider</param-value>
+   </context-param>
+   
+   <!-- ================== Common filter Configuration ==================== -->
+   
+	
+   <!-- ================== Common Listener Configuration ==================== -->
+   <!-- Configures JSF 1.2 -->
+   <listener>
+     <listener-class>org.jboss.web.jsf.integration.config.JBossMojarra12ConfigureListener</listener-class>
+   </listener>
+
+</web-app>

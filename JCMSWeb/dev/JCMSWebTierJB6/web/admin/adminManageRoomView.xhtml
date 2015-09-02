@@ -1,0 +1,295 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+    <h:panelGrid columns="1" id="roomResultsGridId">
+        <h:panelGroup id="roomResultsPanelId">
+            <h:panelGroup styleClass="left">
+                <a4j:commandButton
+                    value="Add"
+                    title="Add"
+                    styleClass="mediumButton"
+                    action="#{adminRoomBean.addAction}"
+                    render="roomResultsTableId"
+                    oncomplete="setNumberOfFilteredRows(); moveFocusToInput(); setIsEdit(true);" >
+                </a4j:commandButton>
+            </h:panelGroup>
+
+            <h:panelGrid columns="3">
+                <h:panelGroup>
+                    <div align="right">
+                        <h:outputText value="Results " /><h:outputText id="roomFilterCount"/>&nbsp;
+                        <h:outputText value="of #{adminRoomBean.vocabularyDataModel.rowCount}" />
+                    </div>
+
+                    <a4j:jsFunction name="showHistory" 
+                                    action="#{adminRoomBean.showRoomHistoryAction}" 
+                                    render="healthLevelHistoryPanel" 
+                                    oncomplete="disableInputDate();" 
+                                    status="statusTable" >
+                        <a4j:param name="selectedRowKey" assignTo="#{adminRoomBean.selectedRowKey}"  />
+                    </a4j:jsFunction>
+
+                    <rich:dataTable
+                        id="roomResultsTableId"
+                        value="#{adminRoomBean.vocabularyDataModel}"
+                        var="dm"
+                        style=" width: 620px;"
+                        rowKeyVar="tableRowIndex" 
+                        onrowclick="$(this.parentElement).find('.rf-dt-r').removeClass('selected-dt-row'); $(this).addClass('selected-dt-row'); showHistoryCheck(#{dm.roomKey}); "
+                        sortMode="single">
+
+                        <f:facet name="header">
+                            <h:outputText value="Room" />
+                        </f:facet>
+
+                        <rich:column id="colRoomSaveAction" 
+                                        rendered="#{adminRoomBean.rowIndex == tableRowIndex}" 
+                                        styleClass="nowrap" 
+                                        width="60px;">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['common.actions']}" />
+                            </f:facet>
+                            <a4j:commandButton title="#{msgs['common.save']}"
+                                                image="/images/icon-save.gif"
+                                                action="#{adminRoomBean.saveAction}"
+                                                render="roomResultsGridId healthLevelHistoryPanel"  
+                                                oncomplete="setNumberOfFilteredRows(); disableInputDate(); setIsEdit(false);" >
+                                <f:param name="paramPrimaryKey" value="#{dm.roomKey}" />
+                                <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                            </a4j:commandButton>
+                            &nbsp;&nbsp;
+                            <a4j:commandButton title="Cancel"
+                                                image="/images/cancel.png"
+                                                action="#{adminRoomBean.cancelAction}"
+                                                style="width:16px; height:16px;"
+                                                render="roomResultsGridId"  
+                                                oncomplete="setNumberOfFilteredRows(); disableInputDate(); setIsEdit(false);" >
+                            </a4j:commandButton>
+                        </rich:column>
+                        <rich:column rendered="#{!(adminRoomBean.rowIndex == tableRowIndex)}" 
+                                        styleClass="nowrap" 
+                                        width="60px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['common.actions']}" />
+                            </f:facet>
+                            <a4j:commandButton title="#{msgs['common.edit']}"
+                                                image="/images/edit.gif"
+                                                action="#{adminRoomBean.editAction}"
+                                                render="healthLevelHistoryPanel roomResultsGridId "
+                                                oncomplete="setNumberOfFilteredRows(); moveFocusToInput(); setIsEdit(true);">
+                                <f:param name="paramPrimaryKey" value="#{dm.roomKey}" />
+                                <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                            </a4j:commandButton>
+
+                        </rich:column>                                        
+
+                        <rich:column style=" text-align: center;" >
+                            <f:facet name="header">
+                                <h:outputText value="Active" />
+                                <br />
+                                <br />
+                                <h:selectBooleanCheckbox value="#{adminRoomBean.roomSearchDTO.isActive}" >
+                                    <a4j:ajax event="click" 
+                                                render="roomResultsTableId healthLevelHistoryResultsTableId" 
+                                                listener="#{adminRoomBean.loadVocabularyAction}" 
+                                                status="statusTable" 
+                                                oncomplete="setNumberOfFilteredRows(); disableInputDate();" />
+                                </h:selectBooleanCheckbox>
+                            </f:facet>
+                            <h:selectBooleanCheckbox value="#{dm.isActive}"
+                                                        disabled="true"
+                                                        title="Active Disabled"
+                                                        rendered="#{!(adminRoomBean.rowIndex == tableRowIndex)}" />
+                            <h:selectBooleanCheckbox value="#{dm.isActive}"
+                                                        rendered="#{adminRoomBean.rowIndex == tableRowIndex}" />
+                        </rich:column>
+
+                        <rich:column sortBy="#{dm.roomName}" 
+                                        sortOrder="#{adminRoomBean.sortBO.column1Order}"
+                                        filterValue="#{adminRoomBean.filterBO.column1Filter}" 
+                                        filterExpression="#{fn:containsIgnoreCase(dm.roomName, adminRoomBean.filterBO.column1Filter)}" 
+                                        style="cursor: pointer;"
+                                        width="220px" >
+                            <f:facet name="header">
+                                <h:outputText value="Room Name" />
+                                <br />
+                                <a4j:commandButton image="#{adminRoomBean.sortBO.column1Image}" 
+                                                    render="roomResultsTableId" 
+                                                    action="#{adminRoomBean.sortBO.sortByColumn1}" 
+                                                    status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{adminRoomBean.filterBO.column1Filter}" style="width:200px;">
+                                    <a4j:ajax event="blur" 
+                                                render="roomResultsTableId healthLevelHistoryResultsTableId" 
+                                                status="statusTable" 
+                                                oncomplete="setNumberOfFilteredRows();"
+                                                listener="#{adminRoomBean.resetHistoryAction()}"/>
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.roomName}"
+                                            rendered="#{!(adminRoomBean.rowIndex == tableRowIndex)}" />
+                            <h:inputText  value="#{dm.roomName}"
+                                            rendered="#{adminRoomBean.rowIndex == tableRowIndex}" 
+                                            class="startHere" />
+                        </rich:column>
+
+                        <rich:column sortBy="#{dm.healthLevelHistoryDTO.healthLevel}" 
+                                        sortOrder="#{adminRoomBean.sortBO.column2Order}"
+                                        filterValue="#{adminRoomBean.filterBO.column2Filter}" 
+                                        filterExpression="#{fn:containsIgnoreCase(dm.healthLevelHistoryDTO.healthLevel, adminRoomBean.filterBO.column2Filter)}" 
+                                        style="cursor: pointer;"
+                                        width="150px">
+                            <f:facet name="header">
+                                <h:outputText value="Health Level" styleClass="nowrap" />
+                                <br />
+                                <a4j:commandButton image="#{adminRoomBean.sortBO.column2Image}" 
+                                                    render="roomResultsTableId" 
+                                                    action="#{adminRoomBean.sortBO.sortByColumn2}" 
+                                                    status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{adminRoomBean.filterBO.column2Filter}" style="width:130px;">
+                                    <a4j:ajax event="blur" 
+                                                render="roomResultsTableId healthLevelHistoryResultsTableId" 
+                                                status="statusTable" 
+                                                oncomplete="setNumberOfFilteredRows();"
+                                                listener="#{adminRoomBean.resetHistoryAction()}"/>
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.healthLevelHistoryDTO.healthLevel}"
+                                            rendered="#{!(adminRoomBean.rowIndex == tableRowIndex)}" />
+                            <h:selectOneMenu value="#{dm.healthLevelHistoryDTO.healthLevel}" 
+                                                rendered="#{adminRoomBean.rowIndex == tableRowIndex}" >
+                                <f:selectItems value="#{adminRoomBean.selectItemWrapper.cvHealthLevelItemsStringOptional}"/>
+                            </h:selectOneMenu>
+                        </rich:column>
+
+                        <rich:column sortBy="#{dm.healthLevelHistoryDTO.startDate}" 
+                                        sortOrder="#{adminRoomBean.sortBO.column3Order}"
+                                        filterValue="#{adminRoomBean.filterBO.column3Filter}" 
+                                        filterExpression="#{fn:containsIgnoreCase(dm.healthLevelHistoryDTO.startDate, adminRoomBean.filterBO.column3Filter)}" 
+                                        width="150px" >
+                            <f:facet name="header">
+                                <h:outputText value="Health Level Start Date" />
+                                <br />
+                                <a4j:commandButton image="#{adminRoomBean.sortBO.column3Image}" 
+                                                    render="roomResultsTableId" 
+                                                    action="#{adminRoomBean.sortBO.sortByColumn3}" 
+                                                    status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{adminRoomBean.filterBO.column3Filter}" style="width:130px;">
+                                    <a4j:ajax event="blur" 
+                                                render="roomResultsTableId healthLevelHistoryResultsTableId" 
+                                                status="statusTable" 
+                                                oncomplete="setNumberOfFilteredRows();"
+                                                listener="#{adminRoomBean.resetHistoryAction()}"/>
+                                </h:inputText>
+                            </f:facet>
+<!--                                            <h:outputText value="#{dm.healthLevelHistoryDTO.startDate}"
+                                            rendered="#{!(adminRoomBean.rowIndex == tableRowIndex)}" >
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>-->
+                            <p:calendar pattern="#{adminRoomBean.date_format}" 
+                                        value="#{dm.healthLevelHistoryDTO.startDate}"
+                                        disabled="false"
+                                        readonlyInput="true"
+                                        rendered="#{adminRoomBean.rowIndex == tableRowIndex}"  >
+                            </p:calendar>
+                            <p:calendar value="#{dm.healthLevelHistoryDTO.startDate}"
+                                        disabled="true"
+                                        pattern="#{adminRoomBean.date_format}" 
+                                        rendered="#{!(adminRoomBean.rowIndex == tableRowIndex)}"  >
+                            </p:calendar>
+                        </rich:column>
+
+                    </rich:dataTable>
+                </h:panelGroup>
+                <h:panelGroup>&nbsp;&nbsp;</h:panelGroup>
+                <h:panelGroup id="healthLevelHistoryPanel">
+                    <div align="right">
+                        <h:outputText value="#{msgs['search.results']} #{adminRoomBean.healthLevelHistoryDataModel.rowCount}" />
+                    </div>
+                    <rich:dataTable 
+                        id="healthLevelHistoryResultsTableId"
+                        value="#{adminRoomBean.healthLevelHistoryDataModel}"
+                        var="dmHistory"
+                        rowKeyVar="tableHistoryRowIndex">
+
+                        <f:facet name="header">
+                            <h:outputText value="Room #{adminRoomBean.selectedRoomDTO.roomName} Health Level History" />
+                            <rich:columnGroup>
+                                <rich:column>
+                                    <h:outputText value="#{msgs['common.actions']}" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="Health Level" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="Health Level Start Date" />
+                                </rich:column>
+                            </rich:columnGroup>
+                        </f:facet>
+
+                        <rich:column styleClass="nowrap">
+                            <a4j:commandButton title="#{msgs['common.delete']}"
+                                                image="/images/delete.gif"
+                                                action="#{adminRoomBean.deleteHealthLevelHistoryAction}"
+                                                render="roomResultsTableId healthLevelHistoryResultsTableId"
+                                                rendered="#{adminRoomBean.healthLevelHistoryDataModel.rowCount gt 1}"
+                                                oncomplete="disableInputDate();">
+                                <f:param name="paramHistoryRowIndex" value="#{tableHistoryRowIndex}" />
+                            </a4j:commandButton>
+                            <a4j:commandButton title="#{msgs['common.delete']} Disabled"
+                                                image="/images/delete-disable.gif"
+                                                disabled="true"
+                                                rendered="#{adminRoomBean.healthLevelHistoryDataModel.rowCount lt 2}">
+                            </a4j:commandButton>
+                        </rich:column>                                        
+
+                        <rich:column width="150px" >
+                            <h:outputText value="#{dmHistory.healthLevel}" />
+                        </rich:column>
+
+                        <rich:column width="150px" >
+                            <rich:calendar datePattern="#{adminRoomBean.date_format}"  
+                                            value="#{dmHistory.startDate}"
+                                            inputSize="20"
+                                            disabled="true"
+                                            showInput="true"
+                                            showWeeksBar="true"
+                                            defaultTime="12:00:00"
+                                            locale="en/US"
+                                            enableManualInput="false">
+                                <f:convertDateTime pattern="#{adminRoomBean.date_format}" />
+                            </rich:calendar>
+                        </rich:column>
+                    </rich:dataTable>
+                </h:panelGroup>
+            </h:panelGrid>
+            <hr /><br />
+        </h:panelGroup>
+    </h:panelGrid>
+</ui:composition>

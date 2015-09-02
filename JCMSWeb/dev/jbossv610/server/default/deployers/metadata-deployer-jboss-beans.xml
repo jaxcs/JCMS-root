@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    MetaData configuration
+    $Id: metadata-deployer-jboss-beans.xml 110301 2011-01-07 07:59:45Z jaikiran $
+-->
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+   <!-- A reference metadata resolving deployer that creates and endpoint map
+      for the deployments
+   -->
+   <bean name="ReferenceMetaDataResolverDeployer" class="org.jboss.deployment.MappedReferenceMetaDataResolverDeployer"/>
+
+	<!-- The schema location to JBossXB binding class mappings. We specify the dtd/xsd name
+	of the schema as the location to work with legacy dtd as well as namespace based
+	documents.
+	-->
+   <bean name="SchemaResolverConfig"
+      class="org.jboss.xb.binding.sunday.unmarshalling.SchemaResolverConfig">
+      
+      <property name="schemaInitializerInstances">
+         <map keyClass="java.lang.String" valueClass="java.lang.String">
+            <entry>
+               <key>http://java.sun.com/xml/ns/javaee</key>
+               <value>
+                  <!-- Every specified property in this schema initializer
+                       will override the value of the corresponding SchemaBinding property
+                       which was initialized from binding annotations.
+                       Properties that are commented will not affect the corresponding SchemaBinding properties. -->
+                  <bean class="org.jboss.xb.util.SchemaBindingPropertyInitializer">
+                     <!-- must all content have a valid binding
+                     <property name="strictSchema">true</property> -->
+                     <!-- Should ${x} references be replaced with x system property
+                     <property name="replacePropertyRefs">true</property> -->
+                     <!-- if all the characters in the mixed content are whitespaces
+                          should they be considered indentation and ignored?
+                     <property name="ignoreWhitespacesInMixedContent">true</property> -->
+                     <!-- whether to trim string values
+                     <property name="normalizeSpace">true</property> -->
+                  </bean>
+               </value>
+            </entry>
+         </map>
+      </property>
+      
+      <!-- schemaLocation to JBossXBuilder binding classes -->
+      <property name="bindingClassesByLocations">
+         <map keyClass="java.lang.String" valueClass="java.lang.String">
+            <!-- EarMetaData -->
+            <entry>
+               <key>application</key>
+               <value>org.jboss.metadata.ear.spec.Ear13DTDMetaData</value>
+            </entry>
+            <entry>
+               <key>application_1_2.dtd</key>
+               <value>org.jboss.metadata.ear.spec.Ear13DTDMetaData</value>
+            </entry>
+            <entry>
+               <key>application_1_3.dtd</key>
+               <value>org.jboss.metadata.ear.spec.Ear13DTDMetaData</value>
+            </entry>
+            <entry>
+               <key>application_1_4.xsd</key>
+               <value>org.jboss.metadata.ear.spec.Ear14MetaData</value>
+            </entry>
+            <entry>
+               <key>application_5.xsd</key>
+               <value>org.jboss.metadata.ear.spec.Ear50MetaData</value>
+            </entry>
+            <entry>
+               <key>application_6.xsd</key>
+               <value>org.jboss.metadata.ear.spec.Ear60MetaData</value>
+            </entry>
+            <!-- JBossAppMetaData -->
+            <entry>
+               <key>jboss-app</key>
+               <value>org.jboss.metadata.ear.jboss.JBoss50DTDAppMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-app_3_0.dtd</key>
+               <value>org.jboss.metadata.ear.jboss.JBoss50DTDAppMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-app_3_2.dtd</key>
+               <value>org.jboss.metadata.ear.jboss.JBoss50DTDAppMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-app_4_0.dtd</key>
+               <value>org.jboss.metadata.ear.jboss.JBoss50DTDAppMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-app_4_2.dtd</key>
+               <value>org.jboss.metadata.ear.jboss.JBoss50DTDAppMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-app_5_0.dtd</key>
+               <value>org.jboss.metadata.ear.jboss.JBoss50DTDAppMetaData</value>
+            </entry>
+
+            <!-- ApplicationClientMetaData -->
+            <entry>
+               <key>application-client</key>
+               <value>org.jboss.metadata.client.spec.ApplicationClient14DTDMetaData</value>
+            </entry>
+            <entry>
+               <key>application-client_1_2.dtd</key>
+               <value>org.jboss.metadata.client.spec.ApplicationClient14DTDMetaData</value>
+            </entry>
+            <entry>
+               <key>application-client_1_3.dtd</key>
+               <value>org.jboss.metadata.client.spec.ApplicationClient14DTDMetaData</value>
+            </entry>
+            <entry>
+               <key>application-client_1_4.xsd</key>
+               <value>org.jboss.metadata.client.spec.ApplicationClient14MetaData</value>
+            </entry>
+            <entry>
+               <key>application-client_5.xsd</key>
+               <value>org.jboss.metadata.client.spec.ApplicationClient5MetaData</value>
+            </entry>
+            <entry>
+               <key>application-client_6.xsd</key>
+               <value>org.jboss.metadata.client.spec.ApplicationClient6MetaData</value>
+            </entry>
+
+            <!-- ApplicationClientMetaData -->
+            <entry>
+               <key>jboss-client</key>
+               <value>org.jboss.metadata.client.jboss.JBossClient5DTDMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-client_3_2.dtd</key>
+               <value>org.jboss.metadata.client.jboss.JBossClient5DTDMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-client_4_0.dtd</key>
+               <value>org.jboss.metadata.client.jboss.JBossClient5DTDMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-client_4_2.dtd</key>
+               <value>org.jboss.metadata.client.jboss.JBossClient5DTDMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-client_5_0.dtd</key>
+               <value>org.jboss.metadata.client.jboss.JBossClient5DTDMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-client_5_0.xsd</key>
+               <value>org.jboss.metadata.client.jboss.JBossClient5MetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-client_6_0.xsd</key>
+               <value>org.jboss.metadata.client.jboss.JBossClient6MetaData</value>
+            </entry>
+            
+            <!-- EjbJarMetaData -->
+            <entry>
+               <key>ejb-jar</key>
+               <value>org.jboss.metadata.ejb.spec.EjbJar20MetaData</value>
+            </entry>
+            <entry>
+               <key>ejb-jar_1_1.dtd</key>
+               <value>org.jboss.metadata.ejb.spec.EjbJar1xMetaData</value>
+            </entry>
+            <entry>
+               <key>ejb-jar_2_0.dtd</key>
+               <value>org.jboss.metadata.ejb.spec.EjbJar20MetaData</value>
+            </entry>
+            <entry>
+               <key>ejb-jar_2_1.xsd</key>
+               <value>org.jboss.metadata.ejb.spec.EjbJar21MetaData</value>
+            </entry>
+            <entry>
+               <key>ejb-jar_3_0.xsd</key>
+               <value>org.jboss.metadata.ejb.spec.EjbJar30MetaData</value>
+            </entry>
+	    <entry>
+               <key>ejb-jar_3_1.xsd</key>
+               <value>org.jboss.metadata.ejb.spec.EjbJar31MetaData</value>
+            </entry>
+            
+            <!-- JBossMetaData -->
+            <entry>
+               <key>jboss</key>
+               <value>org.jboss.metadata.ejb.jboss.JBoss60DTDMetaData</value>
+            </entry>            
+            <entry>
+               <key>jboss_3_0.dtd</key>
+               <value>org.jboss.metadata.ejb.jboss.JBoss50DTDMetaData</value>
+            </entry>            
+            <entry>
+               <key>jboss_3_2.dtd</key>
+               <value>org.jboss.metadata.ejb.jboss.JBoss50DTDMetaData</value>
+            </entry>            
+            <entry>
+               <key>jboss_4_0.dtd</key>
+               <value>org.jboss.metadata.ejb.jboss.JBoss50DTDMetaData</value>
+            </entry>            
+            <entry>
+               <key>jboss_4_2.dtd</key>
+               <value>org.jboss.metadata.ejb.jboss.JBoss50DTDMetaData</value>
+            </entry>            
+            <entry>
+               <key>jboss_5_0.dtd</key>
+               <value>org.jboss.metadata.ejb.jboss.JBoss50DTDMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss_6_0.dtd</key>
+               <value>org.jboss.metadata.ejb.jboss.JBoss60DTDMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss_5_0.xsd</key>
+               <value>org.jboss.metadata.ejb.jboss.JBoss50MetaData</value>
+            </entry>
+            <entry>
+               <key>jboss_5_1.xsd</key>
+               <value>org.jboss.metadata.ejb.jboss.JBoss51MetaData</value>
+            </entry>
+            
+            <!-- WebMetaData -->
+            <entry>
+               <key>web-app</key>
+               <value>org.jboss.metadata.web.spec.Web22MetaData</value>
+            </entry>
+            <entry>
+               <key>web-app_2_2.dtd</key>
+               <value>org.jboss.metadata.web.spec.Web22MetaData</value>
+            </entry>
+            <entry>
+               <key>web-app_2_3.dtd</key>
+               <value>org.jboss.metadata.web.spec.Web23MetaData</value>
+            </entry>
+            <entry>
+               <key>web-app_2_4.xsd</key>
+               <value>org.jboss.metadata.web.spec.Web24MetaData</value>
+            </entry>
+            <entry>
+               <key>web-app_2_5.xsd</key>
+               <value>org.jboss.metadata.web.spec.Web25MetaData</value>
+            </entry>
+            <entry>
+               <key>web-app_3_0.xsd</key>
+               <value>org.jboss.metadata.web.spec.Web30MetaData</value>
+            </entry>
+
+            <!-- WebFragmentMetaData -->
+            <entry>
+               <key>web-fragment_3_0.xsd</key>
+               <value>org.jboss.metadata.web.spec.WebFragment30MetaData</value>
+            </entry>
+
+            <!-- TldMetaData -->
+            <entry>
+               <key>web-jsptaglibrary_1_1.dtd</key>
+               <value>org.jboss.metadata.web.spec.Tld11MetaData</value>
+            </entry>
+            <entry>
+               <key>web-jsptaglibrary_1_2.dtd</key>
+               <value>org.jboss.metadata.web.spec.Tld12MetaData</value>
+            </entry>
+            <entry>
+               <key>web-jsptaglibrary_2_0.xsd</key>
+               <value>org.jboss.metadata.web.spec.Tld20MetaData</value>
+            </entry>
+            <entry>
+               <key>web-jsptaglibrary_2_1.xsd</key>
+               <value>org.jboss.metadata.web.spec.Tld21MetaData</value>
+            </entry>
+
+            <!-- JBossWebMetaData -->
+            <entry>
+               <key>jboss-web</key>
+               <value>org.jboss.metadata.web.jboss.JBoss50DTDWebMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-web_3_0.dtd</key>
+               <value>org.jboss.metadata.web.jboss.JBoss50DTDWebMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-web_3_2.dtd</key>
+               <value>org.jboss.metadata.web.jboss.JBoss50DTDWebMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-web_4_0.dtd</key>
+               <value>org.jboss.metadata.web.jboss.JBoss50DTDWebMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-web_4_2.dtd</key>
+               <value>org.jboss.metadata.web.jboss.JBoss50DTDWebMetaData</value>
+            </entry>
+            <entry>
+               <key>jboss-web_5_0.dtd</key>
+               <value>org.jboss.metadata.web.jboss.JBoss50DTDWebMetaData</value>
+            </entry>
+             <entry>
+                 <key>jboss-web_5_1.xsd</key>
+                 <value>org.jboss.metadata.web.jboss.JBoss50WebMetaData</value>
+             </entry>
+             <entry>
+                 <key>jboss-web_6_0.xsd</key>
+                 <value>org.jboss.metadata.web.jboss.JBoss60WebMetaData</value>
+             </entry>
+            <!-- PersistenceMetaData -->
+            <entry>
+               <key>persistence_1_0.xsd</key>
+               <value>org.jboss.metadata.jpa.spec.PersistenceMetaData</value>
+            </entry>
+         </map>
+      </property>
+
+      <!-- schema classes by QName's -->
+      <property name="bindingClassesByElementNames">
+         <map keyClass="javax.xml.namespace.QName" valueClass="java.lang.String">
+            <entry>
+               <key>
+                  <bean class="javax.xml.namespace.QName">
+                     <constructor>
+                        <!-- namespace -->
+                        <parameter>http://java.sun.com/xml/ns/javaee</parameter>
+                        <!-- root element name -->
+                        <parameter>ejb-jar</parameter>
+                     </constructor>
+                  </bean>
+               </key>
+               <value>org.jboss.metadata.ejb.spec.EjbJar31MetaData</value>
+            </entry>
+         </map>
+      </property>
+   </bean>
+   
+</deployment>

@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+      xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:panelGrid columns="1">
+        <h:panelGroup>
+            <a4j:commandButton
+                value="Add"
+                title="Add"
+                styleClass="mediumButton"
+                action="#{adminGeneralBean.addAction}"
+                render="tableId"
+                onclick="#{rich:component('tableIdDS')}.first()"
+                oncomplete="setNumberOfFilteredRows(); moveFocusToInput(); ">
+            </a4j:commandButton>
+            <div align="right">
+                <h:outputText value="Results " /><h:outputText id="generalFilterCount"/>&nbsp;
+                <h:outputText value="of #{adminGeneralBean.vocabularyDataModel.rowCount}" />
+            </div>
+        </h:panelGroup>
+        <h:panelGrid columns="1">
+            <rich:dataTable id="tableId"
+                            value="#{adminGeneralBean.vocabularyDataModel}"
+                            sortMode="single"
+                            var="generalRow"
+                            rowKeyVar="generalRowIndex"
+                            rows="20"
+                            styleClass="maxSizeDataTable" 
+                            headerClass="tableSortHeader">
+
+                <f:facet name="footer" class="dataScroller" >
+                    <rich:dataScroller id="tableIdDS" for="tableId" renderIfSinglePage="false" status="statusTable" />
+                </f:facet>                     
+
+                <rich:column id="actionsEdit" 
+                                rendered="#{adminGeneralBean.rowIndex == generalRowIndex}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs['common.actions']}" />
+                    </f:facet>
+                    <a4j:commandButton id="generalSave"
+                                        title="#{msgs['common.save']}"
+                                        image="/images/icon-save.gif"
+                                        action="#{adminGeneralBean.saveAction}"
+                                        oncomplete="setNumberOfFilteredRows();"
+                                        render="adminSamplePanel">
+                        <f:param name="paramPrimaryKey" value="#{generalRow.primaryKey}" />
+                        <f:param name="paramRowIndex" value="#{generalRowIndex}" />
+                    </a4j:commandButton>
+                    &nbsp;&nbsp;                                            
+                    <a4j:commandButton id="generalCancel"
+                                        title="Cancel"
+                                        image="/images/cancel.png"
+                                        action="#{adminGeneralBean.cancelAction}"
+                                        style="width:16px; height:16px;"
+                                        render="adminSamplePanel">
+                    </a4j:commandButton>
+                </rich:column>
+                <rich:column id="generalSaveAction" 
+                                rendered="#{!(adminGeneralBean.rowIndex == generalRowIndex)}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs['common.actions']}" />
+                    </f:facet>
+                    <a4j:commandButton id="generalEdit"
+                                        title="#{msgs['common.edit']}"
+                                        image="/images/edit.gif"
+                                        action="#{adminGeneralBean.editAction}"
+                                        render="adminSamplePanel"
+                                        rendered="#{fn:length(adminGeneralBean.controlledVocabularyDTO.displayColumnTwoName) gt 0}"
+                                        oncomplete="moveFocusToInput();">
+                        <f:param name="paramPrimaryKey" value="#{generalRow.primaryKey}" />
+                        <f:param name="paramRowIndex" value="#{generalRowIndex}" />
+                    </a4j:commandButton>
+                    <a4j:commandButton id="generalEditDisabled"
+                                        title="Edit Disabled"
+                                        image="/images/edit-disable.gif"
+                                        rendered="#{fn:length(adminGeneralBean.controlledVocabularyDTO.displayColumnTwoName) lt 1}">
+                    </a4j:commandButton>
+                    &nbsp;&nbsp;                                            
+                    <a4j:commandButton id="generalDelete"
+                                        title="#{msgs['common.delete']}"
+                                        image="/images/delete.gif"
+                                        action="#{adminGeneralBean.deleteAction}"
+                                        render="adminSamplePanel"
+                                        oncomplete="setNumberOfFilteredRows();"
+                                        rendered="#{!(generalRow.disableDelete)}">
+                        <f:param name="paramPrimaryKey" value="#{generalRow.primaryKey}" />
+                        <f:param name="paramRowIndex" value="#{generalRowIndex}" />
+                    </a4j:commandButton>
+                    <a4j:commandButton title="#{msgs['common.delete']} Disabled"
+                                        image="/images/delete-disable.gif"
+                                        disabled="true"
+                                        rendered="#{generalRow.disableDelete}">
+                    </a4j:commandButton>
+                </rich:column>
+
+                <rich:column id="columnOneAdd"
+                                sortBy="#{generalRow.columnOneValue}"
+                                sortOrder="#{adminGeneralBean.sortBO.column1Order}"
+                                filterValue="#{adminGeneralBean.filterBO.column1Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.columnOneValue, adminGeneralBean.filterBO.column1Filter)}" 
+                                rendered="#{generalRow.primaryKey =='0'}">
+                    <f:facet name="header">
+                        <h:outputText value="#{adminGeneralBean.controlledVocabularyDTO.displayColumnOneName}" />
+                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                        <br />
+                        <a4j:commandButton image="#{adminGeneralBean.sortBO.column1Image}" 
+                                            render="tableId" 
+                                            action="#{adminGeneralBean.sortBO.sortByColumn1}" 
+                                            status="statusTable"/>
+                        <br />
+                        <h:inputText value="#{adminGeneralBean.filterBO.column1Filter}" 
+                                        styleClass="w100">
+                            <a4j:ajax event="blur" render="tableId" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                        </h:inputText>
+                    </f:facet>
+                    <h:inputText  value="#{generalRow.columnOneValue}"
+                                    rendered="#{adminGeneralBean.rowIndex == generalRowIndex}"
+                                    class="startHere"/>
+                </rich:column>
+                <rich:column id="columnOneDisabled"
+                                sortBy="#{generalRow.columnOneValue}"
+                                sortOrder="#{adminGeneralBean.sortBO.column1Order}"
+                                filterValue="#{adminGeneralBean.filterBO.column1Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(generalRow.columnOneValue, adminGeneralBean.filterBO.column1Filter)}" 
+                                rendered="#{!(generalRow.primaryKey =='0')}">
+                    <f:facet name="header">
+                        <h:outputText value="#{adminGeneralBean.controlledVocabularyDTO.displayColumnOneName}" />
+                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                        <br />
+                        <a4j:commandButton image="#{adminGeneralBean.sortBO.column1Image}" 
+                                            render="tableId" 
+                                            rendered="#{adminGeneralBean.vocabularyDataModel.rowCount gt 0}"
+                                            action="#{adminGeneralBean.sortBO.sortByColumn1}" 
+                                            status="statusTable"/>
+                        <br />
+                        <h:inputText value="#{adminGeneralBean.filterBO.column1Filter}" 
+                                        rendered="#{adminGeneralBean.vocabularyDataModel.rowCount gt 0}"
+                                        styleClass="w100">
+                            <a4j:ajax event="blur" render="tableId" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                        </h:inputText>
+                    </f:facet>
+                    <h:outputText value="#{generalRow.columnOneValue}"/>
+                </rich:column>
+
+                <rich:column id="columnTwo"
+                                sortBy="#{generalRow.columnTwoValue}"
+                                sortOrder="#{adminGeneralBean.sortBO.column6Order}"
+                                filterValue="#{adminGeneralBean.filterBO.column6Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(generalRow.columnTwoValue, adminGeneralBean.filterBO.column6Filter)}" 
+                                rendered="#{fn:length(adminGeneralBean.controlledVocabularyDTO.displayColumnTwoName) gt 0}">
+                    <f:facet name="header">
+                        <h:outputText value="#{adminGeneralBean.controlledVocabularyDTO.displayColumnTwoName}" />
+                        <br />
+                        <a4j:commandButton image="#{adminGeneralBean.sortBO.column6Image}" 
+                                            render="tableId" 
+                                            rendered="#{adminGeneralBean.vocabularyDataModel.rowCount gt 0}"
+                                            action="#{adminGeneralBean.sortBO.sortByColumn6}" 
+                                            status="statusTable"/>
+                        <br />
+                        <h:inputText value="#{adminGeneralBean.filterBO.column6Filter}" 
+                                        rendered="#{adminGeneralBean.vocabularyDataModel.rowCount gt 0}"
+                                        styleClass="w100">
+                            <a4j:ajax event="blur" render="tableId" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                        </h:inputText>
+                    </f:facet>
+                    <h:selectOneMenu value="#{generalRow.columnTwoValue}"
+                                     rendered="#{!(adminGeneralBean.rowIndex == generalRowIndex)}" 
+                                      disabled="true">
+                        <f:selectItems value="#{adminGeneralBean.items}"/>
+                    </h:selectOneMenu>
+                    <h:selectOneMenu  value="#{generalRow.columnTwoValue}"
+                                    rendered="#{adminGeneralBean.rowIndex == generalRowIndex}"
+                                    class="startHere">
+                        <f:selectItems value="#{adminGeneralBean.items}"/>
+                    </h:selectOneMenu>
+                </rich:column>
+            </rich:dataTable>
+        </h:panelGrid>
+    </h:panelGrid>
+</ui:composition>

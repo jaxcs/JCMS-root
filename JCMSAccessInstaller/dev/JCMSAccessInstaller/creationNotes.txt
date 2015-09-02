@@ -1,0 +1,47 @@
+﻿***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***
+
+Testing notes: need it on 32 bit machine & 64 bit
+
+All the install and update CODE exists in processProgress.cs, it's hard to understand w/o historical context but important questions to ask yourself include how the 
+schema that is being used is referenced. An example would be the three execute query methods in processProgress.cs. They do not have a default schema in the connection
+string so you will need to reference the schema in the query (such as SELECT * FROM SCHEMANAMEHERE.Mouse; for executeMultipleResultsQuery or ALTER TABLE SCHEMANAMEHERE.GenotypeDocument 
+DROP INDEX `_GenotypeDocument_key`  ;
+
+Upgrading upgrader: 
+
+1.Create script to upgrade to that latest version, add it to the upgrade scripts folder and right click, select properties, and Copy to output directory to 
+'Copy Always'. Also make sure that it's included in the installer project. 
+
+2. In program variables, change latestJCMS to whatever the latest versionNumber of JCMS is (4.6.0, 5.0.0, 5.1.0 or whatever). 
+
+3. To the end of the list of upgrade scripts being added to the upgrade scripts linked list in the initialize() method of the programVariables class add 
+yours as follows: upgradeScripts.AddLast("TheNameOfYourScriptGoesHere"); 
+
+4. Lastly, in the intialize method of the programVariables class add a mapping for the new version of JCMS after the most recent one as follows: 
+upgradeMap.Add("versionNum.Goes.Here", ++index); You may notice that some indexes aren't increased, this is because it not every version had a schema change so
+for example to upgrade from 4.0.0 and 4.0.1 you still just need to run the same scripts.
+
+Upgrading installer:
+
+1. Replace interface file with latest interface file, make sure the name stays constant
+
+2. Add the most recent documentations.
+
+3. If any more items are added, add them to JCMSExtras and take necessary steps os they are installed. 
+
+4. In programVariables.cs add following line installScripts.AddLast("this_is_the_name_of_your_install_script.sql"); at the end of the list of similar lines.

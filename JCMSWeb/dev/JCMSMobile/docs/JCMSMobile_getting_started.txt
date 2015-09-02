@@ -1,0 +1,45 @@
+PhoneGap deployment
+http://docs.phonegap.com/en/3.5.0/index.html
+
+1. 	Install PhoneGap following the follow instructions:
+	
+	http://phonegap.com/install/
+
+2. 	With phonegap installed you should be able to invoke phonegap through the command line. I would try to do all my phonegap setup work using the command line interface details here:
+	http://docs.phonegap.com/en/3.5.0/guide_cli_index.md.html 
+
+3. 	Create a phonegap project in the directory in which you would like to manage your phonegap project using the following command
+	
+	phonegap create hello com.example.hello HelloWorld
+	
+	The first argument hello specifies a directory to be generated for your project. This directory should not already exist, Cordova will create it for you. Its www subdirectory houses your application's home page, along with various resources under css, js, and img, which follow common web development file-naming conventions. The config.xml file contains important metadata needed to generate and distribute the application.
+	
+	The second argument com.example.hello provides your project with a reverse domain-style identifier. This argument is optional, but only if you also omit the third argument, since the arguments are positional. You can edit this value later in the config.xml file, but do be aware that there may be code generated outside of config.xml using this value, such as Java package names. The default value is io.cordova.hellocordova, but it is recommended that you select an appropriate value.
+
+	The third argument HelloWorld provides the application's display title. This argument is optional. You can edit this value later in the config.xml file, but do be aware that there may be code generated outside of config.xml using this value, such as Java class names. The default value is HelloCordova, but it is recommended that you select an appropriate value.
+	
+4. 	At this point you have the base phonegap project and you need to add the desired platforms to the project, this can be done by first cd-ing into the directory created during step three and then executing the following command:
+
+    phonegap platform add ios
+	
+	This will create a folder in the platforms folder under the base project directory for the selected mobile platform (so the above command would create an ios directory in the platforms folder) that contains all the necessary files you need to work with and deploy to the selected platform.
+	
+At this point instructions become platform specific. If you're working with android it is pretty straightforward to open up a project and edit it using eclipse (which has integration with phonegap) and then deploy to a specific device or emulator (which I wouldn't recommend as Android emulators are extremely slow).
+
+iOS is slightly more difficult:
+
+One needs to use X Code in order to develop and deploy to apple devices. There should a project called ***project_name***.xcodeproj that you can double click and will open the project in XCode. From here you should see the expected project hierarchy that you saw before from using android with some subtle differences in how icons and such are tracked.
+
+Once you are able to open the project in xcode it should be trivial to update code an deploy to iOS simulators (select the simulator you want and hit the play button). To deploy to actual iOS hardware (iPad/Phone) you need to do some work in the member center with IT:
+
+Apple requires users be 'Apple Developers' which our IT department has the ability to make us. So submitting a helpdesk ticket to IT can get you membership. From there you need to accept the invitation from IT and you should be able to log in to the apple developer member center.
+
+Once in the member center you need to build the necessary setup to deploy to the iOS hardware. If you go to the apple developer member center and go to the iOS section there should be an option to view 'certificates, devices, and profiles'. Once in the iOS certificates, identifiers and profiles view you should be able to see 4 different sections:
+	
+	Certificates: The first sections defines the individuals who are part of the apple developer program. The certificate, once requested and approved by IT, can be downloaded (by clicking on the certificate) and installed to the machine by double clicking the downloaded file. From here you can add yourself as a registered developer in x code by following the steps outlined here under the 'Adding Your Apple ID Account in Xcode': https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppDistributionGuide/ManagingAccounts/ManagingAccounts.html#//apple_ref/doc/uid/TP40012582-CH24-SW1
+	
+	Identifier: Identifiers correspond to the specific app you would like to deploy to the iOS device, IT Will have to create this for you as you do not have the necessary positions. If you are working on an existing app (like JCMS Mobile) you do not need to create an identifier as one should already exist.
+	
+	Devices: Every device you wish to deploy to needs to be registered. To register a new device you need to supply a name an UDID to IT who will register the device for you.
+	
+	Provisioning Profile: The provisioning profile is what connects the three fields above. It allows you to link a specific App (the identifier) with a volume of developers and devices so that everyone can deploy and test the application. Once created it can be developed and have new developers/devices added to it. Once created/updated it needs to be downloaded/installed for by the developer and you should be able to deploy to iOS devices.

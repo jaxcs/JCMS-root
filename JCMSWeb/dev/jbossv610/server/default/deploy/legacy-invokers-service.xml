@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- $Id: legacy-invokers-service.xml 104583 2010-05-07 21:20:52Z smarlow@redhat.com $ -->
+
+<server>
+
+   <mbean code="org.jboss.invocation.local.LocalInvoker"
+      name="jboss:service=invoker,type=local">
+
+      <depends>jboss:service=TransactionManager</depends>
+   </mbean>
+
+</server>

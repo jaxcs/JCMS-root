@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>                
+            <h:outputText value="Use Schedules"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js"/>
+        <style type="text/css" media="screen">
+            textarea[disabled], input[type="text"][disabled], input[type="password"][disabled], select[disabled] {
+                color: #707070;
+                cursor: default;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form>
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+        </h:form>
+        <div style="margin-left:10px;margin-right:10px">
+            <h:form>
+                <h:panelGroup>
+                    <h1>
+                        <h:outputText value="#{msgs['colonyManagement.header']}" style="h1"/>
+                        <p:ajaxStatus id="ajaxStatusPanel">  
+                            <f:facet name="start">  
+                                <h:graphicImage value="../images/bhi_ball.gif"/>  
+                            </f:facet>  
+                            <f:facet name="complete">  
+                                <h:graphicImage value="../images/bhi_ball_white.gif" />  
+                            </f:facet>
+                        </p:ajaxStatus>
+                    </h1>
+                </h:panelGroup>
+                <hr />
+            </h:form>
+            <h:form>
+                <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5" width="100%"
+                            columnClasses="colonyManagementSideBar,detailPane">
+                    <h:panelGroup>
+                        <f:subview id="adminSideBar"><ui:include src="/colonyManagement/colonyManagementSideBar.xhtml"/></f:subview>
+                    </h:panelGroup>
+                    <h:panelGrid columns="1">
+                        <p:messages autoUpdate="true"/>
+                        <rich:collapsiblePanel id="searchPanel" header="Use Schedule Search Options">
+                            <h:panelGroup id="searchGroup">
+                                <h:panelGrid columns="4" styleClass="searchTable">
+                                    <h:panelGroup>
+                                        <h:outputLabel value="Use Schedule" id="useScheduleLabel"/>
+                                    </h:panelGroup>                            
+                                    <h:panelGroup>
+                                        <h:selectOneMenu id="useScheduleFilter" 
+                                                        value="#{UseSchedule_Backing.useScheduleSearch.useScheduleTerm}"
+                                                        converter="useScheduleTermConverter">
+                                            <f:selectItems value="#{UseSchedule_Backing.wrapper.activeUseScheduleItems}"/>
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:outputLabel value="Use Schedule Done"/>
+                                    </h:panelGroup>                            
+                                    <h:panelGroup>
+                                        <h:selectBooleanCheckbox value="#{UseSchedule_Backing.useScheduleSearch.useSchedule.done}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:outputLabel value="Start Date" />
+                                    </h:panelGroup>                            
+                                    <h:panelGroup>
+                                        <rich:calendar id="startDate1"
+                                                        value="#{UseSchedule_Backing.useScheduleSearch.startDateLow}"
+                                                        inputSize="#{msgs['common.minMaxSize']}"
+                                                        datePattern="#{UseSchedule_Backing.date_format}"
+                                                        showInput="true"
+                                                        showWeeksBar="true" 
+                                                        enableManualInput="true"/>          
+                                        &nbsp;&nbsp; 
+                                        <h:outputLabel value="To" />
+                                        &nbsp;&nbsp;
+                                        <rich:calendar id="startDate2"
+                                                        value="#{UseSchedule_Backing.useScheduleSearch.startDateHigh}"
+                                                        inputSize="#{msgs['common.minMaxSize']}"
+                                                        datePattern="#{UseSchedule_Backing.date_format}"
+                                                        showInput="true"
+                                                        showWeeksBar="true"
+                                                        enableManualInput="true">
+                                        </rich:calendar>
+                                    </h:panelGroup>     
+                                    <h:panelGroup>
+                                        <h:outputLabel value="#{msgs['mouseId']}" id="lookForMouseId"/>
+                                    </h:panelGroup>                            
+                                    <h:panelGroup>
+                                        <h:selectOneMenu id="mouseIDFilter" value="#{UseSchedule_Backing.useScheduleSearch.mouseFilter}" >
+                                            <f:selectItems value="#{UseSchedule_Backing.wrapper.mouseFilters}"/>
+                                        </h:selectOneMenu>
+                                        <h:inputText id="searchById" value="#{UseSchedule_Backing.useScheduleSearch.mouseID}" 
+                                                        maxlength="#{restrict['size.general.id']}"
+                                                        size="#{restrict['size.general.id']}" />
+                                    </h:panelGroup>                            
+                                    <h:panelGroup>
+                                        <h:outputLabel value="#{msgs['strain']}" id="lookForStrainId" />
+                                    </h:panelGroup>                            
+                                    <h:panelGroup>
+                                        <h:selectOneMenu id="searchByStrain" value="#{UseSchedule_Backing.useScheduleSearch.strain}" >
+                                            <f:selectItems value="#{UseSchedule_Backing.wrapper.allStrains}"/>
+                                            <f:converter converterId="strainConverter" />
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>                            
+                                    <h:panelGroup>
+                                        <h:outputLabel value="#{msgs['lifeStatus']}" id="lifeStatusId" />
+                                    </h:panelGroup>                            
+                                    <h:panelGroup>
+                                        <h:selectOneMenu value="#{UseSchedule_Backing.useScheduleSearch.lifeStatus}" >
+                                            <f:selectItems value="#{UseSchedule_Backing.wrapper.cvLifeStatusItemsOptional}"/>
+                                            <f:converter converterId="lifeStatusConverter" />
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>                            
+                                    <h:panelGroup>
+                                        <h:outputLabel value="#{msgs['pen#']}" />
+                                    </h:panelGroup>                            
+                                    <h:panelGroup>
+                                        <h:selectOneMenu id="penIDFilter" value="#{UseSchedule_Backing.useScheduleSearch.penFilter}" >
+                                            <f:selectItems value="#{UseSchedule_Backing.wrapper.integerFilters}"/>
+                                        </h:selectOneMenu>
+                                        <h:inputText id="searchByPenId" value="#{UseSchedule_Backing.useScheduleSearch.penID}" 
+                                                        maxlength="#{restrict['size.general.id']}"
+                                                        size="#{restrict['size.general.id']}" />
+                                    </h:panelGroup>                            
+                                    <h:panelGroup>
+                                        <h:outputLabel value="#{msgs['sex']}" id="sexId" />
+                                    </h:panelGroup>                            
+                                    <h:panelGroup>
+                                        <h:selectOneMenu value="#{UseSchedule_Backing.useScheduleSearch.sex}" >
+                                            <f:selectItems value="#{UseSchedule_Backing.wrapper.cvSexItemsOptional}"/>
+                                            <f:converter converterId="sexConverter" />
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>                            
+                                    <h:panelGroup>
+                                        <h:outputLabel value="#{msgs['dateOfBirth']}" />
+                                    </h:panelGroup>                            
+                                    <h:panelGroup>
+                                        <rich:calendar id="birthDate1"
+                                                        value="#{UseSchedule_Backing.useScheduleSearch.DOBStartDate}"
+                                                        inputSize="#{msgs['common.minMaxSize']}"
+                                                        datePattern="#{UseSchedule_Backing.date_format}"
+                                                        showInput="true"
+                                                        showWeeksBar="true"
+                                                        enableManualInput="true">
+                                        </rich:calendar>                            
+                                        &nbsp;&nbsp; 
+                                        <h:outputLabel value="To" />
+                                        &nbsp;&nbsp;
+                                        <rich:calendar id="birthDate2"
+                                                        value="#{UseSchedule_Backing.useScheduleSearch.DOBEndDate}"
+                                                        inputSize="#{msgs['common.minMaxSize']}"
+                                                        datePattern="#{UseSchedule_Backing.date_format}"
+                                                        showInput="true"
+                                                        showWeeksBar="true"
+                                                        enableManualInput="true"/>
+                                    </h:panelGroup>   
+                                    <h:panelGroup>
+                                        <h:outputLabel value="#{msgs['generation']}" id="generationId" />
+                                    </h:panelGroup>                            
+                                    <h:panelGroup>
+                                        <h:selectOneMenu value="#{UseSchedule_Backing.useScheduleSearch.generation}" >
+                                            <f:selectItems value="#{UseSchedule_Backing.wrapper.cvGenerationItemsOptional}"/>
+                                            <f:converter converterId="generationConverter" />
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>      
+                                </h:panelGrid>
+                                <h:panelGrid  styleClass="searchTable">
+                                    <h:panelGroup>
+                                        <h:outputLabel value="Workgroup Filter"/>
+                                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                    </h:panelGroup>                                    
+                                    <rich:pickList value="#{UseSchedule_Backing.useScheduleSearch.wgs}" 
+                                                disabled="false" 
+                                                style="border: 1px;">
+                                        <f:selectItems value="#{UseSchedule_Backing.wrapper.colonyManageWorkgroups}"/>
+                                        <f:converter converterId="workgroupConverter" />
+                                    </rich:pickList>
+                                </h:panelGrid>
+                            </h:panelGroup>
+                            <h:panelGrid styleClass="searchTable">
+                                <br />
+                                <h:panelGroup layout="block">
+                                    <a4j:commandButton
+                                        id="searchId" 
+                                        value="#{msgs['line.search']}"
+                                        styleClass="mediumButton"
+                                        type="submit"
+                                        render="resultsContainer" 
+                                        actionListener="#{UseSchedule_Backing.executeUseScheduleSearch}"
+                                        status="statusPage"/>
+                                    &nbsp;&nbsp;
+                                    <a4j:commandButton
+                                        id="clearId" 
+                                        value="#{msgs['filter.clear']}"
+                                        actionListener="#{UseSchedule_Backing.clearSearchPanel}"
+                                        styleClass="mediumButton"
+                                        render="searchGroup"/>
+                                </h:panelGroup> 
+                            </h:panelGrid>
+                        </rich:collapsiblePanel>
+                        <h:panelGrid columns="1" id="resultsContainer">
+                            <h2><h:outputText value="Results Returned: #{UseSchedule_Backing.resultsLength}" 
+                                              rendered="#{!empty UseSchedule_Backing.useSchedules}"/></h2>
+                            <rich:dataTable id="usTable"
+                                            value="#{UseSchedule_Backing.useSchedules}"
+                                            sortMode="single"
+                                            rendered="#{!empty UseSchedule_Backing.useSchedules}"
+                                            var="us"
+                                            rows="10"
+                                            rowKeyVar="usRow"
+                                            styleClass="maxSizeDataTable" 
+                                            headerClass="tableSortHeader">
+                                <f:facet name="footer" class="dataScroller" >
+                                    <rich:dataScroller for="usTable" 
+                                                       renderIfSinglePage="false"
+                                                       render="usTable"/>
+                                </f:facet>        
+                                <rich:column id="usActions"
+                                             style="background-color: &#35;#{us.useScheduleTerm.color}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Actions" />
+                                    </f:facet>                                        
+                                    <a4j:commandButton title="#{msgs['common.save']}"
+                                                        image="/images/icon-save.gif"
+                                                        actionListener="#{UseSchedule_Backing.saveUseScheduleAction}">
+                                        <f:param name="paramSPKey" value="#{us.useScheduleKey}" />
+                                        <f:param name="paramRowIndex" value="#{usRow}" />                                            
+                                    </a4j:commandButton>
+                                </rich:column>
+                                <rich:column id="id"
+                                             style="background-color: &#35;#{us.useScheduleTerm.color}"
+                                             sortBy="#{us.mouse.ID}"
+                                             sortOrder="#{sortingBean.column1Order}"
+                                             filterValue="#{filterBean.column1Filter}" 
+                                             filterExpression="#{fn:containsIgnoreCase(us.mouse.ID, filterBean.column1Filter)}" >
+                                    <f:facet name="header">
+                                        <h:outputText value="#{msgs['mouseId']}" />
+                                        <br />
+                                        <a4j:commandButton image="#{sortingBean.column1Image}" 
+                                                            render="usTable" 
+                                                            action="#{sortingBean.sortByColumn1}"/>
+                                        <br />
+                                        <h:inputText value="#{filterBean.column1Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="usTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <h:outputText value="#{us.mouse.ID}"/>
+                                </rich:column>
+                                <rich:column id="useScheduleTermName"
+                                             style="background-color: &#35;#{us.useScheduleTerm.color}"
+                                             sortBy="#{us.useScheduleTerm.useScheduleTermName}"
+                                             sortOrder="#{sortingBean.column2Order}"
+                                             filterValue="#{filterBean.column2Filter}" 
+                                             filterExpression="#{fn:containsIgnoreCase(us.useScheduleTerm.useScheduleTermName, filterBean.column2Filter)}" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Use Schedule Term" />
+                                        <br />
+                                        <a4j:commandButton image="#{sortingBean.column2Image}" 
+                                                            render="usTable" 
+                                                            action="#{sortingBean.sortByColumn2}" />
+                                        <br />
+                                        <h:inputText value="#{filterBean.column2Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="usTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <h:outputText value="#{us.useScheduleTerm.useScheduleTermName}"/>
+                                </rich:column>
+                                <rich:column id="useScheduleDone"
+                                             style="background-color: &#35;#{us.useScheduleTerm.color}"
+                                             sortBy="#{us.done}"
+                                             sortOrder="#{sortingBean.column3Order}"
+                                             filterValue="#{filterBean.column3Filter}" 
+                                             filterExpression="#{fn:containsIgnoreCase(us.done, filterBean.column3Filter)}" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Done" />
+                                    </f:facet>
+                                    <h:selectBooleanCheckbox value="#{us.done}"/>
+                                </rich:column>
+                                <rich:column id="startDate"
+                                             sortBy="#{us.startDate}"
+                                             style="background-color: &#35;#{us.useScheduleTerm.color}"
+                                             sortOrder="#{sortingBean.column4Order}"
+                                             filterValue="#{filterBean.column4Filter}" 
+                                             filterExpression="#{fn:containsIgnoreCase(us.startDate, filterBean.column4Filter)}" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Start Date" />
+                                        <br />
+                                        <a4j:commandButton image="#{sortingBean.column4Image}" 
+                                                            render="usTable" 
+                                                            action="#{sortingBean.sortByColumn4}" />
+                                        <br />
+                                        <h:inputText value="#{filterBean.column4Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="usTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <rich:calendar value="#{us.startDate}" 
+                                                   datePattern="#{UseSchedule_Backing.date_format}"
+                                                   disabled="true"/>
+                                </rich:column>
+                                <rich:column id="containerID"
+                                             style="background-color: &#35;#{us.useScheduleTerm.color}"
+                                             sortBy="#{us.mouse.containerID}"
+                                             sortOrder="#{sortingBean.column5Order}"
+                                             filterValue="#{filterBean.column5Filter}" 
+                                             filterExpression="#{fn:containsIgnoreCase(us.mouse.containerID, filterBean.column5Filter)}" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Cage ID" />
+                                        <br />
+                                        <a4j:commandButton image="#{sortingBean.column5Image}" 
+                                                            render="usTable" 
+                                                            action="#{sortingBean.sortByColumn5}" />
+                                        <br />
+                                        <h:inputText value="#{filterBean.column5Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="usTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <h:outputText value="#{us.mouse.containerID}"/>
+                                </rich:column>                                
+                                <rich:column id="strainName"
+                                             colspan="6"
+                                             style="background-color: &#35;#{us.useScheduleTerm.color}"
+                                             sortBy="#{us.mouse.strainName}"
+                                             sortOrder="#{sortingBean.column6Order}"
+                                             filterValue="#{filterBean.column6Filter}" 
+                                             filterExpression="#{fn:containsIgnoreCase(us.mouse.strainName, filterBean.column6Filter)}" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Strain" />
+                                        <br />
+                                        <a4j:commandButton image="#{sortingBean.column6Image}" 
+                                                            render="usTable" 
+                                                            action="#{sortingBean.sortByColumn6}" />
+                                        <br />
+                                        <h:inputText value="#{filterBean.column6Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="usTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <h:outputText value="#{us.mouse.strainName}"/>
+                                </rich:column>                                
+                                <rich:column id="versionNum"
+                                             colspan="2"
+                                             style="background-color: &#35;#{us.useScheduleTerm.color}"
+                                             sortBy="#{us.useScheduleTerm.versionNum}"
+                                             sortOrder="#{sortingBean.column7Order}"
+                                             filterValue="#{filterBean.column7Filter}" 
+                                             filterExpression="#{fn:containsIgnoreCase(us.useScheduleTerm.versionNum, filterBean.column7Filter)}" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Version Number" />
+                                        <br />
+                                        <a4j:commandButton image="#{sortingBean.column7Image}" 
+                                                            render="usTable" 
+                                                            action="#{sortingBean.sortByColumn7}" />
+                                        <br />
+                                        <h:inputText value="#{filterBean.column7Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="usTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <h:outputText value="#{us.useScheduleTerm.versionNum}"/>
+                                </rich:column>                              
+                                <rich:column id="Owner"
+                                             colspan="2"
+                                             style="background-color: &#35;#{us.useScheduleTerm.color}"
+                                             sortBy="#{us.mouse.owner}"
+                                             sortOrder="#{sortingBean.column8Order}"
+                                             filterValue="#{filterBean.column8Filter}" 
+                                             filterExpression="#{fn:containsIgnoreCase(us.mouse.owner, filterBean.column8Filter)}" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Mouse Owner" />
+                                        <br />
+                                        <a4j:commandButton image="#{sortingBean.column8Image}" 
+                                                            render="usTable" 
+                                                            action="#{sortingBean.sortByColumn8}" />
+                                        <br />
+                                        <h:inputText value="#{filterBean.column8Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="usTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <h:outputText value="#{us.mouse.owner}"/>
+                                </rich:column>
+                                <rich:collapsibleSubTable id="spSubTable" 
+                                                          var="use" 
+                                                          rowKeyVar="usageRow"                                      
+                                                          value="#{us.usages}"
+                                                          rendered="#{!empty us.usages}"
+                                                          sortMode="single">
+                                    <rich:column/>
+                                    <rich:column id="useColumn">
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="Use" />
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <h:outputText value="#{use.use}"/>
+                                    </rich:column>    
+                                    <rich:column id="useAgeColumn">
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="Use Age" />
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <h:outputText value="#{use.useAge}"/>
+                                    </rich:column>  
+                                    <rich:column id="doneColumn" >
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="Done" />
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <h:selectBooleanCheckbox value="#{use.done}"/>
+                                    </rich:column>  
+                                    <rich:column id="projectedDateColumn" sortOrder="ascending" sortBy="#{use.projectedDate}">
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="Projected Date" />
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <rich:calendar value="#{use.projectedDate}" 
+                                                       datePattern="#{UseSchedule_Backing.date_format}"
+                                                       disabled="true"/>
+                                    </rich:column>    
+                                    <rich:column id="actualDateColumn" >
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="Actual Date" />
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <rich:calendar value="#{use.actualDate}"
+                                                       datePattern="#{UseSchedule_Backing.date_format}"/>
+                                    </rich:column>    
+                                    <rich:column id="d1Column" >
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="D1" />
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <rich:inplaceInput value="#{use.d1}" defaultLabel="#{use.mouseUse.d1Caption}"/>
+                                    </rich:column>  
+                                    <rich:column id="d2Column" >
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="D2" />
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <rich:inplaceInput value="#{use.d2}" defaultLabel="#{use.mouseUse.d2Caption}"/>
+                                    </rich:column> 
+                                    <rich:column id="d3Column" >
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="D3" />
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <rich:inplaceInput value="#{use.d3}" defaultLabel="#{use.mouseUse.d3Caption}"/>
+                                    </rich:column>    
+                                    <rich:column id="d4Column" >
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="D4" />
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <rich:inplaceInput value="#{use.d4}" defaultLabel="#{use.mouseUse.d4Caption}"/>
+                                    </rich:column>    
+                                    <rich:column id="d5Column" >
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="D5" />
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <rich:inplaceInput value="#{use.d5}" defaultLabel="#{use.mouseUse.d5Caption}"/>
+                                    </rich:column>    
+                                    <rich:column id="d6Column" >
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="D6" />
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <rich:inplaceInput value="#{use.d6}" defaultLabel="#{use.mouseUse.d6Caption}"/>
+                                    </rich:column>    
+                                    <rich:column id="d7Column" >
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="D7"/>
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <rich:inplaceInput value="#{use.d7}" defaultLabel="#{use.mouseUse.d7Caption}"/>
+                                    </rich:column>    
+                                    <rich:column id="d8Column" >
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="D8" />
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <rich:inplaceInput value="#{use.d8}" defaultLabel="#{use.mouseUse.d8Caption}"/>
+                                    </rich:column>    
+                                    <rich:column id="d9Column" >
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="D9" />
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <rich:inplaceInput value="#{use.d9}" defaultLabel="#{use.mouseUse.d9Caption}"/>
+                                    </rich:column>    
+                                    <rich:column id="d10Column" >
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="D10" />
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <rich:inplaceInput value="#{use.d10}" defaultLabel="#{use.mouseUse.d10Caption}"/>
+                                    </rich:column>                              
+                                </rich:collapsibleSubTable>
+                            </rich:dataTable>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+            </h:form>
+        </div>
+    </h:body>
+</html>

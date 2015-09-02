@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+        <title>
+            <h:outputText value="Load Cage Cards"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript">
+            function deleteWarning(){
+                var r = false;
+                var r=confirm("Are you sure you wish to delete this card?");
+                if(r){
+                    document.getElementById('loadCardForm:secretDelete').click();
+                }
+                else{
+                    document.getElementById('loadCardForm:secretCancel').click();
+                }
+                return;
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <h:form id="loadCardForm">
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <div style="margin-left:10px;margin-right:10px">
+
+            <rich:messages />
+            <f:verbatim><br /></f:verbatim>
+            <f:verbatim><h2><h:outputText value="Load Cage Cards:"/></h2></f:verbatim>
+            <f:verbatim><br /></f:verbatim>
+
+            <h:panelGrid columns="5"
+                         columnClasses="detailPane, detailPane, detailPane, detailPane, detailPane">
+                <h:panelGroup>
+                    <rich:dataTable id="detailTable"
+                                    value="#{LoadCageCard_Backing.detailCards}"
+                                    var="row"
+                                    rowKeyVar="theFieldIndex">
+                        <f:facet name="header"><h:outputText value="Detail Cards" rendered="true"/></f:facet>
+                        <rich:column>
+                            <h:panelGrid columns="2"
+                                         id="detailGrid">
+                                <a4j:commandLink id="deleteDetailLink"
+                                                 styleClass="smallText"
+                                                 action = "#{CustomCageCard_Backing.deleteCardHelper}"
+                                                 oncomplete="deleteWarning();"
+                                                 render="detailTable">
+                                    <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                    <f:param name="udMouseQueryKey" value="#{row.queryDefinitionkey}"/>
+                                </a4j:commandLink>
+                                <h:commandLink action="#{CustomCageCard_Backing.loadCageCardAction}" target="_blank">
+                                    <h:outputText value="#{row.queryName}"/>
+                                    <f:param name="udMouseQueryKey" value="#{row.queryDefinitionkey}" />
+                                </h:commandLink>
+                            </h:panelGrid>
+                        </rich:column>
+                    </rich:dataTable>
+                </h:panelGroup>
+
+                <h:panelGroup>
+                    <br />
+                </h:panelGroup>
+
+                <h:panelGroup>
+                    <rich:dataTable id="matingTable" 
+                                    value="#{LoadCageCard_Backing.matingCards}"
+                                    var="row">
+                        <f:facet name="header">
+                            <h:outputText value="Mating Card"/>
+                        </f:facet>
+                        <rich:column>
+                            <h:panelGrid columns="2"
+                                         id="matingGrid">
+                                <a4j:commandLink id="deleteMatingLink"
+                                                 styleClass="smallText"
+                                                 action = "#{CustomCageCard_Backing.deleteCardHelper}"
+                                                 oncomplete="deleteWarning();"
+                                                 render="matingTable">
+                                    <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                    <f:param name="udMouseQueryKey" value="#{row.queryDefinitionkey}"/>
+                                </a4j:commandLink>
+                                <h:commandLink action="#{CustomCageCard_Backing.loadCageCardAction}" target="_blank">
+                                    <h:outputText value="#{row.queryName}"/>
+                                    <f:param name="udMouseQueryKey" value="#{row.queryDefinitionkey}" />
+                                </h:commandLink>
+                            </h:panelGrid>
+                        </rich:column>
+                    </rich:dataTable>
+                </h:panelGroup>
+
+                <h:panelGroup>
+                    <br />
+                </h:panelGroup>
+
+                <h:panelGroup>
+                    <rich:dataTable id = "weanTable"
+                                    value="#{LoadCageCard_Backing.weanCards}"
+                                    var="row">
+                        <f:facet name="header">
+                            <h:outputText value="Wean Card"/>
+                        </f:facet>
+                        <rich:column>
+                            <h:panelGrid columns="2"
+                                         id="weanGrid">
+                                <a4j:commandLink id="deleteWeanLink"
+                                                 styleClass="smallText"
+                                                 action = "#{CustomCageCard_Backing.deleteCardHelper}"
+                                                 oncomplete="deleteWarning();"
+                                                 render="weanTable">
+                                    <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                    <f:param name="udMouseQueryKey" value="#{row.queryDefinitionkey}"/>
+                                </a4j:commandLink>
+                                <h:commandLink action="#{CustomCageCard_Backing.loadCageCardAction}" target="_blank">
+                                    <h:outputText value="#{row.queryName}"/>
+                                    <f:param name="udMouseQueryKey" value="#{row.queryDefinitionkey}" />
+                                </h:commandLink>
+                            </h:panelGrid>
+                        </rich:column>
+                    </rich:dataTable>
+                </h:panelGroup>
+            </h:panelGrid>
+            <h:commandButton id="secretDelete"
+                             action="#{CustomCageCard_Backing.deleteCard}"
+                             style="visibility:hidden"/>
+            <h:commandButton id="secretCancel"
+                             action="#{LoadCageCard_Backing.deleteCancel}"
+                             style="visibility:hidden"/>
+            </div>
+            <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+        </h:form>
+    </h:body>
+</html>

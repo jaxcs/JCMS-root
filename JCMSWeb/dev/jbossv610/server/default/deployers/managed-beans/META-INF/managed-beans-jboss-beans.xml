@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+    
+    <bean name="ManagedBeanAnnotationMetaDataDeployer" class="org.jboss.managed.bean.mc.deployer.ManagedBeanAnnotationMetaDataDeployer"/>
+
+    <bean name="ManagedBeanManagerDeployer" class="org.jboss.managed.bean.mc.deployer.ManagedBeanManagerDeployer"/>
+    
+    <bean name="ManagedBeanSwitchBoardDeployer" class="org.jboss.managed.bean.mc.deployer.ManagedBeanSwitchBoardDeployer">
+        <constructor><parameter class="org.jboss.reloaded.naming.deployers.javaee.JavaEEComponentInformer"><inject/></parameter></constructor>
+    </bean>        
+    
+    <bean name="MCBasedManagedBeanManagerRegistry" class="org.jboss.managed.bean.mc.MCBasedManagedBeanManagerRegistry">
+        <constructor>
+            <parameter><inject bean="jboss.kernel:service=KernelController"/></parameter>
+        </constructor>
+    </bean>
+    
+    <bean name="ManagedBeanNamingDeployer" class="org.jboss.managed.bean.mc.deployer.ManagedBeanNamingDeployer">
+        <property name="managedBeanManagerRegistry"><inject bean="MCBasedManagedBeanManagerRegistry"/></property>
+    </bean>
+
+    <!-- Resource provider for managed bean resource-env-ref references -->
+    <bean name="org.jboss.switchboard.ManagedBeanResourceEnvRefResourceProvider" class="org.jboss.managed.bean.mc.resource.provider.ManagedBeanResourceEnvRefResourceProvider"/>
+    
+    <!-- Resource provider for managed bean resource-ref references -->
+    <bean name="org.jboss.switchboard.ManagedBeanResourceRefResourceProvider" class="org.jboss.managed.bean.mc.resource.provider.ManagedBeanResourceRefResourceProvider"/>
+    
+</deployment>

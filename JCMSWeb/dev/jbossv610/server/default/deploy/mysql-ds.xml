@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: mysql-ds.xml 63175 2007-05-21 16:26:06Z rrajesh $ -->
+<!--  Datasource config for MySQL using 3.0.9 available from:  http://www.mysql.com/downloads/api-jdbc-stable.html -->
+<datasources>
+
+  <local-tx-datasource> 
+    <jndi-name>JCMSWebDS</jndi-name>
+<connection-url>jdbc:mysql://localhost:3306/jcms_db</connection-url>
+    <use-java-context>true</use-java-context>
+    <driver-class>com.mysql.jdbc.Driver</driver-class>
+    <connection-property name="char.encoding">ISO8859-1</connection-property> 
+    <user-name>_jcmsWeb</user-name>
+    <password>jcms</password>
+    <valid-connection-checker-class-name>org.jboss.resource.adapter.jdbc.vendor.MySQLValidConnectionChecker</valid-connection-checker-class-name>
+    <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.MySQLExceptionSorter</exception-sorter-class-name>
+    <prepared-statement-cache-size>200</prepared-statement-cache-size>
+    <metadata>
+       <type-mapping>mySQL</type-mapping>
+    </metadata>
+  </local-tx-datasource>
+
+  <local-tx-datasource> 
+    <jndi-name>JCMSWebDBDS</jndi-name>
+<connection-url>jdbc:mysql://localhost:3306/jcms_db</connection-url>
+    <use-java-context>true</use-java-context>
+    <driver-class>com.mysql.jdbc.Driver</driver-class>
+    <connection-property name="char.encoding">ISO8859-1</connection-property> 
+    <user-name>_jcmsWeb</user-name>
+    <password>jcms</password>
+    <valid-connection-checker-class-name>org.jboss.resource.adapter.jdbc.vendor.MySQLValidConnectionChecker</valid-connection-checker-class-name>
+    <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.MySQLExceptionSorter</exception-sorter-class-name>
+    <prepared-statement-cache-size>200</prepared-statement-cache-size>
+    <metadata>
+       <type-mapping>mySQL</type-mapping>
+    </metadata>
+  </local-tx-datasource>
+  
+  <local-tx-datasource> 
+    <jndi-name>RSLIMSDS</jndi-name>
+<connection-url>jdbc:mysql://localhost:3306/jcms_db</connection-url>
+    <use-java-context>true</use-java-context>
+    <driver-class>com.mysql.jdbc.Driver</driver-class>
+    <connection-property name="char.encoding">ISO8859-1</connection-property> 
+    <user-name>_jcmsWeb</user-name>
+    <password>jcms</password>
+    <valid-connection-checker-class-name>org.jboss.resource.adapter.jdbc.vendor.MySQLValidConnectionChecker</valid-connection-checker-class-name>
+    <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.MySQLExceptionSorter</exception-sorter-class-name>
+    <prepared-statement-cache-size>200</prepared-statement-cache-size>
+    <metadata>
+       <type-mapping>mySQL</type-mapping>
+    </metadata>
+  </local-tx-datasource>
+  
+  <local-tx-datasource>
+    <jndi-name>DefaultDS</jndi-name>
+<connection-url>jdbc:mysql://localhost:3306/jcms_db</connection-url>
+    <driver-class>com.mysql.jdbc.Driver</driver-class>
+    <connection-property name="char.encoding">ISO8859-1</connection-property> 
+    <user-name>_jcmsWeb</user-name>
+    <password>jcms</password>
+    <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.MySQLExceptionSorter</exception-sorter-class-name>
+    <metadata>
+       <type-mapping>mySQL</type-mapping>
+    </metadata>
+  </local-tx-datasource>
+</datasources> 
+

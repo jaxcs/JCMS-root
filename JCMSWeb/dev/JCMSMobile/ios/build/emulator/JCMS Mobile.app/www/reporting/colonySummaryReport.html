@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Reporting Home</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link href="../css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+ 		<link href="../css/JCMSMobileStyles.css" rel="stylesheet" type="text/css">    
+		<script type="text/javascript" charset="utf-8" src="../cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../lib/bootstrap.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../lib/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../js/jcmsMobileUtilities.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../js/colonySummaryReport.js"></script>
+	</head>
+	<body onload="buildColonySummaryReport()">
+		<img src="../img/header.png" alt="JCMS Mobile" style="width: 100%"/>
+		<div style="text-align: center"><h2>JCMS Mobile Reporting</h2></div>
+		<form id="homeMenuForm" style="padding: 19px 29px 29px">			
+			<ul class="nav nav-pills">
+				<li onclick="window.location.href='../home.html'">
+					<a href="#">Home</a>
+				</li>
+				<li onclick="window.location.href='./reportingHome.html'">
+					<a href="#">Reporting Home</a>
+				</li>
+				<li class="active">
+					<a href="#">Colony Summary Report</a>
+				</li>
+				<li onclick="window.location.href='./kaplanMeier.html'">
+					<a href="#">Kaplan Meier Charts</a>
+				</li>
+			</ul>
+			<div style="text-align: center;" class="loader"><img src="../img/loading.gif"/></div>
+			<div id="containerDiv" style="display: none;">
+				<table id="summaryStatsTable" class="table">
+					<tbody>
+						<tr>
+							<td>
+								<h3><label>Number of live mice for the owners/workgroups:</label></h3>
+							</td>
+							<td id="numLiveMice">
+							
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h3><label>Number of active strains for the owners/workgroups:</label></h3>
+							</td>
+							<td id="numActiveStrains">
+							
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h3><label>Number of active cages for the owners/workgroups:</label></h3>
+							</td>
+							<td id="numActiveCages">
+							
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h3><label>Number of active matings for the owners/workgroups:</label></h3>
+							</td>
+							<td id="numActiveMatings">
+							
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<table id="miceTable" class="table">
+					<thead id="miceTableHeader">
+						<tr>
+							<th>
+								<label>
+									Owner/Workgroup
+								</label>
+							</th>
+							<th>
+								<label>
+									Strain
+								</label>
+							</th>
+							<th>
+								<label>
+									# Live Mice
+								</label>
+							</th>
+						</tr>
+					</thead>
+				</table>
+				<table id="cagesTable" class="table">
+					<thead id="cagesTableHeader">
+						<tr>
+							<th>
+								<label>
+									Owner/Workgroup
+								</label>
+							</th>
+							<th>
+								<label>
+									Room
+								</label>
+							</th>
+							<th>
+								<label>
+									# Active Cages
+								</label>
+							</th>
+						</tr>
+					</thead>
+				</table>
+				<table id="matingsTable" class="table">
+					<thead id="matingsTableHeader">
+						<tr>
+							<th>
+								<label>
+									Owner/Workgroup
+								</label>
+							</th>
+							<th>
+								<label>
+									Strain
+								</label>
+							</th>
+							<th>
+								<label>
+									# Active Matings
+								</label>
+							</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</form>
+	</body>
+</html>

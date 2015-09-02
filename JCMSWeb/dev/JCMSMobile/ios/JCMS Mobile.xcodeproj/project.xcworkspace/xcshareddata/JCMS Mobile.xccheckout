@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>17D19574-A4DB-4E00-AD27-33F53CF62E86</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>ec0f27a9-8735-0410-b0c3-3338c583ac1a++1340</key>
+		<string>https://cs-svn.jax.org/svn/csrepos/JCMSWeb/trunk/dev/JCMSMobile/www</string>
+	</dict>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>ec0f27a9-8735-0410-b0c3-3338c583ac1a++1340</key>
+		<string>www</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>ec0f27a9-8735-0410-b0c3-3338c583ac1a++1340</key>
+		<string>https://cs-svn.jax.org/svn/csrepos</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://cs-svn.jax.org/svn/csrepos/JCMSWeb/trunk/dev/JCMSMobile/www</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>ec0f27a9-8735-0410-b0c3-3338c583ac1a++1340</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>ec0f27a9-8735-0410-b0c3-3338c583ac1a++1340</string>
+			<key>IDESourceControlWCCName</key>
+			<string>www</string>
+		</dict>
+	</array>
+</dict>
+</plist>

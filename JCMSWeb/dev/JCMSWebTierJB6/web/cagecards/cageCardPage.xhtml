@@ -1,0 +1,237 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Cage Cards</title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript">
+            function check() {
+                if (document.getElementById('form2:secret').value=="true") {
+                    //save previous target
+                    var theTarget = document.getElementById('form2').target;
+                    //makes it open in new window
+                    document.getElementById('form2').target='_blank';
+                    document.getElementById('form2:secretButton').click();
+                    //resets to original target
+                    document.getElementById('form2').target = theTarget;
+                    displayCardsNotPrinted();
+                }
+            }
+        </script>
+        <script type="text/javascript">
+            function blankTarget(){
+                if(document.getElementById('form2:theCards').value != ''){
+                    var theTarget = document.getElementById('form2').target;
+                    //makes it open in new window
+                    document.getElementById('form2').target='_blank';
+                    document.getElementById('form2:secretButton2').click();
+                    //resets to original target
+                    document.getElementById('form2').target = theTarget;
+                }
+            }
+        </script>
+
+        <script type="text/javascript">
+            function printBlankCards(){
+                    var theTarget = document.getElementById('printBlankCardsForm').target;
+                    //makes it open in new window
+                    document.getElementById('printBlankCardsForm').target='_blank';
+                    document.getElementById('printBlankCardsForm:printBlankCards').click();
+                    //resets to original target
+                    document.getElementById('printBlankCardsForm').target = theTarget;
+                }
+        </script>
+        <script type="text/javascript">
+            function previewBlankCard(){
+                if(document.getElementById('printBlankCardsForm:theBlankCards').value != ''){
+                    var theTarget = document.getElementById('printBlankCardsForm').target;
+                    //makes it open in new window
+                    document.getElementById('printBlankCardsForm').target='_blank';
+                    document.getElementById('printBlankCardsForm:preview').click();
+                    //resets to original target
+                    document.getElementById('printBlankCardsForm').target = theTarget;
+                }
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <h:form id="form2">
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <div style="margin-left:10px;margin-right:10px">
+            <rich:messages />
+            <h1>
+                <h:panelGroup>
+                    <h:outputText value="#{msgs['cageCard.header']}" styleClass="h1"/>
+                    <a4j:status>
+                        <f:facet name="start">
+                            <h:graphicImage  value="../images/bhi_ball.gif"/>
+                        </f:facet>
+                    </a4j:status>    
+                </h:panelGroup>
+                </h1><hr />
+                <h:panelGrid columns = "2" 
+                                id="cardPanel"
+                                styleClass="blackTextStyle"
+                                border="0" 
+                                title="Fill in Cage Card Information">
+                    <h:outputText value = "Card Quantity: "/>
+                    <h:selectOneRadio value="#{CageCard_Backing.cardQuantity}">
+                        <f:selectItem id="single" itemLabel="Single" itemValue="single"/>
+                        <f:selectItem id="multiple" itemLabel="Multiple" itemValue="multiple"/>
+                        <a4j:ajax event="change" render="toText, highCardIn"/>
+                    </h:selectOneRadio>
+                    <h:panelGroup>
+                        <h:outputText value = "#{msgs['cageCard.cageID']}"/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:panelGrid columns="3" border="0">
+                            <h:inputText value ="#{CageCard_Backing.cageID}"/>
+                            <h:panelGroup id="toText">
+                                <h:outputText value = " to " 
+                                                rendered="#{CageCard_Backing.cardQuantity == 'multiple'}"/>
+                            </h:panelGroup>
+                            <h:panelGroup id="highCardIn">
+                                <h:inputText value ="#{CageCard_Backing.cageID2}" 
+                                                rendered="#{CageCard_Backing.cardQuantity == 'multiple'}">
+                                </h:inputText>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:panelGroup>
+                    <h:outputText value ="#{msgs['cageCard.cardType']}"/>
+                    <h:selectOneMenu id="cardTypeMenu"
+                                        value="#{CageCard_Backing.cardTypeMask}">
+                        <f:selectItem itemLabel="Detail" itemValue="detail"/>
+                        <f:selectItem itemLabel="Mating" itemValue="mating"/>
+                        <f:selectItem itemLabel="Wean" itemValue="wean"/>
+                        <a4j:ajax event="change"
+                                    listener="#{CageCard_Backing.changeCardListener}"
+                                    render="theCards"/>
+                    </h:selectOneMenu>
+                    <h:outputText value="Card Name"/>
+                    <h:selectOneMenu id="theCards"
+                                        value="#{CageCard_Backing.entityKey}"
+                                        required="#{!empty param['form2:submit'] ||
+                                            !empty param['form2:secretButton']}">
+                        <f:selectItems value="#{CageCard_Backing.displayCards}"/> 
+                    </h:selectOneMenu> 
+                    <h:panelGrid columns = "8" border="0" title="actionButtons">
+                        <a4j:commandButton value = "#{msgs['cageCard.submit']}"
+                                            oncomplete="check()"
+                                            render="secret"
+                                            styleClass="smallButton"
+                                            action="#{CageCard_Backing.validateCageCardAction}"/>
+                        <a4j:commandButton value="#{msgs['cageCard.preview']}"
+                                            styleClass="smallButton"
+                                            onclick="blankTarget()"/>
+                        <a4j:commandButton value = "#{msgs['cageCard.printBlankCards']}" 
+                                            oncomplete="#{rich:component('printBlankCardsPanel')}.show()"
+                                            styleClass="mediumButton"
+                                            render="printBlankCardsGrid"/>
+                        <h:commandButton id = "secretButton" 
+                                            action = "#{CageCard_Backing.validateAndDownloadCageCardAction}"
+                                            style="visibility:hidden;"/>
+                        <h:commandButton id = "secretButton2" 
+                                            action = "#{CageCard_Backing.previewCard}"
+                                            style="visibility:hidden;"/>
+                        <h:inputHidden id="secret" value="#{CageCard_Backing.goodCard}"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <h:commandLink action="customCageCard" immediate="true" >
+                    <h:outputText value="Make Custom Card" />
+                </h:commandLink>
+                </div>
+                <a4j:jsFunction name="displayCardsNotPrinted" 
+                                actionListener="#{CageCard_Backing.displayCardsNotPrinted}"/>
+            </h:form>
+            <rich:popupPanel id="printBlankCardsPanel"
+                             autosized="true"
+                             width = "300">
+
+                <f:facet name="header"><h:outputText value="Print Blank Cards"/></f:facet>
+                <f:facet name="controls">
+                    <h:panelGroup>
+                        <h:graphicImage value="/images/delete.gif" id="hidelink"
+                                        onclick="#{rich:component('printBlankCardsPanel')}.hide();"
+                                        styleClass="hidelink" title="Close" />
+                    </h:panelGroup> 
+                </f:facet>
+                 <h:form id="printBlankCardsForm">
+                    <rich:messages />
+                    <br />
+                    <h:panelGrid id="printBlankCardsGrid"
+                                 columns = "2"
+                                 styleClass="innerTable">
+                        <h:outputText value="Number of cards: "/>
+                        <h:inputText value="#{CageCard_Backing.numberOfCards}"
+                                     converterMessage="Number of cards must be an integer between 0 and 99."
+                                     required="#{!empty param['printBlankCardsForm:changeMaxPenId'] ||
+                                                 !empty param['printBlankCardsForm:printBlankCards']}"
+                                     requiredMessage="Please choose how many cards you would like to print."/>
+                        <h:outputText value ="#{msgs['cageCard.cardType']}"/>
+                        <h:selectOneMenu id="blankCardTypeMenu"
+                                         value="#{CageCard_Backing.cardTypeMask}">
+                            <f:selectItem itemLabel="Detail" itemValue="detail"/>
+                            <f:selectItem itemLabel="Mating" itemValue="mating"/>
+                            <f:selectItem itemLabel="Wean" itemValue="wean"/>
+                            <a4j:ajax event="change"
+                                      listener="#{CageCard_Backing.changeCardListener}"
+                                      render="theBlankCards, cardTypeMenu, theCards"/>
+                        </h:selectOneMenu>
+                        <h:outputText value="Card Name: "/>
+                        <h:selectOneMenu id="theBlankCards"
+                                         value="#{CageCard_Backing.entityKey}"
+                                         required="#{!empty param['printBlankCardsForm:changeMaxPenId'] ||
+                                                     !empty param['printBlankCardsForm:previewBlankButton'] ||
+                                                     !empty param['printBlankCardsForm:printBlankCards'] ||
+                                                     !empty param['printBlankCardsForm:preview']}"
+                                         requiredMessage="Please choose a cage card">
+                            <f:selectItems value="#{CageCard_Backing.displayCards}"/> 
+                            <a4j:ajax event="change" render="cardTypeMenu, theCards"/>
+                        </h:selectOneMenu> 
+                    </h:panelGrid>
+                    <h:panelGrid columns="2"
+                                 border="0">
+                        <a4j:commandButton value="print"
+                                           id="changeMaxPenId"
+                                           action="#{CageCard_Backing.changeMaxPenId}"
+                                           oncomplete="if (#{facesContext.maximumSeverity==null}) printBlankCards()"/>
+                        <a4j:commandButton value="preview"
+                                           id="previewBlankButton"
+                                           onclick="previewBlankCard()"/>
+                        <h:commandButton id="printBlankCards"
+                                         action="#{CageCard_Backing.downloadBlankCardAction}"
+                                         style="visibility:hidden"/>
+                        <h:commandButton id = "preview" 
+                                         action = "#{CageCard_Backing.previewCard}"
+                                         style="visibility:hidden;"/>
+                    </h:panelGrid>
+                 </h:form>
+            </rich:popupPanel>
+            <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+        </h:body>
+    </html>
+

@@ -1,0 +1,1161 @@
+TJCMS Mobile
+v6
+r1
+cCheck dependencies
+cProcessInfoPlistFile /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/Info.plist /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/JCMS\ Mobile-Info.plist
+cPhaseScriptExecution Copy\ www\ directory /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Script-304B58A110DAC018002A0835.sh
+cCpResource JCMS\ Mobile/Resources/icons/icon-76@2x.png build/emulator/JCMS\ Mobile.app/icon-76@2x.png
+cCpResource JCMS\ Mobile/Resources/icons/icon-50@2x.png build/emulator/JCMS\ Mobile.app/icon-50@2x.png
+cCpResource JCMS\ Mobile/Resources/icons/icon-76.png build/emulator/JCMS\ Mobile.app/icon-76.png
+cCopyStringsFile /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/en.lproj/Localizable.strings JCMS\ Mobile/Resources/en.lproj/Localizable.strings
+cCompileXIB /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Classes/MainViewController.xib
+cCpResource JCMS\ Mobile/Resources/icons/icon-small@2x.png build/emulator/JCMS\ Mobile.app/icon-small@2x.png
+cCopyStringsFile /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/de.lproj/Localizable.strings JCMS\ Mobile/Resources/de.lproj/Localizable.strings
+cCpResource JCMS\ Mobile/Resources/splash/Default-Landscape@2x~ipad.png build/emulator/JCMS\ Mobile.app/Default-Landscape@2x~ipad.png
+cCpResource JCMS\ Mobile/Resources/icons/icon-72.png build/emulator/JCMS\ Mobile.app/icon-72.png
+cCpResource JCMS\ Mobile/Resources/splash/Default-Landscape~ipad.png build/emulator/JCMS\ Mobile.app/Default-Landscape~ipad.png
+cCpResource JCMS\ Mobile/Resources/icons/icon-40@2x.png build/emulator/JCMS\ Mobile.app/icon-40@2x.png
+cCpResource JCMS\ Mobile/Resources/icons/icon-small.png build/emulator/JCMS\ Mobile.app/icon-small.png
+cCpResource JCMS\ Mobile/Resources/splash/Default-Portrait@2x~ipad.png build/emulator/JCMS\ Mobile.app/Default-Portrait@2x~ipad.png
+cCpResource JCMS\ Mobile/Resources/splash/Default-Portrait~ipad.png build/emulator/JCMS\ Mobile.app/Default-Portrait~ipad.png
+cCpResource JCMS\ Mobile/Resources/icons/icon-72@2x.png build/emulator/JCMS\ Mobile.app/icon-72@2x.png
+cCpResource JCMS\ Mobile/Resources/splash/Default@2x~iphone.png build/emulator/JCMS\ Mobile.app/Default@2x~iphone.png
+cCpResource JCMS\ Mobile/Resources/splash/Default~iphone.png build/emulator/JCMS\ Mobile.app/Default~iphone.png
+cCpResource JCMS\ Mobile/Resources/icons/icon-40.png build/emulator/JCMS\ Mobile.app/icon-40.png
+cCpResource JCMS\ Mobile/Resources/splash/Default-568h@2x~iphone.png build/emulator/JCMS\ Mobile.app/Default-568h@2x~iphone.png
+cCpResource JCMS\ Mobile/Resources/icons/icon-50.png build/emulator/JCMS\ Mobile.app/icon-50.png
+cProcessPCH /var/folders/z2/lk5l967n7wn73zvvs2mq6vbc0000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/JCMS\ Mobile-Prefix-dtqqdmgpqxwrdqgplsoovtvbkpjn/JCMS\ Mobile-Prefix.pch.pch JCMS\ Mobile/JCMS\ Mobile-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/main.o /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/main.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/AppDelegate.o /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Classes/AppDelegate.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/MainViewController.o /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Classes/MainViewController.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cLd /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/JCMS\ Mobile normal i386
+cGenerateDSYMFile /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app.dSYM /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/JCMS\ Mobile
+cTouch /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk
+c000000005377AC380000000000000198
+t1400351800
+s408
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/SDKSettings.plist
+c0000000053285E8600000000000003B4
+t1395154566
+s948
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/CoreServices/SystemVersion.plist
+c0000000053285E8F000000000000019E
+t1395154575
+s414
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/AVFoundation.framework/AVFoundation
+c0000000053285E920000000000484210
+t1395154578
+s4735504
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/AVFoundation.framework/libAVFAudio.dylib
+c0000000053285E910000000000098030
+t1395154577
+s622640
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/AssetsLibrary.framework/AssetsLibrary
+c0000000053285E910000000000059340
+t1395154577
+s365376
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation
+c0000000053285E9300000000005B82F0
+t1395154579
+s5997296
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics
+c000000005377AABC0000000000446820
+t1400351420
+s4483104
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/CoreLocation.framework/CoreLocation
+c0000000053285E9200000000000F1A80
+t1395154578
+s989824
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/CoreMedia.framework/CoreMedia
+c0000000053285E93000000000013B8C0
+t1395154579
+s1292480
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/Foundation.framework/Foundation
+c0000000053285E95000000000088D8C0
+t1395154581
+s8968384
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/MobileCoreServices.framework/MobileCoreServices
+c0000000053285E9600000000001BE790
+t1395154582
+s1828752
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/UIKit.framework/UIKit
+c0000000053285E9D0000000001F1DE10
+t1395154589
+s32628240
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/PrivateFrameworks/UIFoundation.framework/UIFoundation
+c0000000053285EAC00000000002BC360
+t1395154604
+s2868064
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/crt1.o
+c0000000053285EB50000000000002338
+t1395154613
+s9016
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/libSystem.dylib
+c0000000053285EB7000000000008D370
+t1395154615
+s578416
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/libobjc.dylib
+c0000000053285EB60000000000392E20
+t1395154614
+s3747360
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/host/libdyld.dylib
+c00000000500B631300000000000121D0
+t1342923539
+s74192
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libcache_sim.dylib
+c0000000053285EB70000000000014A80
+t1395154615
+s84608
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libcommonCrypto_sim.dylib
+c0000000053285EB70000000000033BA0
+t1395154615
+s211872
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libcompiler_rt_sim.dylib
+c0000000053285EB7000000000001CFB0
+t1395154615
+s118704
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libcopyfile_sim.dylib
+c0000000053285EB7000000000001B2B0
+t1395154615
+s111280
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libcorecrypto_sim.dylib
+c0000000053285EB700000000000C9570
+t1395154615
+s824688
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libdispatch.dylib
+c0000000053285EB70000000000063280
+t1395154615
+s406144
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libdyld_sim.dylib
+c0000000053285EB70000000000008880
+t1395154615
+s34944
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libmacho_sim.dylib
+c0000000053285EB70000000000015080
+t1395154615
+s86144
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libnotify_sim.dylib
+c0000000053285EB700000000000230F0
+t1395154615
+s143600
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libremovefile_sim.dylib
+c0000000053285EB7000000000000E380
+t1395154615
+s58240
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_network.dylib
+c0000000053285EB70000000000089380
+t1395154615
+s562048
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_override.dylib
+c0000000053285EB70000000000017320
+t1395154615
+s95008
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_sim_asl.dylib
+c0000000053285EB70000000000039CD0
+t1395154615
+s236752
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_sim_blocks.dylib
+c0000000053285EB7000000000000B0B0
+t1395154615
+s45232
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_sim_c.dylib
+c0000000053285EB70000000000167E80
+t1395154615
+s1474176
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_sim_configuration.dylib
+c0000000053285EB700000000000106A0
+t1395154615
+s67232
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_sim_dnssd.dylib
+c0000000053285EB7000000000001CE40
+t1395154615
+s118336
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_sim_info.dylib
+c0000000053285EB700000000000740C0
+t1395154615
+s475328
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_sim_m.dylib
+c0000000053285EB7000000000006CA60
+t1395154615
+s445024
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libunwind_sim.dylib
+c0000000053285EB7000000000001BAD0
+t1395154615
+s113360
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libxpc.dylib
+c0000000053285EB70000000000084A20
+t1395154615
+s543264
+
+N/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/5.1/lib/darwin/libclang_rt.ios.a
+c000000005377AABC000000000000514C
+t1400351420
+s20812
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/AppDelegate.h
+c0000000053F5F74900000000000005BB
+t1408628553
+s1467
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/AppDelegate.m
+c0000000053F5F7490000000000001771
+t1408628553
+s6001
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/MainViewController.h
+c0000000053F5F74900000000000004D1
+t1408628553
+s1233
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/MainViewController.m
+c0000000053F5F749000000000000126C
+t1408628553
+s4716
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/MainViewController.xib
+c0000000053F5F7480000000000001759
+t1408628552
+s5977
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/JCMS Mobile-Info.plist
+c000000005417232800000000000009D9
+t1410802472
+s2521
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/JCMS Mobile-Prefix.pch
+c0000000053F5F74900000000000003C7
+t1408628553
+s967
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/de.lproj/Localizable.strings
+c0000000053F5F74800000000000004C0
+t1408628552
+s1216
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/en.lproj/Localizable.strings
+c0000000053F5F74800000000000004AB
+t1408628552
+s1195
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/icons/icon-40.png
+c0000000053FF3D670000000000001766
+t1409236327
+s5990
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/icons/icon-40@2x.png
+c0000000053FF3D67000000000000353B
+t1409236327
+s13627
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/icons/icon-50.png
+c0000000053FF3D670000000000001D59
+t1409236327
+s7513
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/icons/icon-50@2x.png
+c0000000053FF3D670000000000004A45
+t1409236327
+s19013
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/icons/icon-60.png
+c0000000053F5F74800000000000016B3
+t1408628552
+s5811
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/icons/icon-60@2x.png
+c0000000053F5F7480000000000002E94
+t1408628552
+s11924
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/icons/icon-72.png
+c0000000053FF3D670000000000002DEC
+t1409236327
+s11756
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/icons/icon-72@2x.png
+c0000000053FF3D670000000000002F88
+t1409236327
+s12168
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/icons/icon-76.png
+c0000000053FF40490000000000003340
+t1409237065
+s13120
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/icons/icon-76@2x.png
+c0000000053FF3D6700000000000081B1
+t1409236327
+s33201
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/icons/icon-small.png
+c0000000053FF3D6700000000000012A7
+t1409236327
+s4775
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/icons/icon-small@2x.png
+c0000000053FF3D67000000000000222B
+t1409236327
+s8747
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/icons/icon.jpg
+c0000000053FE38F6000000000000EF6C
+t1409169654
+s61292
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/icons/icon.png
+c0000000053F5F7480000000000000F3E
+t1408628552
+s3902
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/icons/icon@2x.png
+c0000000053F5F7480000000000001EBD
+t1408628552
+s7869
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/splash/Default-568h@2x~iphone.png
+c0000000053FF51E30000000000072C52
+t1409241571
+s470098
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/splash/Default-Landscape@2x~ipad.png
+c0000000053FF507300000000000CA9AC
+t1409241203
+s829868
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/splash/Default-Landscape~ipad.png
+c0000000053FF5042000000000010814A
+t1409241154
+s1081674
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/splash/Default-Portrait@2x~ipad.png
+c0000000053FF4D0800000000000E1BCD
+t1409240328
+s924621
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/splash/Default-Portrait~ipad.png
+c0000000053FF4D5B0000000000076FE3
+t1409240411
+s487395
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/splash/Default@2x~iphone.png
+c0000000053FF4DE80000000000068512
+t1409240552
+s427282
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Resources/splash/Default~iphone.png
+c0000000053FF4E0E0000000000021B32
+t1409240590
+s138034
+
+N/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/main.m
+c0000000053F5F749000000000000045D
+t1408628553
+s1117
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/JCMS Mobile.build/Debug-iphonesimulator/JCMS Mobile.build/Objects-normal/i386/AppDelegate.o
+t1408628719
+s77328
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/JCMS Mobile.build/Debug-iphonesimulator/JCMS Mobile.build/Objects-normal/i386/JCMS Mobile.LinkFileList
+c0000000053F5F7E10000000000000198
+t1408628705
+s408
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/JCMS Mobile.build/Debug-iphonesimulator/JCMS Mobile.build/Objects-normal/i386/MainViewController.o
+t1408628719
+s51496
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/JCMS Mobile.build/Debug-iphonesimulator/JCMS Mobile.build/Objects-normal/i386/main.o
+t1408628719
+s2932
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/JCMS Mobile.build/Debug-iphonesimulator/JCMS Mobile.build/Script-304B58A110DAC018002A0835.sh
+c0000000053F5F7E1000000000000002D
+t1408628705
+s45
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app
+t1410802479
+s1054
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app.dSYM
+t1410553476
+s102
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/Default-568h@2x~iphone.png
+t1409254281
+s470098
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/Default-Landscape@2x~ipad.png
+t1409254281
+s829868
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/Default-Landscape~ipad.png
+t1409254281
+s1081674
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/Default-Portrait@2x~ipad.png
+t1409254281
+s924621
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/Default-Portrait~ipad.png
+t1409254281
+s487395
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/Default@2x~iphone.png
+t1409254281
+s427282
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/Default~iphone.png
+t1409254281
+s138034
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/Info.plist
+t1410802478
+s1246
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/JCMS Mobile
+t1408628719
+s276560
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/MainViewController.nib
+t1408628719
+s836
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/PkgInfo
+t2
+s0
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/de.lproj/Localizable.strings
+t1408628705
+s280
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/en.lproj/Localizable.strings
+t1408628705
+s166
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/icon-40.png
+t1409254281
+s5990
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/icon-40@2x.png
+t1409254281
+s13627
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/icon-50.png
+t1409254281
+s7513
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/icon-50@2x.png
+t1409254281
+s19013
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/icon-60.png
+t1408628705
+s5811
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/icon-60@2x.png
+t1408628705
+s11924
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/icon-72.png
+t1409254281
+s11756
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/icon-72@2x.png
+t1409254281
+s12168
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/icon-76.png
+t1409254281
+s13120
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/icon-76@2x.png
+t1409254281
+s33201
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/icon-small.png
+t1409254281
+s4775
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/icon-small@2x.png
+t1409254281
+s8747
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/icon.jpg
+t1409236347
+s61292
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/icon.png
+t1408628705
+s3902
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/icon@2x.png
+t1408628705
+s7869
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVAvailability.h
+c0000000053F5F7DD0000000000000D19
+t1408628701
+s3353
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVCommandDelegate.h
+c0000000053F5F7DD00000000000008BA
+t1408628701
+s2234
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVCommandDelegateImpl.h
+c0000000053F5F7DD00000000000004E2
+t1408628701
+s1250
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVCommandQueue.h
+c0000000053F5F7DD0000000000000503
+t1408628701
+s1283
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVInvokedUrlCommand.h
+c0000000053F5F7DD00000000000007E6
+t1408628701
+s2022
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVPlugin.h
+c0000000053F5F7DD00000000000008F3
+t1408628701
+s2291
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVPluginResult.h
+c0000000053F5F7DD0000000000000C13
+t1408628701
+s3091
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVScreenOrientationDelegate.h
+c0000000053F5F7DD0000000000000408
+t1408628701
+s1032
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVViewController.h
+c0000000053F5F7DD0000000000000ACC
+t1408628701
+s2764
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVWhitelist.h
+c0000000053F5F7DD00000000000004B4
+t1408628701
+s1204
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/NSMutableArray+QueueAdditions.h
+c0000000053F5F7DD00000000000003A0
+t1408628701
+s928
+
+N/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/libCordova.a
+c0000000053F5F7E100000000000D3F10
+t1408628705
+s868112
+
+N/usr/lib/libSystem.B.dylib
+c00000000500B6308000000000000D2A0
+t1342923528
+s53920
+
+N/usr/lib/system/libcache.dylib
+c00000000500B63130000000000013870
+t1342923539
+s79984
+
+N/usr/lib/system/libcommonCrypto.dylib
+c0000000051C0DBD10000000000030250
+t1371593681
+s197200
+
+N/usr/lib/system/libcompiler_rt.dylib
+c00000000500B63080000000000017910
+t1342923528
+s96528
+
+N/usr/lib/system/libcopyfile.dylib
+c0000000053C853B3000000000001A110
+t1405637555
+s106768
+
+N/usr/lib/system/libdnsinfo.dylib
+c0000000051C0DC66000000000000C2A0
+t1371593830
+s49824
+
+N/usr/lib/system/libkeymgr.dylib
+c00000000500B63130000000000008CE0
+t1342923539
+s36064
+
+N/usr/lib/system/liblaunch.dylib
+c0000000051C0DC70000000000001D350
+t1371593840
+s119632
+
+N/usr/lib/system/libmacho.dylib
+c00000000500B63120000000000014F90
+t1342923538
+s85904
+
+N/usr/lib/system/libquarantine.dylib
+c0000000051C38789000000000000D790
+t1371768713
+s55184
+
+N/usr/lib/system/libremovefile.dylib
+c0000000051C0DC7C000000000000C330
+t1371593852
+s49968
+
+N/usr/lib/system/libsystem_blocks.dylib
+c00000000500B6313000000000000A080
+t1342923539
+s41088
+
+N/usr/lib/system/libsystem_c.dylib
+c000000005242D6C400000000001F91C0
+t1380112068
+s2068928
+
+N/usr/lib/system/libsystem_dnssd.dylib
+c0000000051C38787000000000001BC00
+t1371768711
+s113664
+
+N/usr/lib/system/libsystem_info.dylib
+c00000000500B6308000000000008B580
+t1342923528
+s570752
+
+N/usr/lib/system/libsystem_kernel.dylib
+c00000000525DD8FA00000000000569B0
+t1381882106
+s354736
+
+N/usr/lib/system/libsystem_m.dylib
+c00000000500B63080000000000070540
+t1342923528
+s460096
+
+N/usr/lib/system/libsystem_notify.dylib
+c00000000500B63080000000000025620
+t1342923528
+s153120
+
+N/usr/lib/system/libsystem_sandbox.dylib
+c0000000051C3877B000000000000C780
+t1371768699
+s51072
+
+N/usr/lib/system/libunc.dylib
+c00000000500B630F000000000000D430
+t1342923535
+s54320
+
+N/usr/lib/system/libunwind.dylib
+c00000000500B6313000000000001BAA0
+t1342923539
+s113312
+
+N/var/folders/z2/lk5l967n7wn73zvvs2mq6vbc0000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/JCMS Mobile-Prefix-dtqqdmgpqxwrdqgplsoovtvbkpjn/JCMS Mobile-Prefix.pch.pch
+t1408628719
+s5376324
+
+CCheck dependencies
+r0
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies18"Check dependenciesd3db47ae5ac7b941^8e3ffdae5ac7b941^---0#1#1#--18"Check dependencies36"737CC644-009D-429A-80AE-C4B2099FD4CF-
+
+CCompileC build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/AppDelegate.o /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Classes/AppDelegate.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s430321519.517713
+e430321519.608718
+r1
+xCompileC
+xbuild/JCMS Mobile.build/Debug-iphonesimulator/JCMS Mobile.build/Objects-normal/i386/AppDelegate.o
+x/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/AppDelegate.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+d/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/AppDelegate.m
+d/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/AppDelegate.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVViewController.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVAvailability.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVInvokedUrlCommand.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVCommandDelegate.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVCommandQueue.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVWhitelist.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVScreenOrientationDelegate.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVPlugin.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVPluginResult.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/NSMutableArray+QueueAdditions.h
+d/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/MainViewController.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVCommandDelegateImpl.h
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection79"Compile /Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/AppDelegate.m227"[1mCompileC[0m build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/AppDelegate.o [1mJCMS\ Mobile/Classes/AppDelegate.m[0m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compilereed0846f2fa6b941^d0d49b6f2fa6b941^---0#0#1#-19%DVTDocumentLocation2@91"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/JCMS%20Mobile/Classes/AppDelegate.m0000000000000000^3675"[1mCompileC[0m build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/AppDelegate.o [1mJCMS\ Mobile/Classes/AppDelegate.m[0m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export LANG=en_US.US-ASCII    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=272 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -fcolor-diagnostics -std=c99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wduplicate-method-match -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk -fexceptions -fasm-blocks -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -g -fvisibility=hidden -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch -mios-simulator-version-min=6.0 -iquote /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-generated-files.hmap -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-own-target-headers.hmap -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-all-target-headers.hmap -iquote /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-project-headers.hmap -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/include -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/usr/local/lib/include -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/UninstalledProducts/include -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/DerivedSources/i386 -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/DerivedSources -F/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator -include /var/folders/z2/lk5l967n7wn73zvvs2mq6vbc0000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/JCMS\ Mobile-Prefix-dtqqdmgpqxwrdqgplsoovtvbkpjn/JCMS\ Mobile-Prefix.pch -MMD -MT dependencies -MF /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/AppDelegate.d --serialize-diagnostics /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/AppDelegate.dia -c /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Classes/AppDelegate.m -o /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/AppDelegate.o36"D25029DA-F75B-40F0-821F-C7BCCB9D98AE-
+b0BA8986F-9A48-43BB-84F4-983EE13FFE55
+
+CCompileC build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/MainViewController.o /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Classes/MainViewController.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s430321519.517975
+e430321519.589663
+r1
+xCompileC
+xbuild/JCMS Mobile.build/Debug-iphonesimulator/JCMS Mobile.build/Objects-normal/i386/MainViewController.o
+x/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/MainViewController.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+d/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/MainViewController.m
+d/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/MainViewController.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVViewController.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVAvailability.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVInvokedUrlCommand.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVCommandDelegate.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVCommandQueue.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVWhitelist.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVScreenOrientationDelegate.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVPlugin.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVPluginResult.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/NSMutableArray+QueueAdditions.h
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/include/Cordova/CDVCommandDelegateImpl.h
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection86"Compile /Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/MainViewController.m241"[1mCompileC[0m build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/MainViewController.o [1mJCMS\ Mobile/Classes/MainViewController.m[0m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler5fd2846f2fa6b941^28f4966f2fa6b941^---0#0#1#-19%DVTDocumentLocation2@98"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/JCMS%20Mobile/Classes/MainViewController.m0000000000000000^3717"[1mCompileC[0m build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/MainViewController.o [1mJCMS\ Mobile/Classes/MainViewController.m[0m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export LANG=en_US.US-ASCII    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=272 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -fcolor-diagnostics -std=c99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wduplicate-method-match -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk -fexceptions -fasm-blocks -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -g -fvisibility=hidden -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch -mios-simulator-version-min=6.0 -iquote /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-generated-files.hmap -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-own-target-headers.hmap -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-all-target-headers.hmap -iquote /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-project-headers.hmap -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/include -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/usr/local/lib/include -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/UninstalledProducts/include -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/DerivedSources/i386 -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/DerivedSources -F/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator -include /var/folders/z2/lk5l967n7wn73zvvs2mq6vbc0000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/JCMS\ Mobile-Prefix-dtqqdmgpqxwrdqgplsoovtvbkpjn/JCMS\ Mobile-Prefix.pch -MMD -MT dependencies -MF /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/MainViewController.d --serialize-diagnostics /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/MainViewController.dia -c /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Classes/MainViewController.m -o /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/MainViewController.o36"765D6CE5-9519-4CDC-8CB4-C2028CB731B2-
+b0BA8986F-9A48-43BB-84F4-983EE13FFE55
+
+CCompileC build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/main.o /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/main.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s430321519.517721
+e430321519.547503
+r1
+xCompileC
+xbuild/JCMS Mobile.build/Debug-iphonesimulator/JCMS Mobile.build/Objects-normal/i386/main.o
+x/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/main.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+d/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/main.m
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection64"Compile /Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/main.m205"[1mCompileC[0m build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/main.o [1mJCMS\ Mobile/main.m[0m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler68cc846f2fa6b941^45498c6f2fa6b941^---0#0#1#-19%DVTDocumentLocation2@76"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/JCMS%20Mobile/main.m0000000000000000^3617"[1mCompileC[0m build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/main.o [1mJCMS\ Mobile/main.m[0m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export LANG=en_US.US-ASCII    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=272 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -fcolor-diagnostics -std=c99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wduplicate-method-match -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk -fexceptions -fasm-blocks -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -g -fvisibility=hidden -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch -mios-simulator-version-min=6.0 -iquote /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-generated-files.hmap -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-own-target-headers.hmap -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-all-target-headers.hmap -iquote /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-project-headers.hmap -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/include -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/usr/local/lib/include -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/UninstalledProducts/include -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/DerivedSources/i386 -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/DerivedSources -F/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator -include /var/folders/z2/lk5l967n7wn73zvvs2mq6vbc0000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/JCMS\ Mobile-Prefix-dtqqdmgpqxwrdqgplsoovtvbkpjn/JCMS\ Mobile-Prefix.pch -MMD -MT dependencies -MF /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/main.d --serialize-diagnostics /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/main.dia -c /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/main.m -o /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/main.o36"9AA3B6F3-1425-41B1-8254-7CFAA4643C13-
+b0BA8986F-9A48-43BB-84F4-983EE13FFE55
+
+CCompileXIB /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Classes/MainViewController.xib
+s430321505.626853
+e430321519.099367
+r1
+xCompileXIB
+x/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/MainViewController.xib
+o2014-08-21 09:45:18.333 Interface Builder Cocoa Touch Tool[12092:303] CFPreferences: user home directory at file:///Users/cssc/Library/Application%20Support/iPhone%20Simulator/User/ is unavailable. User domains will be volatile.
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection90"Compiling /Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/Classes/MainViewController.xib70"[1mCompileXIB[0m [1mJCMS\ Mobile/Classes/MainViewController.xib[0m4f90a0612fa6b941^b570196f2fa6b941^-229"2014-08-21 09:45:18.333 Interface Builder Cocoa Touch Tool[12092:303] CFPreferences: user home directory at file:///Users/cssc/Library/Application%20Support/iPhone%20Simulator/User/ is unavailable. User domains will be volatile.-0#0#1#-19%DVTDocumentLocation2@100"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/JCMS%20Mobile/Classes/MainViewController.xib0000000000000000^823"[1mCompileXIB[0m [1mJCMS\ Mobile/Classes/MainViewController.xib[0m    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    export XCODE_DEVELOPER_USR_PATH=/Applications/Xcode.app/Contents/Developer/usr/bin/..    /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/ibtool --errors --warnings --notices --minimum-deployment-target 6.0 --output-format human-readable-text --compile /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/MainViewController.nib /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Classes/MainViewController.xib36"F73EC73C-E526-4BE5-9DE4-4CE7B8EFD903-
+b0BA8986F-9A48-43BB-84F4-983EE13FFE55
+
+CCopyStringsFile /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/de.lproj/Localizable.strings JCMS\ Mobile/Resources/de.lproj/Localizable.strings
+s430321505.633682
+e430321505.694009
+r1
+xCopyStringsFile
+x/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/de.lproj/Localizable.strings
+xJCMS Mobile/Resources/de.lproj/Localizable.strings
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection55"Copy JCMS Mobile/Resources/de.lproj/Localizable.strings136"[1mCopyStringsFile[0m build/emulator/JCMS\ Mobile.app/de.lproj/Localizable.strings JCMS\ Mobile/Resources/de.lproj/Localizable.stringse44da2612fa6b941^3babb1612fa6b941^---0#0#1#-19%DVTDocumentLocation2@108"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/JCMS%20Mobile/Resources/de.lproj/Localizable.strings0000000000000000^632"[1mCopyStringsFile[0m build/emulator/JCMS\ Mobile.app/de.lproj/Localizable.strings JCMS\ Mobile/Resources/de.lproj/Localizable.strings    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copyStrings --validate --inputencoding utf-8 --outputencoding binary --outdir /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/de.lproj -- JCMS\ Mobile/Resources/de.lproj/Localizable.strings36"C92318EA-3881-47DC-932C-06B6022CA689-
+b0BA8986F-9A48-43BB-84F4-983EE13FFE55
+
+CCopyStringsFile /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/en.lproj/Localizable.strings JCMS\ Mobile/Resources/en.lproj/Localizable.strings
+s430321505.626716
+e430321505.693602
+r1
+xCopyStringsFile
+x/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/en.lproj/Localizable.strings
+xJCMS Mobile/Resources/en.lproj/Localizable.strings
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection55"Copy JCMS Mobile/Resources/en.lproj/Localizable.strings136"[1mCopyStringsFile[0m build/emulator/JCMS\ Mobile.app/en.lproj/Localizable.strings JCMS\ Mobile/Resources/en.lproj/Localizable.stringsa488a0612fa6b941^6093b1612fa6b941^---0#0#1#-19%DVTDocumentLocation2@108"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/JCMS%20Mobile/Resources/en.lproj/Localizable.strings0000000000000000^632"[1mCopyStringsFile[0m build/emulator/JCMS\ Mobile.app/en.lproj/Localizable.strings JCMS\ Mobile/Resources/en.lproj/Localizable.strings    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copyStrings --validate --inputencoding utf-8 --outputencoding binary --outdir /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/en.lproj -- JCMS\ Mobile/Resources/en.lproj/Localizable.strings36"2695280F-2A1D-45FB-80CD-CF366C5D7FC0-
+b0BA8986F-9A48-43BB-84F4-983EE13FFE55
+
+CCpResource JCMS\ Mobile/Resources/icons/icon-40.png build/emulator/JCMS\ Mobile.app/icon-40.png
+s430947081.834208
+e430947081.837878
+r1
+xCpResource
+xJCMS Mobile/Resources/icons/icon-40.png
+xbuild/emulator/JCMS Mobile.app/icon-40.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection47"Copy build/emulator/JCMS Mobile.app/icon-40.png103"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-40.png build/emulator/JCMS\ Mobile.app/icon-40.pngbea4d509bbafb941^f88ad609bbafb941^---0#0#1#-19%DVTDocumentLocation2@100"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/icon-40.png0000000000000000^637"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-40.png build/emulator/JCMS\ Mobile.app/icon-40.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/icons/icon-40.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"8D293023-623E-4824-8565-5A6D05D08145-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/icons/icon-40@2x.png build/emulator/JCMS\ Mobile.app/icon-40@2x.png
+s430947081.823779
+e430947081.828526
+r1
+xCpResource
+xJCMS Mobile/Resources/icons/icon-40@2x.png
+xbuild/emulator/JCMS Mobile.app/icon-40@2x.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection50"Copy build/emulator/JCMS Mobile.app/icon-40@2x.png109"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-40@2x.png build/emulator/JCMS\ Mobile.app/icon-40@2x.pnga1f7d209bbafb941^261ed409bbafb941^---0#0#1#-19%DVTDocumentLocation2@103"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/icon-40@2x.png0000000000000000^646"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-40@2x.png build/emulator/JCMS\ Mobile.app/icon-40@2x.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/icons/icon-40@2x.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"871481D4-837F-447C-83C0-BDC6AAC52B25-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/icons/icon-50.png build/emulator/JCMS\ Mobile.app/icon-50.png
+s430947081.837637
+e430947081.839951
+r1
+xCpResource
+xJCMS Mobile/Resources/icons/icon-50.png
+xbuild/emulator/JCMS Mobile.app/icon-50.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection47"Copy build/emulator/JCMS Mobile.app/icon-50.png103"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-50.png build/emulator/JCMS\ Mobile.app/icon-50.png1e8ad609bbafb941^6c07d709bbafb941^---0#0#1#-19%DVTDocumentLocation2@100"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/icon-50.png0000000000000000^637"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-50.png build/emulator/JCMS\ Mobile.app/icon-50.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/icons/icon-50.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"65150078-F82C-42E3-B54F-55BBA06EAF86-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/icons/icon-50@2x.png build/emulator/JCMS\ Mobile.app/icon-50@2x.png
+s430947081.816875
+e430947081.822050
+r1
+xCpResource
+xJCMS Mobile/Resources/icons/icon-50@2x.png
+xbuild/emulator/JCMS Mobile.app/icon-50@2x.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection50"Copy build/emulator/JCMS Mobile.app/icon-50@2x.png109"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-50@2x.png build/emulator/JCMS\ Mobile.app/icon-50@2x.pngbe4fd109bbafb941^3788d209bbafb941^---0#0#1#-19%DVTDocumentLocation2@103"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/icon-50@2x.png0000000000000000^646"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-50@2x.png build/emulator/JCMS\ Mobile.app/icon-50@2x.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/icons/icon-50@2x.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"3B329061-0FB4-481E-BF22-049F942AC1D1-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/icons/icon-60.png build/emulator/JCMS\ Mobile.app/icon-60.png
+s430321505.664633
+e430321505.667081
+r1
+xCpResource
+xJCMS Mobile/Resources/icons/icon-60.png
+xbuild/emulator/JCMS Mobile.app/icon-60.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection47"Copy build/emulator/JCMS Mobile.app/icon-60.png103"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-60.png build/emulator/JCMS\ Mobile.app/icon-60.png2a36aa612fa6b941^26c6aa612fa6b941^---0#0#1#-19%DVTDocumentLocation2@100"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/icon-60.png0038b05edfffdf42^637"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-60.png build/emulator/JCMS\ Mobile.app/icon-60.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/icons/icon-60.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"3B0CFEF0-A475-4DAF-8C0C-7BF00FBAFD9D-
+b0BA8986F-9A48-43BB-84F4-983EE13FFE55
+
+CCpResource JCMS\ Mobile/Resources/icons/icon-60@2x.png build/emulator/JCMS\ Mobile.app/icon-60@2x.png
+s430321505.630003
+e430321505.633487
+r1
+xCpResource
+xJCMS Mobile/Resources/icons/icon-60@2x.png
+xbuild/emulator/JCMS Mobile.app/icon-60@2x.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection50"Copy build/emulator/JCMS Mobile.app/icon-60@2x.png109"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-60@2x.png build/emulator/JCMS\ Mobile.app/icon-60@2x.png6458a1612fa6b941^cb2ca2612fa6b941^---0#0#1#-19%DVTDocumentLocation2@103"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/icon-60@2x.png0038b05edfffdf42^646"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-60@2x.png build/emulator/JCMS\ Mobile.app/icon-60@2x.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/icons/icon-60@2x.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"A43005A6-EC85-44C6-A1A0-D50F8C5652B1-
+b0BA8986F-9A48-43BB-84F4-983EE13FFE55
+
+CCpResource JCMS\ Mobile/Resources/icons/icon-72.png build/emulator/JCMS\ Mobile.app/icon-72.png
+s430947081.822500
+e430947081.826050
+r1
+xCpResource
+xJCMS Mobile/Resources/icons/icon-72.png
+xbuild/emulator/JCMS Mobile.app/icon-72.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection47"Copy build/emulator/JCMS Mobile.app/icon-72.png103"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-72.png build/emulator/JCMS\ Mobile.app/icon-72.png2bbdd209bbafb941^d789d309bbafb941^---0#0#1#-19%DVTDocumentLocation2@100"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/icon-72.png0000000000000000^637"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-72.png build/emulator/JCMS\ Mobile.app/icon-72.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/icons/icon-72.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"22CBC426-C996-497A-807B-8C06CA2FC377-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/icons/icon-72@2x.png build/emulator/JCMS\ Mobile.app/icon-72@2x.png
+s430947081.829813
+e430947081.833583
+r1
+xCpResource
+xJCMS Mobile/Resources/icons/icon-72@2x.png
+xbuild/emulator/JCMS Mobile.app/icon-72@2x.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection50"Copy build/emulator/JCMS Mobile.app/icon-72@2x.png109"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-72@2x.png build/emulator/JCMS\ Mobile.app/icon-72@2x.png6a86d409bbafb941^6b66d509bbafb941^---0#0#1#-19%DVTDocumentLocation2@103"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/icon-72@2x.png0000000000000000^646"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-72@2x.png build/emulator/JCMS\ Mobile.app/icon-72@2x.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/icons/icon-72@2x.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"3731B196-76A0-470C-B3B0-9133565422A3-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/icons/icon-76.png build/emulator/JCMS\ Mobile.app/icon-76.png
+s430947081.817197
+e430947081.820977
+r1
+xCpResource
+xJCMS Mobile/Resources/icons/icon-76.png
+xbuild/emulator/JCMS Mobile.app/icon-76.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection47"Copy build/emulator/JCMS Mobile.app/icon-76.png103"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-76.png build/emulator/JCMS\ Mobile.app/icon-76.pngc152d109bbafb941^cb2cd209bbafb941^---0#0#1#-19%DVTDocumentLocation2@100"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/icon-76.png0000000000000000^637"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-76.png build/emulator/JCMS\ Mobile.app/icon-76.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/icons/icon-76.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"D23DA01F-A8D5-4A81-88C3-01DB003CD713-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/icons/icon-76@2x.png build/emulator/JCMS\ Mobile.app/icon-76@2x.png
+s430947081.816187
+e430947081.819784
+r1
+xCpResource
+xJCMS Mobile/Resources/icons/icon-76@2x.png
+xbuild/emulator/JCMS Mobile.app/icon-76@2x.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection50"Copy build/emulator/JCMS Mobile.app/icon-76@2x.png109"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-76@2x.png build/emulator/JCMS\ Mobile.app/icon-76@2x.png3525d109bbafb941^37fdd109bbafb941^---0#0#1#-19%DVTDocumentLocation2@103"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/icon-76@2x.png0000000000000000^646"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-76@2x.png build/emulator/JCMS\ Mobile.app/icon-76@2x.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/icons/icon-76@2x.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"B71A6DAD-FA1D-455B-913F-C0558800BDDB-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/icons/icon-small.png build/emulator/JCMS\ Mobile.app/icon-small.png
+s430947081.826610
+e430947081.829502
+r1
+xCpResource
+xJCMS Mobile/Resources/icons/icon-small.png
+xbuild/emulator/JCMS Mobile.app/icon-small.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection50"Copy build/emulator/JCMS Mobile.app/icon-small.png109"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-small.png build/emulator/JCMS\ Mobile.app/icon-small.pngb6bbd309bbafb941^c05bd409bbafb941^---0#0#1#-19%DVTDocumentLocation2@103"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/icon-small.png0000000000000000^646"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-small.png build/emulator/JCMS\ Mobile.app/icon-small.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/icons/icon-small.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"79C6E15F-18F3-47D1-A63C-38ACC3FA3696-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/icons/icon-small@2x.png build/emulator/JCMS\ Mobile.app/icon-small@2x.png
+s430947081.818603
+e430947081.823169
+r1
+xCpResource
+xJCMS Mobile/Resources/icons/icon-small@2x.png
+xbuild/emulator/JCMS Mobile.app/icon-small@2x.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection53"Copy build/emulator/JCMS Mobile.app/icon-small@2x.png115"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-small@2x.png build/emulator/JCMS\ Mobile.app/icon-small@2x.png89b4d109bbafb941^27bed209bbafb941^---0#0#1#-19%DVTDocumentLocation2@106"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/icon-small@2x.png0000000000000000^655"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon-small@2x.png build/emulator/JCMS\ Mobile.app/icon-small@2x.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/icons/icon-small@2x.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"F0125040-6B4F-4D2E-B3E3-AB5DD0AC87C0-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/icons/icon.jpg build/emulator/JCMS\ Mobile.app/icon.jpg
+s430929147.828423
+e430929147.830920
+r1
+xCpResource
+xJCMS Mobile/Resources/icons/icon.jpg
+xbuild/emulator/JCMS Mobile.app/icon.jpg
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection44"Copy build/emulator/JCMS Mobile.app/icon.jpg97"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon.jpg build/emulator/JCMS\ Mobile.app/icon.jpgbe31d4fb74afb941^c3b7d4fb74afb941^---0#0#1#-19%DVTDocumentLocation2@97"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/icon.jpg00380c8eddffdf42^628"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon.jpg build/emulator/JCMS\ Mobile.app/icon.jpg    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/icons/icon.jpg /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"9A1CAAEE-FE6F-43C9-8AA4-DAC02CBB0138-
+b05683425-BD43-4175-B80D-1F26F443F609
+
+CCpResource JCMS\ Mobile/Resources/icons/icon.png build/emulator/JCMS\ Mobile.app/icon.png
+s430321505.621912
+e430321505.627613
+r1
+xCpResource
+xJCMS Mobile/Resources/icons/icon.png
+xbuild/emulator/JCMS Mobile.app/icon.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection44"Copy build/emulator/JCMS Mobile.app/icon.png97"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon.png build/emulator/JCMS\ Mobile.app/icon.png3c509f612fa6b941^e7aba0612fa6b941^---0#0#1#-19%DVTDocumentLocation2@97"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/icon.png0038b05edfffdf42^628"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon.png build/emulator/JCMS\ Mobile.app/icon.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/icons/icon.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"760E5ABB-B84B-48BE-8371-608025FDCB9F-
+b0BA8986F-9A48-43BB-84F4-983EE13FFE55
+
+CCpResource JCMS\ Mobile/Resources/icons/icon@2x.png build/emulator/JCMS\ Mobile.app/icon@2x.png
+s430321505.625607
+e430321505.628793
+r1
+xCpResource
+xJCMS Mobile/Resources/icons/icon@2x.png
+xbuild/emulator/JCMS Mobile.app/icon@2x.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection47"Copy build/emulator/JCMS Mobile.app/icon@2x.png103"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon@2x.png build/emulator/JCMS\ Mobile.app/icon@2x.png113aa0612fa6b941^d7f8a0612fa6b941^---0#0#1#-19%DVTDocumentLocation2@100"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/icon@2x.png0038b05edfffdf42^637"[1mCpResource[0m JCMS\ Mobile/Resources/icons/icon@2x.png build/emulator/JCMS\ Mobile.app/icon@2x.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/icons/icon@2x.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"9DF407D0-E30B-4B98-89F9-400D86C701A6-
+b0BA8986F-9A48-43BB-84F4-983EE13FFE55
+
+CCpResource JCMS\ Mobile/Resources/splash/Default-568h@2x~iphone.png build/emulator/JCMS\ Mobile.app/Default-568h@2x~iphone.png
+s430947081.834629
+e430947081.839223
+r1
+xCpResource
+xJCMS Mobile/Resources/splash/Default-568h@2x~iphone.png
+xbuild/emulator/JCMS Mobile.app/Default-568h@2x~iphone.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection62"Copy build/emulator/JCMS Mobile.app/Default-568h@2x~iphone.png134"[1mCpResource[0m JCMS\ Mobile/Resources/splash/Default-568h@2x~iphone.png build/emulator/JCMS\ Mobile.app/Default-568h@2x~iphone.png2fc1d509bbafb941^c7d7d609bbafb941^---0#0#1#-19%DVTDocumentLocation2@115"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/Default-568h@2x~iphone.png0000000000000000^684"[1mCpResource[0m JCMS\ Mobile/Resources/splash/Default-568h@2x~iphone.png build/emulator/JCMS\ Mobile.app/Default-568h@2x~iphone.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/splash/Default-568h@2x~iphone.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"BC414D6D-538C-4BD8-AFF4-CB552FF111D3-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/splash/Default-Landscape@2x~ipad.png build/emulator/JCMS\ Mobile.app/Default-Landscape@2x~ipad.png
+s430947081.821383
+e430947081.825190
+r1
+xCpResource
+xJCMS Mobile/Resources/splash/Default-Landscape@2x~ipad.png
+xbuild/emulator/JCMS Mobile.app/Default-Landscape@2x~ipad.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection65"Copy build/emulator/JCMS Mobile.app/Default-Landscape@2x~ipad.png140"[1mCpResource[0m JCMS\ Mobile/Resources/splash/Default-Landscape@2x~ipad.png build/emulator/JCMS\ Mobile.app/Default-Landscape@2x~ipad.pngd36cd209bbafb941^7040d309bbafb941^---0#0#1#-19%DVTDocumentLocation2@118"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/Default-Landscape@2x~ipad.png0000000000000000^693"[1mCpResource[0m JCMS\ Mobile/Resources/splash/Default-Landscape@2x~ipad.png build/emulator/JCMS\ Mobile.app/Default-Landscape@2x~ipad.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/splash/Default-Landscape@2x~ipad.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"1D674C23-D289-4DEB-9329-1FF5F16BF704-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/splash/Default-Landscape~ipad.png build/emulator/JCMS\ Mobile.app/Default-Landscape~ipad.png
+s430947081.823706
+e430947081.828158
+r1
+xCpResource
+xJCMS Mobile/Resources/splash/Default-Landscape~ipad.png
+xbuild/emulator/JCMS Mobile.app/Default-Landscape~ipad.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection62"Copy build/emulator/JCMS Mobile.app/Default-Landscape~ipad.png134"[1mCpResource[0m JCMS\ Mobile/Resources/splash/Default-Landscape~ipad.png build/emulator/JCMS\ Mobile.app/Default-Landscape~ipad.png87f9d209bbafb941^7e02d409bbafb941^---0#0#1#-19%DVTDocumentLocation2@115"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/Default-Landscape~ipad.png0000000000000000^684"[1mCpResource[0m JCMS\ Mobile/Resources/splash/Default-Landscape~ipad.png build/emulator/JCMS\ Mobile.app/Default-Landscape~ipad.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/splash/Default-Landscape~ipad.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"18AC74CA-2F84-4E52-8640-9A5F6AFFB606-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/splash/Default-Portrait@2x~ipad.png build/emulator/JCMS\ Mobile.app/Default-Portrait@2x~ipad.png
+s430947081.826984
+e430947081.832341
+r1
+xCpResource
+xJCMS Mobile/Resources/splash/Default-Portrait@2x~ipad.png
+xbuild/emulator/JCMS Mobile.app/Default-Portrait@2x~ipad.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection64"Copy build/emulator/JCMS Mobile.app/Default-Portrait@2x~ipad.png138"[1mCpResource[0m JCMS\ Mobile/Resources/splash/Default-Portrait@2x~ipad.png build/emulator/JCMS\ Mobile.app/Default-Portrait@2x~ipad.png62d6d309bbafb941^d314d509bbafb941^---0#0#1#-19%DVTDocumentLocation2@117"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/Default-Portrait@2x~ipad.png0000000000000000^690"[1mCpResource[0m JCMS\ Mobile/Resources/splash/Default-Portrait@2x~ipad.png build/emulator/JCMS\ Mobile.app/Default-Portrait@2x~ipad.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/splash/Default-Portrait@2x~ipad.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"6DAC2DB1-A56F-4620-BF63-77934537CCC4-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/splash/Default-Portrait~ipad.png build/emulator/JCMS\ Mobile.app/Default-Portrait~ipad.png
+s430947081.829441
+e430947081.832824
+r1
+xCpResource
+xJCMS Mobile/Resources/splash/Default-Portrait~ipad.png
+xbuild/emulator/JCMS Mobile.app/Default-Portrait~ipad.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection61"Copy build/emulator/JCMS Mobile.app/Default-Portrait~ipad.png132"[1mCpResource[0m JCMS\ Mobile/Resources/splash/Default-Portrait~ipad.png build/emulator/JCMS\ Mobile.app/Default-Portrait~ipad.pngab7bd409bbafb941^ea41d509bbafb941^---0#0#1#-19%DVTDocumentLocation2@114"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/Default-Portrait~ipad.png0000000000000000^681"[1mCpResource[0m JCMS\ Mobile/Resources/splash/Default-Portrait~ipad.png build/emulator/JCMS\ Mobile.app/Default-Portrait~ipad.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/splash/Default-Portrait~ipad.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"74EA5650-C305-4287-9B4D-C8CC6E5FC653-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/splash/Default@2x~iphone.png build/emulator/JCMS\ Mobile.app/Default@2x~iphone.png
+s430947081.830730
+e430947081.836146
+r1
+xCpResource
+xJCMS Mobile/Resources/splash/Default@2x~iphone.png
+xbuild/emulator/JCMS Mobile.app/Default@2x~iphone.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection57"Copy build/emulator/JCMS Mobile.app/Default@2x~iphone.png124"[1mCpResource[0m JCMS\ Mobile/Resources/splash/Default@2x~iphone.png build/emulator/JCMS\ Mobile.app/Default@2x~iphone.pngb3b7d409bbafb941^d80ed609bbafb941^---0#0#1#-19%DVTDocumentLocation2@110"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/Default@2x~iphone.png0000000000000000^669"[1mCpResource[0m JCMS\ Mobile/Resources/splash/Default@2x~iphone.png build/emulator/JCMS\ Mobile.app/Default@2x~iphone.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/splash/Default@2x~iphone.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"0E3305F8-6269-4E8C-9D55-E2CBE459C1E4-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CCpResource JCMS\ Mobile/Resources/splash/Default~iphone.png build/emulator/JCMS\ Mobile.app/Default~iphone.png
+s430947081.833923
+e430947081.836675
+r1
+xCpResource
+xJCMS Mobile/Resources/splash/Default~iphone.png
+xbuild/emulator/JCMS Mobile.app/Default~iphone.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection54"Copy build/emulator/JCMS Mobile.app/Default~iphone.png118"[1mCpResource[0m JCMS\ Mobile/Resources/splash/Default~iphone.png build/emulator/JCMS\ Mobile.app/Default~iphone.png6093d509bbafb941^fd30d609bbafb941^---0#0#1#-19%DVTDocumentLocation2@107"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app/Default~iphone.png0000000000000000^660"[1mCpResource[0m JCMS\ Mobile/Resources/splash/Default~iphone.png build/emulator/JCMS\ Mobile.app/Default~iphone.png    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/Resources/splash/Default~iphone.png /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"4FC7E102-4ED5-4275-8500-B3B95EA96769-
+b6DEFCEED-6EA0-4056-A6F4-5ACEE8B13294
+
+CGenerateDSYMFile /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app.dSYM /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/JCMS\ Mobile
+s432495279.739953
+e432495280.040188
+r1
+xGenerateDSYMFile
+x/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app.dSYM
+x/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/JCMS Mobile
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection82"Generate /Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app.dSYM114"[1mGenerateDSYMFile[0m [1mbuild/emulator/JCMS\ Mobile.app.dSYM[0m build/emulator/JCMS\ Mobile.app/JCMS\ Mobileec86bdaf5ac7b941^624c0ab05ac7b941^---0#0#1#-19%DVTDocumentLocation2@94"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/build/emulator/JCMS%20Mobile.app.dSYM/0000000000000000^648"[1mGenerateDSYMFile[0m [1mbuild/emulator/JCMS\ Mobile.app.dSYM[0m build/emulator/JCMS\ Mobile.app/JCMS\ Mobile    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/JCMS\ Mobile -o /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app.dSYM36"B4479900-2D8F-4493-9FD3-7BDF950FC95D-
+bC2A7121F-17F7-4C0E-9EB4-B945AF0744C5
+
+CLd /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/JCMS\ Mobile normal i386
+s430321519.633913
+e430321519.856967
+r1
+xLd
+x/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/JCMS Mobile
+xnormal
+xi386
+d/Users/cssc/JCMS Mobile/platforms/ios/build/JCMS Mobile.build/Debug-iphonesimulator/JCMS Mobile.build/Objects-normal/i386/JCMS Mobile.LinkFileList
+d/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/libCordova.a
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/crt1.o
+d/Users/cssc/JCMS Mobile/platforms/ios/build/JCMS Mobile.build/Debug-iphonesimulator/JCMS Mobile.build/Objects-normal/i386/main.o
+d/Users/cssc/JCMS Mobile/platforms/ios/build/JCMS Mobile.build/Debug-iphonesimulator/JCMS Mobile.build/Objects-normal/i386/AppDelegate.o
+d/Users/cssc/JCMS Mobile/platforms/ios/build/JCMS Mobile.build/Debug-iphonesimulator/JCMS Mobile.build/Objects-normal/i386/MainViewController.o
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/UIKit.framework/UIKit
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/AVFoundation.framework/AVFoundation
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/CoreMedia.framework/CoreMedia
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/libSystem.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/AssetsLibrary.framework/AssetsLibrary
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/MobileCoreServices.framework/MobileCoreServices
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/CoreLocation.framework/CoreLocation
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/Foundation.framework/Foundation
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/libobjc.dylib
+d/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/5.1/lib/darwin/libclang_rt.ios.a
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/Frameworks/AVFoundation.framework/libAVFAudio.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/PrivateFrameworks/UIFoundation.framework/UIFoundation
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_override.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libcache_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libcommonCrypto_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libcorecrypto_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libcompiler_rt_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libcopyfile_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libdispatch.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libdyld_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libmacho_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libnotify_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libremovefile_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_sim_blocks.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_sim_c.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_sim_dnssd.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_sim_info.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_sim_m.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_network.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libunwind_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libxpc.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_sim_configuration.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/libsystem_sim_asl.dylib
+d/usr/lib/libSystem.B.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/system/host/libdyld.dylib
+d/usr/lib/system/libcache.dylib
+d/usr/lib/system/libcommonCrypto.dylib
+d/usr/lib/system/libcompiler_rt.dylib
+d/usr/lib/system/libcopyfile.dylib
+d/usr/lib/system/libdnsinfo.dylib
+d/usr/lib/system/libkeymgr.dylib
+d/usr/lib/system/liblaunch.dylib
+d/usr/lib/system/libmacho.dylib
+d/usr/lib/system/libquarantine.dylib
+d/usr/lib/system/libremovefile.dylib
+d/usr/lib/system/libsystem_blocks.dylib
+d/usr/lib/system/libsystem_c.dylib
+d/usr/lib/system/libsystem_dnssd.dylib
+d/usr/lib/system/libsystem_info.dylib
+d/usr/lib/system/libsystem_kernel.dylib
+d/usr/lib/system/libsystem_m.dylib
+d/usr/lib/system/libsystem_notify.dylib
+d/usr/lib/system/libsystem_sandbox.dylib
+d/usr/lib/system/libunc.dylib
+d/usr/lib/system/libunwind.dylib
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection85"Link /Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/JCMS Mobile67"[1mLd[0m build/emulator/JCMS\ Mobile.app/JCMS\ Mobile normal i386ff5ea26f2fa6b941^b762db6f2fa6b941^---0#0#1#--1674"[1mLd[0m build/emulator/JCMS\ Mobile.app/JCMS\ Mobile normal i386    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export IPHONEOS_DEPLOYMENT_TARGET=6.0    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -arch i386 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk -L/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator -F/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator -filelist /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/JCMS\ Mobile.LinkFileList -Xlinker -objc_abi_version -Xlinker 2 -weak_framework CoreFoundation -weak_framework UIKit -weak_framework AVFoundation -weak_framework CoreMedia -weak-lSystem -force_load /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/libCordova.a -ObjC -fobjc-arc -fobjc-link-runtime -Xlinker -no_implicit_dylibs -mios-simulator-version-min=6.0 -framework AssetsLibrary /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/libCordova.a -framework CoreGraphics -framework MobileCoreServices -framework CoreLocation -Xlinker -dependency_info -Xlinker /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Objects-normal/i386/JCMS\ Mobile_dependency_info.dat -o /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/JCMS\ Mobile36"347051AD-4A0B-47F6-8A32-3B81542C94F9-
+b0BA8986F-9A48-43BB-84F4-983EE13FFE55
+
+CPhaseScriptExecution Copy\ www\ directory /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Script-304B58A110DAC018002A0835.sh
+s432495279.006559
+e432495279.308568
+r1
+xPhaseScriptExecution
+xCopy www directory
+x/Users/cssc/JCMS Mobile/platforms/ios/build/JCMS Mobile.build/Debug-iphonesimulator/JCMS Mobile.build/Script-304B58A110DAC018002A0835.sh
+o
+oreal	0m0.245s
+ouser	0m0.081s
+osys	0m0.099s
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection44"Run custom shell script 'Copy www directory'150"[1mPhaseScriptExecution[0m Copy\ www\ directory build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Script-304B58A110DAC018002A0835.shcf2f02af5ac7b941^e6024faf5ac7b941^-42"real	0m0.245suser	0m0.081ssys	0m0.099s3(21%IDEActivityLogMessage2@14"real	0m0.245s-432495279#1#14#-0#-----2@14"user	0m0.081s-432495279#15#14#-0#-----2@13"sys	0m0.099s-432495279#29#13#-0#-----0#0#1#--357"[1mPhaseScriptExecution[0m Copy\ www\ directory build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Script-304B58A110DAC018002A0835.sh    cd "/Users/cssc/JCMS Mobile/platforms/ios"    /bin/sh -c \"/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/Script-304B58A110DAC018002A0835.sh\"36"6E5F4E1B-49D5-4B4A-AA90-4E05545318BC-
+bC2A7121F-17F7-4C0E-9EB4-B945AF0744C5
+
+CProcessInfoPlistFile /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/Info.plist /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/JCMS\ Mobile-Info.plist
+s432495278.992126
+e432495278.997383
+r1
+xProcessInfoPlistFile
+x/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app/Info.plist
+x/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/JCMS Mobile-Info.plist
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection80"Process /Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/JCMS Mobile-Info.plist116"[1mProcessInfoPlistFile[0m build/emulator/JCMS\ Mobile.app/Info.plist [1mJCMS\ Mobile/JCMS\ Mobile-Info.plist[0m7425feae5ac7b941^6d54ffae5ac7b941^---0#0#1#-19%DVTDocumentLocation2@94"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/JCMS%20Mobile/JCMS%20Mobile-Info.plist0000000000000000^730"[1mProcessInfoPlistFile[0m build/emulator/JCMS\ Mobile.app/Info.plist [1mJCMS\ Mobile/JCMS\ Mobile-Info.plist[0m    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    builtin-infoPlistUtility /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/JCMS\ Mobile-Info.plist -genpkginfo /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -o /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app/Info.plist36"DD322776-F2F7-45CE-AFD8-2E36C8E7CB4C-
+bC2A7121F-17F7-4C0E-9EB4-B945AF0744C5
+
+CProcessPCH /var/folders/z2/lk5l967n7wn73zvvs2mq6vbc0000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/JCMS\ Mobile-Prefix-dtqqdmgpqxwrdqgplsoovtvbkpjn/JCMS\ Mobile-Prefix.pch.pch JCMS\ Mobile/JCMS\ Mobile-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s430321519.109472
+e430321519.508293
+r1
+xProcessPCH
+x/var/folders/z2/lk5l967n7wn73zvvs2mq6vbc0000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/JCMS Mobile-Prefix-dtqqdmgpqxwrdqgplsoovtvbkpjn/JCMS Mobile-Prefix.pch.pch
+xJCMS Mobile/JCMS Mobile-Prefix.pch
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+d/Users/cssc/JCMS Mobile/platforms/ios/JCMS Mobile/JCMS Mobile-Prefix.pch
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection45"Precompile JCMS Mobile/JCMS Mobile-Prefix.pch318"[1mProcessPCH[0m /var/folders/z2/lk5l967n7wn73zvvs2mq6vbc0000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/JCMS\ Mobile-Prefix-dtqqdmgpqxwrdqgplsoovtvbkpjn/JCMS\ Mobile-Prefix.pch.pch JCMS\ Mobile/JCMS\ Mobile-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compilerfb231c6f2fa6b941^c422826f2fa6b941^---0#0#1#-19%DVTDocumentLocation2@94"file://localhost/Users/cssc/JCMS%20Mobile/platforms/ios/JCMS%20Mobile/JCMS%20Mobile-Prefix.pch0000000000000000^3739"[1mProcessPCH[0m /var/folders/z2/lk5l967n7wn73zvvs2mq6vbc0000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/JCMS\ Mobile-Prefix-dtqqdmgpqxwrdqgplsoovtvbkpjn/JCMS\ Mobile-Prefix.pch.pch JCMS\ Mobile/JCMS\ Mobile-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export LANG=en_US.US-ASCII    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c-header -arch i386 -fmessage-length=272 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -fcolor-diagnostics -std=c99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wduplicate-method-match -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk -fexceptions -fasm-blocks -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -g -fvisibility=hidden -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch -mios-simulator-version-min=6.0 -iquote /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-generated-files.hmap -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-own-target-headers.hmap -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-all-target-headers.hmap -iquote /Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/JCMS\ Mobile-project-headers.hmap -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/include -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/usr/local/lib/include -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/UninstalledProducts/include -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/DerivedSources/i386 -I/Users/cssc/JCMS\ Mobile/platforms/ios/build/JCMS\ Mobile.build/Debug-iphonesimulator/JCMS\ Mobile.build/DerivedSources -F/Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator --serialize-diagnostics /var/folders/z2/lk5l967n7wn73zvvs2mq6vbc0000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/JCMS\ Mobile-Prefix-dtqqdmgpqxwrdqgplsoovtvbkpjn/JCMS\ Mobile-Prefix.pch.dia -MMD -MT dependencies -MF /var/folders/z2/lk5l967n7wn73zvvs2mq6vbc0000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/JCMS\ Mobile-Prefix-dtqqdmgpqxwrdqgplsoovtvbkpjn/JCMS\ Mobile-Prefix.pch.d -c /Users/cssc/JCMS\ Mobile/platforms/ios/JCMS\ Mobile/JCMS\ Mobile-Prefix.pch -o /var/folders/z2/lk5l967n7wn73zvvs2mq6vbc0000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/JCMS\ Mobile-Prefix-dtqqdmgpqxwrdqgplsoovtvbkpjn/JCMS\ Mobile-Prefix.pch.pch36"C604A414-64A7-48A9-81E5-BC382EFE1E75-
+b0BA8986F-9A48-43BB-84F4-983EE13FFE55
+
+CTouch /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app
+s432495280.049898
+e432495280.058308
+r1
+xTouch
+x/Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection74"Touch /Users/cssc/JCMS Mobile/platforms/ios/build/emulator/JCMS Mobile.app45"[1mTouch[0m build/emulator/JCMS\ Mobile.appb8e40cb05ac7b941^bbed0eb05ac7b941^---0#0#1#--409"[1mTouch[0m build/emulator/JCMS\ Mobile.app    cd "/Users/cssc/JCMS Mobile/platforms/ios"    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin"    /usr/bin/touch -c /Users/cssc/JCMS\ Mobile/platforms/ios/build/emulator/JCMS\ Mobile.app36"0B2ED682-1B33-4A29-ABE6-9ABDD1F427FF-
+bC2A7121F-17F7-4C0E-9EB4-B945AF0744C5
+

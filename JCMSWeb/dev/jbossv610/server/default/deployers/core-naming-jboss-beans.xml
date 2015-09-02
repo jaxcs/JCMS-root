@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+    
+    <!-- ==================================================================== -->
+    <!-- JNDI                                                                 -->
+    <!-- ==================================================================== -->
+    
+    <bean name="LocalNamingBean" class="org.jnp.server.NamingBeanImpl">
+        <!-- Install this bean as the global JVM NamingServer -->
+        <property name="installGlobalService">true</property>
+        <property name="useGlobalService">false</property>
+        <property name="installJavaComp">false</property>
+    </bean>
+
+    <bean name="NameSpaces" class="org.jboss.reloaded.naming.service.NameSpaces"/>
+
+    <bean name="JavaEEModuleIdentifier" class="org.jboss.as.naming.javaee.JavaEEModuleIdentifier"/>
+
+    <bean name="NamingJavaEEApplicationInformer" class="org.jboss.as.naming.javaee.NamingJavaEEApplicationInformer"/>
+    <bean name="NamingJavaEEModuleInformer" class="org.jboss.as.naming.javaee.NamingJavaEEModuleInformer">
+        <property name="javaEEModuleIdentifier"><inject bean="JavaEEModuleIdentifier"/></property>
+    </bean>
+    <bean name="NamingJavaEEComponentInformer" class="org.jboss.as.naming.javaee.NamingJavaEEComponentInformer">
+        <property name="javaEEModuleIdentifier"><inject bean="JavaEEModuleIdentifier"/></property>       
+    </bean>
+
+    <bean name="AppNamingDeployer" class="org.jboss.reloaded.naming.deployers.AppNamingDeployer">
+        <constructor><parameter><inject bean="NamingJavaEEApplicationInformer"/></parameter></constructor>
+    </bean>
+    <bean name="ModuleNamingDeployer" class="org.jboss.reloaded.naming.deployers.ModuleNamingDeployer">
+        <constructor><parameter><inject bean="NamingJavaEEModuleInformer"/></parameter></constructor>
+    </bean>
+    <bean name="ComponentNamingDeployer" class="org.jboss.reloaded.naming.deployers.ComponentNamingDeployer">
+        <constructor><parameter><inject bean="NamingJavaEEComponentInformer"/></parameter></constructor>
+    </bean>
+</deployment>

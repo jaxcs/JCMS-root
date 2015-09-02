@@ -1,0 +1,58 @@
+EditExpPlan,Experiment: Make changes to an experimental plan or manage the mice and tests that are part of the plan.,Manage/ Edit Exp Plan,Owner
+AddExpTest,Experiment: Add a new experimental test.,Add Exp Test,Owner
+EditExpTest,Experiment: Make changes to an experimental test.,Edit Exp Test,Owner
+AddExpDataDescriptor,Experiment: Add a new test type and describe the data to be collected.,Add Test Type - Data Description,Owner
+EditExpDataDescriptor,Experiment: Make changes to a test type.,Edit Test Type,Owner
+AddExpDataDefaults,Experiment: Add a new set of default values for the data corresponding to a particular test type.,Add Test Type Defaults,Owner
+EditExpDataDefaults,Experiment: Make changes to the default data values for a particular test type.,Edit Test Type Defaults,Admin
+AddExpData,Experiment: Add experimental data for a mouse.,Add Exp Data,Sec
+EditExpData,Experiment: Make changes to the experimental data associated with a mouse.,Edit Exp Data,Sec
+QueryExperimentalData,Query: Show information about the data collected for a mouse\, experiment\, or test.,Query Experiment,Sec
+BulkAddMiceFromQuery,Experiment: Add a group of mice into an experimental plan or test - mice are selected with the mouse query form.,Bulk Add Mice from Query,Owner
+AddExpDataToSpecificTest,Experiment: Add data values that are the same to a group of mice all at once.,Bulk Add Data to Specific Test,Sec
+RequestExperimentWorkReport,Reports: Experiments - Show all the mice due for processing based on age and proposed test date.,Print Experiment Work Report,Sec
+HandHeldMain,Handheld: Main menu of choices.,Handheld Forms,Sec
+HandheldWeanAndExit,Handheld: Wean pups\, Wean and Exit pups\, or Bulk change life status.,Wean or Wean and Exit,Sec
+HandheldMating,Handheld: Add a pair or trio mating by moving the mice into a new pen.,Make a Pair or Trio Mating,Sec
+HandheldAddLitter,Handheld: Add a litter and add mouse records for the pups at the same time.,Add litter w/mice,Sec
+HandheldPrintCageCards,Handheld: Print a new cage card for a selected pen.,Print cage card with handheld,Sec
+HandheldMoveMice,Handheld: Move mice from a selected pen into a new pen.,Move mice with handheld,Owner
+HandheldChangeMice,Handheld: Change the life status of mice in one or more pens.,Change life status,Owner
+AddMouse,Add Mice: Add new mice\, one at a time.,Add Mouse,Sec
+EditMouse,Edit Mice: Make changes to the information about a mouse.,Edit Mouse,Sec
+AddMouseAtWeaning,Add Mice: Add a new mouse from a specific JCMS litter.,Wean,Owner
+MoveMouse,Pens: Use this form to move mice from one pen into another.,Move Mice,Owner
+ImportMice,Add Mice: Add a group of mice at once. All must be similar.,Import Mice,Owner
+AddLitterWithPups,Add Litter: Add a litter and optionally create mouse records for each pup at the same time.,Add Litter w/Pups,Sec
+AddLitter,Add Litter: Add a litter.,Add Litter,Sec
+EditLitter,Edit Litter: Make changes to the information about a litter of mice.,Edit Litter,Sec
+DesignMatings,Add Mating: Create a mating "on paper" before doing it for real.,Design Matings,Owner
+ActivateMatings,Add Mating: Finalize the creation of a mating that was designed previously by entering the mating date.,Activate Matings,Owner
+DoMatings,Add Mating: Add a mating record after it has been done in the mouse room.,Do Matings,Owner
+TSDesignRetireMating,Other Mating: Decide ahead of time what matings to retire.,Design Retire Matings,Owner
+RetireMatings,Other Mating: Finalize the end of a mating by retiring it.,Retire Matings,Owner
+EditMatings,Edit Mating: Make changes to the information about a mating.,Edit Matings,Owner
+AddGenotype,Add Genotype: Add new genotype information for a particular mouse.,Add Genotype,Owner
+EditGenotype,Edit Genotype: Make changes to the genotype information for a mouse.,Edit Genotype,Owner
+AddMouseUse,Add Mouse Use: Add a new use for a particular mouse. Uses can store small amounts of associated data.,Add Use,Owner
+EditMouseUse,Edit Mouse Use: Make changes to the information about a mouse's use and add or update associated data.,Edit Use,Owner
+RequestWeanReport,Reports: Wean - List litters that have not been weaned.,Print Wean Report,Sec
+RequestMouseUseReport,Reports: Mouse Uses - List mice with uses that are not marked done.,Print Mouse Use Report,Sec
+LastTagEdit,Misc: The strain record can contain a range of ear tags for use with only that strain.,Edit Ear Tags,Admin
+CreatePen,Pens: Add a new empty mouse cage.,New Pen,Owner
+PenInfo,Pens: Show what pen a mouse is in\, list the other mice in the pen\, and print a cage card.,Pen Info,Sec
+EditPenGroup,Pens: Edit the basic information about a mouse cage.,Edit Pen Group,Owner
+PrintCageCards,Pens: Print blank cage cards.,Print Cage Cards,Sec
+BulkChangeLifeStatusOrDietMouse,Edit Mice: Make a change to either the life status or diet of a group of mice.,Bulk Change Life Status or Diet,Owner
+BulkAddOrEditMouseUse,Add Mouse Use: Add or edit mouse uses for a group of mice.,Bulk Add or Edit Use,Owner
+BulkAddGenoType,Add Genotype: Add new genotype information for a group of mice.,Bulk Add Genotype,Owner
+DB Statistics,Misc: Show the current number of mice\, matings\, and pens in JCMS,Data Stats,Sec
+QueryMatings,Query: Show information about matings based on user criteria,Query Matings,Sec
+QueryMouse,Query: Show information about mice based on user criteria.,Query Mouse,Sec
+AddExpPlan,Experiment: Add a new experimental plan.,Add Exp Plan,Owner
+TestTypeBasedWorkReport,Reports: Experiments - Show the mice due for processing for selected test types.,Test-type Based Exp Work Report,Sec
+ChangeMouseIDForm,Misc: Create a new ID number for an existing mouse,Change Mouse ID,Owner
+AddSample,Add Sample: Add new samples.,Add Sample,Sec
+EditSample,Edit Sample: Modify exsiting samples.,Edit Sample,Sec
+BulkUpdateSample,Bulk Edit Sample: Add or edit mouse Owner/Status/Location a group of samples.,Bulk Change Sample,Sec
+QuerySample,Query Samples:  Show information about samples based on user criteria.,Query Samples,Sec

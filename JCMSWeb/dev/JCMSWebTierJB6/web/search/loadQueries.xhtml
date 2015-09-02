@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+        <title>
+            <h:outputText value="Load Queries"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript">
+            function deleteMouseWarning(){
+                var r = false;
+                var r=confirm("Are you sure you wish to delete this query?");
+                if(r){
+                    document.getElementById('loadQueryForm:secretMouseDelete').click();
+                }
+                else{
+                    document.getElementById('loadQueryForm:secretMouseCancel').click();
+                }
+                return;
+            }
+        </script>
+        <script type="text/javascript">
+            function deleteMatingWarning(){
+                var r = false;
+                var r=confirm("Are you sure you wish to delete this query?");
+                if(r){
+                    document.getElementById('loadQueryForm:secretMatingDelete').click();
+                }
+                else{
+                    document.getElementById('loadQueryForm:secretMatingCancel').click();
+                }
+                return;
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <h:form id="loadQueryForm">
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <div style="margin-left:10px;margin-right:10px">
+
+                <rich:messages />
+                <br />
+                <h2><h:outputText value="Load Mouse and Mating Queries:"/></h2>
+                <br />
+
+                <h:panelGrid columns="2"
+                             columnClasses="detailPane, detailPane, detailPane">
+
+                    <h:panelGroup>
+                        <rich:dataTable value="#{LoadQuery_Backing.queryLst}"
+                                        style=" margin-left: 20px;"
+                                        var="row" id="mouseQueryTable">
+                            <f:facet name="header">
+                                <rich:columnGroup>
+                                    <rich:column colspan="3">Mouse Queries</rich:column>
+                                    <rich:column breakRowBefore="true"><h:outputText value="Actions"/></rich:column>
+                                    <rich:column><h:outputText value="Mouse Query"/></rich:column>
+                                    <rich:column><h:outputText value="Workgroups"/></rich:column>
+                                </rich:columnGroup>
+                            </f:facet>
+                            <rich:column rendered="#{row.queryTypekey.queryTypekey == 1}">
+                                <a4j:commandLink id="deleteMouseQueryLink"
+                                                styleClass="smallText"
+                                                action = "#{MouseQuery_Backing.deleteQueryHelper}"
+                                                oncomplete="deleteMouseWarning();"
+                                                render="mouseQueryTable">
+                                    <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                    <f:param name="udMouseQueryKey" value="#{row.queryDefinitionkey}"/>
+                                </a4j:commandLink>
+                            </rich:column>
+                            <rich:column rendered="#{row.queryTypekey.queryTypekey == 1}">
+                                <h:commandLink action="#{MouseQuery_Backing.loadMouseQueryAction}" target="_blank">
+                                    <h:outputText value="#{row.queryName}"/>
+                                    <f:param name="udMouseQueryKey" value="#{row.queryDefinitionkey}" />
+                                    <a4j:param value="#{row.queryName}" assignTo="#{MouseQuery_Backing.queryName}" />
+                                </h:commandLink>
+                            </rich:column>
+                            <rich:column rendered="#{row.queryTypekey.queryTypekey == 1}">
+                                <h:outputText value="#{row.workgroupkey.workgroupName}"/>
+                            </rich:column>
+                        </rich:dataTable>
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <rich:dataTable value="#{LoadQuery_Backing.queryLst}"
+                                        style=" margin-left: 20px;"
+                                        var="row" id="matingQueryTable">
+                            <f:facet name="header">
+                                <rich:columnGroup>
+                                    <rich:column colspan="3">Mating Queries</rich:column>
+                                    <rich:column breakRowBefore="true"><h:outputText value="Actions"/></rich:column>
+                                    <rich:column><h:outputText value="Mating Query"/></rich:column>
+                                    <rich:column><h:outputText value="Workgroups"/></rich:column>
+                                </rich:columnGroup>
+                            </f:facet>
+                            <rich:column rendered="#{row.queryTypekey.queryTypekey == 2}">
+                                <a4j:commandLink id="deleteMatingQueryLink"
+                                                styleClass="smallText"
+                                                action = "#{MatingQuery_Backing.deleteQueryHelper}"
+                                                oncomplete="deleteMatingWarning();"
+                                                render="matingQueryTable">
+                                    <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                    <f:param name="udMatingQueryKey" value="#{row.queryDefinitionkey}"/>
+                                </a4j:commandLink>
+                            </rich:column>
+                            <rich:column rendered="#{row.queryTypekey.queryTypekey == 2}">
+                                <h:commandLink action="#{MatingQuery_Backing.loadMatingQueryAction}" target="_blank">
+                                    <h:outputText value="#{row.queryName}"/>
+                                    <f:param name="udMatingQueryKey" value="#{row.queryDefinitionkey}" />
+                                    <a4j:param value="#{row.queryName}" assignTo="#{MatingQuery_Backing.queryName}" />
+                                </h:commandLink>
+                            </rich:column>
+                            <rich:column rendered="#{row.queryTypekey.queryTypekey == 2}">
+                                <h:outputText value="#{row.workgroupkey.workgroupName}"/>
+                            </rich:column>
+                        </rich:dataTable>
+                    </h:panelGroup>
+                </h:panelGrid>
+                </div>
+                <h:commandButton id="secretMatingDelete"
+                                action="#{MatingQuery_Backing.deleteQuery}"
+                                style="visibility:hidden"/>
+                <h:commandButton id="secretMatingCancel"
+                                action="#{MatingQuery_Backing.deleteCancel}"
+                                style="visibility:hidden"/>
+                <h:commandButton id="secretMouseDelete"
+                                action="#{MouseQuery_Backing.deleteQuery}"
+                                style="visibility:hidden"/>
+                <h:commandButton id="secretMouseCancel"
+                                action="#{MouseQuery_Backing.deleteCancel}"
+                                style="visibility:hidden"/>
+                <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+            </h:form>
+    </h:body>
+</html>

@@ -1,0 +1,1566 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Mating Query</title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js" >
+        </script>
+        <script type="text/javascript">
+            function overwriteQueryNameWarning() {
+                var question = "Do you want to overwrite mating query definition " + $('input[id$="queryNameId"]').val() + ".  \n\n" 
+                              +"Select OK to overwrite current query or select Cancel to abort the save, \nrename your query name and try to save again.";
+                if(confirm(question)){
+                    document.getElementById('matingQueryFormId:secretSaveQueryButton').click();
+                }
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <h:form id="matingQueryFormId">
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <div style="margin-left:10px;margin-right:10px">
+                <h1>
+                    <h:outputText value="Mating Query" style="h1"/>
+                    </h1>
+                    <img src="../images/bhi_ball_white.gif" />
+                    <!-- STATUS -->
+                    <a4j:status name="statusPage">
+                        <f:facet name="start">
+                            <h:graphicImage  value="../images/bhi_ball.gif"/>
+                        </f:facet>
+                    </a4j:status> 
+
+                   <div align="left">
+                   &nbsp;&nbsp;
+                   <a4j:commandButton
+                        value="#{msgs['common.run']}"
+                        styleClass="mediumButton"
+                        oncomplete="#{rich:component('runMatingQueryPanel')}.show()"
+                        action="#{MatingQuery_Backing.runQueryAction}"
+                        render="resultsMatingQueryRowCnt, resultsMatingQueryDisplay, datMatingSearchResultsTable, matingQueryFormId"
+                        id="run1" 
+                        status="statusPage"/>                        
+                   &nbsp;&nbsp;
+                    <h:panelGroup id="saveButtonsTop">
+                        <a4j:commandButton
+                            value="#{msgs['common.save']}"
+                            styleClass="mediumButton"
+                            action="#{MatingQuery_Backing.saveQueryAction}"
+                            render="matingQueryFormId"
+                            rendered="#{!(MatingQuery_Backing.isOverwrite)}"
+                            status="statusPage">
+                            <a4j:param value="false" assignTo="#{MatingQuery_Backing.isOverwrite}"/>
+                        </a4j:commandButton>
+                        <a4j:commandButton
+                            value="#{msgs['common.save']}"
+                            styleClass="mediumButton"
+                            oncomplete="overwriteQueryNameWarning()"
+                            rendered="#{MatingQuery_Backing.isOverwrite}" />
+                    </h:panelGroup>                    
+                   &nbsp;&nbsp;
+                   <a4j:commandButton
+                        value="#{msgs['common.clear']}"
+                        styleClass="mediumButton"
+                        action="#{MatingQuery_Backing.clearQueryAction}"
+                        render="matingQueryFormId"
+                        id="clear1"  
+                        status="statusPage"/>
+                    <a4j:commandButton id="secretSaveQueryButton"
+                                       style="visibility: hidden"
+                                       action="#{MatingQuery_Backing.saveQueryAction}" 
+                                       status="statusTable">
+                        <a4j:param value="true" assignTo="#{MatingQuery_Backing.isOverwrite}"/>
+                    </a4j:commandButton>
+                </div><hr />
+
+                <!-- Messages -->
+                <rich:messages />
+                <br />
+
+                <h:outputText value="#{msgs['common.queryName']}: " class="rowHeader" />
+                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />                
+                &nbsp;&nbsp;
+                <h:inputText id="queryNameId"
+                             value="#{MatingQuery_Backing.queryName}" 
+                             class="innerTableTD" >
+                    <a4j:ajax event="keyup" listener="#{MatingQuery_Backing.overwriteQueryListener}" render="saveButtonsTop saveButtonsBottom" />
+                </h:inputText>
+                
+
+                <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5"
+                             columnClasses="detailPane, detailPane">
+
+                    <h:panelGroup styleClass="formTitle">
+
+                        <h:panelGrid columns="3"
+                                     columnClasses="innerTableTD, rowHeader, innerTableTD"
+                                     styleClass="innerTable">
+
+                            <h:panelGroup>
+                                <h3><h:outputText value="Output"></h:outputText></h3>
+                                <h:selectBooleanCheckbox id="checkAll"
+                                                         onclick="checkAllRowsMatingQuery(this.form, 'checkAll');"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h3><h:outputText value="Field"></h:outputText></h3>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h3><h:outputLabel value="Filter Criteria" /></h3>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMatingID"
+                                    value="#{MatingQuery_Backing.search.selectMatingID}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['matingId']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="2">
+                                    <h:panelGroup>
+                                        <h:selectOneMenu value="#{MatingQuery_Backing.search.matingFilter}" >
+                                            <f:selectItems value="#{MatingQuery_Backing.selectItemWrapper.matingFilters}" />
+                                            <a4j:ajax event="change" render="outMating" />
+                                        </h:selectOneMenu>
+                                        &nbsp;&nbsp;
+                                    </h:panelGroup>
+
+                                    <h:panelGroup id="outMating">
+                                        <h:panelGroup rendered="#{MatingQuery_Backing.search.matingFilter == 'Between'}">
+                                            <h:inputText value="#{MatingQuery_Backing.search.mIDFrom}" size="10" />
+                                            &nbsp;&nbsp;
+                                            <h:outputText value="#{msgs['search.to']}" ></h:outputText>
+                                            &nbsp;&nbsp;
+                                            <h:inputText value="#{MatingQuery_Backing.search.mIDTo}" size="10" />
+                                        </h:panelGroup>
+
+                                        <h:panelGroup rendered="#{MatingQuery_Backing.search.matingFilter == 'Equals'}">
+                                            <h:inputText value="#{MatingQuery_Backing.search.mIDFrom}" size="10" />
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+
+                                </h:panelGrid>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMatingDates"
+                                    value="#{MatingQuery_Backing.search.selectMatingDates}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['matingDates']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <rich:calendar id="matingStartDate"
+                                               label="#{msgs['common.calendarPicker']}"
+                                               value="#{MatingQuery_Backing.search.matingStartDate}"
+                                               inputSize="#{msgs['common.minMaxSize']}"
+                                               datePattern="#{MatingQuery_Backing.date_format}"
+                                               showInput="true"
+                                               showWeeksBar="true"
+                                               enableManualInput="true">
+                                </rich:calendar>
+                                &nbsp;&nbsp;
+                                <h:outputText value="#{msgs['search.to']}"></h:outputText>
+                                &nbsp;&nbsp;
+                                <rich:calendar id="matingEndDate"
+                                               label="#{msgs['common.calendarPicker']}"
+                                               value="#{MatingQuery_Backing.search.matingEndDate}"
+                                               inputSize="#{msgs['common.minMaxSize']}"
+                                               datePattern="#{MatingQuery_Backing.date_format}"
+                                               showInput="true"
+                                               showWeeksBar="true"
+                                               enableManualInput="true">
+                                </rich:calendar>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMatingStatus"
+                                    value="#{MatingQuery_Backing.search.selectMatingStatus}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['matingStatus']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="2">
+                                    <h:panelGroup>
+                                        <h:selectManyCheckbox value="#{MatingQuery_Backing.search.crossStatus}"
+                                                              id="matingStatus" layout="pageDirection" onclick="alert(matingStatus.value);">
+                                            <f:selectItems value="#{MatingQuery_Backing.selectItemWrapper.cvCrossStatusItems}" />
+                                            <f:converter converterId="crossStatusConverter" />
+                                        </h:selectManyCheckbox>
+                                        &nbsp;&nbsp;
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                            </h:panelGroup> 
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMatingStrain"
+                                    value="#{MatingQuery_Backing.search.selectMatingStrain}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['litterStrain']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <rich:collapsiblePanel header="Select Filter" expanded="false" >
+                                    <h:outputLabel value="Strain" styleClass="collapsiblePanelLabel" />
+                                    <rich:pickList value="#{MatingQuery_Backing.search.litterStrain}"  >
+                                        <f:selectItems value="#{MatingQuery_Backing.selectItemWrapper.matingStrainItems}" />
+                                        <f:converter converterId="strainConverter" />
+                                    </rich:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMatingGeneration"
+                                    value="#{MatingQuery_Backing.search.selectMatingGeneration}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['litterGeneration']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <rich:collapsiblePanel header="Select Filter" expanded="false" >
+                                    <h:outputLabel value="Litter Generation" styleClass="collapsiblePanelLabel" />
+                                    <rich:pickList value="#{MatingQuery_Backing.search.litterGeneration}">
+                                        <f:selectItems value="#{MatingQuery_Backing.selectItemWrapper.cvGenerationItems}"/>
+                                        <f:converter converterId="generationConverter" />
+                                    </rich:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMatingOwner"
+                                    value="#{MatingQuery_Backing.search.selectMatingOwner}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['matingOwner']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <rich:collapsiblePanel header="Select Filter" expanded="false"  >
+                                    <h:outputLabel value="Mating Owner / Workgroup"  styleClass="collapsiblePanelLabel" />
+                                    <rich:pickList value="#{MatingQuery_Backing.search.matingOwner}">
+                                        <f:selectItems value="#{MatingQuery_Backing.selectItemWrapper.guestOwnerItems}"/>
+                                        <f:converter converterId="ownerConverter" />
+                                    </rich:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMatingPenId"
+                                    value="#{MatingQuery_Backing.search.selectMatingPenId}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['pen#']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="2">
+                                    <h:panelGroup>
+                                        <h:inputText value="#{MatingQuery_Backing.search.penIdFilter}"
+                                                     readonly="true" size="10" />
+                                        &nbsp;&nbsp;
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <h:inputText value="#{MatingQuery_Backing.search.penIDFrom}"
+                                                     size="10" />
+                                        &nbsp;&nbsp;
+                                        <h:outputText value="#{msgs['search.to']}" ></h:outputText>
+                                        &nbsp;&nbsp;
+                                        <h:inputText value="#{MatingQuery_Backing.search.penIDTo}"
+                                                     size="10" />
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMatingPenName"
+                                    value="#{MatingQuery_Backing.search.selectMatingPenName}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['penName']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="2">
+                                    <h:panelGroup>
+                                        <h:inputText value="#{MatingQuery_Backing.search.penNameFilter}"
+                                                     readonly="true" size="10" />
+                                        &nbsp;&nbsp;
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <h:inputText value="#{MatingQuery_Backing.search.pName}" />
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                &nbsp;
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Summarize Litter Information" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <rich:collapsiblePanel header="Check off the litter results to show" expanded="false" >
+                                    <h:outputLabel value="Summarize Litter Information" styleClass="collapsiblePanelLabel" /><br />
+                                    <h:selectBooleanCheckbox value="#{MatingQuery_Backing.search.selectLitterIDs}" />
+                                    <h:outputText value="Litter IDs"/>
+                                    <br />
+                                    <h:selectBooleanCheckbox value="#{MatingQuery_Backing.search.selectTotalLitters}" />
+                                    <h:outputText value="Total number of litters"/>
+                                    <br />
+                                    <h:selectBooleanCheckbox value="#{MatingQuery_Backing.search.selectTotalPups}" />
+                                    <h:outputText value="Total number of pups born"/>
+                                    <br />
+                                    <h:selectBooleanCheckbox value="#{MatingQuery_Backing.search.selectTotalMales}" />
+                                    <h:outputText value="Total number of males weaned"/>
+                                    <br />
+                                    <h:selectBooleanCheckbox value="#{MatingQuery_Backing.search.selectTotalFemales}" />
+                                    <h:outputText value="Total number of females weaned"/>
+                                    <br />
+                                    <h:selectBooleanCheckbox value="#{MatingQuery_Backing.search.selectTotalLittersDead}" />
+                                    <h:outputText value="Total number of litters born dead"/>
+                                    <br />
+                                    <h:selectBooleanCheckbox value="#{MatingQuery_Backing.search.selectBirthDates}" />
+                                    <h:outputText value="First and last birth dates"/>
+                                    <br />
+                                    <h:selectBooleanCheckbox value="#{MatingQuery_Backing.search.selectTotalPupsBornDead}" />
+                                    <h:outputText value="Total pups born dead"/>
+                                    <br />
+                                    <h:selectBooleanCheckbox value="#{MatingQuery_Backing.search.selectTotalPupsCulledAtWean}" />
+                                    <h:outputText value="Total pups culled at wean"/>
+                                    <br />
+                                    <h:selectBooleanCheckbox value="#{MatingQuery_Backing.search.selectTotalPupsMissingAtWean}" />
+                                    <h:outputText value="Total pups missing at wean"/>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDam1ID"
+                                    value="#{MatingQuery_Backing.search.selectDam1ID}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Dam 1 ID" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                &nbsp;
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDam1Strain"
+                                    value="#{MatingQuery_Backing.search.selectDam1Strain}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Dam 1 Strain" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                &nbsp;
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDam1Stock"
+                                    value="#{MatingQuery_Backing.search.selectDam1Stock}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Dam 1 Stock #" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                &nbsp;
+                            </h:panelGroup>
+
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+                    <h:panelGroup styleClass="formTitle">
+
+                        <h:panelGrid columns="2"
+                                     columnClasses="innerTableTD, rowHeader"
+                                     styleClass="innerTable">
+                            <h:panelGroup>
+                                <h3><h:outputText value="Output"></h:outputText></h3>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h3><h:outputText value="Field"></h:outputText></h3>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDam1Gen"
+                                    value="#{MatingQuery_Backing.search.selectDam1Gen}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Dam 1 Generation" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDam1Genotype"
+                                    value="#{MatingQuery_Backing.search.selectDam1Genotype}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Dam 1 Up To Three Genotypes" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDam1DOB"
+                                    value="#{MatingQuery_Backing.search.selectDam1DOB}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Dam 1 Date Of Birth" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDam1PlugDate"
+                                    value="#{MatingQuery_Backing.search.selectDam1PlugDate}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Dam 1 Plug Dates" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDam2ID"
+                                    value="#{MatingQuery_Backing.search.selectDam2ID}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Dam 2 ID" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDam2Strain"
+                                    value="#{MatingQuery_Backing.search.selectDam2Strain}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Dam 2 Strain" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDam2Stock"
+                                    value="#{MatingQuery_Backing.search.selectDam2Stock}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Dam 2 Stock #" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDam2Gen"
+                                    value="#{MatingQuery_Backing.search.selectDam2Gen}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Dam 2 Generation" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDam2Genotype"
+                                    value="#{MatingQuery_Backing.search.selectDam2Genotype}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Dam 2 Up To Three Genotypes" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDam2DOB"
+                                    value="#{MatingQuery_Backing.search.selectDam2DOB}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Dam 2 Date Of Birth" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDam2PlugDate"
+                                    value="#{MatingQuery_Backing.search.selectDam2PlugDate}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Dam 2 Plug Dates" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectSireID"
+                                    value="#{MatingQuery_Backing.search.selectSireID}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Sire ID" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectSireStrain"
+                                    value="#{MatingQuery_Backing.search.selectSireStrain}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Sire Strain" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectSireStock"
+                                    value="#{MatingQuery_Backing.search.selectSireStock}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Sire Stock #" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectSireGen"
+                                    value="#{MatingQuery_Backing.search.selectSireGen}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Sire Generation" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectSireGenotype"
+                                    value="#{MatingQuery_Backing.search.selectSireGenotype}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Sire Up To Three Genotypes" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectSireDOB"
+                                    value="#{MatingQuery_Backing.search.selectSireDOB}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Sire Date Of Birth" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDateRetired"
+                                    value="#{MatingQuery_Backing.search.selectDateRetired}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Date Retired" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectWeanTime"
+                                    value="#{MatingQuery_Backing.search.selectWeanTime}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Wean Time" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectNeedsTyping"
+                                    value="#{MatingQuery_Backing.search.selectNeedsTyping}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Needs Genotyping" />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+                </h:panelGrid>
+                </div>
+
+                <hr /><div align="left">
+                    &nbsp;&nbsp;
+                    <a4j:commandButton
+                        value="#{msgs['common.run']}"
+                        styleClass="mediumButton"
+                        oncomplete="#{rich:component('runMatingQueryPanel')}.show()"
+                        action="#{MatingQuery_Backing.runQueryAction}"
+                        render="resultsMatingQueryRowCnt, resultsMatingQueryDisplay, datMatingSearchResultsTable, matingQueryFormId"
+                        id="run2" 
+                        status="statusPage"/>
+
+                    &nbsp;&nbsp;
+                    <h:panelGroup id="saveButtonsBottom">
+                        <a4j:commandButton
+                            value="#{msgs['common.save']}"
+                            styleClass="mediumButton"
+                            action="#{MatingQuery_Backing.saveQueryAction}"
+                            render="matingQueryFormId"
+                            rendered="#{!(MatingQuery_Backing.isOverwrite)}"
+                            status="statusPage">
+                            <a4j:param value="false" assignTo="#{MatingQuery_Backing.isOverwrite}"/>
+                        </a4j:commandButton>
+                        <a4j:commandButton
+                            value="#{msgs['common.save']}"
+                            styleClass="mediumButton"
+                            oncomplete="overwriteQueryNameWarning()"
+                            rendered="#{MatingQuery_Backing.isOverwrite}" />
+                    </h:panelGroup>                    
+
+                    &nbsp;&nbsp;
+                    <a4j:commandButton
+                        value="#{msgs['common.clear']}"
+                        styleClass="mediumButton"
+                        action="#{MatingQuery_Backing.clearQueryAction}"
+                        render="matingQueryFormId"
+                        id="clear2"  
+                        status="statusPage"/>
+                    </div>
+                </h:form>
+
+        <!-- Run Query modal panel -->
+        <rich:popupPanel id="runMatingQueryPanel" width="750" top="10" 
+                         height="650" resizeable="true">
+            <f:facet name="header">
+                <h:outputText value="#{msgs['matingSearchResults']}" />
+            </f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="/images/delete.gif" id="hidelinkId2" 
+                                    onclick="#{rich:component('runMatingQueryPanel')}.hide();"
+                                    alt="#{msgs['common.close']}" height="20"
+                                    width="20" styleClass="hidelink" title="#{msgs['common.close']}" />
+                </h:panelGroup>
+            </f:facet>
+            <h:form id="matingSearchResultsTable">
+                <rich:messages />
+                <h3><h:outputText id="resultsMatingQueryRowCnt" value="#{MatingQuery_Backing.rowCnt}"/> Search results are as follows</h3>
+                <h3><h:outputText id="resultsMatingQueryDisplay" rendered="#{MatingQuery_Backing.resultData.messageToDisplay == true}" value="#{MatingQuery_Backing.resultData.message}"   />  </h3>
+
+                <div align="left">
+                    <h:panelGrid columns="1">
+                        <h:panelGroup id="okCancelGroupId2">
+                            <a4j:commandButton id="cancelId2"
+                                               value="Return To Search"
+                                               oncomplete="#{rich:component('runMatingQueryPanel')}.hide();"
+                                               styleClass="btn_med">
+                            </a4j:commandButton>
+                            <a4j:status name="statusTable">
+                                <f:facet name="start">
+                                    &nbsp;&nbsp;
+                                    <h:graphicImage  value="../images/bhi_ball.gif"/>
+                                </f:facet>
+                            </a4j:status>    
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </div>
+                <hr />
+                <h:commandLink value="Download Result"
+                               action="#{MatingQuery_Backing.downloadSearchResultsAction}">
+                </h:commandLink>
+                <br /><br />
+                <rich:dataTable id="datMatingSearchResultsTable"
+                                value="#{MatingQuery_Backing.resultData.result}"
+                                sortMode="single"
+                                rows="#{restrict['size.list.numberOfRows']}"
+                                var="dm" 
+                                headerClass="tableSortHeader">
+                    <f:facet name="footer" class="dataScroller">
+                        <div style="text-align: left;">
+                            <rich:dataScroller for="datMatingSearchResultsTable" maxPages="30" />
+                        </div>
+                    </f:facet>
+                    <rich:column sortBy="#{dm.MatingID}"
+                                 rendered="#{MatingQuery_Backing.search.selectMatingID == true}"
+                                 sortOrder="#{sortingBean.column1Order}"
+                                 filterValue="#{filterBean.column1Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.MatingID, filterBean.column1Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['matingId']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column1Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn1}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column1Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.MatingID}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.MatingDate}"
+                                 rendered="#{MatingQuery_Backing.search.selectMatingDates == true}"
+                                 sortOrder="#{sortingBean.column2Order}"
+                                 filterValue="#{filterBean.column2Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.MatingDate, filterBean.column2Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['matingDates']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column2Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn2}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column2Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.MatingDate}">
+                            <f:convertDateTime pattern="#{MatingQuery_Backing.date_format}" />
+                        </h:outputText>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.MatingStatus}"
+                                 rendered="#{MatingQuery_Backing.search.selectMatingStatus == true}"
+                                 sortOrder="#{sortingBean.column3Order}"
+                                 filterValue="#{filterBean.column3Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.MatingStatus, filterBean.column3Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['matingStatus']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column3Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn3}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column3Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.MatingStatus}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.LitterStrain}"
+                                 rendered="#{MatingQuery_Backing.search.selectMatingStrain == true}"
+                                 sortOrder="#{sortingBean.column4Order}"
+                                 filterValue="#{filterBean.column4Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.LitterStrain, filterBean.column4Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['strain']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column4Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn4}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column4Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.LitterStrain}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.LitterGeneration}"
+                                 rendered="#{MatingQuery_Backing.search.selectMatingGeneration == true}"
+                                 sortOrder="#{sortingBean.column5Order}"
+                                 filterValue="#{filterBean.column5Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.LitterGeneration, filterBean.column5Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['generation']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column5Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn5}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column5Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.LitterGeneration}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.MatingOwner}"
+                                 rendered="#{MatingQuery_Backing.search.selectMatingOwner == true}"
+                                 sortOrder="#{sortingBean.column6Order}"
+                                 filterValue="#{filterBean.column6Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.MatingOwner, filterBean.column6Filter)}" >
+                        <f:facet name="header" class="nowrap">
+                            <h:outputText value="#{msgs['matingOwner']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column6Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn6}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column6Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.MatingOwner}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.PenID}"
+                                 rendered="#{MatingQuery_Backing.search.selectMatingPenId == true}"
+                                 sortOrder="#{sortingBean.column7Order}"
+                                 filterValue="#{filterBean.column7Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.PenID, filterBean.column7Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['pen#']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column7Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn7}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column7Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.PenID}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.PenName}"
+                                 rendered="#{MatingQuery_Backing.search.selectMatingPenName == true}"
+                                 sortOrder="#{sortingBean.column8Order}"
+                                 filterValue="#{filterBean.column8Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.PenName, filterBean.column8Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['penName']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column8Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn8}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column8Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.PenName}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.Dam1}"
+                                 rendered="#{MatingQuery_Backing.search.selectDam1ID == true}"
+                                 sortOrder="#{sortingBean.column9Order}"
+                                 filterValue="#{filterBean.column9Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.Dam1, filterBean.column9Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['dam1']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column9Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn9}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column9Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.Dam1}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.Dam1Strain}"
+                                 rendered="#{MatingQuery_Backing.search.selectDam1Strain == true}"
+                                 sortOrder="#{sortingBean.column10Order}"
+                                 filterValue="#{filterBean.column10Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.Dam1Strain, filterBean.column10Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['dam1Strain']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column10Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn10}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column10Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.Dam1Strain}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.Dam1StockNumber}"
+                                 rendered="#{MatingQuery_Backing.search.selectDam1Stock == true}"
+                                 sortOrder="#{sortingBean.column11Order}"
+                                 filterValue="#{filterBean.column11Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.Dam1StockNumber, filterBean.column11Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['dam1StockNumber']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column11Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn11}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column11Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.Dam1StockNumber}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.Dam1Generation}"
+                                 rendered="#{MatingQuery_Backing.search.selectDam1Gen == true}"
+                                 sortOrder="#{sortingBean.column12Order}"
+                                 filterValue="#{filterBean.column12Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.Dam1Generation, filterBean.column12Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['dam1Generation']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column12Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn12}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column12Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.Dam1Generation}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.Dam1Genotypes}"
+                                 rendered="#{MatingQuery_Backing.search.selectDam1Genotype == true}"
+                                 sortOrder="#{sortingBean.column13Order}"
+                                 filterValue="#{filterBean.column13Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.Dam1Genotypes, filterBean.column13Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['dam1Genotype']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column13Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn13}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column13Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.Dam1Genotypes}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.Dam1BirthDate}"
+                                 rendered="#{MatingQuery_Backing.search.selectDam1DOB == true}"
+                                 sortOrder="#{sortingBean.column14Order}"
+                                 filterValue="#{filterBean.column14Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.Dam1BirthDate, filterBean.column14Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['dam1BirthDate']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column14Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn14}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column14Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.Dam1BirthDate}">
+                            <f:convertDateTime pattern="#{MatingQuery_Backing.date_format}" />
+                        </h:outputText>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.Dam1PlugDate}"
+                                 rendered="#{MatingQuery_Backing.search.selectDam1PlugDate == true}"
+                                 sortOrder="#{sortingBean.column15Order}"
+                                 filterValue="#{filterBean.column15Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.Dam1PlugDate, filterBean.column15Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['dam1PlugDate']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column15Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn15}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column15Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.Dam1PlugDate}">
+                            <f:convertDateTime pattern="#{MatingQuery_Backing.date_format}" />
+                        </h:outputText>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.Dam2}"
+                                 rendered="#{MatingQuery_Backing.search.selectDam2ID == true}"
+                                 sortOrder="#{sortingBean.column16Order}"
+                                 filterValue="#{filterBean.column16Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.Dam2, filterBean.column16Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['dam2']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column16Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn16}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column16Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.Dam2}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.Dam2Strain}"
+                                 rendered="#{MatingQuery_Backing.search.selectDam2Strain == true}"
+                                 sortOrder="#{sortingBean.column17Order}"
+                                 filterValue="#{filterBean.column17Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.Dam2Strain, filterBean.column17Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['dam2Strain']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column17Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn17}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column17Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.Dam2Strain}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.Dam2StockNumber}"
+                                 rendered="#{MatingQuery_Backing.search.selectDam2Stock == true}"
+                                 sortOrder="#{sortingBean.column18Order}"
+                                 filterValue="#{filterBean.column18Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.Dam2StockNumber, filterBean.column18Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['dam2StockNumber']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column18Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn18}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column18Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.Dam2StockNumber}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.Dam2Generation}"
+                                 rendered="#{MatingQuery_Backing.search.selectDam2Gen == true}"
+                                 sortOrder="#{sortingBean.column19Order}"
+                                 filterValue="#{filterBean.column19Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.Dam2Generation, filterBean.column19Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['dam2Generation']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column19Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn19}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column19Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.Dam2Generation}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.Dam2Genotypes}"
+                                 rendered="#{MatingQuery_Backing.search.selectDam2Genotype == true}"
+                                 sortOrder="#{sortingBean.column20Order}"
+                                 filterValue="#{filterBean.column20Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.Dam2Genotypes, filterBean.column20Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['dam2Genotype']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column20Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn20}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column20Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.Dam2Genotypes}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.Dam2BirthDate}"
+                                 rendered="#{MatingQuery_Backing.search.selectDam2DOB == true}"
+                                 sortOrder="#{sortingBean.column21Order}"
+                                 filterValue="#{filterBean.column21Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.Dam2BirthDate, filterBean.column21Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['dam2BirthDate']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column21Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn21}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column21Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.Dam2BirthDate}">
+                            <f:convertDateTime pattern="#{MatingQuery_Backing.date_format}" />
+                        </h:outputText>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.Dam2PlugDate}"
+                                 rendered="#{MatingQuery_Backing.search.selectDam2PlugDate == true}"
+                                 sortOrder="#{sortingBean.column22Order}"
+                                 filterValue="#{filterBean.column22Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.Dam2PlugDate, filterBean.column22Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['dam2PlugDate']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column22Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn22}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column22Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.Dam2PlugDate}">
+                            <f:convertDateTime pattern="#{MatingQuery_Backing.date_format}" />
+                        </h:outputText>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.SireID}"
+                                 rendered="#{MatingQuery_Backing.search.selectSireID == true}"
+                                 sortOrder="#{sortingBean.column23Order}"
+                                 filterValue="#{filterBean.column23Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.SireID, filterBean.column23Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['sireId']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column23Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn23}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column23Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.Sire}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.SireStrain}"
+                                 rendered="#{MatingQuery_Backing.search.selectSireStrain == true}"
+                                 sortOrder="#{sortingBean.column24Order}"
+                                 filterValue="#{filterBean.column24Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.SireStrain, filterBean.column24Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['sireStrain']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column24Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn24}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column24Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.SireStrain}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.SireStockNumber}"
+                                 rendered="#{MatingQuery_Backing.search.selectSireStock == true}"
+                                 sortOrder="#{sortingBean.column25Order}"
+                                 filterValue="#{filterBean.column25Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.SireStockNumber, filterBean.column25Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['sireStockNumber']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column25Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn25}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column25Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.SireStockNumber}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.SireGeneration}"
+                                 rendered="#{MatingQuery_Backing.search.selectSireGen == true}"
+                                 sortOrder="#{sortingBean.column26Order}"
+                                 filterValue="#{filterBean.column26Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.SireGeneration, filterBean.column26Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['sireGeneration']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column26Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn26}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column26Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.SireGeneration}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.SireGenotypes}"
+                                 rendered="#{MatingQuery_Backing.search.selectSireGenotype == true}"
+                                 sortOrder="#{sortingBean.column27Order}"
+                                 filterValue="#{filterBean.column27Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.SireGenotypes, filterBean.column27Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['sireGenotype']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column27Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn27}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column27Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.SireGenotypes}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.SireBirthDate}"
+                                 rendered="#{MatingQuery_Backing.search.selectSireDOB == true}"
+                                 sortOrder="#{sortingBean.column28Order}"
+                                 filterValue="#{filterBean.column28Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.SireBirthDate, filterBean.column28Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['SireBirthDate']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column28Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn28}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column28Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.SireBirthDate}">
+                            <f:convertDateTime pattern="#{MatingQuery_Backing.date_format}" />
+                        </h:outputText>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.RetireDate}"
+                                 rendered="#{MatingQuery_Backing.search.selectDateRetired == true}"
+                                 sortOrder="#{sortingBean.column29Order}"
+                                 filterValue="#{filterBean.column29Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.RetireDate, filterBean.column29Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['retireDate']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column29Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn29}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column29Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.RetireDate}">
+                            <f:convertDateTime pattern="#{MatingQuery_Backing.date_format}" />
+                        </h:outputText>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.WeanTime}"
+                                 rendered="#{MatingQuery_Backing.search.selectWeanTime == true}"
+                                 sortOrder="#{sortingBean.column30Order}"
+                                 filterValue="#{filterBean.column30Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.WeanTime, filterBean.column30Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['weanTime']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column30Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn30}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column30Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.WeanTime}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.NeedsTyping}"
+                                 rendered="#{MatingQuery_Backing.search.selectNeedsTyping == true}"
+                                 sortOrder="#{sortingBean.column31Order}"
+                                 filterValue="#{filterBean.column31Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.NeedsTyping, filterBean.column31Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="Needs Genotyping"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column31Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn31}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column31Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.NeedsTyping}"/>
+                    </rich:column>
+
+                    <rich:column sortBy="#{dm.TotalLitters}"
+                                 rendered="#{MatingQuery_Backing.search.selectTotalLitters == true}"
+                                 sortOrder="#{sortingBean.column32Order}"
+                                 filterValue="#{filterBean.column32Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.TotalLitters, filterBean.column32Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['totalLitters']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column32Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn32}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column32Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.TotalLitters}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.TotalPups}"
+                                 rendered="#{MatingQuery_Backing.search.selectTotalPups == true}"
+                                 sortOrder="#{sortingBean.column33Order}"
+                                 filterValue="#{filterBean.column33Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.TotalPups, filterBean.column33Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['totalPups']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column33Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn33}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column33Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.TotalPups}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.TotalMales}"
+                                 rendered="#{MatingQuery_Backing.search.selectTotalMales == true}"
+                                 sortOrder="#{sortingBean.column34Order}"
+                                 filterValue="#{filterBean.column34Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.TotalMales, filterBean.column34Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['totalMales']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column34Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn34}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column34Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.TotalMales}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.TotalFemales}"
+                                 rendered="#{MatingQuery_Backing.search.selectTotalFemales == true}"
+                                 sortOrder="#{sortingBean.column35Order}"
+                                 filterValue="#{filterBean.column35Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.TotalFemales, filterBean.column35Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['totalFemales']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column35Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn35}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column35Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.TotalFemales}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.TotalLittersDead}"
+                                 rendered="#{MatingQuery_Backing.search.selectTotalLittersDead == true}"
+                                 sortOrder="#{sortingBean.column36Order}"
+                                 filterValue="#{filterBean.column36Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.TotalLittersDead, filterBean.column36Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['totalLittersDead']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column36Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn36}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column36Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.TotalLittersDead}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.LitterBirthDates}"
+                                 rendered="#{MatingQuery_Backing.search.selectBirthDates == true}"
+                                 sortOrder="#{sortingBean.column37Order}"
+                                 filterValue="#{filterBean.column37Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.LitterBirthDates, filterBean.column37Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="Litter Birthdates"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column37Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn37}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column37Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.LitterBirthDates}">
+                            <f:convertDateTime pattern="#{MatingQuery_Backing.date_format}" />
+                        </h:outputText>
+                    </rich:column>
+                    <rich:column sortBy="#{dm.LitterIDs}"
+                                 rendered="#{MatingQuery_Backing.search.selectLitterIDs == true}"
+                                 sortOrder="#{sortingBean.column38Order}"
+                                 filterValue="#{filterBean.column38Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.LitterIDs, filterBean.column38Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="Litter IDs"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column38Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn38}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column38Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.LitterIDs}"/>
+                    </rich:column>
+                    
+                    <rich:column sortBy="#{dm.TotalPupsBornDead}"
+                                 rendered="#{MatingQuery_Backing.search.selectTotalPupsBornDead == true}"
+                                 sortOrder="#{sortingBean.column39Order}"
+                                 filterValue="#{filterBean.column39Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.TotalPupsBornDead, filterBean.column39Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="Total Pups Born Dead"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column39Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn39}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column39Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.TotalPupsBornDead}"/>
+                    </rich:column>
+                    
+                    <rich:column sortBy="#{dm.TotalPupsMissingAtWean}"
+                                 rendered="#{MatingQuery_Backing.search.selectTotalPupsMissingAtWean == true}"
+                                 sortOrder="#{sortingBean.column40Order}"
+                                 filterValue="#{filterBean.column40Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.TotalPupsMissingAtWean, filterBean.column40Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="Total Pups Missing At Wean"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column40Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn40}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column40Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.TotalPupsMissingAtWean}"/>
+                    </rich:column>
+                    
+                    <rich:column sortBy="#{dm.TotalPupsCulledAtWean}"
+                                 rendered="#{MatingQuery_Backing.search.selectTotalPupsCulledAtWean == true}"
+                                 sortOrder="#{sortingBean.column41Order}"
+                                 filterValue="#{filterBean.column41Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(dm.TotalPupsCulledAtWean, filterBean.column41Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="Total Pups Culled At Wean"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column41Image}" 
+                                               render="datMatingSearchResultsTable" 
+                                               action="#{sortingBean.sortByColumn41}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column41Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datMatingSearchResultsTable" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{dm.TotalPupsCulledAtWean}"/>
+                    </rich:column>
+                </rich:dataTable>
+                
+                
+                <br />
+                <h:commandLink value="Download Result"
+                               action="#{MatingQuery_Backing.downloadSearchResultsAction}">
+                </h:commandLink>
+                <hr />
+                <div align="left">
+                    <h:panelGrid columns="1">
+                        <h:panelGroup id="okCancelGroupId1">
+                            <a4j:commandButton id="cancelId1"
+                                               value="Return To Search"
+                                               oncomplete="#{rich:component('runMatingQueryPanel')}.hide();"
+                                               styleClass="btn_med">
+                            </a4j:commandButton>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </div>
+            </h:form>
+        </rich:popupPanel>
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+    </h:body>
+</html>

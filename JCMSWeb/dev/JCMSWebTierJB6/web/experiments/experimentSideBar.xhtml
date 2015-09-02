@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:form>    
+        <p:menu>
+            <p:submenu label="Data">
+                <p:menuitem value="Add" action="#{ExperimentEditData_Backing.addDataAction}" />
+                <p:menuitem value="Edit" action="#{ExperimentEditData_Backing.editDataAction}" />
+            </p:submenu>
+            <p:submenu label="Test Types">
+                <p:menuitem value="Test Type" action="experimentTestType" />
+            </p:submenu>
+            <p:submenu label="Query">
+                <p:menuitem value="Experiment Query" url="/jcmsWeb/search/queryPages.xhtml" />
+            </p:submenu>
+        </p:menu>
+    </h:form>
+</ui:composition>

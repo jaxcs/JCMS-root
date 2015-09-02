@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    EJB3 Deployers
+-->
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+<!--  We don't want the AOPDependencyBuilder  -->
+    <annotation>@org.jboss.aop.microcontainer.annotations.DisableAOP</annotation>
+
+   <bean name="MessageDestinationReferenceResolver" class="org.jboss.ejb3.resolvers.DefaultMessageDestinationReferenceResolver"/>
+
+   <!-- 
+    
+    JNDI Registrars
+    
+    
+    The JNDI Registrar is responsible for all JNDI Bindings for
+    an EJB.
+    
+  -->
+
+  <!-- SLSB JNDI Registrar -->
+  <bean name="org.jboss.ejb3.JndiRegistrar.Session.SLSBJndiRegistrar"
+    class="org.jboss.ejb3.proxy.impl.jndiregistrar.JndiStatelessSessionRegistrar">
+    <constructor>
+      <parameter>
+        org.jboss.ejb3.proxy.impl.objectfactory.session.stateless.StatelessSessionProxyObjectFactory
+      </parameter>
+    </constructor>
+  </bean>
+
+  <!-- SFSB JNDI Registrar -->
+  <bean name="org.jboss.ejb3.JndiRegistrar.Session.SFSBJndiRegistrar"
+    class="org.jboss.ejb3.proxy.impl.jndiregistrar.JndiStatefulSessionRegistrar">
+    <constructor>
+      <parameter>
+        org.jboss.ejb3.proxy.impl.objectfactory.session.stateful.StatefulSessionProxyObjectFactory
+      </parameter>
+    </constructor>
+  </bean>  
+  
+  <!-- @Service JNDI Registrar -->
+  <bean name="org.jboss.ejb3.JndiRegistrar.Session.ServiceJndiRegistrar"
+    class="org.jboss.ejb3.proxy.impl.jndiregistrar.JndiServiceRegistrar">
+    <constructor>
+      <parameter>
+        org.jboss.ejb3.proxy.impl.objectfactory.session.service.ServiceProxyObjectFactory
+      </parameter>
+    </constructor>
+  </bean>
+   
+  <bean name="org.jboss.ejb3.ProxyClusteringRegistry"
+        class="org.jboss.ejb3.proxy.clustered.registry.ProxyClusteringRegistry"/>
+
+  <!-- Clustered SLSB JNDI Registrar -->
+  <bean name="org.jboss.ejb3.JndiRegistrar.Session.ClusteredSLSBJndiRegistrar"
+    class="org.jboss.ejb3.proxy.clustered.jndiregistrar.JndiClusteredStatelessSessionRegistrar">
+    <constructor>
+      <parameter>
+        org.jboss.ejb3.proxy.clustered.objectfactory.session.stateless.StatelessSessionClusteredProxyObjectFactory
+      </parameter>
+      <parameter><inject bean="org.jboss.ejb3.ProxyClusteringRegistry"/></parameter>
+    </constructor>
+  </bean>
+
+  <!-- Clustered SFSB JNDI Registrar -->
+  <bean name="org.jboss.ejb3.JndiRegistrar.Session.ClusteredSFSBJndiRegistrar"
+    class="org.jboss.ejb3.proxy.clustered.jndiregistrar.JndiClusteredStatefulSessionRegistrar">
+    <constructor>
+      <parameter>
+        org.jboss.ejb3.proxy.clustered.objectfactory.session.stateful.StatefulSessionClusteredProxyObjectFactory
+      </parameter>
+      <parameter><inject bean="org.jboss.ejb3.ProxyClusteringRegistry"/></parameter>
+    </constructor>
+  </bean>
+
+  <!-- Add Annotation Plugins upon installation -->
+  <bean name="org.jboss.ejb3.AddAnnotationPluginOnBeanAnnotationAdaptorCallbackService" 
+    class="org.jboss.ejb3.mcint.annotationadaptor.AddAnnotationPluginOnBeanAnnotationAdaptorCallbackService">
+    <constructor>
+      <parameter><inject bean="jboss.kernel:service=Kernel"/></parameter>
+    </constructor>
+  </bean>
+  
+  <!-- TODO: Move this out of core -->  
+  <!-- EJB Reference Annotation Plugin -->
+  <bean name="org.jboss.ejb3.EjbReferenceAnnotationPlugin"
+    class="org.jboss.ejb3.mcint.metadata.plugins.EjbReferenceAnnotationPlugin">
+    <constructor>
+      <parameter><inject bean="org.jboss.ejb3.EjbReferenceResolver" /></parameter>
+    </constructor>
+  </bean>
+  
+  <bean name="org.jboss.ejb3.async.AsyncInvocationsMap"
+        class="org.jboss.ejb3.async.impl.AsyncInvocationMapImpl" />
+
+</deployment>

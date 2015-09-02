@@ -1,0 +1,771 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>                
+            <h:outputText value="Vivaria Layout View"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js"/>
+        <script type="text/javascript" src="/jcms/javascript/jquery-ui.js" />
+        <script type="text/javascript" src="/jcms/javascript/jquery-1.9.1.js" />
+        <script type="text/javascript" src="/jcms/javascript/levelView.js"/>
+        <link href="/jcms/stylesheet/levelViewStyles.css" rel="stylesheet" media="screen" />        
+    </h:head>
+    <h:body>
+        <h:form>
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+        </h:form>
+        <div style="margin-left:10px;margin-right:10px">
+            <h:form>
+                <h1>
+                    <h:outputText value="#{msgs['colonyManagement.header']}" style="h1"/>
+                </h1>
+                <hr />
+            </h:form>                  
+            <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5" width="100%" 
+                            columnClasses="colonyManagementSideBar,detailPane">
+                <h:panelGroup>
+                    <h:form>
+                        <f:subview id="adminSideBar"><ui:include src="/colonyManagement/colonyManagementSideBar.xhtml"/></f:subview>
+                    </h:form>
+                </h:panelGroup>                    
+                <h:panelGroup>
+                    <h2>
+                        <h:outputText value="Vivaria Layout View"/>
+                    </h2>
+                    <p:ajaxStatus id="ajaxStatusPanel" style="width:64px;height:64px;position:fixed;right:100px;bottom:100px;">  
+                        <f:facet name="start">  
+                            <h:graphicImage value="../images/bhi_ball.gif"/>  
+                        </f:facet>  
+                        <f:facet name="complete">  
+                            <h:outputText value=""/>  
+                        </f:facet>
+                    </p:ajaxStatus>
+                    <hr/>      
+                    <h:form id="levelForm">
+                        <p:growl id="messages" autoUpdate="true"/>  
+                        <h:selectOneRadio value="#{LevelView_Backing.function}" styleClass="blackTextStyle grid">
+                            <f:selectItem itemValue="addPens" itemLabel="Move Cage #{LevelView_Backing.addCageLabel}"/>
+                            <f:selectItem itemValue="exitAndRetire" itemLabel="Change Mouse and Cage Status"/>
+                            <f:selectItem itemValue="addMating" itemLabel="Add Pair Mating"/>
+                            <f:selectItem itemValue="addTrioMating" itemLabel="Add Trio Mating"/>
+                            <f:selectItem itemValue="addLitter" itemLabel="Add Litter"/>
+                            <a4j:ajax event="change" listener="#{LevelView_Backing.functionChangeListener}" 
+                                      oncomplete="applyLevelViewJQuery();" render="instructions, functionDetails, levelGrid"/>
+                        </h:selectOneRadio>
+                        <h:outputText id="instructions" value="#{LevelView_Backing.instructions}"/>
+                        <h:panelGrid columns="2" columnClasses="listColumnEven, listColumnEven">
+                            <h:panelGroup>
+                                <rich:collapsiblePanel styleClass="grid" id="levelPanel" header="Layouts" expanded="#{LevelView_Backing.expanded}">
+                                    <p:tree value="#{LevelView_Backing.root}" id="levelTree" selectionMode="single" var="node">
+                                        <p:ajax event="collapse" listener="#{LevelView_Backing.nodeCollapse}" /> 
+                                        <p:ajax event="expand" listener="#{LevelView_Backing.nodeExpand}" />                 
+                                        <p:ajax event="select" listener="#{LevelView_Backing.onNodeSelect}" 
+                                                update="@(.grid)" oncomplete="applyLevelViewJQuery();"/> 
+                                        <p:treeNode type="room">
+                                            <h:outputText value="#{node.label}" style="color:gray"/>
+                                        </p:treeNode>
+                                        <p:treeNode type="level">
+                                            <h:outputText value="#{node.label}"/>
+                                        </p:treeNode>
+                                    </p:tree>
+                                </rich:collapsiblePanel> 
+                                <br/> 
+                                <h:panelGroup id="functionDetails" styleClass="blackTextStyle">
+                                    <h:panelGrid columns="2">
+                                        <h:outputLabel for="matingCards" value="Mating Card: "/>
+                                        <h:selectOneMenu id="matingCards"
+                                                        value="#{LevelView_Backing.matingCardKey}">
+                                            <f:selectItems value="#{LevelView_Backing.wrapper.matingCardsRequired}"/> 
+                                        </h:selectOneMenu> 
+                                        <h:outputLabel for="detailCards" value="Detail Card: "/>
+                                        <h:selectOneMenu id="detailCards"
+                                                        value="#{LevelView_Backing.detailCardKey}">
+                                            <f:selectItems value="#{LevelView_Backing.wrapper.detailCardsRequired}"/> 
+                                        </h:selectOneMenu> 
+                                    </h:panelGrid>
+                                    <h:panelGroup id="cageSetup">
+                                        <p:panel header="Cage Details" rendered="#{LevelView_Backing.addingCage}">
+                                            <h:panelGrid columns="2" style="text-align: left;" styleClass="blackTextStyle">
+                                                <h:outputText value="Cage ID: " id="addCageID"/>
+                                                <h:inputText value="#{LevelView_Backing.cageID}"/>
+                                                <h:outputText value="Cage Name: "/>
+                                                <h:inputText value="#{LevelView_Backing.cageName}"/>
+                                                <h:outputText value="Cage Status: "/>
+                                                <h:outputText value="Active"/>
+                                                <h:outputText value="Date"/>
+                                                <rich:calendar datePattern="#{LevelView_Backing.date_format}"  value="#{LevelView_Backing.actionDate}"/>
+                                                <h:outputText value="Room/Level: "/>
+                                                <h:outputText value="#{LevelView_Backing.currentRoom.roomName}/#{LevelView_Backing.selectedLevel.levelId}"/>
+                                                <h:outputText value="Cage Comment: "/>
+                                                <h:inputTextarea value="#{LevelView_Backing.cageComment}"/>                                                    
+                                            </h:panelGrid>                                        
+                                        </p:panel>
+                                    </h:panelGroup>
+                                    <h:panelGrid columns="1" id="dropdowns">
+                                        <p:selectOneMenu id="strainDropdown" value="#{LevelView_Backing.cageFilterStrain}" 
+                                                        rendered="#{LevelView_Backing.function eq 'addPens'}" converter="strainConverter">
+                                            <f:selectItems value="#{LevelView_Backing.wrapper.activeStrainsOptional}"/>
+                                            <p:ajax event="change" listener="#{LevelView_Backing.strainFilterChange}" update="@(.grid)" 
+                                                    oncomplete="onStrainSelect(); applyLevelViewJQuery();"/>
+                                        </p:selectOneMenu>
+                                        <h:panelGrid columns="2" rendered="#{LevelView_Backing.function eq 'exitAndRetire'}" >
+                                            <h:outputText value="New Life Status: "/>
+                                            <h:selectOneMenu value="#{LevelView_Backing.lifeStatus}" converter="lifeStatusConverter">
+                                                <f:selectItems value="#{LevelView_Backing.wrapper.cvLifeStatusItemsOptional}"/>
+                                            </h:selectOneMenu>
+                                            <h:outputText value="New Container Status: "/>
+                                            <h:selectOneMenu value="#{LevelView_Backing.containerStatus}" converter="containerStatusConverter" >
+                                                <f:selectItems value="#{LevelView_Backing.wrapper.cvContainerStatusItemsOptional}"/>
+                                            </h:selectOneMenu>
+                                        </h:panelGrid>
+                                        <h:panelGroup id="selectedStrainGroup" styleClass="grid">
+                                            <h:inputHidden id="selectedStrain" value="#{LevelView_Backing.strainName}"/>
+                                        </h:panelGroup>
+                                    </h:panelGrid>       
+                                    <h:panelGroup id="cagesListbox" styleClass="grid" >
+                                        <p:selectOneListbox rendered="#{LevelView_Backing.pickListContainers ne null and LevelView_Backing.function eq 'addPens'}" style="height:200px">
+                                            <f:selectItems value="#{LevelView_Backing.pickListContainers}"/>
+                                        </p:selectOneListbox>
+                                        <p:panel id="trashCan" header="Status Change List" styleClass="trashCan"
+                                                rendered="#{LevelView_Backing.function eq 'exitAndRetire'}"
+                                                style="width:130px;">
+                                            <h:panelGroup id="deleteTableHolder">
+                                                <h:outputText value="Drag cages here to add to change list."
+                                                            rendered="#{empty LevelView_Backing.statusChangeContainers}"/>
+                                                <rich:dataTable value="#{LevelView_Backing.statusChangeContainers}" id="deleteTable"
+                                                                var="lc" rowKeyVar="tableRowIndex" style="border: 0;"
+                                                                rendered="#{!empty LevelView_Backing.statusChangeContainers}">
+                                                    <rich:column >
+                                                        <a4j:commandLink action="#{LevelView_Backing.removeFromStatusChange}" 
+                                                                        oncomplete="removeDeleteStyle();"
+                                                                        render="deleteTableHolder">
+                                                            <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                                        </a4j:commandLink>
+                                                    </rich:column>
+                                                    <rich:column>
+                                                        <h:outputText id="containerID" value="#{lc.cage.containerID}"/>
+                                                        <h:inputHidden id="hiddenPosition" value="#{lc.position}"/>
+                                                    </rich:column>
+                                                </rich:dataTable>
+                                                <h:inputHidden value="#{LevelView_Backing.removedCullCage}" id="hiddenID"/>
+                                            </h:panelGroup>
+                                        </p:panel>
+                                        <br/>
+                                        <a4j:commandButton value="Submit" 
+                                                            styleClass="smallButton"
+                                                            rendered="#{LevelView_Backing.function eq 'exitAndRetire'}"
+                                                            action="#{LevelView_Backing.exitAndRetireMice}"
+                                                            render="trashCan levelGrid"
+                                                            oncomplete="applyLevelViewJQuery();"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup id="matingSetup">
+                                        <p:panel header="Mating Details" rendered="#{LevelView_Backing.function eq 'addMating' or LevelView_Backing.function eq 'addTrioMating'}">
+                                            <h:panelGrid columns="2">
+                                                <h:outputText value="Litter Strain: "/>
+                                                <h:selectOneMenu value="#{LevelView_Backing.litterStrain}" converter="strainConverter">
+                                                    <f:selectItems value="#{LevelView_Backing.wrapper.activeStrainsOptional}"/>
+                                                </h:selectOneMenu>
+                                                <h:outputText value="Litter Generation: "/>
+                                                <h:selectOneMenu value="#{LevelView_Backing.litterGeneration}" converter="generationConverter">
+                                                    <f:selectItems value="#{LevelView_Backing.wrapper.cvGenerationItemsOptional}"/>
+                                                </h:selectOneMenu>
+                                                <h:outputText value="Mating Diet: "/>
+                                                <h:selectOneMenu value="#{LevelView_Backing.matingDiet}" converter="dietConverter">
+                                                    <f:selectItems value="#{LevelView_Backing.wrapper.cvDietItems}"/>
+                                                </h:selectOneMenu>
+                                                <h:outputText value="Mating Date: "/>
+                                                <rich:calendar datePattern="#{LevelView_Backing.date_format}"  value="#{LevelView_Backing.matingDate}"/>
+                                                <h:outputText value="Wean Time: "/>
+                                                <h:selectOneRadio value="#{LevelView_Backing.weanTime}">
+                                                    <f:selectItem itemLabel="Standard" itemValue="standard"/>
+                                                    <f:selectItem itemLabel="Extended" itemValue="extended"/>
+                                                </h:selectOneRadio>
+                                                <h:outputText value="Needs Genotyping: "/>
+                                                <h:selectBooleanCheckbox value="#{LevelView_Backing.needsGenotyping}" />
+                                                <h:outputText value="Owner: "/>
+                                                <h:selectOneMenu value="#{LevelView_Backing.matingOwner}" converter="ownerConverter">
+                                                    <f:selectItems value="#{LevelView_Backing.wrapper.colonyManageOwnerItems}"/>
+                                                </h:selectOneMenu>
+                                                <h:outputText value="Wean Note: "/>
+                                                <h:inputTextarea value="#{LevelView_Backing.weanNote}"/>
+                                                <h:outputText value="Comments: "/>
+                                                <h:inputTextarea value="#{LevelView_Backing.matingComment}"/>
+                                                <h:outputText value="Cage Name: "/>
+                                                <h:inputText value="#{LevelView_Backing.cageName}"/>
+                                                <h:outputText value="Cage Comment: "/>
+                                                <h:inputTextarea value="#{LevelView_Backing.cageComment}"/>
+                                            </h:panelGrid>
+                                        </p:panel>
+                                    </h:panelGroup>
+                                    <h:panelGroup id="litterSetup" style="white-space: nowrap;">
+                                        <p:panel header="Litter Details" rendered="#{LevelView_Backing.function eq 'addLitter'}">
+                                            <h2><h:outputText value="Litter Details"/></h2>
+                                            <h:panelGrid columns="2">
+                                                <h:outputText value="Mating ID: "/>
+                                                <h:panelGroup>
+                                                    <h:outputText value="#{LevelView_Backing.litterMating.matingID}" styleClass="matingID"/> 
+                                                    <!-- think about a tooltip here for the mating details -->
+                                                </h:panelGroup>
+                                                <h:outputText value="Litter Strain"/>
+                                                <h:outputText value="#{LevelView_Backing.litterMating.strainKey.strainName}"/>
+                                                <h:outputText value="Total Born: "/>
+                                                <h:inputText id="totalBorn" value="#{LevelView_Backing.totalBorn}">
+                                                    <a4j:ajax execute="@this" event="change"/>
+                                                </h:inputText>
+                                                <h:outputText value="Total Born Dead: "/>
+                                                <h:inputText id="totalBornDead" value="#{LevelView_Backing.numberBornDead}">
+                                                    <a4j:ajax execute="@this" event="change"/>
+                                                </h:inputText>
+                                                <h:outputText value="Females/Males: "/>
+                                                <h:panelGroup id="femalesMales">
+                                                    <h:outputText value="#{LevelView_Backing.numFemale}/#{LevelView_Backing.numMale}"
+                                                                rendered="#{LevelView_Backing.numFemale ne '0' or LevelView_Backing.numMale ne '0'}"/>
+                                                    <h:outputText value="" rendered="#{LevelView_Backing.numFemale eq '0' and LevelView_Backing.numMale eq '0'}"/>
+                                                </h:panelGroup>
+                                                <h:outputText value="Number Culled At Wean: "/>
+                                                <h:inputText id="culledAtWean" value="#{LevelView_Backing.numberCulledAtWean}">
+                                                    <a4j:ajax execute="@this" event="change"/>
+                                                </h:inputText>
+                                                <h:outputText value="Number Missing at Wean: "/>
+                                                <h:inputText id="missingAtWean" value="#{LevelView_Backing.numberMissingAtWean}">
+                                                    <a4j:ajax execute="@this" event="change"/>
+                                                </h:inputText>
+                                                <h:outputText value="Litter ID: "/>
+                                                <h:panelGroup>
+                                                    <h:inputText value="#{LevelView_Backing.nextLitterID}" id="litterID"/>
+                                                    &nbsp;
+                                                    <a4j:commandButton value="Next Litter #" styleClass="mediumButton"
+                                                                    action="#{LevelView_Backing.generateNextLitterIDAction}"
+                                                                    render="litterID"/>
+                                                </h:panelGroup>
+                                                <h:outputText value="Litter Type: "/>
+                                                <h:outputText value="Live Birth"/>
+                                                <h:outputText value="Date Born: "/>
+                                                <h:panelGroup>
+                                                    <rich:calendar datePattern="#{LevelView_Backing.date_format}"  value="#{LevelView_Backing.dateBorn}">
+                                                        <a4j:ajax listener="#{LevelView_Backing.birthDateChangeListener}" render="weanDate, tagDate" event="change"/>
+                                                    </rich:calendar>
+                                                    <h:selectBooleanCheckbox value="#{LevelView_Backing.calculateDates}">
+                                                        <a4j:ajax event="change" execute="@this"/>
+                                                    </h:selectBooleanCheckbox>
+                                                    &nbsp;
+                                                    <h:outputText value="Calculate Dates"/>
+                                                </h:panelGroup>
+                                                <h:outputText value="Wean Date: "/>
+                                                <rich:calendar datePattern="#{LevelView_Backing.date_format}"  id="weanDate" value="#{LevelView_Backing.weanDate}"/>
+                                                <h:outputText value="Tag Date: "/>
+                                                <rich:calendar datePattern="#{LevelView_Backing.date_format}"  id="tagDate" value="#{LevelView_Backing.tagDate}"/>
+                                                <h:outputText value="Status: "/>
+                                                <h:selectOneMenu value="#{LevelView_Backing.litterStatus}">
+                                                    <f:selectItems value="#{LevelView_Backing.wrapper.litterStatusItems}"/>
+                                                </h:selectOneMenu>
+                                                <h:outputText value="Comments: "/>
+                                                <h:inputTextarea value="#{LevelView_Backing.litterComments}"/>
+                                            </h:panelGrid>
+                                            <h2><h:outputText value="Add Pups"/></h2>
+                                            <h:panelGrid columns="2">
+                                                <h:outputText value="Base Mouse ID: "/>
+                                                <h:inputText value="#{LevelView_Backing.baseMouseID}"/>
+                                                <h:outputText value="Protocol ID "/>
+                                                <h:selectOneMenu value="#{LevelView_Backing.protocol}" converter="mouseProtocolConverter">
+                                                    <f:selectItems value="#{LevelView_Backing.wrapper.cvMouseProtocolItemsOptional}"/>
+                                                </h:selectOneMenu>
+                                                <h:outputText value="Origin: "/>
+                                                <h:selectOneMenu value="#{LevelView_Backing.origin}" converter="mouseOriginConverter">
+                                                    <f:selectItems value="#{LevelView_Backing.wrapper.cvMouseOriginItems}"/>
+                                                </h:selectOneMenu>                                            
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="2" style="width: 100%;" columnClasses="pupTable, pupTable">
+                                                <h:outputText value="Drag me to a cage" style="font-weight:bold; text-align: center;"/>
+                                                <h:outputText value="Drag me to a cage" style="font-weight:bold; text-align: center;"/>
+                                                <h:outputText value="to add female pups" style="font-weight:bold; text-align: center;"/>
+                                                <h:outputText value="to add male pups" style="font-weight:bold; text-align: center;"/>
+                                                <h:graphicImage id="pupFemale" styleClass="pupFemale" value="/images/mouse1.png" style="text-align: center;width:32px; height:32px;"/>
+                                                <h:graphicImage id="pupMale" styleClass="pupMale" value="/images/mouse2.png" style="text-align: center; width:32px; height:32px;"/>
+                                            </h:panelGrid>
+                                            <rich:dataTable id="pupTable" value="#{LevelView_Backing.pups}" rowClass="pupRow" 
+                                                            rowKeyVar="tableRowIndex" style="width: 300px;" var="pup">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Pup Details"/>
+                                                </f:facet>
+                                                <rich:column width="40">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Actions" />
+                                                    </f:facet>
+                                                    <a4j:commandButton id="removePupButton" action="#{LevelView_Backing.removePup}" 
+                                                                    render="pupTable, femalesMales" image="/images/delete.gif"
+                                                                    oncomplete="styleWeanCages(); addPupListener(); disableWeanCageNames();">
+                                                        <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                                    </a4j:commandButton>
+                                                </rich:column>
+                                                <rich:column >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Mouse ID" />
+                                                    </f:facet>
+                                                    <h:inputText value="#{pup.pup.id}" id="pupIDInput">
+                                                        <a4j:ajax event="change" execute="@this"/>
+                                                    </h:inputText>
+                                                </rich:column>
+                                                <rich:column width="30" >
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Sex" />
+                                                    </f:facet>
+                                                    <h:outputText value="#{pup.pup.sex}"/>
+                                                </rich:column>
+                                                <rich:column width="40">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Cage ID" />
+                                                    </f:facet>
+                                                    <h:outputText value="#{pup.cage.containerID}"/>
+                                                    <h:inputHidden id="hiddenPupPosition" value="#{pup.position}"/>
+                                                </rich:column>
+                                                <rich:column width="40">
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Cage Name" />
+                                                    </f:facet>
+                                                    <h:inputText id="pupCageNameInput" value="#{pup.cage.containerName}">
+                                                        <a4j:ajax event="change" execute="@this" render="pupTable" oncomplete="addPupListener(); disableWeanCageNames();"/>
+                                                    </h:inputText>
+                                                </rich:column>
+                                            </rich:dataTable>
+                                        </p:panel>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="View cages by cage name"/>
+                                    <h:selectBooleanCheckbox value="#{LevelView_Backing.containerNameView}">
+                                        <p:ajax event="change" update="levelGrid" oncomplete="applyLevelViewJQuery();"/>
+                                    </h:selectBooleanCheckbox>
+                                </h:panelGrid>
+                                <p:dataGrid id="levelGrid" value="#{LevelView_Backing.containers}" var="cage"
+                                            paginator="false" columns="#{LevelView_Backing.columns}" styleClass="grid"
+                                            emptyMessage="Select a vivaria layout to view cages.">
+                                    <p:panel style="text-align:center; width: 125px; height: 125px;" id="cage"
+                                            styleClass="#{cage.style}">
+                                        <f:facet name="header" >
+                                            <h:panelGroup id="cageHeader">
+                                                <h:outputText id="idHeader" value="#{cage.cage.containerID}" rendered="#{!LevelView_Backing.containerNameView}"
+                                                              styleClass="cageHeader"/>
+                                                <h:outputText id="nameHeader" value="#{cage.cage.containerName}" rendered="#{LevelView_Backing.containerNameView}"
+                                                              styleClass="cageHeader"/>
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <h:panelGrid columns="1" style="width: 100%; white-space: nowrap;">
+                                            <h:outputText value="#{cage.displayStrain}"/>
+                                            <h:outputText value="#{cage.sex}"/>       
+                                            <a4j:commandButton id="showMiceButton"
+                                                               rendered="#{cage.cage.containerID ne 'empty'
+                                                                           and cage.type ne 'createMating'
+                                                                           and cage.type ne 'createCage'}"
+                                                               image="/images/search.png"
+                                                               title="View Mice"
+                                                               oncomplete="applyLevelViewJQuery();"
+                                                               styleClass="smallImageSize"
+                                                               actionListener="#{LevelView_Backing.showMice}"
+                                                               render="resultsTableID, shownCage">
+                                                <f:attribute name="paramCageID" value="#{cage.cage.containerID}" />
+                                                <f:attribute name="paramCageKey" value="#{cage.cage.container_key}" />                           
+                                            </a4j:commandButton>
+                                            <h:commandButton id="detailPrintButton" 
+                                                             onclick="this.form.target='_blank'" 
+                                                             image="/images/mouse1.png"
+                                                             onblur="this.form.target='blank'"
+                                                             title="Print Detail Card"
+                                                             rendered="#{cage.type eq 'holding' 
+                                                                         and !empty LevelView_Backing.wrapper.detailCardsRequired}"
+                                                               actionListener="#{LevelView_Backing.printCageCard}">
+                                                <f:attribute name="paramCageID" value="#{cage.cage.containerID}" />
+                                                <f:attribute name="paramCageKey" value="#{cage.cage.container_key}" />   
+                                                <f:attribute name="paramCageType" value="#{cage.type}" />           
+                                            </h:commandButton>
+                                            <h:commandButton id="matingPrintButton" onclick="this.form.target='_blank'" 
+                                                               image="/images/mouse2.png"
+                                                               title="Print mating card."
+                                                               onblur="this.form.target='blank'"
+                                                               rendered="#{cage.type eq 'mating' 
+                                                                           and !empty LevelView_Backing.wrapper.matingCardsRequired}"
+                                                               actionListener="#{LevelView_Backing.printCageCard}">
+                                                <f:attribute name="paramCageID" value="#{cage.cage.containerID}" />
+                                                <f:attribute name="paramCageKey" value="#{cage.cage.container_key}" />   
+                                                <f:attribute name="paramCageType" value="#{cage.type}" />           
+                                            </h:commandButton>
+                                            <!-- buttons related to add mating -->
+                                            <a4j:commandButton id="addMatingButton"
+                                                             image="/images/insert.gif"
+                                                             rendered="#{cage.cage.containerID eq 'empty' 
+                                                                         and (LevelView_Backing.function eq 'addMating' 
+                                                                              or LevelView_Backing.function eq 'addTrioMating')}"
+                                                             actionListener="#{LevelView_Backing.selectCageForMating}"
+                                                             oncomplete="applyLevelViewJQuery();"
+                                                             render="levelGrid">
+                                                <f:attribute name="paramCagePostion" value="#{cage.position}" />           
+                                            </a4j:commandButton>
+                                            <h:panelGroup rendered="#{cage.type eq 'createMating' 
+                                                                      and (LevelView_Backing.function eq 'addMating' 
+                                                                           or LevelView_Backing.function eq 'addTrioMating')}">
+                                                <a4j:commandButton id="saveMatingButton"
+                                                                image="/images/icon-save.gif"
+                                                                actionListener="#{LevelView_Backing.saveMating}"
+                                                                oncomplete="applyLevelViewJQuery();"
+                                                                render="levelGrid messages matingSetup resultsTableID">
+                                                    <f:attribute name="paramCagePostion" value="#{cage.position}" /> 
+                                                </a4j:commandButton>
+                                                &nbsp;&nbsp;
+                                                <a4j:commandButton id="cancelMatingButton"
+                                                                image="/images/cancel.png"
+                                                                style="width:16px; height:16px;"
+                                                                actionListener="#{LevelView_Backing.cancelMating}"
+                                                                oncomplete="applyLevelViewJQuery();"
+                                                                render="levelGrid">
+                                                    <f:attribute name="paramCagePostion" value="#{cage.position}" />           
+                                                </a4j:commandButton>
+                                            </h:panelGroup>
+                                            <!-- buttons related to add litter -->
+                                            <a4j:commandButton id="addLitterButton"
+                                                             image="/images/insert.gif"
+                                                             rendered="#{cage.type eq 'mating' 
+                                                                         and LevelView_Backing.function eq 'addLitter'}"
+                                                             actionListener="#{LevelView_Backing.selectCageForLitter}"
+                                                             oncomplete="applyLevelViewJQuery();"
+                                                             render="levelGrid, litterSetup">
+                                                <f:attribute name="paramCagePostion" value="#{cage.position}" />           
+                                            </a4j:commandButton>
+                                            <h:panelGroup rendered="#{cage.type eq 'createLitter'
+                                                                      and LevelView_Backing.function eq 'addLitter'}">
+                                                <a4j:commandButton id="saveLitterButton"
+                                                                image="/images/icon-save.gif"
+                                                                actionListener="#{LevelView_Backing.saveLitter}"
+                                                                oncomplete="applyLevelViewJQuery();"
+                                                                render="levelGrid litterSetup resultsTableID">
+                                                    <f:attribute name="paramCagePostion" value="#{cage.position}" /> 
+                                                </a4j:commandButton>
+                                                &nbsp;&nbsp;
+                                                <a4j:commandButton id="cancelLitterButton"
+                                                                image="/images/cancel.png"
+                                                                style="width:16px; height:16px;"
+                                                                actionListener="#{LevelView_Backing.cancelLitter}"
+                                                                oncomplete="applyLevelViewJQuery();"
+                                                                render="levelGrid, litterSetup">
+                                                    <f:attribute name="paramCagePostion" value="#{cage.position}" />           
+                                                </a4j:commandButton>
+                                            </h:panelGroup>
+                                            <!-- buttons related to add cage -->
+                                            <a4j:commandButton id="addCageButton"
+                                                             image="/images/insert.gif"
+                                                             render="cageSetup levelGrid"
+                                                             oncomplete="applyLevelViewJQuery();"
+                                                             rendered="#{cage.cage.containerID eq 'empty' 
+                                                                         and LevelView_Backing.function ne 'addMating'
+                                                                         and LevelView_Backing.function ne 'addTrioMating'}"
+                                                             actionListener="#{LevelView_Backing.selectSlotForCage}">
+                                                <f:attribute name="paramCagePostion" value="#{cage.position}" />   
+                                            </a4j:commandButton>
+                                            <h:panelGroup rendered="#{cage.type eq 'createCage'}">
+                                                <a4j:commandButton id="saveCageButton"
+                                                                image="/images/icon-save.gif"
+                                                                actionListener="#{LevelView_Backing.saveNewCage}"
+                                                                oncomplete="applyLevelViewJQuery();"
+                                                                render="levelGrid cageSetup">
+                                                    <f:attribute name="paramCagePostion" value="#{cage.position}" /> 
+                                                </a4j:commandButton>
+                                                &nbsp;&nbsp;
+                                                <a4j:commandButton id="cancelCreateCageButton"
+                                                                image="/images/cancel.png"
+                                                                style="width:16px; height:16px;"
+                                                                render="levelGrid cageSetup"
+                                                                oncomplete="applyLevelViewJQuery();"
+                                                                actionListener="#{LevelView_Backing.cancelCreateCage}">
+                                                    <f:attribute name="paramCagePostion" value="#{cage.position}" />           
+                                                </a4j:commandButton>
+                                            </h:panelGroup>
+                                            <!-- mating members data table -->
+                                            <h:panelGrid columns="3" rendered="#{cage.type eq 'createMating' 
+                                                                                and (LevelView_Backing.function eq 'addMating' 
+                                                                                     or LevelView_Backing.function eq 'addTrioMating')}">
+                                                <h:outputText value="Dam 1: "/>
+                                                <h:outputText value="#{LevelView_Backing.dam1ID}"/>
+                                                <a4j:commandButton id="removeDam1Button"
+                                                                image="/images/delete.gif"
+                                                                rendered="#{cage.cage.containerID eq 'Mating Cage' 
+                                                                            and (LevelView_Backing.function eq 'addMating' or LevelView_Backing.function eq 'addTrioMating')
+                                                                            and LevelView_Backing.dam1 ne null}"
+                                                                actionListener="#{LevelView_Backing.removeDam1}"
+                                                                oncomplete="applyLevelViewJQuery();"
+                                                                render="levelGrid"/>
+                                                <h:outputText value="" 
+                                                              rendered="#{cage.cage.containerID eq 'Mating Cage' 
+                                                                        and (LevelView_Backing.function eq 'addMating' or LevelView_Backing.function eq 'addTrioMating')
+                                                                        and LevelView_Backing.dam1 eq null}"/>
+                                                <h:outputText value="Dam 2: "/>
+                                                <h:outputText value="#{LevelView_Backing.dam2ID}"/>
+                                                <a4j:commandButton id="removeDam2Button"
+                                                                image="/images/delete.gif"
+                                                                rendered="#{cage.cage.containerID eq 'Mating Cage' 
+                                                                            and (LevelView_Backing.function eq 'addMating' or LevelView_Backing.function eq 'addTrioMating')
+                                                                            and LevelView_Backing.dam2 ne null}"
+                                                                actionListener="#{LevelView_Backing.removeDam2}"
+                                                                oncomplete="applyLevelViewJQuery();"
+                                                                render="levelGrid"/>
+                                                <h:outputText value="" 
+                                                              rendered="#{cage.cage.containerID eq 'Mating Cage' 
+                                                                        and (LevelView_Backing.function eq 'addMating' or LevelView_Backing.function eq 'addTrioMating')
+                                                                        and LevelView_Backing.dam2 eq null}"/>
+                                                <h:outputText value="Sire: "/>
+                                                <h:outputText value="#{LevelView_Backing.sireID}"/>
+                                                <a4j:commandButton id="removeSireButton"
+                                                                image="/images/delete.gif"
+                                                                rendered="#{cage.cage.containerID eq 'Mating Cage' 
+                                                                            and (LevelView_Backing.function eq 'addMating' or LevelView_Backing.function eq 'addTrioMating')
+                                                                            and LevelView_Backing.sire ne null}"
+                                                                actionListener="#{LevelView_Backing.removeSire}"
+                                                                oncomplete="applyLevelViewJQuery();"
+                                                                render="levelGrid"/>
+                                                <h:outputText value="" 
+                                                              rendered="#{cage.cage.containerID eq 'Mating Cage' 
+                                                                        and (LevelView_Backing.function eq 'addMating' 
+                                                                             or LevelView_Backing.function eq 'addTrioMating')
+                                                                        and LevelView_Backing.sire eq null}"/>
+                                            </h:panelGrid>
+                                            <!-- hidden inputs that I grab with jquery and communicate with backing bean -->
+                                            <h:inputHidden id="cageType" value="#{cage.type}"/>
+                                            <h:inputHidden id="position" value="#{cage.position}"/>
+                                            <h:inputHidden id="hiddenStrain" value="#{cage.strain}"/>
+                                            <h:inputHidden id="hiddenCageID" value="#{cage.cage.containerID}"/>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </p:dataGrid>
+                                <br />
+                                <h:panelGroup id="resultsTableID">
+                                    <rich:dataTable styleClass="miceTable" rows="5" id="mice" value="#{LevelView_Backing.mouseDataModel}" 
+                                                    rendered="#{LevelView_Backing.mouseDataModel.rowCount > 0}"
+                                                    var="mouse" rowClass="mouseRow">
+                                        <f:facet name="header">
+                                            <h:outputText value="Mice in cage #{LevelView_Backing.selectedContainerID}"/>
+                                        </f:facet>
+
+                                        <f:facet name="footer" class="dataScroller" >
+                                            <rich:dataScroller for="mice" 
+                                                               oncomplete="applyLevelViewJQuery();"
+                                                                renderIfSinglePage="false"
+                                                                page="#{adminCageBean.gridPage}" />
+                                        </f:facet>  
+                                        <rich:column sortBy="#{mouse.ID}"
+                                                    sortOrder="#{sortingBean.column1Order}"
+                                                    filterValue="#{filterBean.column1Filter}" 
+                                                    filterExpression="#{fn:containsIgnoreCase(mouse.ID, filterBean.column1Filter)}" >
+                                            <f:facet name="header">
+                                                <h:outputText value="ID" />
+                                                <br />
+                                                <a4j:commandButton image="#{sortingBean.column1Image}" 
+                                                                render="resultsTableID" 
+                                                                action="#{sortingBean.sortByColumn1}" 
+                                                                status="statusTable"/>
+                                                <br />
+                                                <h:inputText value="#{filterBean.column1Filter}" styleClass="w100">
+                                                    <a4j:ajax event="blur" render="resultsTableID" status="statusTable" />
+                                                </h:inputText>
+                                            </f:facet>
+                                            <h:panelGroup styleClass="mouseID">
+                                                <h:graphicImage id="femaleIcon" rendered="#{mouse.sex eq 'F'}" value="/images/mouse1.png">
+                                                    <rich:tooltip id="tt1">
+                                                        <h:outputText value="Drag me to a new container to move me"/>
+                                                    </rich:tooltip>
+                                                </h:graphicImage>
+                                                <h:graphicImage id="maleIcon" rendered="#{mouse.sex ne 'F'}" value="/images/mouse2.png">
+                                                    <rich:tooltip id="tt2">
+                                                        <h:outputText value="Drag me to a new container to move me"/>
+                                                    </rich:tooltip>
+                                                </h:graphicImage>
+                                                <h:inputHidden value="#{mouse.ID}"/>
+                                            </h:panelGroup>
+                                            &nbsp;
+                                            <h:outputText value="#{mouse.ID}" />
+                                        </rich:column>
+                                        <rich:column id="mouseBD"
+                                                    sortBy="#{mouse.birthDate}"
+                                                    sortOrder="#{sortingBean.column2Order}"
+                                                    filterValue="#{filterBean.column2Filter}" 
+                                                    filterExpression="#{fn:containsIgnoreCase(mouse.birthDate, filterBean.column2Filter)}" >
+                                            <f:facet name="header">
+                                                <h:outputText value="Birthdate" />
+                                                <br />
+                                                <a4j:commandButton image="#{sortingBean.column2Image}" 
+                                                                render="resultsTableID" 
+                                                                action="#{sortingBean.sortByColumn2}" 
+                                                                status="statusTable"/>
+                                                <br />
+                                                <h:inputText value="#{filterBean.column2Filter}" styleClass="w100">
+                                                    <a4j:ajax event="blur" render="resultsTableID" status="statusTable" />
+                                                </h:inputText>
+                                            </f:facet>
+                                            <rich:calendar datePattern="#{LevelView_Backing.date_format}"  value="#{mouse.birthDate}" disabled="true"/>
+                                        </rich:column>      
+                                        <rich:column id="sex"
+                                                    sortBy="#{mouse.sex}"
+                                                    sortOrder="#{sortingBean.column3Order}"
+                                                    filterValue="#{filterBean.column3Filter}" 
+                                                    filterExpression="#{fn:containsIgnoreCase(mouse.sex, filterBean.column3Filter)}" >
+                                            <f:facet name="header">
+                                                <h:outputText value="Sex" />
+                                                <br />
+                                                <a4j:commandButton image="#{sortingBean.column3Image}" 
+                                                                render="resultsTableID" 
+                                                                action="#{sortingBean.sortByColumn3}" 
+                                                                status="statusTable"/>
+                                                <br />
+                                                <h:inputText value="#{filterBean.column3Filter}" styleClass="w100">
+                                                    <a4j:ajax event="blur" render="resultsTableID" status="statusTable" />
+                                                </h:inputText>
+                                            </f:facet>
+                                            <h:outputText value="#{mouse.sex}" />
+                                        </rich:column>  
+                                        <rich:column id="strain"
+                                                    sortBy="#{mouse.strainName}"
+                                                    sortOrder="#{sortingBean.column4Order}"
+                                                    filterValue="#{filterBean.column4Filter}" 
+                                                    filterExpression="#{fn:containsIgnoreCase(mouse.strainName, filterBean.column4Filter)}" >
+                                            <f:facet name="header">
+                                                <h:outputText value="Strain" />
+                                                <br />
+                                                <a4j:commandButton image="#{sortingBean.column4Image}" 
+                                                                render="resultsTableID" 
+                                                                action="#{sortingBean.sortByColumn4}" 
+                                                                status="statusTable"/>
+                                                <br />
+                                                <h:inputText value="#{filterBean.column4Filter}" styleClass="w100">
+                                                    <a4j:ajax event="blur" render="resultsTableID" status="statusTable" />
+                                                </h:inputText>
+                                            </f:facet>
+                                            <h:outputText value="#{mouse.strainName}" />
+                                        </rich:column> 
+
+                                        <rich:column id="lifeStatus"
+                                                    sortBy="#{mouse.lifeStatus}"
+                                                    sortOrder="#{sortingBean.column5Order}"
+                                                    filterValue="#{filterBean.column5Filter}" 
+                                                    filterExpression="#{fn:containsIgnoreCase(mouse.lifeStatus, filterBean.column5Filter)}" >
+                                            <f:facet name="header">
+                                                <h:outputText value="Life Status" />
+                                                <br />
+                                                <a4j:commandButton image="#{sortingBean.column5Image}" 
+                                                                render="resultsTableID" 
+                                                                action="#{sortingBean.sortByColumn5}" 
+                                                                status="statusTable"/>
+                                                <br />
+                                                <h:inputText value="#{filterBean.column5Filter}" styleClass="w100">
+                                                    <a4j:ajax event="blur" render="resultsTableID" status="statusTable" />
+                                                </h:inputText>
+                                            </f:facet>
+                                            <h:outputText value="#{mouse.lifeStatus}" />
+                                        </rich:column>
+                                        
+                                        <rich:column id="owner"
+                                                    sortBy="#{mouse.owner}"
+                                                    sortOrder="#{sortingBean.column6Order}"
+                                                    filterValue="#{filterBean.column6Filter}" 
+                                                    filterExpression="#{fn:containsIgnoreCase(mouse.owner, filterBean.column6Filter)}" >
+                                            <f:facet name="header">
+                                                <h:outputText value="Owner" />
+                                                <br />
+                                                <a4j:commandButton image="#{sortingBean.column6Image}" 
+                                                                render="resultsTableID" 
+                                                                action="#{sortingBean.sortByColumn6}" 
+                                                                status="statusTable"/>
+                                                <br />
+                                                <h:inputText value="#{filterBean.column6Filter}" styleClass="w100">
+                                                    <a4j:ajax event="blur" render="resultsTableID" status="statusTable" />
+                                                </h:inputText>
+                                            </f:facet>
+                                            <h:outputText value="#{mouse.owner}" />
+                                        </rich:column>
+                                        
+                                        <rich:column id="genotype"
+                                                    sortBy="#{mouse.genotype}"
+                                                    sortOrder="#{sortingBean.column7Order}"
+                                                    filterValue="#{filterBean.column7Filter}" 
+                                                    filterExpression="#{fn:containsIgnoreCase(mouse.genotype, filterBean.column7Filter)}" >
+                                            <f:facet name="header">
+                                                <h:outputText value="Genotype" />
+                                                <br />
+                                                <a4j:commandButton image="#{sortingBean.column7Image}" 
+                                                                render="resultsTableID" 
+                                                                action="#{sortingBean.sortByColumn7}" 
+                                                                status="statusTable"/>
+                                                <br />
+                                                <h:inputText value="#{filterBean.column7Filter}" styleClass="w100">
+                                                    <a4j:ajax event="blur" render="resultsTableID" status="statusTable" />
+                                                </h:inputText>
+                                            </f:facet>
+                                            <h:outputText value="#{mouse.genotype}" />
+                                        </rich:column>
+                                    </rich:dataTable>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <input type="hidden" name="droppedPosition" value=""/>
+                        <input type="hidden" name="draggedPosition" value=""/>
+                        <input type="hidden" name="draggedCage" value=""/>
+                        <input type="hidden" name="draggedMouse" value=""/>
+                        <h:inputHidden id="shownCage" value="#{LevelView_Backing.selectedContainerID}"/>
+                        <p:remoteCommand name="dropExistingCage" update="levelGrid"
+                                        action="#{LevelView_Backing.cageDrop}"  
+                                        oncomplete="applyLevelViewJQuery();"/> 
+                        <p:remoteCommand name="dropNewCage" update="levelGrid"
+                                        action="#{LevelView_Backing.newCageDrop}"  
+                                        oncomplete="applyLevelViewJQuery();"/>       
+                        <p:remoteCommand name="cullDrop" update="trashCan"
+                                        action="#{LevelView_Backing.cullDrop}"  
+                                        oncomplete="trashCanJQuery();"/>   
+                        <p:remoteCommand name="moveMouseDrop" update="resultsTableID, levelGrid"
+                                        action="#{LevelView_Backing.moveMouseDrop}"  
+                                        oncomplete="applyLevelViewJQuery();"/>  
+                        <p:remoteCommand name="matingPartnerDrop" update="levelGrid, matingSetup"
+                                         action="#{LevelView_Backing.matingPartnerDrop}" 
+                                         oncomplete="applyLevelViewJQuery();"/>
+                        <p:remoteCommand name="dropMatingMember" update="levelGrid, matingSetup"
+                                         action="#{LevelView_Backing.dropMatingMember}" 
+                                         oncomplete="applyLevelViewJQuery();"/>
+                        <a4j:jsFunction  name="dropMalePup" render="pupTable, femalesMales, tempCageID, totalBorn"
+                                         action="#{LevelView_Backing.dropMalePup}" 
+                                         oncomplete="styleWeanCages(); addPupListener();  disableWeanCageNames();"/> 
+                        <a4j:jsFunction  name="dropFemalePup" render="pupTable, femalesMales, tempCageID, totalBorn"
+                                         action="#{LevelView_Backing.dropFemalePup}" 
+                                         oncomplete="styleWeanCages(); addPupListener(); disableWeanCageNames();"/>
+                    </h:form>
+                </h:panelGroup>
+            </h:panelGrid>
+        </div>
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+    </h:body>
+</html>

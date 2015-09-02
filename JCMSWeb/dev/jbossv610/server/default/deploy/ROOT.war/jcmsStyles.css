@@ -1,0 +1,431 @@
+/* Global Styles */
+body {
+    margin:0px;
+    font-family: arial,sans-serif;
+    color: #666666;
+    font-size:11px;
+}
+
+a   {
+    color: #003352;
+}
+
+a:hover {
+    color: #0090FF;
+}
+
+a:visted {
+    color: #003352;
+}
+
+textarea {
+    font:12px "Trebuchet MS", Verdana;
+}
+h1  {
+    font:24px "Trebuchet MS", Verdana;
+    color: #003352;
+    letter-spacing:.2em;
+    margin-bottom:2px;
+    padding-bottom:2px;
+    margin-top:0px;
+    padding-top:0px;
+    vertical-align: top;
+}
+
+h2  {
+    font:15px "Trebuchet MS", Verdana;
+    color: #003352;
+    letter-spacing:.2em;
+    font-weight:bold;
+    margin-bottom:2px;
+    padding-bottom:2px;
+    margin-top:0px;
+    padding-top:0px;
+}
+
+h3  {
+    font:11px "Trebuchet MS", Verdana;
+    color:#003352;
+    letter-spacing:.2em;
+    font-weight:bold;
+    margin-bottom:2px;
+    padding-bottom:2px;
+    margin-top:0px;
+    padding-top:0px;
+}
+h4  {
+    font:11px "Trebuchet MS", Verdana;
+    color: #003352;
+    letter-spacing:.2em;
+    line-height:20px;
+}
+h5  {
+    font:11px "Trebuchet MS", Verdana;
+    color: #0078D0;
+    letter-spacing:.2em;
+    line-height:20px;
+}
+hr
+{
+    color: #CCCCCC;
+    background-color: #CCCCCC;
+    height: 1px;
+    border:0px;
+}
+
+/* ID Styles */
+#logo {
+    font:24px "Trebuchet MS", Verdana;
+    color: #003352;
+    letter-spacing:.2em;
+    line-height:30px;
+    margin-top:30px;
+}
+
+/* Class Styles */
+/* General */
+.bodyText {
+    font:11px "Trebuchet MS", Verdana;
+    color:#000000;
+    line-height:20px;
+    margin-top:0px;
+}
+
+.sideBarText {
+    font:13px "Trebuchet MS", Verdana;
+    background-image: url('../images/navPanel.jpg');
+    background-repeat: no-repeat;
+    letter-spacing:.1em;
+    font-weight:bold;
+    height: 330px;
+    width: 125px;
+    padding: 10px;
+    vertical-align: top;
+    }
+
+.sideBarText td {
+    vertical-align: top;
+    }
+
+.smallText {
+    font: 10px "Trebuchet MS", Verdana;
+    color: #666666;
+    line-height: 22px;
+    font-style: italic;
+}
+
+.instructionText {
+    font: 16px "Trebuchet MS", Verdana;
+    color: #666666;
+    line-height:16px;
+    letter-spacing:.1em;
+    text-decoration: none;
+}
+
+.sideBar {
+    width: 150px;
+    text-align: left;
+    vertical-align:top;
+}
+
+.detailPane {
+    text-align: left;
+    vertical-align:top;
+}
+
+.smallImage {
+    width: 15px;
+    height: 15px;
+    color: #003352;
+    background-color:#D6E6FB;
+    border-top: 1px solid #8DB7F3;
+    border-right: 1px solid #8DB7F3;
+    border-bottom: 1px solid #0078D0;
+    border-left: 1px solid #0078D0;
+}
+/* Buttons */
+.tinyButton
+{
+    font-weight: bold;
+    font-size: 11px;
+    width: 10pt;
+    color: #003352;
+    background-color:#D6E6FB;
+    border-top: 1px solid #0078D0;
+    border-right: 1px solid #0078D0;
+    border-bottom: 1px solid #8DB7F3;
+    border-left: 1px solid #8DB7F3;
+    padding: 2px;
+    text-align: center;
+}
+
+.smallButton
+{
+    font-weight: bold;
+    font-size: 11px;
+    width: 50pt;
+    color: #003352;
+    background-color:#D6E6FB;
+    border-top: 1px solid #0078D0;
+    border-right: 1px solid #0078D0;
+    border-bottom: 1px solid #8DB7F3;
+    border-left: 1px solid #8DB7F3;
+    padding: 2px;
+    text-align: center;
+}
+
+.mediumButton
+{
+    font-weight: bold;
+    font-size: 11px;
+    width: 75pt;
+    color: #003352;
+    background-color:#D6E6FB;
+    border-top: 1px solid #0078D0;
+    border-right: 1px solid #0078D0;
+    border-bottom: 1px solid #8DB7F3;
+    border-left: 1px solid #8DB7F3;
+    padding: 2px;
+    text-align: center;
+}
+
+.largeButton
+{
+    font-weight: bold;
+    font-size: 11px;
+    width: 150pt;
+    color: #003352;
+    background-color:#D6E6FB;
+    border-top: 1px solid #0078D0;
+    border-right: 1px solid #0078D0;
+    border-bottom: 1px solid #8DB7F3;
+    border-left: 1px solid #8DB7F3;
+    padding: 2px;
+    text-align: center;
+}
+/* Drop downs */
+.smallSelect
+{
+    width: 75pt;
+}
+
+.mediumSelect
+{
+    width: 125pt;
+}
+
+.largeSelect
+{
+    width: 230pt;
+}
+
+/* menu bar */
+.barBackground
+{
+    background-color: #ECF4FE;
+}
+
+.menu
+{
+    font:11px "Trebuchet MS", Verdana;
+    color: #003352;
+    letter-spacing:.2em;
+    margin-right:200px;
+}
+
+.menu a
+{
+    font:11px "Trebuchet MS", Verdana;
+    color: #003352;
+    font-weight:bold;
+    letter-spacing:.1em;
+    text-decoration:none;
+    margin-right:20px;
+}
+
+.menu a:hover
+{
+    color: #0090FF;
+    letter-spacing:.1em;
+    cursor: pointer;
+}
+/* tables */
+.innerTable{
+    color:#000000;
+    border: 1px solid #CCCCCC;
+    border-collapse:collapse;
+    padding: 2px 5px 2px 5px;
+}
+
+.columnHeader {
+    font:12px arial,sans-serif;
+    color:#000000;
+    background-color: #D6E6FB;
+    font-weight:bold;
+    text-align: center;
+    padding: 2px 5px 2px 5px;
+    border: 1px solid #CCCCCC;
+}
+
+.rowHeader {
+    font:12px arial,sans-serif;
+    color:#000000;
+    background-color: #D6E6FB;    
+    font-weight:bold;
+    text-align: left;
+    padding: 2px 5px 2px 5px;
+    border: 1px solid #CCCCCC;
+    vertical-align:top;
+    width: 120px;
+}
+
+.columnFooter {
+    font:12px arial,sans-serif;
+    color:#000000;
+    background-color: #CCCCCC;
+    border: 1px solid #CCCCCC;
+    font-weight:normal;
+    text-align: center;
+    padding: 2px 5px 2px 5px;
+}
+
+.innerTableTD
+{
+    font:10px arial,sans-serif;
+    border: 1px solid #CCCCCC;
+    vertical-align:top;
+    padding: 2px 5px 2px 5px;
+}
+
+.innerTableRight
+{
+    font:10px arial,sans-serif;
+    border: 1px solid #CCCCCC;
+    vertical-align:top;
+    padding: 2px 5px 2px 5px;
+    text-align: right;
+}
+
+.innerTable th
+{
+    font:11px arial,sans-serif;
+    font-weight:bold;
+    vertical-align:top;
+    background-color: #ECF4FE;
+    border: 1px solid #CCCCCC;
+    padding: 2px 5px 2px 5px;
+    
+}
+
+.innerTable td{
+    border: 1px solid #CCCCCC;
+    padding: 2px 5px 2px 5px;
+}
+
+.loginHeader {
+    font:12px arial,sans-serif;
+    color:#003352;
+    background-color: #D6E6FB;
+    font-weight:bold;
+    padding: 3px;
+    text-align: left;
+    vertical-align:top;
+    width: 75px;
+}
+
+.borderlessTable
+{
+    border:0px;
+}
+
+.borderlessTable td
+{
+    border:0px;
+}
+
+.listColumnOdd
+{
+    vertical-align:top;
+    text-align: left;
+}
+
+.listColumnEven
+{
+    vertical-align: top;
+    text-align: left;
+}
+
+.location td
+{
+    height: 25px;
+}
+
+.formTitle
+{
+    font:16px "Trebuchet MS", Verdana;
+    color: #003352;
+    margin-bottom:2px;
+    padding-bottom:2px;
+    margin-top:0px;
+    padding-top:0px;
+}
+
+.currentPage
+{
+    background-color: #ffff33;
+    color: #336600;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.formDetail
+{
+    background-attachment: scroll;
+}
+
+.errorMessage {
+    color: red;
+    font-family: "Trebuchet MS", Verdana;
+    font-size: 12px;
+    font-style: normal;
+    margin-left: 5px;
+    font-weight: 600;
+}
+
+.warnMessage {
+    color: #FCC917;
+    font-family: "Trebuchet MS", Verdana;
+    font-size: 12px;
+    font-style: normal;
+    margin-left: 5px;
+    font-weight: 600;
+}
+
+.infoMessage {
+    color: #0078D0;
+    font-family: "Trebuchet MS", Verdana;
+    font-size: 12px;
+    font-style: normal;
+    margin-left: 5px;
+    font-weight: 600;
+}
+.emphasis {
+    font-size: 1.3em;
+}
+
+.top{
+    vertical-align:top;
+}
+
+.center{
+    text-align: center;
+}
+.reqColor{
+    color:red;
+}
+
+
+
+
+
+

@@ -1,0 +1,11 @@
+1,\N,\N,\N,0,\N,0,B6D2F1/J,\N,0,100006,\N,B6D2,\N,B6D2F1/J,A,F1 hybrid,\N,\N
+2,\N,\N,\N,0,\N,0,B6.129P2-Apoe<tmlUnc>/J,\N,0,2052,\N,\N,\N,B6.129P2-Apoe<tmlUnc>/J,A,congenic,\N,\N
+3,\N,\N,\N,0,\N,0,BALB/cJ,\N,0,651,\N,C,\N,BALB/cJ,A,inbred,\N,\N
+4,\N,\N,\N,0,\N,0,BALB/cByJ,\N,0,1026,\N,CBy; BALB Bailey; BALB/c Bailey J,\N,BALB/cByJ,A,inbred,\N,\N
+5,\N,\N,\N,0,\N,0,C3H/HeJ,\N,0,659,\N,C3; C3H Heston,\N,C3H/HeJ,A,inbred,\N,\N
+6,\N,\N,\N,0,\N,0,C57BL/6J,\N,0,664,\N,C57 Black; B6; B6J; Black 6,\N,C57BL/6J,A,inbred,\N,\N
+7,\N,\N,\N,0,\N,0,CBA/J,\N,0,656,\N,CBA Jackson,\N,CBA/J,A,inbred,\N,\N
+8,\N,\N,\N,0,\N,0,DBA/2J,\N,0,671,\N,D2; D2J,\N,DBA/2J,A,inbred,\N,\N
+9,\N,\N,\N,0,\N,0,FVB/NJ,\N,0,1800,\N,FVB; Friend Virus B NIH Jackson,\N,FVB/NJ,A,inbred,\N,\N
+10,\N,\N,\N,0,\N,0,NOD/ShiLtJ,\N,0,1976,\N,NOD/LtJ; Non-obese Diabetic,\N,NOD/ShiLtJ,A,inbred,\N,\N
+11,\N,\N,\N,0,\N,0,NOD.CB17-Prkdc<scid>/J,\N,0,1303,\N,NOD SCID,\N,NOD.CB17-Prkdc<scid>/J,A,congenic,\N,\N

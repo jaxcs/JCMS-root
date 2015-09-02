@@ -1,0 +1,297 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui">
+    <h:panelGrid columns="1">
+        <p:ajaxStatus id="ajaxStatusPanel">  
+            <f:facet name="start">  
+                <h:graphicImage value="../images/bhi_ball.gif"/>  
+            </f:facet>  
+            <f:facet name="complete">  
+                <h:graphicImage value="../images/bhi_ball_white.gif" />  
+            </f:facet>
+        </p:ajaxStatus>
+        <h:panelGrid columns="1" columnClasses="listColumnEven">
+            <h:selectOneRadio value="#{StorageManager_Backing.function}" styleClass="blackTextStyle">
+                <f:selectItem itemLabel="Move Location" itemValue="move"/>
+                <f:selectItem itemLabel="Duplicate Location" itemValue="duplicate"/>
+                <f:selectItem itemLabel="Add Location" itemValue="addLocation"/>
+                <f:selectItem itemLabel="Edit Location" itemValue="editLocation"/>
+                <f:selectItem itemLabel="Add Storage Facility" itemValue="addStorage"/>
+                <f:selectItem itemLabel="Edit Storage Facility" itemValue="editStorage"/>
+                <a4j:ajax event="change" execute="@this" oncomplete="applyJQuery();" render="panels, instructions"/>
+            </h:selectOneRadio>
+            <h:panelGroup id="instructions">
+                <h:outputText rendered="#{StorageManager_Backing.function eq 'move'}" 
+                              value="Drag the location you would like to move to its new location/storage facility and drop it."/>
+                <h:outputText rendered="#{StorageManager_Backing.function eq 'duplicate'}" 
+                              value="Drag the location you would like to duplicate to the desired location/storage facility and drop it."/> 
+                <h:outputText rendered="#{StorageManager_Backing.function eq 'addLocation'}" 
+                              value="Select the desired parent location/storage facility and fill out the add location panel with the desired properties and click 'Save'."/>
+                <h:outputText rendered="#{StorageManager_Backing.function eq 'editLocation'}" 
+                              value="Select the location you wish to edit provide the new fields and click 'Save'."/>
+                <h:outputText rendered="#{StorageManager_Backing.function eq 'addStorage'}" 
+                              value="Provide a storage facility name and click 'Save'"/>
+                <h:outputText rendered="#{StorageManager_Backing.function eq 'editStorage'}" 
+                              value="Select the storage facility you wish to edit provide the new name and click 'Save'"/>
+            </h:panelGroup>
+            <h:panelGrid columns="2" columnClasses="listColumnEven, listColumnEven">
+                <p:tree id="locationTree" selectionMode="single" value="#{StorageManager_Backing.root}" var="node">
+                    <p:ajax event="expand" listener="#{StorageManager_Backing.nodeExpand}" /> 
+                    <p:ajax event="collapse" listener="#{StorageManager_Backing.nodeCollapse}" /> 
+                    <p:ajax event="select" listener="#{StorageManager_Backing.onNodeSelect}" oncomplete="applyJQuery();" update="@(.panels)"/>
+                    <p:treeNode id="storageNode" type="storage" icon="disabledIcon">
+                        <h:outputText value="#{node.label}" style="color:gray"/>
+                        <h:inputHidden id="hiddenKeyStorage" value="#{node.storageFacility_key}"/>
+                        <h:inputHidden id="hiddenClass1" value="#{StorageManager_Backing.storageClass}"/>
+                    </p:treeNode>
+                    <p:treeNode id="locationNode" type="location" icon="customIcon">
+                        <h:panelGroup id="locationText">
+                            <h:outputText value="#{node.label}"/>
+                            <h:inputHidden id="hiddenKey" value="#{node.locationType_key}"/>
+                            <h:inputHidden id="hiddenClass2" value="#{StorageManager_Backing.locationClass}"/>
+                        </h:panelGroup>
+                    </p:treeNode>
+                </p:tree>
+                <h:panelGroup id="panels" styleClass="panels">
+                    <p:panel id="addLocationPanel" header="Add Location" rendered="#{StorageManager_Backing.function eq 'addLocation'}">
+                        <h:panelGrid columns="4">
+                            <h:outputLabel value="Location: " for="locationType"/>
+                            <h:inputText value="#{StorageManager_Backing.newLocationTypeName}" id="locationType"/>
+                            <h:outputLabel value="Location Detail: " for="locationDetail"/>
+                            <h:inputText value="#{StorageManager_Backing.newLocationTypeDetail}" id="locationDetail"/>
+                            <h:outputLabel value="Parent Location: " for="parentLocation"/>
+                            <h:outputText value="#{StorageManager_Backing.parentLocationName}" id="parentLocation"/>
+                            <h:outputLabel value="Parent Storage Facility: " for="parentStorage"/>
+                            <h:outputText value="#{StorageManager_Backing.parentStorageFacility}" id="parentStorage"/>
+                        </h:panelGrid>
+                        <a4j:commandButton value="Save" styleClass="smallButton" action="#{StorageManager_Backing.addLocationType}"
+                                            render="locationTree, addLocationPanel" oncomplete="applyJQuery();"/>
+                    </p:panel>
+                    <p:panel id="addStorageFacilityPanel" header="Add Storage Facility" rendered="#{StorageManager_Backing.function eq 'addStorage'}">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Storage Facility Name " for="storageFacility"/>
+                            <h:inputText value="#{StorageManager_Backing.newStorageFacilityName}" id="storageFacility"/>
+                        </h:panelGrid>
+                        <a4j:commandButton value="Save" styleClass="smallButton" action="#{StorageManager_Backing.addStorageFacility}"
+                                            render="locationTree, addStorageFacilityPanel" oncomplete="applyJQuery();"/>
+                    </p:panel>
+                    <p:panel id="editLocationPanel" header="Edit Location" rendered="#{StorageManager_Backing.function eq 'editLocation'}">
+                        <h:panelGrid columns="4">
+                            <h:outputLabel value="Location: " for="editlocationType"/>
+                            <h:inputText value="#{StorageManager_Backing.newLocationTypeName}" id="editlocationType"/>
+                            <h:outputLabel value="Location Detail: " for="editlocationDetail"/>
+                            <h:inputText value="#{StorageManager_Backing.newLocationTypeDetail}" id="editlocationDetail"/>
+                            <h:outputLabel value="Current Location: " for="editparentLocation"/>
+                            <h:outputText value="#{StorageManager_Backing.selectedLocation.locationType}" id="editparentLocation"/>
+                            <h:outputLabel value="Current Location Detail: " for="editparentStorage"/>
+                            <h:outputText value="#{StorageManager_Backing.selectedLocation.locationDetail}" id="editparentStorage"/>
+                        </h:panelGrid>
+                        <a4j:commandButton value="Save" styleClass="smallButton" action="#{StorageManager_Backing.updateLocationType}"
+                                            render="locationTree, editLocationPanel" oncomplete="applyJQuery();"/>
+                    </p:panel>
+                    <p:panel id="editStorageFacilityPanel"  header="Edit Storage Facility" rendered="#{StorageManager_Backing.function eq 'editStorage'}">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="New Storage Facility Name " for="newStorageFacility"/>
+                            <h:inputText value="#{StorageManager_Backing.newStorageFacilityName}" id="newStorageFacility"/>
+                            <h:outputLabel value="Current Storage Facility Name: " for="currentStorageFacility"/>
+                            <h:outputText value="#{StorageManager_Backing.selectedStorageFacility.storageFacility}" id="currentStorageFacility"/>
+                        </h:panelGrid>
+                        <a4j:commandButton value="Save" styleClass="smallButton" action="#{StorageManager_Backing.updateStorageFacility}"
+                                            render="locationTree, editStorageFacilityPanel" oncomplete="applyJQuery();"/>
+                    </p:panel>
+                    <br/>
+                    <rich:dataTable id="samplesTable" rowKeyVar="tableRowIndex" styleClass="stable" 
+                                    var="sample" rendered="#{!empty StorageManager_Backing.samples}"
+                                    rowClass="sampleRow"
+                                    value="#{StorageManager_Backing.samples}" rows="15">
+                        <f:facet name="footer" class="dataScroller">
+                            <rich:dataScroller for="samplesTable" 
+                                               id="resultsDataScroller"
+                                               maxPages="5"                                    
+                                               renderIfSinglePage="false" 
+                                               oncomplete="applyJQuery();" />
+                        </f:facet> 
+                        <h:column >
+                            <f:facet name="header">
+                                <h:outputText value="Actions"/>
+                            </f:facet>
+                            <h:commandLink action="#{EditSample_Backing.editSample}" target="_blank">
+                                <h:graphicImage value="/images/edit.gif" style="border:0" />
+                                <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                <f:param name="paramSampleKey" value="#{sample.sample_key}"/>
+                            </h:commandLink>
+                        </h:column>
+                        <rich:column sortBy="#{sample.sampleID}"
+                                    sortOrder="#{sortingBean.column1Order}"
+                                    filterValue="#{filterBean.column1Filter}" 
+                                    filterExpression="#{fn:containsIgnoreCase(sample.sampleID, filterBean.column1Filter)}"  >
+                            <f:facet name="header">
+                                <h:outputText value="Sample ID"/>
+                                <br />
+                                <a4j:commandButton  image="#{sortingBean.column1Image}" 
+                                                    render="samplesTable" 
+                                                    action="#{sortingBean.sortByColumn1}"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column1Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="samplesTable"/>
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{sample.sampleID}"/>
+                        </rich:column>
+                        <rich:column sortBy="#{sample.owner}"
+                                    sortOrder="#{sortingBean.column2Order}"
+                                    filterValue="#{filterBean.column2Filter}" 
+                                    filterExpression="#{fn:containsIgnoreCase(sample.owner, filterBean.column2Filter)}">
+                            <f:facet name="header">
+                                <h:outputText value="Owner"/>
+                                <br />
+                                <a4j:commandButton  image="#{sortingBean.column2Image}" 
+                                                    render="samplesTable" 
+                                                    action="#{sortingBean.sortByColumn2}"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column2Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="samplesTable"/>
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{sample.owner}"/>
+                        </rich:column>
+                        <rich:column sortBy="#{sample.sampleDate}"
+                                    sortOrder="#{sortingBean.column3Order}"
+                                    filterValue="#{filterBean.column3Filter}" 
+                                    filterExpression="#{fn:containsIgnoreCase(sample.sampleDate, filterBean.column3Filter)}">
+                            <f:facet name="header">
+                                <h:outputText value="Sample Date"/>
+                                <br />
+                                <a4j:commandButton  image="#{sortingBean.column3Image}" 
+                                                    render="samplesTable" 
+                                                    action="#{sortingBean.sortByColumn3}"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column3Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="samplesTable"/>
+                                </h:inputText>
+                            </f:facet>
+                            <rich:calendar value="#{sample.sampleDate}" 
+                                           datePattern="#{StorageManager_Backing.date_format}" disabled="true"/>
+                        </rich:column>
+                        <rich:column sortBy="#{sample.strainName}"
+                                    sortOrder="#{sortingBean.column4Order}"
+                                    filterValue="#{filterBean.column4Filter}" 
+                                    filterExpression="#{fn:containsIgnoreCase(sample.strainName, filterBean.column4Filter)}">
+                            <f:facet name="header">
+                                <h:outputText value="Strain"/>
+                                <br />
+                                <a4j:commandButton  image="#{sortingBean.column4Image}" 
+                                                    render="samplesTable" 
+                                                    action="#{sortingBean.sortByColumn4}"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column4Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="samplesTable"/>
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{sample.strainName}"/>
+                        </rich:column>
+
+                        <rich:column sortBy="#{sample.sampleType}"
+                                    sortOrder="#{sortingBean.column5Order}"
+                                    filterValue="#{filterBean.column5Filter}" 
+                                    filterExpression="#{fn:containsIgnoreCase(sample.sampleType, filterBean.column5Filter)}">
+                            <f:facet name="header">
+                                <h:outputText value="Sample Type"/>
+                                <br />
+                                <a4j:commandButton  image="#{sortingBean.column5Image}" 
+                                                    render="samplesTable" 
+                                                    action="#{sortingBean.sortByColumn5}"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column5Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="samplesTable"/>
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{sample.sampleType}"/>
+                        </rich:column>
+
+                        <rich:column sortBy="#{sample.storage.sampleStatus}"
+                                    sortOrder="#{sortingBean.column6Order}"
+                                    filterValue="#{filterBean.column6Filter}" 
+                                    filterExpression="#{fn:containsIgnoreCase(sample.strainName, filterBean.column6Filter)}">
+                            <f:facet name="header">
+                                <h:outputText value="Sample Status"/>
+                                <br />
+                                <a4j:commandButton  image="#{sortingBean.column6Image}" 
+                                                    render="samplesTable" 
+                                                    action="#{sortingBean.sortByColumn6}"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column6Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="samplesTable"/>
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{sample.storage.sampleStatus}"/>
+                        </rich:column>
+                        
+                        <rich:column sortBy="#{sample.location}"
+                                    sortOrder="#{sortingBean.column7Order}"
+                                    filterValue="#{filterBean.column7Filter}" 
+                                    filterExpression="#{fn:containsIgnoreCase(sample.location, filterBean.column7Filter)}">
+                            <f:facet name="header">
+                                <h:outputText value="Location"/>
+                                <br />
+                                <a4j:commandButton  image="#{sortingBean.column7Image}" 
+                                                    render="samplesTable" 
+                                                    action="#{sortingBean.sortByColumn7}"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column7Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="samplesTable"/>
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{sample.location}"/>
+                            <h:inputHidden value="#{sample.locationType_key}" id="hiddenLocationKey"/>
+                        </rich:column>
+                    </rich:dataTable>
+                    <br/>
+                    <a4j:commandButton value="Delete" 
+                                   styleClass="smallButton"
+                                   render="locationTree, panels"
+                                   rendered="#{StorageManager_Backing.selectedTreeNode ne null and StorageManager_Backing.selectedLocation ne null and empty StorageManager_Backing.samples}"
+                                   action="#{StorageManager_Backing.deleteLocation}"
+                                   oncomplete="applyJQuery();"/>
+                    <a4j:commandButton value="Delete" 
+                                    styleClass="smallButton"
+                                    render="locationTree, panels"
+                                    rendered="#{StorageManager_Backing.selectedTreeNode ne null and StorageManager_Backing.selectedLocation eq null and empty StorageManager_Backing.samples}"
+                                    action="#{StorageManager_Backing.deleteStorage}"
+                                    oncomplete="applyJQuery();"/>
+                </h:panelGroup>
+            </h:panelGrid>
+        </h:panelGrid>
+    </h:panelGrid>
+    <input type="hidden" name="locationDragKey" value=""/>
+    <input type="hidden" name="dropKey" value=""/>
+    <input type="hidden" name="dropClass" value=""/>
+    <p:remoteCommand name="dropNode" actionListener="#{StorageManager_Backing.dropNode}" update="locationTree"
+                        oncomplete="applyJQuery();"/>
+
+</ui:composition>

@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<!--
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+	<head>
+		<title>Reporting Home</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link href="../css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"> 
+ 		<link href="../css/JCMSMobileStyles.css" rel="stylesheet" type="text/css">    
+ 		<link href="../css/kaplanMeierStyles.css" rel="stylesheet" type="text/css">    
+		<script type="text/javascript" charset="utf-8" src="../cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../lib/bootstrap.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../lib/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../js/jcmsMobileUtilities.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../js/kaplanMeier.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../lib/d3.v3.js"></script>
+	</head>
+	<body>
+		<img src="../img/header.png" alt="JCMS Mobile" style="width: 100%"/>
+		<div style="text-align: center"><h2>JCMS Mobile Reporting</h2></div>
+		<form id="kaplanMeierForm">
+			<ul class="nav nav-pills">
+				<li onclick="window.location.href='../home.html'">
+					<a href="#">Home</a>
+				</li>
+				<li onclick="window.location.href='./reportingHome.html'">
+					<a href="#">Reporting Home</a>
+				</li>
+				<li onclick="window.location.href='../vivariaLayout/vivariaLayout.html'">
+					<a href="#">Vivaria Layout</a>
+				</li>
+			</ul>
+			<ul class="nav nav-pills">
+				<li onclick="window.location.href='./colonySummaryReport.html'">
+					<a href="#">Colony Summary Report</a>
+				</li>
+				<li class="active">
+					<a href="#">Kaplan Meier Charts</a>
+				</li>
+				<li onclick="window.location.href='./mouseHistogram.html'">
+					<a href="#">Mouse Histogram</a>
+				</li>
+				<li onclick="window.location.href='./cageHistogram.html'">
+					<a href="#">Cage Histogram</a>
+				</li>
+			</ul>
+			<table style="width: 100%;">
+				<tr>
+					<td>
+						<select id="workgroupDropdown" name="workgroups" class="form-control" multiple>
+    						<option value="" disabled selected>Workgroups</option>
+						</select>
+					</td>
+					<td>
+						<select id="strainDropdown" name="strains" class="form-control" multiple>
+    						<option value="" disabled selected>Strains</option>
+						</select>
+					</td>
+					<td>
+						<select id="useScheduleDropdown" name="useSchedules" class="form-control" multiple>
+    						<option value="" disabled selected>Use Schedules</option>
+						</select>						
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<select id="codDropdown" name="cods" class="form-control" multiple>
+    						<option value="" disabled selected>Cause of Deaths</option>
+						</select>
+					</td>
+					<td>
+						<select id="roomDropdown" name="rooms" class="form-control" multiple>
+    						<option value="" disabled selected>Rooms</option>
+						</select>
+					</td>
+					<td>
+						<select id="lifeStatusDropdown" name="lifeStatuses" class="form-control" multiple>
+    						<option value="" disabled selected>Life Statuses</option>
+						</select>						
+					</td>
+				</tr>
+			</table>
+			<table style="margin-left: auto; margin-right: auto;">
+				<tr>
+					<td>
+						<div style="text-align: center;">
+							<button id="submit" onclick="createKaplanMeier();" type="button" class="btn btn-large btn-primary">Submit</button>
+						</div>
+					</td>
+					<td>
+						<div style="text-align: center;">
+							<button id="clear" onclick="d3.selectAll('svg').remove();" type="button" class="btn btn-large btn-primary">Clear</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<div style="text-align: center;" class="loader"><img src="../img/loading.gif"/></div>
+			<div id="legendDiv" style="text-align: left; border: none; overflow: auto;"></div>
+			<div id="contentDiv" style="text-align: center;"></div>
+		</form>
+		
+	</body>
+</html>

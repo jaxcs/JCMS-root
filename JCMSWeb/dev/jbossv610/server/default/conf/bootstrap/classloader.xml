@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+   The core classloading system
+-->
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+   <!--
+      The classloader implementation
+   -->
+   <bean name="ClassLoaderSystem" class="org.jboss.classloader.spi.ClassLoaderSystem">
+      <classloader><null/></classloader>
+      <constructor factoryClass="org.jboss.classloader.spi.ClassLoaderSystem" factoryMethod="getInstance"/>
+   </bean>
+
+   <!--
+      The default classloading domain
+   -->
+   <bean name="ClassLoaderDomain" class="org.jboss.classloader.spi.ClassLoaderDomain">
+      <classloader><null/></classloader>
+      <constructor factoryMethod="getDefaultDomain">
+         <factory bean="ClassLoaderSystem"/>
+      </constructor>
+
+      <!-- Whether to use loadClass directly for the parent classloader.
+           Set to false to first check whether the parent classloader has the class as a resource
+           before locking the classloader to avoid contention (experimental).
+      -->
+      <property name="useLoadClassForParent">true</property>
+   </bean>
+
+   <!-- 
+      ClassLoader management and resolution
+   -->
+   <bean name="ClassLoading" class="org.jboss.classloading.spi.dependency.ClassLoading">
+      <classloader><null/></classloader>
+      <incallback method="addModule" state="Configured"/>
+      <uncallback method="removeModule" state="Configured"/>
+   </bean>
+
+   <!--
+      Javassist setup - we can set the repo anyway, even though we don't actually use JavassistTIF
+    -->
+   <bean name="JBossClClassPoolConfig" class="org.jboss.classpool.plugins.jbosscl.JBossClClassPoolConfig">
+      <classloader><null/></classloader>
+      <constructor factoryMethod="getInstance"/>
+      <property name="classLoading"><inject bean="ClassLoading"/></property>
+   </bean>
+
+   <bean name="JavassistInitializer" class="org.jboss.reflect.plugins.javassist.JavassistInitializer">
+      <classloader><null/></classloader>
+      <constructor>
+         <parameter><inject bean="JBossClClassPoolConfig" property="classPoolRepository"/></parameter>
+      </constructor>
+   </bean>
+
+</deployment>

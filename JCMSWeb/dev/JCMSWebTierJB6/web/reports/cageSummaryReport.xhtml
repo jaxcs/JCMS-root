@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+        <title>
+            <h:outputText value="Cage Summary Report"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript">
+            function openNewWindow(fname) {
+                win = window.open("", "navigation window", "", true);
+                //alert("called again");
+                if (win.open) {
+                    win.close();
+                }
+
+                win = window.open(fname, "navigation window", "", true);
+                win.focus();
+
+                return false;
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <h:form id="cageSummaryReportId">
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <div style="margin-left:10px;margin-right:10px">
+
+                <!-- Messages -->
+                <rich:messages />
+                <br />
+                <!-- STATUS -->
+                <a4j:status >
+                    <f:facet name="start">
+                        <h:graphicImage  value="../images/bhi_ball.gif"/>
+                    </f:facet>
+                </a4j:status>
+
+                <h:panelGrid columns="3" border="0" cellpadding="5" cellspacing="5"
+                             columnClasses="detailPane, detailPane">
+
+                    <h:panelGroup styleClass="formTitle">
+
+                        <h3><h:outputText value="Filter Options"></h:outputText></h3>
+
+                        <h:panelGrid columns="2"
+                                     columnClasses="rowHeader, innerTableTD"
+                                     styleClass="innerTable">
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['room']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectOneMenu value="#{CageSummary_Backing.report.room}">
+                                    <f:selectItems value="#{CageSummary_Backing.selectItemWrapper.roomItems}"/>
+                                    <f:converter converterId="roomConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['common.name.status']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectOneMenu value="#{CageSummary_Backing.report.status}" id="status" 
+                                                 disabled="#{CageSummary_Backing.report.isBillable}" >
+                                    <f:selectItems value="#{CageSummary_Backing.selectItemWrapper.activeCvContainerStatusItems}"/>
+                                    <f:converter converterId="containerStatusConverter" />
+                                    <a4j:ajax event="change" render="selectBillable" />
+                                </h:selectOneMenu>
+
+                                &nbsp;&nbsp;
+
+                                <h:selectBooleanCheckbox
+                                    id="selectBillable"
+                                    disabled="#{CageSummary_Backing.report.isStatus}"
+                                    value="#{CageSummary_Backing.report.isBillable}" >
+                                    <a4j:ajax event="change" render="status" />
+                                </h:selectBooleanCheckbox> All Billable
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['pbDate']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <rich:calendar id="pbStartDate"
+                                               value="#{CageSummary_Backing.report.pbStartDate}"
+                                               inputSize="#{msgs['common.minMaxSize']}"
+                                               datePattern="#{CageSummary_Backing.date_format}"
+                                               showInput="true"
+                                               showWeeksBar="true"
+                                               enableManualInput="true">
+                                    <a4j:ajax event="change" render="pbStartDate" />
+<!--                                                 action="#{CageSummary_Backing.validateDateAction}" >-->
+                                </rich:calendar>
+                                &nbsp;&nbsp;
+                                <h:outputText value="#{msgs['search.to']}"></h:outputText>
+                                &nbsp;&nbsp;
+                                <rich:calendar id="pbEndDate"
+                                               label="#{msgs['common.calendarPicker']}"
+                                               value="#{CageSummary_Backing.report.pbbEndDate}"
+                                               inputSize="#{msgs['common.minMaxSize']}"
+                                               datePattern="#{CageSummary_Backing.date_format}"
+                                               showInput="true"
+                                               showWeeksBar="true"
+                                               enableManualInput="true">
+                                    <a4j:ajax event="change" render="pbEndDate" />
+<!--                                                 action="#{CageSummary_Backing.validateDateAction}" ></a4j:ajax>-->
+                                </rich:calendar>
+                            </h:panelGroup>   
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['owner']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup id="ownersId">   
+                                <rich:collapsiblePanel header="Select Filter" expanded="false" >
+                                    <h:outputLabel value="Owner" styleClass="collapsiblePanelLabel" />
+                                    <rich:pickList value="#{CageSummary_Backing.report.owners}" 
+                                                   disabled="false"  >
+                                        <f:selectItems value="#{CageSummary_Backing.selectItemWrapper.guestOwnerItems}"/>
+                                        <f:converter converterId="ownerConverter" />
+                                    </rich:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+                    <h:panelGroup styleClass="formTitle">
+                        <h:panelGrid>                           
+                            <h3><h:outputText value="Group By"></h:outputText></h3>
+                            <h:panelGroup>
+                                <h:selectOneRadio layout="pageDirection" value="#{CageSummary_Backing.report.groupBy}">
+                                    <f:selectItems value="#{CageSummary_Backing.selectItemWrapper.cageSummaryGroupBy}"/>
+                                </h:selectOneRadio>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+                    <h:panelGroup styleClass="formTitle">
+                        <h:panelGrid>
+                            <h3><h:outputText value="Cage Billing"></h:outputText></h3>     
+                            <h:panelGroup>
+                                <h:selectOneRadio layout="pageDirection" value="#{CageSummary_Backing.report.penBilling}">
+                                    <f:selectItems value="#{CageSummary_Backing.selectItemWrapper.cageSummaryPenOptions}"/>
+                                </h:selectOneRadio>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:panelGroup>
+                    
+                    <h:panelGroup>
+                        <div align="left">
+                            <a4j:commandButton
+                                value="#{msgs['common.run']}"
+                                styleClass="mediumButton"
+                                action="#{CageSummary_Backing.runReportAction}"
+                                id="run"
+                                onclick='this.form.target="_blank"'
+                                />
+                            &nbsp;&nbsp;
+                            <h:commandButton
+                                value="#{msgs['common.reset']}"
+                                styleClass="mediumButton"
+                                action="#{CageSummary_Backing.cageSummaryReportAction}"
+                                render="cageSummaryReportId"
+                                id="clear"/>
+                        </div>
+                    </h:panelGroup>
+                    
+                </h:panelGrid>
+
+            </div>                    
+            <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+        </h:form>
+    </h:body>
+</html>

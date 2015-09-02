@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+  <!-- 
+      Configure JSR-160 style JMX connector for use with jconsole and other remote access programs such as twiddle.
+      
+      To invoke jconsole with this JMX connector, issue:
+         jconsole service:jmx:rmi:///jndi/rmi://hostname:rmiRegistryPort/jmxrmi
+       or
+         jconsole service:jmx:rmi:///jndi/rmi://localhost:1090/jmxrmi
+
+ -->
+
+  <bean name="InitialContext" class="javax.naming.InitialContext"/>
+ 
+  <bean name="JMXConnector" class="org.jboss.system.server.jmx.JMXConnector">
+
+      <!-- configuration properties -->
+
+      <!--  To enable authentication security checks, uncomment the following security domain name -->
+      <!--UNCOMMENT THIS
+      <property name="securityDomain">jmx-console</property>
+      -->
+
+      <!--  specify the NIC that will run the JMX connector --> 
+      <property name="hostname">
+         <value-factory bean="ServiceBindingManager" method="getStringBinding" 
+            parameter="jboss.remoting:service=JMXConnectorServer,protocol=rmi"/>
+      </property>
+
+      <!-- specify the port that the JMX connector is looked up through (used in JMXServiceURL) -->
+      <!-- commenting this out, will use 1090 as default -->
+          <property name="rmiRegistryPort" class="int">
+          <!-- Get the port from the ServiceBindingManager -->
+          <value-factory bean="ServiceBindingManager" method="getIntBinding" 
+          parameter="jboss.remoting:service=JMXConnectorServer,protocol=rmi"/>
+       </property>
+
+
+      <!-- specify the port that the RMI server listens to  -->
+      <!-- commenting this out, will use 1091 as default -->
+      <property name="rmiServerPort" class="int">
+      <!-- Get the port from the ServiceBindingManager -->
+      <value-factory bean="ServiceBindingManager" method="getIntBinding"
+      parameter="jboss.remoting:service=JMXConnectorServer,protocol=rmiServer"/>
+      </property>
+
+
+      <!-- specify the mbean server that is used internally, this shouldn't be changed here. -->
+      <property name="mbeanServer" class="javax.management.MBeanServer"><inject bean="JMXKernel" property="mbeanServer" /></property>
+      <property name="context" class="javax.naming.InitialContext"><inject bean="InitialContext"/></property>
+  </bean>
+</deployment>

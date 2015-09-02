@@ -1,0 +1,250 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+        <title>
+            <h:outputText value="Colony Summary Report"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <div style="margin-left:10px;margin-right:10px">                   
+
+                <rich:messages layout="table" title="#{msgs['common.messages.reviewMsg']}"
+                               styleClass="errorMessage"/>
+
+                <br />
+                <h2>Colony Summary Report for&nbsp;<h:outputText value="#{ColonySummary_Backing.today}"/></h2>
+                <br />
+
+                <h2><h:outputText value="Summary Statistics:"/></h2>
+                <hr />
+
+                <h:panelGrid columns="3"
+                             columnClasses="detailPane, detailPane, detailPane">
+                    <h:panelGroup>
+                        <h3><h:outputLabel>Number of live mice for the owners/workgroups:</h:outputLabel></h3>
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        &nbsp;
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h3><h:outputText value="#{ColonySummary_Backing.numberOfLiveMice}" /></h3>
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h3><h:outputLabel>Number of active strains for the owners/workgroups:</h:outputLabel></h3>
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        &nbsp;
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h3><h:outputText value="#{ColonySummary_Backing.numberOfActiveStrains}" /></h3>
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h3><h:outputLabel>Number of active cages for the owners/workgroups:</h:outputLabel></h3>
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        &nbsp;
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h3><h:outputText value="#{ColonySummary_Backing.numberOfActivePens}" /></h3>
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h3><h:outputLabel>Number of active matings for the owners/workgroups:</h:outputLabel></h3>
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        &nbsp;
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h3><h:outputText value="#{ColonySummary_Backing.numberOfActiveMatings}" /></h3>
+                    </h:panelGroup>
+
+                </h:panelGrid>
+
+                <hr />
+                <br />
+
+                <h2><h:outputText value="Detail Reports:"/></h2>
+                <br />
+
+                <h2><h:outputText value="Number of Live mice by Owner/Workgroup and Strain:"/></h2>
+
+                <hr />
+                <br />
+
+                <rich:messages layout="table" title="#{msgs['common.messages.reviewMsg']}"
+                               styleClass="errorMessage"/>
+
+                <!-- Number of active mice and strains by owner -->
+                <rich:dataTable width="700" border="0" var="record"
+                                value="#{ColonySummary_Backing.simpleDTOLst}">
+
+                    <rich:column>
+                        <h3><h:outputText value="#{record.owner}" /></h3>
+                    </rich:column>
+                    <rich:column>
+                        <h3><h:outputLabel value="#{msgs['totalStrains']}" />&nbsp;<h:outputText value="#{record.strainCnt}"></h:outputText></h3>
+                    </rich:column>
+                    <rich:column>
+                        <h3><h:outputLabel value="#{msgs['totalMice']}" />&nbsp;<h:outputText value="#{record.liveMiceCnt}"></h:outputText></h3>
+                    </rich:column>
+
+                    <f:facet name="header">
+                        <rich:columnGroup>
+                            <rich:column >
+                                <h:outputLabel value="#{msgs['owner']}" />
+                            </rich:column>
+                            <rich:column >
+                                <h:outputLabel value="#{msgs['strain']}" />
+                            </rich:column>
+                            <rich:column>
+                                <h:outputLabel value="#{msgs['liveMice']}" />
+                            </rich:column>
+                        </rich:columnGroup>
+                    </f:facet>
+
+                    <rich:collapsibleSubTable
+                        var="row" value="#{ColonySummary_Backing.liveMice}">
+
+                        <rich:column
+                            rendered="#{fn:toLowerCase(row.owner) == fn:toLowerCase(record.owner)}">
+                            &nbsp;
+                        </rich:column>
+                        <rich:column
+                            rendered="#{fn:toLowerCase(row.owner) == fn:toLowerCase(record.owner)}">
+                            <h:outputText value="#{row.strainName}"></h:outputText>
+                        </rich:column>
+                        <rich:column
+                            rendered="#{fn:toLowerCase(row.owner) == fn:toLowerCase(record.owner)}">
+                            <h:outputText value="#{row.mice}"></h:outputText>
+                        </rich:column>
+                    </rich:collapsibleSubTable>
+                </rich:dataTable>
+
+                <br />
+                <br />
+                <h2><h:outputText value="Number of Cages by Owner/Workgroup and Room:"/></h2>
+                <hr />
+                <br />
+
+                <!-- Number of pens by owner and room -->
+                <rich:dataTable width="700" border="0" var="record"
+                                value="#{ColonySummary_Backing.activePensLst}">
+
+                    <rich:column>
+                        <h3><h:outputText value="#{record.owner}" /></h3>
+                    </rich:column>
+                    <rich:column>
+                        <h3><h:outputText value="#{record.room}" /></h3>
+                    </rich:column>
+                    <rich:column>
+                        <h3><h:outputLabel value="#{msgs['totalPens']}" />&nbsp;<h:outputText value="#{record.penCntByOwner}"></h:outputText></h3>
+                    </rich:column>
+                        <rich:column>
+                        &nbsp;
+                    </rich:column>
+
+                    <f:facet name="header">
+                        <rich:columnGroup>
+                            <rich:column >
+                                <h:outputLabel value="#{msgs['owner']}" />
+                            </rich:column>
+                            <rich:column >
+                                <h:outputLabel value="#{msgs['room']}" />
+                            </rich:column>
+                            <rich:column>
+                                <h:outputLabel value="#{msgs['pens']}" />
+                            </rich:column>
+                            <rich:column>
+                                <h:outputLabel value="#{msgs['penStatus']}" />
+                            </rich:column>
+                        </rich:columnGroup>
+                    </f:facet>
+
+                    <rich:collapsibleSubTable
+                        var="row" value="#{ColonySummary_Backing.activePensByOwnerLst}">
+
+                        <rich:column
+                            rendered="#{row.room == record.room and fn:toLowerCase(row.owner) == fn:toLowerCase(record.owner)}">
+                            &nbsp;
+                        </rich:column>
+                        <rich:column
+                            rendered="#{row.room == record.room and fn:toLowerCase(row.owner) == fn:toLowerCase(record.owner)}">
+                            <!--<h3><h:outputText value="#{row.room}"></h:outputText></h3>-->
+                            &nbsp;
+                        </rich:column>
+                        <rich:column
+                            rendered="#{row.room == record.room and fn:toLowerCase(row.owner) == fn:toLowerCase(record.owner)}">
+                            <h:outputText value="#{row.penCnt}"></h:outputText>
+                        </rich:column>
+                        <rich:column
+                            rendered="#{row.room == record.room and fn:toLowerCase(row.owner) == fn:toLowerCase(record.owner)}">
+                            <h:outputText value="#{row.status}"></h:outputText>
+                        </rich:column>
+                    </rich:collapsibleSubTable>
+                </rich:dataTable>
+
+                <br />
+                <br />
+                <h2><h:outputText value="Number of Active Matings by Owner/Workgroup:"/></h2>
+                <hr />
+                <br />
+
+                <!-- Number of active matings by owner -->
+                <rich:dataTable width="700" border="0" var="record"
+                                value="#{ColonySummary_Backing.activeMatings}">
+
+                    <rich:column>
+                        <h3>#Total Active Matings for&nbsp;<h:outputText value="#{record.owner}" />
+                            :&nbsp;<h:outputText value="#{record.Matings}" />
+                        </h3>
+                    </rich:column>
+                </rich:dataTable>
+
+                <br />
+                <br />
+                </div>
+                <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+            </h:form>
+    </h:body>
+</html>
+
+    

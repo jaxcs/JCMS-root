@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui">
+    <h:panelGrid columns="1">
+            <!-- STATUS -->
+            <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">  
+                <f:facet name="start">  
+                    <h:graphicImage  value="../images/bhi_ball.gif"/>
+                </f:facet>  
+
+                <f:facet name="complete">  
+                    <h:graphicImage value="../images/bhi_ball_white.gif" />  
+                </f:facet>  
+            </p:ajaxStatus>  
+
+        <h:panelGrid columns="2">
+            <h:panelGroup>
+                <h2><h:outputText value="Sample Class" /></h2>  
+                <h:selectOneMenu value="#{AdminPreservation_Backing.sampleClass}">
+                    <f:selectItems value="#{AdminPreservation_Backing.sampleClasses}" />      
+                    <a4j:ajax event="change" listener="#{AdminPreservation_Backing.sampleClassChangeListener}" render="presGrid"/>
+                </h:selectOneMenu>
+            </h:panelGroup>
+            <h:panelGrid columns="3" id="presGrid">
+                <h:outputText value="Preservation Type" styleClass="h2"/>  
+                <h:outputText value="Preservation Method" styleClass="h2"/>  
+                <h:outputText value="Preservation Detail" styleClass="h2"/>
+                <h:panelGroup id="presTypes">
+                    <p:selectOneListbox value="#{AdminPreservation_Backing.presType}">  
+                        <f:selectItems value="#{AdminPreservation_Backing.presTypes}"/> 
+                        <p:ajax event="change" listener="#{AdminPreservation_Backing.preservationTypeSelectListener}" update="presGrid"/>
+                    </p:selectOneListbox>  
+                    <h:inputText value="#{AdminPreservation_Backing.addPresType}" disabled="#{AdminPreservation_Backing.sampleClass eq ''}"/>
+                    &nbsp;
+                    <a4j:commandButton value="Add" styleClass="smallButton" render="presTypes"
+                                       action="#{AdminPreservation_Backing.addPreservationType}"
+                                       disabled="#{AdminPreservation_Backing.sampleClass eq ''}"/>
+                </h:panelGroup>
+                <h:panelGroup id="presMethods">
+                    <p:selectOneListbox value="#{AdminPreservation_Backing.presMethod}">  
+                        <f:selectItems value="#{AdminPreservation_Backing.presMethods}" /> 
+                        <p:ajax event="change" listener="#{AdminPreservation_Backing.preservationMethodSelectListener}" update="presGrid"/>
+                    </p:selectOneListbox>    
+                    <h:inputText value="#{AdminPreservation_Backing.addPresMethod}" disabled="#{AdminPreservation_Backing.presType eq ''}"/>
+                    &nbsp;
+                    <a4j:commandButton value="Add" styleClass="smallButton" render="presMethods"
+                                       action="#{AdminPreservation_Backing.addPreservationMethod}"
+                                       disabled="#{AdminPreservation_Backing.presType eq ''}"/>
+                </h:panelGroup>
+                <h:panelGroup id="presDetails">
+                    <p:selectOneListbox value="#{AdminPreservation_Backing.presDetail}">  
+                        <f:selectItems value="#{AdminPreservation_Backing.presDetails}"/> 
+                    </p:selectOneListbox>    
+                    <h:inputText value="#{AdminPreservation_Backing.addPresDetail}" disabled="#{AdminPreservation_Backing.presMethod eq ''}"/>
+                    &nbsp;
+                    <a4j:commandButton value="Add" styleClass="smallButton" render="presDetails"
+                                       action="#{AdminPreservation_Backing.addPreservationDetail}"
+                                       disabled="#{AdminPreservation_Backing.presMethod eq ''}"/>
+                </h:panelGroup>
+            </h:panelGrid>
+        </h:panelGrid>
+    </h:panelGrid>
+</ui:composition>

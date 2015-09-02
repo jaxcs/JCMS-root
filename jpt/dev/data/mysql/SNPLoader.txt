@@ -1,0 +1,4 @@
+1,1,-1,Input file 06-05.csv is well-formed
+2,1,-1,The file 06-05.csv is a valid JAX-CMS formatted genotype importation file
+3,2,-1,Added 0 geneclass records
+4,3,-1,Added 0 gene records

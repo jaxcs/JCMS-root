@@ -1,0 +1,318 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+    <h:panelGroup>
+        <a4j:commandButton
+            value="Add"
+            title="Add"
+            styleClass="mediumButton"
+            action="#{adminGeneBean.addAction}"
+            render="geneTable"    
+            onclick="#{rich:component('geneDS')}.first();"
+            oncomplete="setNumberOfFilteredRows(); moveFocusToInput();">
+        </a4j:commandButton>
+        <div align="center">
+            <h:outputText value="Results " /><h:outputText id="geneFilterCount"/>&nbsp;
+            <h:outputText value="of #{adminGeneBean.vocabularyDataModel.rowCount}" />
+        </div>
+    </h:panelGroup>
+    <h:panelGroup styleClass="nowrap">
+        <rich:dataTable
+            id="geneTable"
+            value="#{adminGeneBean.vocabularyDataModel}"
+            sortMode="single"
+            var="dm"
+            rowKeyVar="tableRowIndex"
+            rows="15"
+            styleClass="maxSizeDataTable" 
+            headerClass="tableSortHeader">
+
+            <f:facet name="footer" class="dataScroller" >
+                <rich:dataScroller id="geneDS" for="geneTable" renderIfSinglePage="false" status="statusTable" />
+            </f:facet>                     
+
+            <rich:column rendered="#{adminGeneBean.rowIndex == tableRowIndex}">
+                <f:facet name="header">
+                    <h:outputText value="#{msgs['common.actions']}" />
+                </f:facet>
+                <a4j:commandButton title="#{msgs['common.save']}"
+                                    image="/images/icon-save.gif"
+                                    action="#{adminGeneBean.saveAction}"
+                                    oncomplete="setNumberOfFilteredRows();"
+                                    render="adminGenePanel">
+                    <f:param name="paramPrimaryKey" value="#{dm.geneKey}" />
+                    <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                </a4j:commandButton>
+                &nbsp;&nbsp;                                            
+                <a4j:commandButton title="Cancel"
+                                    image="/images/cancel.png"
+                                    action="#{adminGeneBean.cancelAction}"
+                                    style="width:16px; height:16px;"
+                                    oncomplete="setNumberOfFilteredRows();"
+                                    render="adminGenePanel">
+                </a4j:commandButton>
+            </rich:column>
+            <rich:column rendered="#{!(adminGeneBean.rowIndex == tableRowIndex)}">
+                <f:facet name="header">
+                    <h:outputText value="#{msgs['common.actions']}" />
+                </f:facet>
+                <a4j:commandButton title="#{msgs['common.edit']}"
+                                    image="/images/edit.gif"
+                                    action="#{adminGeneBean.editAction}"
+                                    render="adminGenePanel"
+                                    oncomplete="setNumberOfFilteredRows(); moveFocusToInput();">
+                    <f:param name="paramPrimaryKey" value="#{dm.geneKey}" />
+                    <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                </a4j:commandButton>
+                &nbsp;&nbsp;                                            
+                <a4j:commandButton title="#{msgs['common.delete']}"
+                                    image="/images/delete.gif"
+                                    action="#{adminGeneBean.deleteAction}"
+                                    oncomplete="setNumberOfFilteredRows();"
+                                    render="adminGenePanel"
+                                    rendered="#{!(dm.disableDelete)}">
+                    <f:param name="paramPrimaryKey" value="#{dm.geneKey}" />
+                    <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                </a4j:commandButton>
+                <a4j:commandButton title="#{dm.disableDeleteMessage}"
+                                    image="/images/delete-disable.gif"
+                                    disabled="true"
+                                    rendered="#{dm.disableDelete}">
+                    <f:param name="paramPrimaryKey" value="#{dm.geneKey}" />
+                    <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                </a4j:commandButton>
+            </rich:column>
+
+            <rich:column sortBy="#{dm.labSymbol}"
+                            sortOrder="#{adminGeneBean.sortBO.column1Order}"
+                            filterValue="#{adminGeneBean.filterBO.column1Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.labSymbol, adminGeneBean.filterBO.column1Filter)}" 
+                            rendered="#{dm.geneKey == '0'}">
+                <f:facet name="header">
+                    <h:outputText value="Lab Symbol" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminGeneBean.sortBO.column1Image}" 
+                                        render="geneTable" 
+                                        rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}"
+                                        action="#{adminGeneBean.sortBO.sortByColumn1}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminGeneBean.filterBO.column1Filter}" 
+                                    rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}" 
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="geneTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+
+                <h:inputText  value="#{dm.labSymbol}"
+                                class="startHere"/>
+            </rich:column>
+            <rich:column sortBy="#{dm.labSymbol}"
+                            sortOrder="#{adminGeneBean.sortBO.column1Order}"
+                            filterValue="#{adminGeneBean.filterBO.column1Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.labSymbol, adminGeneBean.filterBO.column1Filter)}"  
+                            rendered="#{!(dm.geneKey == '0')}">
+                <f:facet name="header">
+                    <h:outputText value="Lab Symbol" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminGeneBean.sortBO.column1Image}" 
+                                        render="geneTable"  
+                                        rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}"
+                                        action="#{adminGeneBean.sortBO.sortByColumn1}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminGeneBean.filterBO.column1Filter}"  
+                                    rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="geneTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+
+                <h:outputText value="#{dm.labSymbol}"/>
+            </rich:column>
+
+            <rich:column sortBy="#{dm.geneSymbol}"
+                            sortOrder="#{adminGeneBean.sortBO.column2Order}"
+                            filterValue="#{adminGeneBean.filterBO.column2Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.geneSymbol, adminGeneBean.filterBO.column2Filter)}">
+                <f:facet name="header">
+                    <h:outputText value="Gene Symbol" />
+                    <br />
+                    <a4j:commandButton image="#{adminGeneBean.sortBO.column2Image}" 
+                                        render="geneTable" 
+                                        rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminGeneBean.sortBO.sortByColumn2}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminGeneBean.filterBO.column2Filter}"  
+                                    rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="geneTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+
+                <h:outputText value="#{dm.geneSymbol}"
+                                rendered="#{!(adminGeneBean.rowIndex == tableRowIndex)}" />
+                <h:inputText value="#{dm.geneSymbol}"
+                                rendered="#{adminGeneBean.rowIndex == tableRowIndex}" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.geneClass}"
+                            sortOrder="#{adminGeneBean.sortBO.column3Order}"
+                            filterValue="#{adminGeneBean.filterBO.column3Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.geneClass, adminGeneBean.filterBO.column3Filter)}">
+                <f:facet name="header">
+                    <h:outputText value="Gene Class" />
+                    <br />
+                    <a4j:commandButton image="#{adminGeneBean.sortBO.column3Image}" 
+                                        render="geneTable" 
+                                        rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminGeneBean.sortBO.sortByColumn3}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminGeneBean.filterBO.column3Filter}" 
+                                    rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}" 
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="geneTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:outputText value="#{dm.geneClass}"
+                                rendered="#{!(adminGeneBean.rowIndex == tableRowIndex)}" />
+                <h:selectOneMenu id="mouseIDFilter" 
+                                    value="#{dm.geneClass}" 
+                                    rendered="#{adminGeneBean.rowIndex == tableRowIndex}" >
+                    <f:selectItems value="#{adminGeneBean.selectItemWrapper.cvGeneClassStringItemsOptional}"/>
+                </h:selectOneMenu>
+            </rich:column>
+
+            <rich:column sortBy="#{dm.chromosome}"
+                            sortOrder="#{adminGeneBean.sortBO.column2Order}"
+                            filterValue="#{adminGeneBean.filterBO.column2Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.chromosome, adminGeneBean.filterBO.column2Filter)}" >
+                <f:facet name="header">
+                    <h:outputText value="Chromosome" />
+                    <br />
+                    <a4j:commandButton image="#{adminGeneBean.sortBO.column2Image}" 
+                                        render="geneTable" 
+                                        rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminGeneBean.sortBO.sortByColumn2}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminGeneBean.filterBO.column2Filter}"  
+                                    rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="geneTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:outputText value="#{dm.chromosome}"
+                                rendered="#{!(adminGeneBean.rowIndex == tableRowIndex)}" />
+                <h:inputText value="#{dm.chromosome}"
+                                rendered="#{adminGeneBean.rowIndex == tableRowIndex}" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.cM}"
+                            sortOrder="#{adminGeneBean.sortBO.column5Order}"
+                            filterValue="#{adminGeneBean.filterBO.column5Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.cM, adminGeneBean.filterBO.column5Filter)}"
+                            style="text-align: right;">
+                <f:facet name="header">
+                    <h:outputText value="cM" />
+                    <br />
+                    <a4j:commandButton image="#{adminGeneBean.sortBO.column5Image}" 
+                                        render="geneTable" 
+                                        rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminGeneBean.sortBO.sortByColumn5}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminGeneBean.filterBO.column5Filter}"  
+                                    rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="geneTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:outputText value="#{dm.cM}"
+                                rendered="#{!(adminGeneBean.rowIndex == tableRowIndex)}" />
+                <h:inputText value="#{dm.cM}"
+                                rendered="#{adminGeneBean.rowIndex == tableRowIndex}" 
+                                style="text-align: right;"/>
+            </rich:column>
+
+            <rich:column sortBy="#{dm.megabase}"
+                            sortOrder="#{adminGeneBean.sortBO.column6Order}"
+                            filterValue="#{adminGeneBean.filterBO.column6Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.megabase, adminGeneBean.filterBO.column6Filter)}" 
+                            style="text-align: right;">
+                <f:facet name="header">
+                    <h:outputText value="Megabase" />
+                    <br />
+                    <a4j:commandButton image="#{adminGeneBean.sortBO.column6Image}" 
+                                        render="geneTable"  
+                                        rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}"
+                                        action="#{adminGeneBean.sortBO.sortByColumn6}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminGeneBean.filterBO.column6Filter}"  
+                                    rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="geneTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:outputText value="#{dm.megabase}"
+                                rendered="#{!(adminGeneBean.rowIndex == tableRowIndex)}" />
+                <h:inputText value="#{dm.megabase}"
+                                rendered="#{adminGeneBean.rowIndex == tableRowIndex}" 
+                                style="text-align: right;"/>
+            </rich:column>
+
+            <rich:column sortBy="#{dm.comment}"
+                            sortOrder="#{adminGeneBean.sortBO.column7Order}"
+                            filterValue="#{adminGeneBean.filterBO.column7Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.comment, adminGeneBean.filterBO.column7Filter)}">
+                <f:facet name="header">
+                    <h:outputText value="Comment" />
+                    <br />
+                    <a4j:commandButton image="#{adminGeneBean.sortBO.column7Image}" 
+                                        render="geneTable" 
+                                        rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminGeneBean.sortBO.sortByColumn7}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminGeneBean.filterBO.column7Filter}"  
+                                    rendered="#{adminGeneBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="geneTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:inputTextarea value="#{dm.comment}"
+                                    cols="30" rows="1"
+                                    readonly="#{!(adminGeneBean.rowIndex == tableRowIndex)}"/>
+            </rich:column>
+
+        </rich:dataTable>
+    </h:panelGroup>
+</ui:composition>

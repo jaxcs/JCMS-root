@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: ssilvert
+Build-Jdk: 1.6.0_18
+Specification-Title: JBoss JSF Deployer
+Specification-Version: 1.0.3
+Specification-Vendor: JBoss, a division of Red Hat, Inc.
+Implementation-Title: JBoss JSF Deployer
+Implementation-Version: 1.0.3
+Implementation-Vendor-Id: org.jboss.jsf.integration
+Implementation-Vendor: JBoss, a division of Red Hat, Inc.
+Implementation-URL: http://jsf.jboss.org/jboss-jsf-deployer/
+

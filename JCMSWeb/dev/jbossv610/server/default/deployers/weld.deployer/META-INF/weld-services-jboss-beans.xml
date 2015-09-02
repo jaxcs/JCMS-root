@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Welds' Services Implementations for JBoss AS
+-->
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+   <!-- EJB Services Utility class -->
+   <bean name="WeldJBossEjb" class="org.jboss.weld.integration.util.JBossEjb"/>
+
+   <!-- EJB Services: @EJB-style lookup -->
+   <beanfactory name="JBossEjbServices" class="org.jboss.weld.integration.ejb.JBossEjbServices">
+      <property name="resolver"><inject/></property>
+      <property name="jbossEjb"><inject bean="WeldJBossEjb" /></property>
+   </beanfactory>
+   
+   <!-- EJB Injection Services: @EJB-style injection -->
+   <beanfactory name="JBossEjbInjectionServices" class="org.jboss.weld.integration.ejb.JBossEjbInjectionServices">
+      <property name="resolver"><inject/></property>
+      <property name="jbossEjb"><inject bean="WeldJBossEjb" /></property>
+   </beanfactory>
+  
+   <!-- JPA Services: @PersistenceContext-style and @PersistenceUnit-style lookup -->
+   <beanfactory name="JBossJpaServices" class="org.jboss.weld.integration.persistence.JBossJpaServices">
+      <property name="persistenceUnitDependencyResolver"><inject bean="PersistenceUnitDependencyResolver" /></property>
+      <property name="jbossEjb"><inject bean="WeldJBossEjb" /></property>
+   </beanfactory>
+  
+   <!-- @Resource-style lookup -->
+   <bean name="JBossResourceServices" class="org.jboss.weld.integration.resource.JBossResourceServices" />
+  
+   <!-- Access to the JTA UserTransaction, and synchronization registration -->
+   <bean name="JBossTransactionServices" class="org.jboss.weld.integration.transaction.JBossTransactionServices">
+      <constructor>
+         <parameter><inject bean="TransactionManager"/></parameter>
+      </constructor>     
+   </bean>
+   
+   <!-- Access to the caller context Principal -->
+   <bean name="JBossSecurityServices" class="org.jboss.weld.integration.security.JBossSecurityServices" />
+
+   <!-- Weld Mock Services : disable real services -->
+   <!-- bean name="MockServices" class="org.jboss.weld.integration.mock.MockServices">
+      <constructor>
+         <parameter>
+            <array elementClass="java.lang.Class">
+               <value>org.jboss.weld.ejb.spi.EjbServices</value>
+               <value>org.jboss.weld.injection.spi.EjbInjectionServices</value -->
+               <!-- value>org.jboss.weld.injection.spi.JpaInjectionServices</value -->
+               <!-- value>org.jboss.weld.injection.spi.ResourceInjectionServices</value -->
+               <!-- value>org.jboss.weld.transaction.spi.TransactionServices</value -->
+               <!-- value>org.jboss.weld.security.spi.SecurityServices</value -->
+            <!-- /array>
+         </parameter>
+      </constructor>
+      <alias>JBossEjbServices</alias>
+      <alias>JBossEjbInjectionServices</alias -->
+      <!-- alias>JBossJpaServices</alias -->
+      <!-- alias>JBossResourceServices</alias -->
+      <!-- alias>JBossTransactionServices</alias -->
+      <!-- alias>JBossSecurityServices</alias -->
+   <!-- /bean -->
+
+</deployment>

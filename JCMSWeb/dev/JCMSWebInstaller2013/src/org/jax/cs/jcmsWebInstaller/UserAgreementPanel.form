@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="cbxLicenseAgreement" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="22" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="backButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="txtMessage" max="32767" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="nextButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtFirstAndLastName" max="32767" attributes="0"/>
+                                  <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtPhoneNumber" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txtOrganization" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="232" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtFirstAndLastName" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtOrganization" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtPhoneNumber" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="cbxLicenseAgreement" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="nextButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="backButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtMessage" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTextArea" name="txtUserAgreement">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="columns" type="int" value="20"/>
+            <Property name="lineWrap" type="boolean" value="true"/>
+            <Property name="rows" type="int" value="5"/>
+            <Property name="text" type="java.lang.String" value="JCMS User Agreement&#xa;&#xa;In order to receive a copy of JCMS software and documentation, please read and agree to the following license. After clicking &#x2018;Register&#x2019; you&#x2019;ll see a &#x2018;Download JCMS&#x2019; link. Click the link and you will be taken to the download page.&#xa;&#xa;The Jackson Laboratory Colony Management System software (JCMS) is a Microsoft&#xae; Access application. It runs under Access2000, Access2003, Access2007, and Access2010-32bit. It has been tested under Windows XP, Windows 2000, Windows 2003, Windows Vista, and Windows7. You should plan on reserving approximately 60 Megabytes of disk space. The download file is in Microsoft Installer format (MSI). You may download it to your local system or run it directly from this web page.&#xa;&#xa;Statement of Principle&#xa;&#xa;This software was developed with support from the NIH and the Howard Hughes Medical Institute and is made available to the research community in support of the colony management of mouse models used in the biological sciences. For over seventy years, scientists at The Jackson Laboratory have been conducting mouse-based biomedical research.  As a result, we have accumulated a tremendous wealth of information related to husbandry, genetics and biology associated with selecting and using laboratory mice in research.  We also obtain new knowledge as we provide custom mouse breeding and related support services that is used in our research and the development of additional mouse models.  The cumulative knowledge of The Laboratory is shared with researchers around the world through our scientific presentations, technical information services, Web-accessible databases, printed literature and publications, and training programs.&#xa;&#xa;LICENSE AGREEMENT&#xa;&#xa;IMPORTANT! The Product is licensed only on the condition that you and your employer, company, educational institution or organization (&#x201c;YOU&#x201d;) agree with the Jackson Laboratory (&#x201c;JACKSON&#x201d;) to the terms and conditions set forth below. PLEASE CAREFULLY READ THE TERMS OF THIS LICENSE AGREEMENT.&#xa;&#xa;IF YOU AGREE TO BE BOUND BY THE TERMS OF THIS AGREEMENT, YOU SHOULD CLICK ON THE &#x201c;I Accept&#x201d; BOX AT THE BOTTOM OF THIS AGREEMENT. IF YOU DO NOT AGREE TO THE TERMS OF THIS AGREEMENT, YOU ARE NOT AUTHORIZED TO USE THE PRODUCT.&#xa;&#xa;1. PRODUCT: As used in this Agreement &#x201c;Product&#x201d; shall mean the software or service identified in the Download Summary screen, and all related documentation.&#xa;2. LICENSE TO USE: JACKSON hereby grants to YOU a personal, non-exclusive, non-transferable, limited license to use the Product solely on the terms, conditions and restrictions contained in this Agreement. The rights granted to YOU shall, subject to the Restrictions set out in Section 3 below, mean the right to use the Product in support of your organization&#x2019;s research or educational purposes only.&#xa;3. OWNERSHIP &amp; RESTRICTIONS: The Product and any and all knowledge, know-how and/or techniques relating to the Product, as may be modified or enhanced, in whole or in part, is and will remain the sole and absolute property of JACKSON and JACKSON owns any and all right, title and interest in and to the Product. All inventions, discoveries, improvements, software, copyright, know-how or other intellectual property, whether or not patentable or copyrightable, created by JACKSON prior to, after the termination of, or during the course of this Agreement pertaining to the Product is and will remain the sole and absolute property of JACKSON. No right, title or interest in or to any official mark, trademark, service mark, logo, or trade name of JACKSON is granted to YOU under this Agreement. Without limiting the forgoing YOU shall not, and shall not authorize any third party to:&#xa;    1. Make copies of the Product, other than (a) additional copies necessary for testing and/or training as required for YOUR use of the product, and (b) a reasonable number of backup copies retained under YOUR direct control and as necessary to secure YOUR data stored in the Product;&#xa;    2. Modify, decompile, disassemble, translate into another  computer language, create derivative works, or otherwise reverse engineer the Product (including any source or object code), or disclose any trade secrets relating to the Product, except for internal use only;&#xa;    3. Any internal modifications made to the software may not be distributed to another party under another name;&#xa;    4. Any internal modifications made to the software must only be distributed to third parties through JACKSON. Only JACKSON will be responsible for curating the source code and for distribution of such source code;&#xa;    5. YOU shall not, and shall not authorize any third party to distribute, sell, lease, transfer, assign, trade, rent or publish the Product or any part thereof and/ or copies thereof, to others;&#xa;    6. License or sublicense the use of the Product to others;&#xa;    7. Use, without its expressed permission, the name of JACKSON or in YOUR advertising, publicity, or otherwise.&#xa;    8. YOU agree not to export or provide access to Language Evaluator contrary to U.S. federal laws governing export control, as further identified in this Agreement and in federal law. &#xa;4. DISCLAIMER OF WARRANTY: THE PRODUCT IS PROVIDED TO YOU BY JACKSON IN ORDER TO ALLOW YOU TO OBTAIN ACCESS TO LEADING ACADEMIC RESEARCH. THE PRODUCT IS PROVIDED TO YOU BY JACKSON &#x201c;AS IS&#x201d;, AND YOU ACKNOWLEDGE AND AGREE THAT JACKSON MAKES NO REPRESENTATIONS AND EXTENDS NO WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. THERE ARE NO EXPRESS OR IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS OF THE PRODUCT FOR A PARTICULAR PURPOSE, OR THAT THE USE OF THE PRODUCT WILL PRODUCE A DESIRED RESULT OR THAT THE USE OF THE PRODUCT WILL NOT INFRINGE ANY PATENT, COPYRIGHT, TRADEMARK OR OTHER RIGHTS, OR THAT THE PRODUCT IS ERROR-FREE OR VIRUS-FREE, OR ANY OTHER EXPRESS OR IMPLIED WARRANTIES. THE UNITED NATION CONVENTION ON THE INTERNATIONAL SALE OF GOODS SHALL NOT APPLY TO THE PROVISIONS OF THIS AGREEMENT.IN PARTICULAR, NOTHING IN THIS AGREEMENT IS OR WILL BE CONSTRUED AS:A WARRANTY OR REPRESENTATION BY JACKSON AS TO ANY INTELLECTUAL PROPERTY RIGHTS IN THE PRODUCT;AN OBLIGATION TO FURNISH ANY PRODUCTS, SOFTWARE, TECHNOLOGY, OR TECHNOLOGICAL INFORMATION OTHER THAN THE PRODUCT;AN OBLIGATION TO CORRECT MALFUNCTIONS (&#x201c;MALFUNCTIONS&#x201d;) THAT ARISE IN ANY VERSION OF THE PRODUCT DELIVERED TO YOU. MALFUNCTIONS, AS USED HEREIN, MEANS ERRORS DEEMED TO BE INTERNAL TO THE PRODUCT. JACKSON DO NOT WARRANT THAT THE PRODUCT IS FREE FROM MALFUNCTIONS, NOR THAT ANY MALFUNCTIONS CAN OR WILL BE CORRECTED OR THAT JACKSON WILL DEVELOP OR PROVIDE YOU WITH ANY OPERATIONS, CAPABILITIES OR FEATURES NOT PRESENT IN THE VERSION OF THE PRODUCT DELIVERED TO YOU UNDER THIS AGREEMENT.&#xa;5. LIMITATION OF LIABILITY: JACKSON WILL NOT BE LIABLE TO YOU OR ANY OTHER PERSON OR ENTITY FOR ANY LIABILITY, LOSS OR DAMAGES CAUSED OR ALLEGED TO HAVE BEEN CAUSED, EITHER DIRECTLY OR INDIRECTLY, BY THE PRODUCT. WITHOUT LIMITING THE FOREGOING, IN NO EVENT WILL JACKSON BE LIABLE FOR ANY LOST REVENUE, PROFIT, BUSINESS INTERRUPTION OR DATA, OR FOR SPECIAL, INDIRECT, CONSEQUENTIAL, INCIDENTAL OR PUNITIVE DAMAGES, HOWEVER CAUSED AND REGARDLESS OF THE THEORY OF LIABILITY, ARISING OUT OF OR RELATED TO THE USE OF OR INABILITY TO USE THE PRODUCT, EVEN IF JACKSON HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.&#xa;6. INDEMNITY: YOU WILL INDEMNIFY, DEFEND AND HOLD HARMLESS JACKSON, ITS STAFF, AND AGENTS FROM AND AGAINST ANY AND ALL LIABILITY, LOSS, DAMAGE, ACTION, CLAIM OR EXPENSE (INCLUDING ATTORNEY&#x2019;S FEES AND COSTS AT TRIAL AND APPELLATE LEVELS) IN CONNECTION WITH ANY CLAIM, SUIT, ACTION, DEMAND OR JUDGMENT ARISING OUT OF CONNECTED WITH, RESULTING FROM, OR SUSTAINED AS A RESULT OF YOUR USE OF THE PRODUCT OR IN EXECUTING AND PERFORMING THIS AGREEMENT.&#xa;7. TERM: This Agreement is effective until terminated. YOU may terminate this Agreement at any time by ceasing use of the Product and destroying or deleting any copies of the Product. This Agreement will terminate immediately without notice from JACKSON if you fail to comply with any provision of this Agreement. On any termination of this Agreement the Disclaimer of Warranty, Restrictions, Limitation of Liability and Indemnity provisions of this Agreement shall survive such termination.&#xa;8. Work described herein was funded, in whole or in part, by National Institutes of Health Grant Number 1R01GM072863-01.; The United States government has certain rights in the invention. Pursuant to U.S. laws, Software may not be downloaded, acquired or otherwise exported or re-exported (i) into, or to a national or resident of any country to which the U.S. has embargoed goods; or (ii) to anyone on the U.S. Treasury Department&#x2019;s list of Specially Designated Nations or the U.S. Commerce Department&#x2019;s Table of Denial Orders. By signing this License, you represent that: 1) you are not located in or under the control of a national or resident of any such country or on any such list; and 2) you will not export or re-export the Software to any prohibited county, or to any prohibited person, entity, or end-user as specified by U.S. export controls.&#xa;9. USE OF THE DOWNLOAD SERVICE: YOU represent and warrant that YOU possess the legal authority to enter into this Agreement, and that YOU will be financially responsible for your use of the Download Service. YOU agree to be responsible for all costs, charges and taxes (where applicable) arising out of your use of the Product and the Download Service. YOU are responsible for supplying any hardware or software necessary to use the Product pursuant to this Agreement.&#xa;10. GENERAL PROVISIONS:&#xa;    1. The Download Service is operated from The Jackson Laboratory, Maine USA and this Agreement (and all disputes arising out of or relating to this Agreement) will be governed and interpreted according to the laws of Maine, USA without regard to its conflicts of laws rules. YOU agree that by accepting the terms of this Agreement or using the Product YOU have attorned to the exclusive jurisdiction of the Courts of competent authority in the Hancock County Maine.&#xa;    2. USE OF THE PRODUCT OR THE DOWNLOAD SERVICE IS PROHIBITED IN ANY JURISDICTION WHICH DOES NOT GIVE EFFECT TO THE TERMS OF THIS AGREEMENT.&#xa;    3. YOU agree that no joint venture, partnership, employment, consulting or agency relationship exists between YOU and JACKSON as a result of this Agreement or your use of the Download Service.&#xa;    4. This Agreement is the entire agreement between YOU and JACKSON relating to this subject matter. YOU will not contest the validity of this Agreement merely because it is in electronic form.&#xa;    5. No modification of this Agreement will be binding, unless in writing and accepted by an authorized representative of each party.&#xa;    6. The provisions of this Agreement are severable in that if any provision in the Agreement is determined to be invalid or unenforceable under any controlling body of law, that will not affect the validity or enforceability of the remaining provisions of the Agreement.&#xa;    7. YOU should print out or download a copy of this Agreement and retain it for your records.&#xa;    8. YOU consent to the use of the English language in this Agreement.&#xa;    9. YOU may not assign this agreement. JACKSON, at its sole discretion may assign this agreement without notice to YOU.&#xa;"/>
+            <Property name="wrapStyleWord" type="boolean" value="true"/>
+            <Property name="caretPosition" type="int" value="0"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="backButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Back"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backButtonNextActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="18" style="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="JCMS User Agreement"/>
+        <Property name="horizontalTextPosition" type="int" value="0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="nextButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Next"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nextButtonNextActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Your First and Last Name"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtFirstAndLastName">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Organization"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtOrganization">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Your Email"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtEmail">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Your Phone Number"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtPhoneNumber">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPhoneNumberActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbxLicenseAgreement">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="I have understood and accept the terms and conditions set forth in this license agreement"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbxLicenseAgreementActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="txtMessage">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="[Message Field]"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

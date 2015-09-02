@@ -1,0 +1,460 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+    <h:panelGroup>
+        <a4j:commandButton
+            value="Add"
+            title="Add"
+            styleClass="mediumButton"
+            action="#{adminMouseUseBean.addAction}"
+            render="mouseUseTable"
+            onclick="#{rich:component('mouseUseDS')}.first()"
+            oncomplete="setNumberOfFilteredRows(); moveFocusToInput();">
+        </a4j:commandButton>
+        <div align="center">
+            <h:outputText value="Results " /><h:outputText id="mouseUseFilterCount"/>&nbsp;
+            <h:outputText value="of #{adminMouseUseBean.vocabularyDataModel.rowCount}" />
+        </div>
+    </h:panelGroup>
+    <h:panelGroup styleClass="nowrap">
+        <rich:dataTable
+            id="mouseUseTable"
+            value="#{adminMouseUseBean.vocabularyDataModel}"
+            sortMode="single"
+            var="dm"
+            rowKeyVar="tableRowIndex"
+            rows="15"
+            styleClass="maxSizeDataTable" 
+            headerClass="tableSortHeader">
+
+            <f:facet name="footer" class="dataScroller" >
+                <rich:dataScroller id="mouseUseDS" for="mouseUseTable" renderIfSinglePage="false" status="statusTable" />
+            </f:facet>                     
+
+            <rich:column rendered="#{adminMouseUseBean.rowIndex == tableRowIndex}">
+                <f:facet name="header">
+                    <h:outputText value="#{msgs['common.actions']}" />
+                </f:facet>
+                <a4j:commandButton title="#{msgs['common.save']}"
+                                    image="/images/icon-save.gif"
+                                    action="#{adminMouseUseBean.saveAction}"
+                                    oncomplete="setNumberOfFilteredRows();"
+                                    status="statusTable"
+                                    render="adminMouseUsePanel">
+                    <f:param name="paramPrimaryKey" value="#{dm.mouseUse_key}" />
+                    <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                </a4j:commandButton>
+                &nbsp;&nbsp;                                            
+                <a4j:commandButton title="Cancel"
+                                    image="/images/cancel.png"
+                                    action="#{adminMouseUseBean.cancelAction}"
+                                    style="width:16px; height:16px;"
+                                    oncomplete="setNumberOfFilteredRows();"
+                                    status="statusTable"
+                                    render="adminMouseUsePanel">
+                </a4j:commandButton>
+            </rich:column>
+            <rich:column rendered="#{!(adminMouseUseBean.rowIndex == tableRowIndex)}">
+                <f:facet name="header">
+                    <h:outputText value="#{msgs['common.actions']}" />
+                </f:facet>
+                <a4j:commandButton title="#{msgs['common.edit']}"
+                                    image="/images/edit.gif"
+                                    action="#{adminMouseUseBean.editAction}"
+                                    render="adminMouseUsePanel"
+                                    status="statusTable"
+                                    oncomplete="setNumberOfFilteredRows(); moveFocusToInput();">
+                    <f:param name="paramPrimaryKey" value="#{dm.mouseUse_key}" />
+                    <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                </a4j:commandButton>
+
+            </rich:column>
+
+            <rich:column sortBy="#{dm.isActive}"
+                            sortOrder="#{adminMouseUseBean.sortBO.column13Order}"
+                            filterValue="#{adminMouseUseBean.filterBO.columnBln1Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.isActive, adminMouseUseBean.filterBO.columnBln1Filter)}" 
+                            style="text-align: center;"
+                            width="25px">
+                <f:facet name="header">
+                    <h:outputText value="Active" />
+                    <br />
+                    <br />
+                    <h:selectBooleanCheckbox value="#{adminMouseUseBean.filterBO.columnBln1Filter}" 
+                                                rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}" >
+                        <a4j:ajax event="click" 
+                                    render="mouseUseTable" 
+                                    status="statusTable" 
+                                    oncomplete="setNumberOfFilteredRows();" />
+                    </h:selectBooleanCheckbox>
+                </f:facet>
+                <h:selectBooleanCheckbox value="#{dm.isActive}"
+                                            disabled="true"
+                                            title="Active Disabled"
+                                            rendered="#{!(adminMouseUseBean.rowIndex == tableRowIndex)}" />
+                <h:selectBooleanCheckbox value="#{dm.isActive}"
+                                            rendered="#{adminMouseUseBean.rowIndex == tableRowIndex}" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.mouseUse}"
+                            sortOrder="#{adminMouseUseBean.sortBO.column1Order}"
+                            filterValue="#{adminMouseUseBean.filterBO.column1Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.mouseUse, adminMouseUseBean.filterBO.column1Filter)}" 
+                            rendered="#{dm.mouseUse_key == '0'}">
+                <f:facet name="header">
+                    <h:outputText value="Mouse Use" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminMouseUseBean.sortBO.column1Image}" 
+                                        render="mouseUseTable" 
+                                        rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}"
+                                        action="#{adminMouseUseBean.sortBO.sortByColumn1}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminMouseUseBean.filterBO.column1Filter}" 
+                                    rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}" 
+                                    styleClass="w150">
+                        <a4j:ajax event="blur" render="mouseUseTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:inputText  value="#{dm.mouseUse}"
+                                class="startHere"/>
+            </rich:column>
+            <rich:column sortBy="#{dm.mouseUse}"
+                            sortOrder="#{adminMouseUseBean.sortBO.column1Order}"
+                            filterValue="#{adminMouseUseBean.filterBO.column1Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.mouseUse, adminMouseUseBean.filterBO.column1Filter)}"  
+                            rendered="#{!(dm.mouseUse_key == '0')}">
+                <f:facet name="header">
+                    <h:outputText value="Mouse Use" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminMouseUseBean.sortBO.column1Image}" 
+                                        render="mouseUseTable"  
+                                        rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}"
+                                        action="#{adminMouseUseBean.sortBO.sortByColumn1}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminMouseUseBean.filterBO.column1Filter}"  
+                                    rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w150">
+                        <a4j:ajax event="blur" render="mouseUseTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:outputText value="#{dm.mouseUse}" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.useDescription}"
+                            sortOrder="#{adminMouseUseBean.sortBO.column2Order}"
+                            filterValue="#{adminMouseUseBean.filterBO.column2Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.useDescription, adminMouseUseBean.filterBO.column2Filter)}">
+                <f:facet name="header">
+                    <h:outputText value="Description" />
+                    <br />
+                    <a4j:commandButton image="#{adminMouseUseBean.sortBO.column2Image}" 
+                                        render="mouseUseTable" 
+                                        rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminMouseUseBean.sortBO.sortByColumn2}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminMouseUseBean.filterBO.column2Filter}"  
+                                    rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w150">
+                        <a4j:ajax event="blur" render="mouseUseTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+
+                <h:outputText value="#{dm.useDescription}"
+                                rendered="#{!(adminMouseUseBean.rowIndex == tableRowIndex)}" />
+                <h:inputTextarea value="#{dm.useDescription}"
+                                    styleClass="strainInput"
+                                    rows="1" 
+                                    rendered="#{adminMouseUseBean.rowIndex == tableRowIndex}" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.d1Caption}"
+                            sortOrder="#{adminMouseUseBean.sortBO.column3Order}"
+                            filterValue="#{adminMouseUseBean.filterBO.column3Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.d1Caption, adminMouseUseBean.filterBO.column3Filter)}">
+                <f:facet name="header">
+                    <h:outputText value="D1" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminMouseUseBean.sortBO.column3Image}" 
+                                        render="mouseUseTable" 
+                                        rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminMouseUseBean.sortBO.sortByColumn3}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminMouseUseBean.filterBO.column3Filter}" 
+                                    rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}" 
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="mouseUseTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:outputText value="#{dm.d1Caption}"
+                                rendered="#{!(adminMouseUseBean.rowIndex == tableRowIndex)}" />
+                <h:inputText value="#{dm.d1Caption}"
+                                rendered="#{adminMouseUseBean.rowIndex == tableRowIndex}" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.d2Caption}"
+                            sortOrder="#{adminMouseUseBean.sortBO.column4Order}"
+                            filterValue="#{adminMouseUseBean.filterBO.column4Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.d2Caption, adminMouseUseBean.filterBO.column4Filter)}" >
+                <f:facet name="header">
+                    <h:outputText value="D2" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminMouseUseBean.sortBO.column4Image}" 
+                                        render="mouseUseTable" 
+                                        rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminMouseUseBean.sortBO.sortByColumn4}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminMouseUseBean.filterBO.column4Filter}"  
+                                    rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="mouseUseTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:outputText value="#{dm.d2Caption}"
+                                rendered="#{!(adminMouseUseBean.rowIndex == tableRowIndex)}" />
+                <h:inputText value="#{dm.d2Caption}"
+                                rendered="#{adminMouseUseBean.rowIndex == tableRowIndex}" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.d3Caption}"
+                            sortOrder="#{adminMouseUseBean.sortBO.column5Order}"
+                            filterValue="#{adminMouseUseBean.filterBO.column5Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.d3Caption, adminMouseUseBean.filterBO.column5Filter)}" >
+                <f:facet name="header">
+                    <h:outputText value="D3" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminMouseUseBean.sortBO.column5Image}" 
+                                        render="mouseUseTable" 
+                                        rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminMouseUseBean.sortBO.sortByColumn5}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminMouseUseBean.filterBO.column5Filter}"  
+                                    rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="mouseUseTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:outputText value="#{dm.d3Caption}"
+                                rendered="#{!(adminMouseUseBean.rowIndex == tableRowIndex)}" />
+                <h:inputText value="#{dm.d3Caption}"
+                                rendered="#{adminMouseUseBean.rowIndex == tableRowIndex}" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.d4Caption}"
+                            sortOrder="#{adminMouseUseBean.sortBO.column6Order}"
+                            filterValue="#{adminMouseUseBean.filterBO.column6Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.d4Caption, adminMouseUseBean.filterBO.column6Filter)}" >
+                <f:facet name="header">
+                    <h:outputText value="D4" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminMouseUseBean.sortBO.column6Image}" 
+                                        render="mouseUseTable"  
+                                        rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}"
+                                        action="#{adminMouseUseBean.sortBO.sortByColumn6}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminMouseUseBean.filterBO.column6Filter}"  
+                                    rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="mouseUseTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:outputText value="#{dm.d4Caption}"
+                                rendered="#{!(adminMouseUseBean.rowIndex == tableRowIndex)}" />
+                <h:inputText value="#{dm.d4Caption}"
+                                rendered="#{adminMouseUseBean.rowIndex == tableRowIndex}" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.d5Caption}"
+                            sortOrder="#{adminMouseUseBean.sortBO.column7Order}"
+                            filterValue="#{adminMouseUseBean.filterBO.column7Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.d5Caption, adminMouseUseBean.filterBO.column7Filter)}">
+                <f:facet name="header">
+                    <h:outputText value="D5" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminMouseUseBean.sortBO.column7Image}" 
+                                        render="mouseUseTable" 
+                                        rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminMouseUseBean.sortBO.sortByColumn7}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminMouseUseBean.filterBO.column7Filter}"  
+                                    rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="mouseUseTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:outputText value="#{dm.d5Caption}"
+                                rendered="#{!(adminMouseUseBean.rowIndex == tableRowIndex)}" />
+                <h:inputText value="#{dm.d5Caption}"
+                                rendered="#{adminMouseUseBean.rowIndex == tableRowIndex}" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.d6Caption}"
+                            sortOrder="#{adminMouseUseBean.sortBO.column8Order}"
+                            filterValue="#{adminMouseUseBean.filterBO.column8Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.d6Caption, adminMouseUseBean.filterBO.column8Filter)}">
+                <f:facet name="header">
+                    <h:outputText value="D6" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminMouseUseBean.sortBO.column8Image}" 
+                                        render="mouseUseTable" 
+                                        rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminMouseUseBean.sortBO.sortByColumn8}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminMouseUseBean.filterBO.column8Filter}"  
+                                    rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="mouseUseTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:outputText value="#{dm.d6Caption}"
+                                rendered="#{!(adminMouseUseBean.rowIndex == tableRowIndex)}" />
+                <h:inputText value="#{dm.d6Caption}"
+                                rendered="#{adminMouseUseBean.rowIndex == tableRowIndex}" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.d7Caption}"
+                            sortOrder="#{adminMouseUseBean.sortBO.column9Order}"
+                            filterValue="#{adminMouseUseBean.filterBO.column9Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.d7Caption, adminMouseUseBean.filterBO.column9Filter)}">
+                <f:facet name="header">
+                    <h:outputText value="D7" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminMouseUseBean.sortBO.column9Image}" 
+                                        render="mouseUseTable" 
+                                        rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminMouseUseBean.sortBO.sortByColumn9}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminMouseUseBean.filterBO.column9Filter}"  
+                                    rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="mouseUseTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:outputText value="#{dm.d7Caption}"
+                                rendered="#{!(adminMouseUseBean.rowIndex == tableRowIndex)}" />
+                <h:inputText value="#{dm.d7Caption}"
+                                rendered="#{adminMouseUseBean.rowIndex == tableRowIndex}" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.d8Caption}"
+                            sortOrder="#{adminMouseUseBean.sortBO.column10Order}"
+                            filterValue="#{adminMouseUseBean.filterBO.column10Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.d8Caption, adminMouseUseBean.filterBO.column10Filter)}">
+                <f:facet name="header">
+                    <h:outputText value="D8" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminMouseUseBean.sortBO.column10Image}" 
+                                        render="mouseUseTable" 
+                                        rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminMouseUseBean.sortBO.sortByColumn10}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminMouseUseBean.filterBO.column10Filter}"  
+                                    rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="mouseUseTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:outputText value="#{dm.d8Caption}"
+                                rendered="#{!(adminMouseUseBean.rowIndex == tableRowIndex)}" />
+                <h:inputText value="#{dm.d8Caption}"
+                                rendered="#{adminMouseUseBean.rowIndex == tableRowIndex}" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.d9Caption}"
+                            sortOrder="#{adminMouseUseBean.sortBO.column11Order}"
+                            filterValue="#{adminMouseUseBean.filterBO.column11Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.d9Caption, adminMouseUseBean.filterBO.column11Filter)}">
+                <f:facet name="header">
+                    <h:outputText value="D9" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminMouseUseBean.sortBO.column11Image}" 
+                                        render="mouseUseTable" 
+                                        rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminMouseUseBean.sortBO.sortByColumn11}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminMouseUseBean.filterBO.column11Filter}"  
+                                    rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="mouseUseTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:outputText value="#{dm.d9Caption}"
+                                rendered="#{!(adminMouseUseBean.rowIndex == tableRowIndex)}" />
+                <h:inputText value="#{dm.d9Caption}"
+                                rendered="#{adminMouseUseBean.rowIndex == tableRowIndex}" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.d10Caption}"
+                            sortOrder="#{adminMouseUseBean.sortBO.column12Order}"
+                            filterValue="#{adminMouseUseBean.filterBO.column12Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.d10Caption, adminMouseUseBean.filterBO.column12Filter)}">
+                <f:facet name="header">
+                    <h:outputText value="D10" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminMouseUseBean.sortBO.column12Image}" 
+                                        render="mouseUseTable" 
+                                        rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminMouseUseBean.sortBO.sortByColumn12}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminMouseUseBean.filterBO.column12Filter}"  
+                                    rendered="#{adminMouseUseBean.vocabularyDataModel.rowCount gt 0}"
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="mouseUseTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <h:outputText value="#{dm.d10Caption}"
+                                rendered="#{!(adminMouseUseBean.rowIndex == tableRowIndex)}" />
+                <h:inputText value="#{dm.d10Caption}"
+                                rendered="#{adminMouseUseBean.rowIndex == tableRowIndex}" />
+            </rich:column>
+
+        </rich:dataTable>
+    </h:panelGroup>
+</ui:composition>

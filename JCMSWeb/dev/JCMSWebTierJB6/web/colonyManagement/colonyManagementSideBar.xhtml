@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+    <h:panelGrid columns="1" width="100%">
+
+        <rich:accordion styleClass="menu" 
+                        switchType="ajax"
+                        activeItem="#{colonyManagementSideBarBean.activeTab}"
+                        style="margin-right: 30px;">
+            <rich:accordionItem name="Manage Mice">
+                <h:panelGrid columns="1">
+                    <h:commandLink
+                        action="#{Mouse_Backing.addMouseAction}"
+                        immediate="true"
+                        value="#{msgs['colonyManagement.addMouse']}" />
+
+                    <h:commandLink
+                        action="#{MouseList_Backing.miceListAction}"
+                        immediate="true"
+                        value="#{msgs['colonyManagement.miceList']}" />
+
+                    <h:commandLink
+                        action="bulkUpdate"
+                        immediate="true"
+                        value="Bulk Updates" />
+                </h:panelGrid>
+            </rich:accordionItem>
+            
+            <rich:accordionItem name="Manage Matings">
+                <h:panelGrid columns="1">
+                    <h:commandLink
+                        action="#{Mating_Backing.addMatingAction}"
+                        immediate="true"
+                        value="#{msgs['colonyManagement.addMating']}" />
+
+                    <h:commandLink
+                        action="#{MatingList_Backing.matingListAction}"
+                        immediate="true"
+                        value="#{msgs['colonyManagement.matingList']}" />
+                    
+                    <h:commandLink
+                        action="#{PlugDate_Backing.navigatePlugdate}"
+                        immediate="true"
+                        value="#{msgs['colonyManagement.plugDate']}" />
+                </h:panelGrid>
+            </rich:accordionItem>
+
+            <rich:accordionItem name="Manage Litters">
+                <h:panelGrid columns="1">
+                    <h:commandLink
+                        action="#{Litter_Backing.addLitterAction}"
+                        immediate="true"
+                        value="#{msgs['colonyManagement.addLitterWithPups']}" />
+
+                    <h:commandLink
+                        action="#{LitterList_Backing.litterListAction}"
+                        immediate="true"
+                        value="#{msgs['colonyManagement.litterList']}" />
+                </h:panelGrid>
+            </rich:accordionItem>
+
+            <rich:accordionItem name="Genotyping">
+                <h:panelGrid columns="1">
+                    <h:commandLink
+                        action="#{MouseGenotypeList_Backing.addGenotypeAction}"
+                        immediate="true"
+                        value="#{msgs['colonyManagement.miceGenotypeList']}" />
+                    <h:commandLink
+                        action="bulkAddGenotype"
+                        immediate="true"
+                        value="Bulk Add Genotype" />
+                </h:panelGrid>
+            </rich:accordionItem>
+
+            <rich:accordionItem name="Mouse Uses">
+                <h:panelGrid columns="1">
+                    <h:commandLink
+                        action="#{Use_Backing.navigateUse}"
+                        immediate="true"
+                        value="Mouse Usage Manager" />
+                    <h:commandLink
+                        action="useScheduleList"
+                        value="Use Schedule Manager" />
+                    <h:commandLink 
+                        action="#{Calendar_Backing.navigateCalendar}"
+                        immediate="true" 
+                        value="Calendar"/>
+                </h:panelGrid>
+            </rich:accordionItem>
+
+            <rich:accordionItem name="Vivaria Layout">
+                <h:panelGrid columns="1">
+                    <h:commandLink
+                        action="#{LevelView_Backing.navToLevelView}"
+                        value="Vivaria Layout View" />
+                </h:panelGrid>
+            </rich:accordionItem>
+        </rich:accordion>
+
+    </h:panelGrid>
+</ui:composition>

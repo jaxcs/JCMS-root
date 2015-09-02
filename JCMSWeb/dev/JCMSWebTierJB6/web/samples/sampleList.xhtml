@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>                
+            <h:outputText value="Sample List"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js" >
+        </script>
+        <style type="text/css" media="screen">
+            .rf-cal-inp {
+                color:#000000 !important;
+                font:10px arial,sans-serif;
+            }
+        </style>
+        <style type="text/css" media="screen">
+            .customIcon {
+                background-image: url('../images/Center_Enabled.png') !important;
+                height:16px;
+                width:16px;
+            }
+        </style>
+        <style type="text/css" media="screen">
+            .disabledIcon {
+                background-image: url('../images/Center_Disabled.png') !important;
+                height:16px;
+                width:16px;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form>
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+        </h:form>
+        <div style="margin-left:10px;margin-right:10px">
+            <h:form>
+                <h1>
+                    <h:outputText value="Samples" style="h1"/>
+                </h1>
+                <hr />
+            </h:form>
+            <h:form >
+                <h:panelGroup id="title">
+                    <h2>
+                        <h:outputText value="Sample List"/>
+                    </h2>
+                </h:panelGroup>
+            </h:form>
+            <img src="../images/bhi_ball_white.gif" />
+            <a4j:status>
+                <f:facet name="start">
+                    <h:graphicImage  value="../images/bhi_ball.gif"/>
+                </f:facet>
+            </a4j:status>
+            <hr/>          
+            <h:form>
+            <p:messages id="messages" autoUpdate="true" /> 
+                <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5" width="100%" 
+                                columnClasses="sideBar,detailPane">
+                    <h:panelGroup>
+                        <f:subview id="adminSideBar"><ui:include src="/samples/sampleSideBar.xhtml"/></f:subview>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <!-- stuff goes here -->
+                        <rich:collapsiblePanel header="Search Criteria">
+                            <h:panelGrid columns="1">
+                                <h:panelGrid columns="4">
+                                    <h:outputText value="Sample ID"/>
+                                    <h:panelGroup>
+                                        <h:selectOneMenu id="sampleIDFilter" value="#{SampleList_Backing.sampleIDFilter}" >
+                                            <f:selectItems value="#{SampleList_Backing.wrapper.mouseFilters}"/>
+                                        </h:selectOneMenu>
+                                        &nbsp;
+                                        <h:inputText value="#{SampleList_Backing.sampleID}"/>
+                                    </h:panelGroup>
+                                    <h:outputText value="Source Type"/>
+                                    <h:selectOneMenu value="#{SampleList_Backing.sourceType}">
+                                        <f:selectItems value="#{SampleList_Backing.sourceTypes}"/>
+                                    </h:selectOneMenu>
+                                    <h:outputText value="Strain"/>
+                                    <h:selectOneMenu value="#{SampleList_Backing.sampleStrain}" converter="strainConverter">
+                                        <f:selectItems value="#{SampleList_Backing.wrapper.activeStrainsOptional}"/>
+                                    </h:selectOneMenu>
+                                    <h:outputText value=""/>
+                                    <h:outputText value=""/>
+                                    <h:outputText value="Sample Date Before"/>
+                                    <rich:calendar datePattern="#{SampleList_Backing.date_format}"  value="#{SampleList_Backing.sampleDateBefore}"/>                                    
+                                    <h:outputText value="Sample Date After"/>
+                                    <rich:calendar datePattern="#{SampleList_Backing.date_format}"  value="#{SampleList_Backing.sampleDateAfter}"/>
+                                    <h:outputText value="Sample Class"/>
+                                    <h:selectOneMenu value="#{SampleList_Backing.sampleClass}">
+                                        <a4j:ajax event="change" listener="#{SampleList_Backing.sampleClassChangeListener}" render="sampleTypes"/>
+                                        <f:selectItems value="#{SampleList_Backing.sampleClasses}"/>  
+                                    </h:selectOneMenu>
+                                    <h:outputText value="Sample Type"/>
+                                    <h:selectOneMenu value="#{SampleList_Backing.sampleType}" id="sampleTypes">
+                                        <f:selectItems value="#{SampleList_Backing.sampleTypes}"/>  
+                                    </h:selectOneMenu>
+                                </h:panelGrid>
+                                <h:panelGrid columns="2" columnClasses="listColumnEven, listColumnEven">
+                                    <p:pickList value="#{SampleList_Backing.ownersModel}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true"
+                                                var="owner" itemLabel="#{owner}" itemValue="#{owner}">
+                                        <f:facet name="sourceCaption">Select Owner(s)</f:facet>  
+                                        <f:facet name="targetCaption">Selected Owner(s)</f:facet>  
+                                    </p:pickList>
+                                    <h:panelGroup>
+                                        <h:outputText value="Storage Facility/Location"/>
+                                        <p:tree id="locationTree" selectionMode="single" value="#{SampleList_Backing.root}" var="node">
+                                            <p:treeNode type="storage" icon="disabledIcon">
+                                                <h:outputText value="#{node.label}"/>
+                                            </p:treeNode>
+                                            <p:treeNode type="location" icon="customIcon">
+                                                <h:outputText value="#{node.label}"/>
+                                            </p:treeNode>
+                                            <p:ajax event="select" listener="#{SampleList_Backing.onNodeSelect}" />  
+                                        </p:tree>
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                                <a4j:commandButton styleClass="smallButton" value="Search" render="samplesGrid"
+                                                   action="#{SampleList_Backing.search}"/>
+                            </h:panelGrid>
+                        </rich:collapsiblePanel>
+                        <br />
+                        <h:panelGrid columns="1" id="samplesGrid">
+                            <h2>
+                                <h:outputText value="Total results: #{SampleList_Backing.totalResults}"
+                                          rendered="#{!empty SampleList_Backing.samples}" styleClass="blackTextStyle"/>
+                            </h2>
+                            <rich:dataTable id="samplesTable" rowKeyVar="tableRowIndex" 
+                                            var="sample" rendered="#{!empty SampleList_Backing.samples}"
+                                            value="#{SampleList_Backing.samples}" rows="15">
+                                <f:facet name="footer" class="dataScroller">
+                                    <rich:dataScroller for="samplesTable" 
+                                                       id="resultsDataScroller"
+                                                       maxPages="5"                                    
+                                                       renderIfSinglePage="false" />
+                                </f:facet> 
+                                <h:column >
+                                    <f:facet name="header">
+                                        <h:outputText value="Actions"/>
+                                    </f:facet>
+                                    <h:commandLink action="#{EditSample_Backing.editSample}">
+                                        <h:graphicImage value="/images/edit.gif" style="border:0" />
+                                        <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        <f:param name="paramSampleKey" value="#{sample.sample_key}"/>
+                                    </h:commandLink>
+                                </h:column>
+                                <rich:column sortBy="#{sample.sampleID}"
+                                            sortOrder="#{sortingBean.column1Order}"
+                                            filterValue="#{filterBean.column1Filter}" 
+                                            filterExpression="#{fn:containsIgnoreCase(sample.sampleID, filterBean.column1Filter)}"  >
+                                    <f:facet name="header">
+                                        <h:outputText value="Sample ID"/>
+                                        <br />
+                                        <a4j:commandButton  image="#{sortingBean.column1Image}" 
+                                                            render="samplesTable" 
+                                                            action="#{sortingBean.sortByColumn1}"/>
+                                        <br />
+                                        <h:inputText value="#{filterBean.column1Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="samplesTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <h:outputText value="#{sample.sampleID}"/>
+                                </rich:column>
+                                <rich:column sortBy="#{sample.owner}"
+                                            sortOrder="#{sortingBean.column2Order}"
+                                            filterValue="#{filterBean.column2Filter}" 
+                                            filterExpression="#{fn:containsIgnoreCase(sample.owner, filterBean.column2Filter)}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Owner"/>
+                                        <br />
+                                        <a4j:commandButton  image="#{sortingBean.column2Image}" 
+                                                            render="samplesTable" 
+                                                            action="#{sortingBean.sortByColumn2}"/>
+                                        <br />
+                                        <h:inputText value="#{filterBean.column2Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="samplesTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <h:outputText value="#{sample.owner}"/>
+                                </rich:column>
+                                <rich:column sortBy="#{sample.sampleDate}"
+                                            sortOrder="#{sortingBean.column3Order}"
+                                            filterValue="#{filterBean.column3Filter}" 
+                                            filterExpression="#{fn:containsIgnoreCase(sample.sampleDate, filterBean.column3Filter)}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Sample Date"/>
+                                        <br />
+                                        <a4j:commandButton  image="#{sortingBean.column3Image}" 
+                                                            render="samplesTable" 
+                                                            action="#{sortingBean.sortByColumn3}"/>
+                                        <br />
+                                        <h:inputText value="#{filterBean.column3Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="samplesTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <rich:calendar datePattern="#{SampleList_Backing.date_format}"  value="#{sample.sampleDate}" disabled="true"/>
+                                </rich:column>
+                                <rich:column sortBy="#{sample.strainName}"
+                                            sortOrder="#{sortingBean.column4Order}"
+                                            filterValue="#{filterBean.column4Filter}" 
+                                            filterExpression="#{fn:containsIgnoreCase(sample.strainName, filterBean.column4Filter)}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Strain"/>
+                                        <br />
+                                        <a4j:commandButton  image="#{sortingBean.column4Image}" 
+                                                            render="samplesTable" 
+                                                            action="#{sortingBean.sortByColumn4}"/>
+                                        <br />
+                                        <h:inputText value="#{filterBean.column4Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="samplesTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <h:outputText value="#{sample.strainName}"/>
+                                </rich:column>
+                                
+                                <rich:column sortBy="#{sample.sampleType}"
+                                            sortOrder="#{sortingBean.column5Order}"
+                                            filterValue="#{filterBean.column5Filter}" 
+                                            filterExpression="#{fn:containsIgnoreCase(sample.sampleType, filterBean.column5Filter)}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Sample Type"/>
+                                        <br />
+                                        <a4j:commandButton  image="#{sortingBean.column5Image}" 
+                                                            render="samplesTable" 
+                                                            action="#{sortingBean.sortByColumn5}"/>
+                                        <br />
+                                        <h:inputText value="#{filterBean.column5Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="samplesTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <h:outputText value="#{sample.sampleType}"/>
+                                </rich:column>
+                                
+                                <rich:column sortBy="#{sample.storage.sampleStatus}"
+                                            sortOrder="#{sortingBean.column6Order}"
+                                            filterValue="#{filterBean.column6Filter}" 
+                                            filterExpression="#{fn:containsIgnoreCase(sample.strainName, filterBean.column6Filter)}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Sample Status"/>
+                                        <br />
+                                        <a4j:commandButton  image="#{sortingBean.column6Image}" 
+                                                            render="samplesTable" 
+                                                            action="#{sortingBean.sortByColumn6}"/>
+                                        <br />
+                                        <h:inputText value="#{filterBean.column6Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="samplesTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <h:outputText value="#{sample.storage.sampleStatus}"/>
+                                </rich:column>
+                                
+                                <rich:column sortBy="#{sample.description}"
+                                            sortOrder="#{sortingBean.column7Order}"
+                                            filterValue="#{filterBean.column7Filter}" 
+                                            filterExpression="#{fn:containsIgnoreCase(sample.description, filterBean.column7Filter)}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Description"/>
+                                        <br />
+                                        <a4j:commandButton  image="#{sortingBean.column7Image}" 
+                                                            render="samplesTable" 
+                                                            action="#{sortingBean.sortByColumn7}"/>
+                                        <br />
+                                        <h:inputText value="#{filterBean.column7Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="samplesTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <h:outputText value="#{sample.description}"/>
+                                </rich:column>
+                                
+                                <rich:column sortBy="#{sample.sourceType}"
+                                            sortOrder="#{sortingBean.column8Order}"
+                                            filterValue="#{filterBean.column8Filter}" 
+                                            filterExpression="#{fn:containsIgnoreCase(sample.sourceType, filterBean.column8Filter)}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Source Type"/>
+                                        <br />
+                                        <a4j:commandButton  image="#{sortingBean.column8Image}" 
+                                                            render="samplesTable" 
+                                                            action="#{sortingBean.sortByColumn8}"/>
+                                        <br />
+                                        <h:inputText value="#{filterBean.column8Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="samplesTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <h:outputText value="#{sample.sourceType}"/>
+                                </rich:column>
+                                
+                                <rich:column sortBy="#{sample.location}"
+                                            sortOrder="#{sortingBean.column9Order}"
+                                            filterValue="#{filterBean.column9Filter}" 
+                                            filterExpression="#{fn:containsIgnoreCase(sample.location, filterBean.column9Filter)}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Location"/>
+                                        <br />
+                                        <a4j:commandButton  image="#{sortingBean.column9Image}" 
+                                                            render="samplesTable" 
+                                                            action="#{sortingBean.sortByColumn9}"/>
+                                        <br />
+                                        <h:inputText value="#{filterBean.column9Filter}" styleClass="w100">
+                                            <a4j:ajax event="blur" render="samplesTable"/>
+                                        </h:inputText>
+                                    </f:facet>
+                                    <h:outputText value="#{sample.location}"/>
+                                </rich:column>
+                            </rich:dataTable>
+                        </h:panelGrid>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </h:form>
+        </div>
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+    </h:body>
+</html>

@@ -1,0 +1,502 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+        <title>
+            <h:outputText value="JCMS Web Administration" />
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jquery-ui.js" />
+        <script type="text/javascript" src="/jcms/javascript/jquery-1.9.1.js" />
+        <script type="text/javascript" src="/jcms/javascript/storageManager.js"/>
+        <script type="text/javascript" src="/jcms/javascript/levelManager.js"/>
+        <link href="/jcms/stylesheet/administrationStyles.css" rel="stylesheet" media="screen" />
+        <script type="text/javascript" src="/jcms/javascript/administrationJS.js"/>
+    </h:head>
+    <h:body>
+    <h:form id="adminHomeId">
+        <f:subview id="mainheader"><ui:include src="/mainheader.xhtml"/></f:subview>
+        <f:subview id="mainbar"><ui:include src="/mainbar.xhtml"/></f:subview>
+
+        <div style="margin-left:10px; margin-right:10px;">
+            <h:panelGrid columns="2">
+                <h:panelGroup>
+                    <h1>
+                        <h:outputText value="#{msgs['administration.header']}" styleClass="h1"/>
+                    </h1>
+                </h:panelGroup>
+                <!-- STATUS -->
+                <a4j:status name="statusTable">
+                    <f:facet name="start">
+                        <h:graphicImage  value="../images/bhi_ball.gif"/>
+                    </f:facet>
+                </a4j:status>    
+            </h:panelGrid>            
+            <hr />            
+            <h:panelGrid id="menuPanel" columns="2" cellpadding="5" cellspacing="5" styleClass="top left">
+                <!-- SIDE BAR -->
+                <f:subview id="adminSideBar"><ui:include src="/admin/adminSideBarSimple.xhtml"/></f:subview>          
+                <!-- CONTENT -->
+                <h:panelGroup id="detailPanel">
+                    <rich:messages id="messageID"/>
+
+                    <!-- CENTER VIEW -->
+                    <h:panelGrid id="centersPanel" columns="1" border="0" cellpadding="5" cellspacing="5" width="100%"
+                                    columnClasses="sideBar,detailPane" >                         
+                        <!-- RIGHT SIDE OF PAGE -->
+                        <h:panelGroup rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_CENTER}">
+                            <h:panelGroup  styleClass="formTitle" id="centerPanelGroupId">
+                                <h:outputText value="#{msgs['administration.centers']}"/>
+                            </h:panelGroup>
+                            <f:subview id="adminCenterView"><ui:include src="/admin/adminUserTree.xhtml"/></f:subview>  
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    
+                    <!-- ADD USER WIZARD -->
+                    <h:panelGrid id="adminUserWizardPanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_ADDUSERWIZARD}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>           
+                        <f:subview id="addUserWizard"><ui:include src="/admin/addUserWizard.xhtml"/></f:subview>                                      
+                    </h:panelGrid>
+                    
+                    <!-- GENERAL VIEW -->
+                    <h:panelGrid id="adminGeneral" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_GENERAL}"> 
+                        <h:panelGroup layout="block" style="white-space: nowrap;">
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        <f:subview id="adminGeneralView"><ui:include src="/admin/adminGeneralView.xhtml"/></f:subview>                           
+                    </h:panelGrid>
+                    
+                    <!-- LIFE STATUS VIEW -->
+                    <h:panelGrid id="adminLifeStatus" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_LIFESTATUS}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        <f:subview id="adminLifeStatusView"><ui:include src="/admin/adminLifeStatusView.xhtml"/></f:subview>                         
+                    </h:panelGrid>
+                    
+                    <!-- CONTAINER STATUS VIEW -->
+                    <h:panelGrid id="adminContainerStatusPanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_PENSTATUS}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        <f:subview id="adminContainerStatusView"><ui:include src="/admin/adminContainerStatusView.xhtml"/></f:subview>                         
+                    </h:panelGrid>
+                    
+                    <!-- GENE VIEW -->
+                    <h:panelGrid id="adminGenePanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_GENE}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        <f:subview id="adminGeneView"><ui:include src="/admin/adminGeneView.xhtml"/></f:subview>                         
+                    </h:panelGrid>
+                    
+                    <!-- ALLELE VIEW -->
+                    <h:panelGrid id="adminAllelePanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_ALLELE}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        <f:subview id="adminAlleleView"><ui:include src="/admin/adminAlleleView.xhtml"/></f:subview>      
+                    </h:panelGrid>
+
+                    <!-- APPROVED STRAINS VIEW -->
+                    <h:panelGrid id="adminApprovedStrainPanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_APPROVEDMATINGSTRAINS}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                            <br />
+                        </h:panelGroup>                        
+                        <f:subview id="adminApprovedStrainsView"><ui:include src="/admin/adminApprovedStrainsView.xhtml"/></f:subview>  
+                    </h:panelGrid>
+                    
+                    <!-- STRAIN VIEW -->
+                    <h:panelGrid id="adminStrainPanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_STRAIN}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        <f:subview id="adminStrainView"><ui:include src="/admin/adminStrainView.xhtml"/></f:subview>
+                    </h:panelGrid>
+                    
+                    <!-- RETIRE PENS VIEW -->
+                    <h:panelGrid id="adminRetirePenPanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_RETIREPENS}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        <f:subview id="adminRetirePensView"><ui:include src="/admin/adminRetirePensView.xhtml"/></f:subview>
+                    </h:panelGrid>
+
+                    <!-- MANAGE ROOM VIEW -->
+                    <h:panelGrid id="adminManageRoomPanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_MANAGEROOM}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        <f:subview id="adminManageRoomView"><ui:include src="/admin/adminManageRoomView.xhtml"/></f:subview>
+                    </h:panelGrid>
+
+                    <!-- SETUP VARIABLE VIEW -->
+                    <h:panelGrid id="adminSetupVariablesPanel" 
+                                 columns="1"
+                                 style="border: 1px;"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_JCMSSETUPVARIABLES}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        <f:subview id="adminSetupVariableView"><ui:include src="/admin/adminSetupVariableView.xhtml"/></f:subview>
+                    </h:panelGrid>
+
+                    <!-- MANAGE CAGE STATUS LOCATION VIEW -->
+                    <h:panelGrid id="adminManageCagePanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_MANAGEPENS}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        <f:subview id="adminManageCageStatusLocationView"><ui:include src="/admin/adminManageCageStatusLocationView.xhtml"/></f:subview>
+                    </h:panelGrid>
+
+                    <!-- MOUSE USE VIEW -->
+                    <h:panelGrid id="adminMouseUsePanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_MOUSEUSE}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        <f:subview id="adminMouseUseView"><ui:include src="/admin/adminMouseUseView.xhtml"/></f:subview>
+                    </h:panelGrid>
+                    
+                    <!-- SAMPLE TYPE VIEW -->
+                    <h:panelGrid id="adminSamplePanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_SAMPLE}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>                        
+                        <f:subview id="adminSample"><ui:include src="/admin/adminSampleType.xhtml"/></f:subview>                        
+                    </h:panelGrid>
+                    
+                    <!-- SAMPLES STATUS VIEW -->
+                    <h:panelGrid id="adminSampleStatusPanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_SAMPLESTATUS}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>                        
+                        <f:subview id="adminSampleStatus"><ui:include src="/admin/adminSampleStatus.xhtml"/></f:subview>                        
+                    </h:panelGrid>
+                    
+                    <!-- TIME UNIT VIEW -->
+                    <h:panelGrid id="adminTimeUnitPanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_TIMEUNIT}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>                        
+                        <f:subview id="adminTimeUnit"><ui:include src="/admin/adminTimeUnit.xhtml"/></f:subview>                        
+                    </h:panelGrid>
+                    
+                    <!-- LOCATION TREE VIEW -->
+                    <h:panelGrid id="adminLocationPanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_LOCATION}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        <f:subview id="adminSampleLocation"><ui:include src="/admin/adminLocationTree.xhtml"/></f:subview>
+                    </h:panelGrid>
+                    
+                    <!-- LOCATION PRESERVATION VIEW -->
+                    <h:panelGrid id="adminPreservationPanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_PRESERVATION}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        
+                        <f:subview id="adminPreservation"><ui:include src="/admin/adminPreservation.xhtml"/></f:subview>
+                        
+                    </h:panelGrid>
+                        
+                    <!-- LOCATION PRESERVATION VIEW -->
+                    <h:panelGrid id="adminLevelsPanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_LEVELS}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        
+                        <f:subview id="adminLevels"><ui:include src="/admin/adminLevelManager.xhtml"/></f:subview>
+                        
+                    </h:panelGrid>
+                    
+                    <!-- USESCHEDULETERMS MANAGER VIEW -->
+                    <h:panelGrid id="adminUseSchedulesPanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_USESCHEDULETERMS}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        
+                        <f:subview id="adminUseSchedules"><ui:include src="/admin/adminUseScheduleManager.xhtml"/></f:subview>
+                        
+                    </h:panelGrid>
+                    
+                    <!-- MOUSE PHENOTYPES VIEW -->
+                    <h:panelGrid id="adminPhenotypePanel" 
+                                 columns="1"
+                                 rendered="#{controlledVocabularyBean.subViewName == controlledVocabularyBean.ADMIN_PHENOTYPE}">
+                        <h:panelGroup>
+                            <h2><h:outputLabel value="#{controlledVocabularyBean.displayName}" /></h2>
+                        </h:panelGroup>
+                        <f:subview id="adminPhenotypeView"><ui:include src="/admin/adminPhenotypeView.xhtml"/></f:subview>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </h:panelGrid>
+            
+        </div>
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+        
+    </h:form>
+        
+        
+    <!-- SELECT STRAIN POPUP -->    
+    <rich:popupPanel id="selectStrainPanel" width="700" height="680" 
+                     keepVisualState="true" resizeable="true" 
+                     onshow="document.getElementById('searchApprovedStrainFormId:strainNameAMSearchId').focus();"
+                     top="10">
+        <f:facet name="header">
+            <h:outputText value="Select #{adminApprovedStrainBean.strainType} Strain" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="/images/delete.gif" id="hidelinkId1" title="#{msgs['common.close']}" alt="#{msgs['common.close']}" 
+                                onclick="#{rich:component('selectStrainPanel')}.hide(); return false;"
+                                height="20" width="20" styleClass="hidelink" />
+            </h:panelGroup>
+        </f:facet>
+        <h:form id="searchApprovedStrainFormId">
+            <rich:messages style="color:red;"></rich:messages>
+
+            <rich:collapsiblePanel header="Search Strains" 
+                                   styleClass="collapsibleSearchAMSPanel" 
+                                   expanded="true" >
+                <h:panelGrid columns="2">
+                    <h:panelGroup>
+                        <h:outputLabel value="Strain Name"/>
+                        &nbsp;&nbsp;
+                        <h:inputText id="strainNameAMSearchId" 
+                                     value="#{adminApprovedStrainBean.strainSearchDTO.strainName}" />
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <h:outputLabel value="Stock Number" />
+                        &nbsp;&nbsp;
+                        <h:inputText id="fromStockNumberAMSearchId" 
+                                     value="#{adminApprovedStrainBean.strainSearchDTO.jrNumFrom}" 
+                                     title="Greater than or equal to this stock number"/> 
+                        &nbsp;
+                        <h:outputLabel value="To" />
+                        &nbsp;
+                        <h:inputText id="toStockNumberAMSearchId" 
+                                     value="#{adminApprovedStrainBean.strainSearchDTO.jrNumTo}" 
+                                     title="Less than or equal to this stock number"/> 
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:panelGrid styleClass="searchTable">
+                    <br />
+                    <h:panelGroup layout="block">
+                        <a4j:commandButton
+                            id="btnSearchAMStrain"
+                            value="#{msgs['line.search']}"
+                            action="#{adminApprovedStrainBean.searchApprovedStrainsPopupAction}"
+                            styleClass="mediumButton"
+                            type="submit"
+                            render="amSearchResultsGridId" />
+                        &nbsp;&nbsp;
+                        <a4j:commandButton
+                            id="btnSearchAMClear"
+                            value="#{msgs['filter.clear']}"
+                            action="#{adminApprovedStrainBean.clearApprovedStrainsPopupAction}"
+                            styleClass="mediumButton"
+                            render="strainNameAMSearchId fromStockNumberAMSearchId toStockNumberAMSearchId amSearchResultsGridId" />
+                    </h:panelGroup>
+                </h:panelGrid>
+            </rich:collapsiblePanel>
+
+            <h:panelGrid columns="1" id="amSearchResultsGridId">
+                <h:panelGroup>
+                    <h:outputText id="amResultsTextId"
+                                  rendered="#{adminApprovedStrainBean.showCount}"
+                                  value="#{msgs['search.results']} #{adminApprovedStrainBean.searchStrainDataModel.rowCount}" />
+                </h:panelGroup>
+
+                <h:panelGroup id="amSearchResultsPanelId"
+                              rendered="#{adminApprovedStrainBean.searchStrainDataModel.rowCount > 0}">
+
+                    <hr />
+                    <rich:extendedDataTable 
+                        id="approvedStrainResultsTableId"
+                        value="#{adminApprovedStrainBean.searchStrainDataModel}"
+                        var="approvedStrainDM"
+                        rows="14"
+                        styleClass="largestSizeExtendedDataTable"
+                        sortMode="#{adminApprovedStrainBean.searchStrainETB.sortMode}"
+                        selectionMode="#{adminApprovedStrainBean.searchStrainETB.selectionMode}"
+                        selection="#{adminApprovedStrainBean.searchStrainETB.selection}" >
+
+                        <f:facet name="footer" class="dataScroller" >
+                            <rich:dataScroller for="approvedStrainResultsTableId" renderIfSinglePage="false"/>
+                        </f:facet>                     
+                        <a4j:ajax event="selectionchange" listener="#{adminApprovedStrainBean.searchStrainETB.selectionDTOListener}"/>
+                        
+                        <rich:column sortBy="#{approvedStrainDM.isActive}" 
+                                     sortOrder="#{adminApprovedStrainBean.sortBO.column1Order}"
+                                     filterValue="#{adminApprovedStrainBean.filterBO.column1Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(approvedStrainDM.isActive, adminApprovedStrainBean.filterBO.column1Filter)}" 
+                                     width="50px" >
+                            <f:facet name="header">
+                                <h:outputText value="Active" />
+                                <br />
+                                <a4j:commandButton image="#{adminApprovedStrainBean.sortBO.column1Image}" 
+                                                   render="approvedStrainResultsTableId" 
+                                                   action="#{adminApprovedStrainBean.sortBO.sortByColumn1}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{adminApprovedStrainBean.filterBO.column1Filter}" style="width:30px;">
+                                    <a4j:ajax event="blur" render="approvedStrainResultsTableId" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:selectBooleanCheckbox value="#{approvedStrainDM.isActive}" disabled="true" />
+                        </rich:column>
+                        <rich:column sortBy="#{approvedStrainDM.strainName}" 
+                                        sortOrder="#{adminApprovedStrainBean.sortBO.column2Order}"
+                                     filterValue="#{adminApprovedStrainBean.filterBO.column2Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(approvedStrainDM.strainName, adminApprovedStrainBean.filterBO.column2Filter)}" 
+                                     width="300px" >
+                            <f:facet name="header">
+                                <h:outputText value="Strain Name" />
+                                <br />
+                                <a4j:commandButton image="#{adminApprovedStrainBean.sortBO.column2Image}" 
+                                                   render="approvedStrainResultsTableId" 
+                                                   action="#{adminApprovedStrainBean.sortBO.sortByColumn2}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{adminApprovedStrainBean.filterBO.column2Filter}" style="width:270px;">
+                                    <a4j:ajax event="blur" render="approvedStrainResultsTableId" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{approvedStrainDM.strainName}" />
+                        </rich:column>
+                        <rich:column sortBy="#{approvedStrainDM.strainStatus}" 
+                                     sortOrder="#{adminApprovedStrainBean.sortBO.column3Order}"
+                                     filterValue="#{adminApprovedStrainBean.filterBO.column3Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(approvedStrainDM.strainStatus, adminApprovedStrainBean.filterBO.column3Filter)}" 
+                                     width="50px" >
+                            <f:facet name="header">
+                                <h:outputText value="Status" />
+                                <br />
+                                <a4j:commandButton image="#{adminApprovedStrainBean.sortBO.column3Image}" 
+                                                   render="approvedStrainResultsTableId" 
+                                                   action="#{adminApprovedStrainBean.sortBO.sortByColumn3}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{adminApprovedStrainBean.filterBO.column3Filter}" style="width:30px;">
+                                    <a4j:ajax event="blur" render="approvedStrainResultsTableId" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{approvedStrainDM.strainStatus}" />
+                        </rich:column>
+                        <rich:column sortBy="#{approvedStrainDM.jrNum}" 
+                                     sortOrder="#{adminApprovedStrainBean.sortBO.column4Order}"
+                                     filterValue="#{adminApprovedStrainBean.filterBO.column4Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(approvedStrainDM.jrNum, adminApprovedStrainBean.filterBO.column4Filter)}" 
+                                     width="100px" >
+                            <f:facet name="header">
+                                <h:outputText value="Stock Number" />
+                                <br />
+                                <a4j:commandButton image="#{adminApprovedStrainBean.sortBO.column4Image}" 
+                                                   render="approvedStrainResultsTableId" 
+                                                   action="#{adminApprovedStrainBean.sortBO.sortByColumn4}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{adminApprovedStrainBean.filterBO.column4Filter}" style="width:80px;">
+                                    <a4j:ajax event="blur" render="approvedStrainResultsTableId" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{approvedStrainDM.jrNum}" />
+                        </rich:column>
+                    </rich:extendedDataTable>
+                    <hr /><br />
+
+                    <div align="left">
+                        <h:panelGrid id="okCancelGrid" columns="1">
+                            <h:panelGroup id="okCancelGroupId">
+                                <a4j:commandButton id="okStrainId"
+                                                   value="#{msgs['common.ok']}"
+                                                   oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('selectStrainPanel')}.hide();"   
+                                                   action="#{adminApprovedStrainBean.selectStrainPopupOKAction}"
+                                                   render="approvedStrainTable"
+                                                   styleClass="mediumButton">                                       
+                                </a4j:commandButton>
+                                &nbsp;&nbsp;
+                                <a4j:commandButton id="cancelStrainId"
+                                                   value="#{msgs['common.cancel']}"
+                                                   oncomplete="#{rich:component('selectStrainPanel')}.hide(); return false;"
+                                                   styleClass="mediumButton">
+                                </a4j:commandButton>
+                            </h:panelGroup>
+                        </h:panelGrid>
+
+                    </div>
+                </h:panelGroup>
+            </h:panelGrid>
+            
+        </h:form>
+    </rich:popupPanel>
+
+
+    </h:body>
+</html>
+
+   

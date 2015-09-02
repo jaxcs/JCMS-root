@@ -1,0 +1,674 @@
+<html>
+<title> Pen Control Unit Tester </title>
+<head>
+    <style type="text/css">
+        #btSetRetire
+        {
+            width: 136px;
+        }
+        #btIncrementName
+        {
+            width: 136px;
+        }
+        #btGetData
+        {
+            width: 136px;
+        }
+        #btUseNextID
+        {
+            width: 136px;
+        }
+        #btSetNextID
+        {
+            width: 136px;
+        }
+        #btDebug
+        {
+            width: 136px;
+        }
+        #btSetGreen
+        {
+            width: 136px;
+        }
+        #btDebug0
+        {
+            width: 136px;
+        }
+        #btSetGreen0
+        {
+            width: 136px;
+        }
+        .style1
+        {
+            width: 136px;
+        }
+        #btDebug1
+        {
+            width: 136px;
+        }
+        #btSetGreen1
+        {
+            width: 136px;
+        }
+        .style2
+        {
+            width: 245px;
+        }
+        #btSelectName
+        {
+            width: 169px;
+        }
+        .style3
+        {
+            width: 70px;
+        }
+        .style4
+        {
+            width: 130px;
+        }
+        .style5
+        {
+            width: 120px;
+        }
+        #btSetGreen1
+        {
+            width: 41px;
+        }
+        #btSetGreen2
+        {
+            width: 136px;
+        }
+        #btSetGreen2
+        {
+            width: 41px;
+        }
+        #btSetGreen3
+        {
+            width: 136px;
+        }
+        #btSetGreen3
+        {
+            width: 41px;
+        }
+        #btSetGreen4
+        {
+            width: 136px;
+        }
+        #btSetGreen4
+        {
+            width: 41px;
+        }
+        #btSetGreen5
+        {
+            width: 136px;
+        }
+        #btSetGreen5
+        {
+            width: 41px;
+        }
+        #btSetGreen6
+        {
+            width: 136px;
+        }
+        #btSetGreen6
+        {
+            width: 41px;
+        }
+        #btSetGreen7
+        {
+            width: 136px;
+        }
+        #btSetGreen7
+        {
+            width: 41px;
+        }
+        #btSetGreen8
+        {
+            width: 136px;
+        }
+        #btSetGreen8
+        {
+            width: 41px;
+        }
+        #btSetGreen9
+        {
+            width: 136px;
+        }
+        #btSetGreen9
+        {
+            width: 41px;
+        }
+        #btSetGreen10
+        {
+            width: 136px;
+        }
+        #btSetGreen10
+        {
+            width: 41px;
+        }
+        #btSetGreen11
+        {
+            width: 136px;
+        }
+        #btSetGreen11
+        {
+            width: 41px;
+        }
+        #btSetGreen1
+        {
+            width: 136px;
+        }
+        #btSetGreen2
+        {
+            width: 136px;
+        }
+        #PenControl
+        {
+            height: 210px;
+            width: 377px;
+        }
+        #btSelectID47
+        {
+            width: 134px;
+        }
+        #txtContainerID0
+        {
+            width: 48px;
+        }
+        #txtSubmitInput
+        {
+            width: 70px;
+        }
+        .style6
+        {
+            width: 201px;
+        }
+        </style>
+</head>
+<BODY>
+
+<center> <h1> Debug the Pen Control </h1> </center>
+&nbsp;
+<table style="width:100%;">
+        <tr>
+            <td class="style1">
+                <table style="width: 18%; height: 102px; margin-right: 0px;">
+                    <tr>
+                        <td class="style2">
+                            <input id="btGetData" type="button" value="Get Control Data" onclick=GetControlData()   /></td>
+                    </tr>
+                    <tr>
+                        <td class="style2">
+                            <input id="btUseNextID" type="button" value="Set UseNext ID" onclick=SetUseNextID() /></td>
+                    </tr>
+                    <tr>
+                        <td class="style2">
+                            <input id="btIncrementName" type="button" value="Set Increment Name" onclick=SetIncName() /></td>
+                    </tr>
+                    <tr>
+                        <td class="style2">
+                            <input id="btSetRetire" type="button" value="Set Retire" onclick=SetRetire() /></td>
+                    </tr>
+                    <tr>
+                        <td class="style2">
+                            <input id="btSetNextID" type="button" value="Hide NextID" onclick=SetNextID() /></td>
+                    </tr>
+                    <tr>
+                        <td class="style2">
+                            <input id="btDebug0" type="button" value="SetDebugFlag" onclick=SetDebugX() /></td>
+                    </tr>
+                    <tr>
+                    <td class="style2">
+                            <input id="btSetGreen0" type="button" value="SetGreen" onclick=SetGreen() /></td>
+                    </tr>
+                    <tr>
+                        <td class="style2">
+                            <input id="btSelectID" type="button" value="Select ID=4" onclick=SelectID() 
+                                atomicselection="True" /></td>
+                    </tr>
+                    <tr>
+                    <td class="style2">
+                            <input id="btSelectName" type="button" value="Slect Name=Testing" 
+                                onclick=SelectName() /></td>
+                    </tr>
+                    <tr>
+                        <td class="style2">
+                            <input id="btSelectStatus" type="button" value="Status=Active" onclick=SelectStatus() 
+                                atomicselection="True" /></td>
+                    </tr>
+                                        <tr>
+                    <td class="style2">
+                            <input id="btUHL" type="button" value="UsingHealthLevel" 
+                                onclick=togUsingHealthLevel() /></td>
+                    </tr>
+                                        <tr>
+                    <td class="style2">
+                            <input id="btUPC" type="button" value="UsingPenComments" 
+                                onclick=togUsingPenComments() /></td>
+                    </tr>
+                                        <tr>
+                    <td class="style2">
+                            <input id="btUPN" type="button" value="UsingPenNames" 
+                                onclick=togUsingPenNames() /></td>
+                    </tr>
+                                        <tr>
+                    <td class="style2">
+                            <input id="btUPN0" type="button" value="UsingNextAvailableID" 
+                                onclick=togUsingNextAvailableID() /></td>
+                    </tr>
+                                        <tr>
+                    <td class="style2">
+                            <input id="btUPN1" type="button" value="UsingIncrementName" 
+                                onclick=togUsingIncrementName()  /></td>
+                    </tr>
+                                        <tr>
+                    <td class="style2">
+                            <input id="btUPN2" type="button" value="UsingRetire" 
+                                onclick=togUsingRetire() /></td>
+                    </tr>
+                                        <tr>
+                    <td class="style2">
+                            <input id="btSubmit" type="button" value="Submit Action" onclick=SubmitAction() 
+                                atomicselection="True" /><input id="txtSubmitInput" type="text" /></td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table style="width: 56%; height: 271px;">
+        <tr>
+            <td class="style4">
+                &nbsp;
+            
+
+<OBJECT classid="clsid:0C396347-A258-4669-AEFF-68F6A78F1FEA" id="PenControl"   >
+    
+</OBJECT> 
+
+
+            </td>
+        </tr>
+    </table>
+            </td>
+        </tr>
+    </table>
+    <p>
+        <br />
+    </p>
+<table style="width:59%; height: 411px;">
+    <tr>
+        <td class="style5">
+            JCMS Version</td>
+        <td class="style3">
+            &nbsp;</td>
+            <td>
+                <input id="txtJCMSVersion" type="text" /></td>
+                <td class="style6">
+                <input id="SetMode" type="button" value="Set Control Mode" 
+                    onclick=SetControlMode() />
+                </td>
+        </tr>
+    <tr>
+        <td class="style5">
+            Container ID</td>
+        <td class="style3">
+                            <input id="btSetContainerID" type="button" value="Set" 
+                onclick=SetContainerID() /></td>
+            <td>
+                <input id="txtContainerID" type="text" /></td>
+                <td class="style6">
+                <input id="rbMode1" name="ControlMode" type="radio" value="1" />   Mode 1 - "Pen Info"
+                </td>
+        </tr>
+        <tr>
+            <td class="style5">
+                Container Name</td>
+            <td class="style3">
+                            <input id="btContainerName" type="button" value="Set" 
+                    onclick=SetContainerName() /></td>
+            <td>
+                <input id="txtContainerName" type="text" /></td>
+            <td class="style6">
+                <input id="rbMode2"  name="ControlMode" type="radio" value="2"  /> Mode 2 - "Add Pen"
+            </td>
+        </tr>
+        <tr>
+            <td class="style5">
+                Status</td>
+            <td class="style3">
+                            <input id="btSetStatus" type="button" value="Set" 
+                    onclick=SetStatus() /></td>
+            <td>
+                <input id="txtStatus" type="text" /></td>
+            <td class="style6"> <input id="rbMode3"  name="ControlMode" type="radio" value="3"  />Mode 3 - "Edit Pen" </td>
+        </tr>
+        <tr>
+            <td class="style5">
+                Date</td>
+            <td class="style3">
+                            <input id="btSetDate" type="button" value="Set" 
+                    onclick=SetDate() /></td>
+            <td>
+                <input id="txtDate" type="text" /></td>
+                <td class="style6"> <input id="rbMode4"  name="ControlMode" type="radio" value="4"  />Mode 4 - "Show All" </td>
+               
+        </tr>
+        <tr>
+            <td class="style5">
+                Comments</td>
+            <td class="style3">
+                            <input id="btSetComments" type="button" value="Set" 
+                    onclick=SetComments() /></td>
+            <td>
+                <input id="txtComments" type="text" /></td>
+                
+                
+            <td class="style6">
+                <input id="LoadButton" type="button" value="Set Load Mode" 
+                    onclick=SetLoadMode() />
+                </td>
+            
+        </tr>
+        <tr>
+            <td class="style5">
+                Room</td>
+            <td class="style3">
+                            <input id="btSetRoom" type="button" value="Set" 
+                    onclick=SetRoom() /></td>
+            <td>
+                <input id="txtRoom" type="text" /></td>
+            <td class="style6">
+                <input id="rbLoadMode1" name="LoadMode" type="radio" value="1"  />Load with all 
+                Pens</td>
+            
+        </tr>
+        <tr>
+            <td class="style5">
+                Health Level</td>
+            <td class="style3">
+                            &nbsp;</td>
+            <td>
+                <input id="txtHealthLevel" type="text" /></td>
+            <td class="style6">
+                <input id="rbLoadMode2" name="LoadMode" type="radio" value="2"  />Load all but 
+                retired Pens</td>
+            
+        </tr>
+        <tr>
+            <td class="style5">
+                NextAvialableID</td>
+            <td class="style3">
+                            &nbsp;</td>
+            <td>
+                <input id="txtNextAvialableID" type="text" /></td>
+        </tr>    
+        <tr>
+            <td class="style5">
+                IncrementName</td>
+            <td class="style3">
+                            &nbsp;</td>
+            <td>
+                <input id="txtIncrementName" type="text" /></td>
+        </tr>  
+                <tr>
+            <td class="style5">
+                NewName</td>
+            <td class="style3">
+                            <input id="btSetNewName" type="button" value="Set" 
+                    onclick=SetNewName() /></td>
+            <td>
+                <input id="txtNewName" type="text" /></td>
+        </tr>           <tr>
+            <td class="style5">
+                Retire</td>
+            <td class="style3">
+                            &nbsp;</td>
+            <td>
+                <input id="txtRetire" type="text" /></td>
+        </tr> <tr>
+            <td class="style5">
+                Control Mode</td>
+            <td class="style3">
+                &nbsp;</td>
+            <td>
+                <input id="txtMode" type="text" /></td>
+        </tr>
+        <tr>
+            <td class="style5">
+                Debug Mode</td>
+            <td class="style3">
+                &nbsp;</td>
+            <td>
+                <input id="txtDebug" type="text" /></td>
+        </tr>   
+        <!-- xxx -->
+        <tr>
+            <td class="style5">
+                Container Key</td>
+            <td class="style3">
+                &nbsp;</td>
+            <td>
+                <input id="txtContainerKey" type="text" /></td>
+        </tr>   
+        <tr>
+            <td class="style5">
+                Container Status Key</td>
+            <td class="style3">
+                &nbsp;</td>
+            <td>
+                <input id="txtContainerStatusKey" type="text" /></td>
+        </tr>   
+        <tr>
+            <td class="style5">
+                Health Level Key</td>
+            <td class="style3">
+                &nbsp;</td>
+            <td>
+                <input id="txtHealthLevelKey" type="text" /></td>
+        </tr>   
+        <tr>
+            <td class="style5">
+                Health Level History Key</td>
+            <td class="style3">
+                &nbsp;</td>
+            <td>
+                <input id="txtHealthLevelHistoryKey" type="text" /></td>
+        </tr>   
+        <tr>
+            <td class="style5">
+                Room Key</td>
+            <td class="style3">
+                &nbsp;</td>
+            <td>
+                <input id="txtRoomKey" type="text" /></td>
+        </tr>   
+        <tr>
+            <td class="style5">
+                Container History Key</td>
+            <td class="style3">
+                &nbsp;</td>
+            <td>
+                <input id="txtContainerHistoryKey" type="text" /></td>
+        </tr>   
+      </table>
+
+<script language=javascript type="text/javascript">
+
+function GetControlData() {
+    // This one needs a new label.
+    txtJCMSVersion.value = PenControl.JCMSVersion
+    txtContainerID.value  = PenControl.ContainerID
+    txtContainerName.value  = PenControl.ContainerName
+    txtStatus.value  = PenControl.Status
+    txtDate.value  = PenControl.ContainerHistoryDate
+    txtComments.value  = PenControl.Comment
+    txtRoom.value  = PenControl.Room
+    txtHealthLevel.value  = PenControl.HealthLevel
+    txtNextAvialableID.value = PenControl.NextAvailableID
+    txtIncrementName.value = PenControl.IncrementName
+    txtNewName.value = PenControl.NewName
+    txtRetire.value = PenControl.Retire
+    txtMode.value = PenControl.Mode 
+    txtDebug.value = PenControl.DebugControl
+    // xxxx
+    txtContainerKey.value  = PenControl.ContainerKey   
+    txtContainerStatusKey.value = PenControl.ContainerStatusKey
+    txtHealthLevelKey.value = PenControl.HealthLevelKey
+    txtHealthLevelHistoryKey.value = PenControl.HealthLevelHistoryKey
+    txtRoomKey.value = PenControl.RoomKey
+    txtContainerHistoryKey.value = PenControl.ContainerHistoryKey
+    
+}
+
+function SetControlMode() {
+    var btn = valButton( ControlMode);
+    if (btn == null) alert('No radio button selected');
+    else PenControl.Mode = btn 
+}
+
+//
+function SetLoadMode() {
+    var btn = valButton(LoadMode);
+    if (btn == null) alert('No radio button selected');
+    else PenControl.LoadContainerMode = btn
+}
+
+
+// Radio Button Validation
+// copyright Stephen Chapman, 15th Nov 2004,14th Sep 2005
+// you may copy this function but please keep the copyright notice with it
+function valButton(btn) {
+    var cnt = -1;
+    for (var i=btn.length-1; i > -1; i--) {
+        if (btn[i].checked) {cnt = i; i = -1;}
+    }
+    if (cnt > -1) return btn[cnt].value;
+    else return null;
+}
+////////////
+function SetUseNextID(){
+    if (PenControl.NextAvailableID) 
+        PenControl.NextAvailableID = false;
+    else
+        PenControl.NextAvailableID = true;
+} 
+
+function SetIncName(){
+    if (PenControl.IncrementName) 
+        PenControl.IncrementName = false; 
+    else
+        PenControl.IncrementName = true; 
+}
+
+function SetRetire(){
+    if (PenControl.Retire) 
+        PenControl.Retire = false; 
+    else
+        PenControl.Retire = true;
+}
+
+function SetNextID(){
+    if (PenControl.NextContainerID) 
+        PenControl.NextContainerID = false; 
+    else
+        PenControl.NextContainerID = true;
+}
+
+function SetDebugX(){
+    if (PenControl.DebugControl) 
+        PenControl.DebugControl = false; 
+    else
+        PenControl.DebugControl = true;
+}
+function SetGreen() {
+    PenControl.SubmitAction("");
+
+}
+function SelectID() {
+    PenControl.SelectContainerID(4);
+}
+function SubmitAction() {
+
+    PenControl.SubmitAction(txtSubmitInput.value);
+}  
+function SelectName() {
+    PenControl.SelectContainerName("Testing");
+}
+function SelectStatus() {
+    PenControl.SelectContainerStatus("active");
+}
+function SetContainerID() {
+    PenControl.ContainerID = txtContainerID.value;
+}
+function SetContainerName() {
+    PenControl.ContainerName = txtContainerName.value;
+}
+function SetStatus() {
+    PenControl.Status = txtStatus.value;
+}
+function SetDate() {
+    PenControl.ContainerHistoryDate = txtDate.value;
+}
+function SetComments() {
+    PenControl.Comment = txtComments.value;
+}
+function SetRoom() {
+    PenControl.Room = txtRoom.value;
+}
+
+function SetNewName() {
+    PenControl.NewName = txtNewName.value;
+}
+//
+function togUsingHealthLevel() {
+    if (PenControl.UsingHealthLevel)
+        PenControl.UsingHealthLevel = false;
+    else
+        PenControl.UsingHealthLevel = true;
+
+}
+//togUsingPenComments()
+function togUsingPenComments() {
+    if (PenControl.UsingPenComments)
+        PenControl.UsingPenComments = false;
+    else
+        PenControl.UsingPenComments = true;
+}
+// togUsingPenNames()
+function togUsingPenNames() {
+    if (PenControl.UsingPenNames)
+        PenControl.UsingPenNames = false;
+    else
+        PenControl.UsingPenNames = true;
+
+}
+////////////
+
+//togUsingNextAvailableID
+//()
+function togUsingNextAvailableID() {
+    if (PenControl.UsingNextAvailableID)
+        PenControl.UsingNextAvailableID = false;
+    else
+        PenControl.UsingNextAvailableID = true;
+}
+
+function togUsingIncrementName(){
+    if (PenControl.UsingIncrementName)
+        PenControl.UsingIncrementName = false;
+    else
+        PenControl.UsingIncrementName = true;
+
+}
+
+function togUsingRetire() {
+    if (PenControl.UsingRetire)
+        PenControl.UsingRetire = false;
+    else
+        PenControl.UsingRetire = true;
+
+}
+
+</script>
+
+
+</BODY></HTML>

@@ -1,0 +1,5 @@
+Alive,0,A
+Killed,-1,K
+Dead,-1,D
+Missing,-1,M
+Shipped,-1,S

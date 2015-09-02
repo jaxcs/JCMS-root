@@ -1,0 +1,1542 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Mouse Query</title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js" >
+        </script>
+        <script type="text/javascript">
+            function overwriteQueryNameWarning() {
+                var question = "Do you want to overwrite mouse query definition " + $('input[id$="queryNameId"]').val() + ".  \n\n" 
+                              +"Select OK to overwrite current query or select Cancel to abort the save, \nrename your query name and try to save again.";
+                if(confirm(question)){
+                    document.getElementById('mouseQueryFormId:secretSaveQueryButton').click();
+                }
+            }
+        </script>
+    </h:head>
+    <h:body>  
+        <h:form id="mouseQueryFormId">
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <div style="margin-left:10px;margin-right:10px">
+
+                <h1>
+                    <h:outputText value="Mouse Query" style="h1"/>
+                    </h1>
+
+                <img src="../images/bhi_ball_white.gif" />
+
+                <!-- STATUS -->
+                <a4j:status name="statusPage" >
+                    <f:facet name="start">
+                        <h:graphicImage  value="../images/bhi_ball.gif"/>
+                    </f:facet>
+                </a4j:status>
+
+                <div align="left">
+                    <a4j:commandButton
+                        value="#{msgs['common.run']}"
+                        styleClass="mediumButton"
+                        oncomplete="if (#{facesContext.maximumSeverity eq null}) #{rich:component('runMouseQueryPanel')}.show()"
+                        action="#{MouseQuery_Backing.runQueryAction}"
+                        render="datResults, resultsMouseQueryRowCnt, resultsMouseQueryDisplay"
+                        id="run1" 
+                        status="statusPage"/>
+
+                    &nbsp;&nbsp;
+
+                    <h:panelGroup id="saveButtonsTop">
+                        <a4j:commandButton
+                            value="#{msgs['common.save']}"
+                            styleClass="mediumButton"
+                            action="#{MouseQuery_Backing.saveQueryAction}"
+                            render="mouseQueryFormId"
+                            rendered="#{!(MouseQuery_Backing.isOverwrite)}"
+                            status="statusPage">
+                            <a4j:param value="false" assignTo="#{MouseQuery_Backing.isOverwrite}"/>
+                        </a4j:commandButton>
+                        <a4j:commandButton
+                            value="#{msgs['common.save']}"
+                            styleClass="mediumButton"
+                            oncomplete="overwriteQueryNameWarning()"
+                            rendered="#{MouseQuery_Backing.isOverwrite}" />
+                    </h:panelGroup>                    
+                    
+                    &nbsp;&nbsp;
+
+                    <a4j:commandButton
+                        value="#{msgs['common.clear']}"
+                        styleClass="mediumButton"
+                        action="#{MouseQuery_Backing.clearQueryAction}"
+                        render="mouseQueryFormId"
+                        id="clear1" 
+                        status="statusPage"/>
+
+                    <a4j:commandButton id="secretSaveQueryButton"
+                                       style="visibility: hidden"
+                                       action="#{MouseQuery_Backing.saveQueryAction}" 
+                                       status="statusTable">
+                        <a4j:param value="true" assignTo="#{MouseQuery_Backing.isOverwrite}"/>
+                    </a4j:commandButton>
+                    </div><hr />
+
+                <!-- Messages -->
+                <rich:messages />
+                <br />
+
+                <h:outputText value="#{msgs['common.queryName']}: " class="rowHeader" />
+                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />                
+                &nbsp;&nbsp;
+                <h:inputText id="queryNameId"
+                             value="#{MouseQuery_Backing.queryName}" 
+                             class="innerTableTD" >
+                    <a4j:ajax event="keyup" listener="#{MouseQuery_Backing.overwriteQueryListener}" render="saveButtonsTop saveButtonsBottom" />
+                </h:inputText>
+                
+                <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5"
+                             columnClasses="detailPane, detailPane">
+
+                    <h:panelGroup styleClass="formTitle">
+
+                        <h:panelGrid columns="3"
+                                     columnClasses="innerTableTD, rowHeader, innerTableTD"
+                                     styleClass="innerTable">
+
+                            <h:panelGroup>
+                                <h3><h:outputText value="Output"></h:outputText></h3>                                    
+                                <h:selectBooleanCheckbox id="checkAll"
+                                                         onclick="checkAllRowsMouseQuery(this.form, 'checkAll');"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h3><h:outputText value="Field"></h:outputText></h3>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h3><h:outputLabel value="Filter Criteria" /></h3>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseID"
+                                    value="#{MouseQuery_Backing.search.selectMouseID}"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['mouseId']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="2">
+                                    <h:panelGroup>
+                                        <h:selectOneMenu value="#{MouseQuery_Backing.search.mouseFilter}">
+                                            <f:selectItems value="#{MouseQuery_Backing.selectItemWrapper.mouseFilters}" />
+                                        </h:selectOneMenu>
+                                        &nbsp;&nbsp;
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:inputText value="#{MouseQuery_Backing.search.mouseID}" />
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectNewTag"
+                                    value="#{MouseQuery_Backing.search.selectReplacementTag}"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Replacement Tag" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="2">
+                                    <h:panelGroup>
+                                        <h:selectOneMenu value="#{MouseQuery_Backing.search.replacementTagFilter}">
+                                            <f:selectItems value="#{MouseQuery_Backing.selectItemWrapper.mouseFilters}" />
+                                        </h:selectOneMenu>
+                                        &nbsp;&nbsp;
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:inputText value="#{MouseQuery_Backing.search.replacementTag}" />
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseSex"
+                                    value="#{MouseQuery_Backing.search.selectMouseSex}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['sex']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectManyCheckbox value="#{MouseQuery_Backing.search.sex}">
+                                    <f:selectItems value="#{MouseQuery_Backing.selectItemWrapper.cvSexItems}"/>
+                                    <f:converter converterId="sexConverter" />
+                                </h:selectManyCheckbox>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseAge"
+                                    value="#{MouseQuery_Backing.search.selectMouseAge}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['age']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:panelGrid>
+                                    <h:selectOneRadio value="#{MouseQuery_Backing.search.ageMeasure}" >
+                                        <f:selectItems value="#{MouseQuery_Backing.selectItemWrapper.ageMeasures}" />
+                                    </h:selectOneRadio>
+                                </h:panelGrid>
+
+                                <h:selectOneMenu value="#{MouseQuery_Backing.search.ageFilter}" >
+                                    <f:selectItems value="#{MouseQuery_Backing.selectItemWrapper.ageFilters}" />
+                                    <a4j:ajax event="change" render="outAge" status="statusPage" />
+                                </h:selectOneMenu>
+                                &nbsp;&nbsp;
+
+                                <h:panelGroup id="outAge">
+                                    <h:inputText value="#{MouseQuery_Backing.search.ageFrom}"
+                                                 rendered="#{MouseQuery_Backing.search.ageFilter != '' and MouseQuery_Backing.search.ageFilter != ' '}" size="5"/>
+                                    &nbsp;&nbsp;
+                                    <h:outputText value="#{msgs['search.to']}"
+                                                  rendered="#{MouseQuery_Backing.search.ageFilter == 'Between'}"></h:outputText>
+                                    &nbsp;&nbsp;
+                                    <h:inputText value="#{MouseQuery_Backing.search.ageTo}"
+                                                 rendered="#{MouseQuery_Backing.search.ageFilter == 'Between'}" size="5"/>
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseDOB"
+                                    value="#{MouseQuery_Backing.search.selectMouseDOB}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['dateOfBirth']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <rich:calendar id="dobStartDate"
+                                               value="#{MouseQuery_Backing.search.dobStartDate}"
+                                               inputSize="#{msgs['common.minMaxSize']}"
+                                               datePattern="#{MouseQuery_Backing.date_format}"
+                                               showInput="true"
+                                               showWeeksBar="true"
+                                               enableManualInput="true">
+                                </rich:calendar>
+                                &nbsp;&nbsp;
+                                <h:outputText value="#{msgs['search.to']}"></h:outputText>
+                                &nbsp;&nbsp;
+                                <rich:calendar id="dobEndDate"
+                                               value="#{MouseQuery_Backing.search.dobEndDate}"
+                                               inputSize="#{msgs['common.minMaxSize']}"
+                                               datePattern="#{MouseQuery_Backing.date_format}"
+                                               showInput="true"
+                                               showWeeksBar="true"
+                                               enableManualInput="true">
+                                </rich:calendar>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseExitDate"
+                                    value="#{MouseQuery_Backing.search.selectMouseExitDate}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['exitDate']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <rich:calendar id="exitStartDate"
+                                               value="#{MouseQuery_Backing.search.exitStartDate}"
+                                               inputSize="#{msgs['common.minMaxSize']}"
+                                               datePattern="#{MouseQuery_Backing.date_format}"
+                                               showInput="true"
+                                               showWeeksBar="true"
+                                               enableManualInput="true">
+                                </rich:calendar>
+                                &nbsp;&nbsp;
+                                <h:outputText value="#{msgs['search.to']}"></h:outputText>
+                                &nbsp;&nbsp;
+                                <rich:calendar id="exitEndDate"
+                                               value="#{MouseQuery_Backing.search.exitEndDate}"
+                                               inputSize="#{msgs['common.minMaxSize']}"
+                                               datePattern="#{MouseQuery_Backing.date_format}"
+                                               showInput="true"
+                                               showWeeksBar="true"
+                                               enableManualInput="true">
+                                </rich:calendar>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseBreedingStatus"
+                                    value="#{MouseQuery_Backing.search.selectMouseBreedingStatus}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['breedingStatus']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectManyCheckbox value="#{MouseQuery_Backing.search.breedingStatus}">
+                                    <f:selectItems value="#{MouseQuery_Backing.selectItemWrapper.cvBreedingStatusItems}"/>
+                                    <f:converter converterId="breedingStatusConverter" />
+                                </h:selectManyCheckbox>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseLifeStatus"
+                                    value="#{MouseQuery_Backing.search.selectMouseLifeStatus}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['lifeStatus']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <rich:collapsiblePanel header="Select Filter" expanded="false">
+                                    <h:outputLabel value="Life Status" styleClass="collapsiblePanelLabel" />
+                                    <p:pickList value="#{MouseQuery_Backing.lifeStatuses}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true" converter="lifeStatusConverter"
+                                                var="lifeStatus" itemLabel="#{lifeStatus.lifeStatus} : #{lifeStatus.description}" itemValue="#{lifeStatus}">
+                                        <f:facet name="sourceCaption">Select Life Status(es)</f:facet>
+                                        <f:facet name="targetCaption">Selected Life Status(es)</f:facet>  
+                                    </p:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseOrigin"
+                                    value="#{MouseQuery_Backing.search.selectMouseOrigin}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['origin']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <rich:collapsiblePanel header="Select Filter" expanded="false">
+                                    <h:outputLabel value="#{msgs['origin']}" styleClass="collapsiblePanelLabel" />
+                                    <p:pickList value="#{MouseQuery_Backing.origins}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true" converter="mouseOriginConverter"
+                                                var="origin" itemLabel="#{origin.mouseOrigin}" itemValue="#{origin}">
+                                        <f:facet name="sourceCaption">Select Origin(s)</f:facet>
+                                        <f:facet name="targetCaption">Selected Origin(s)</f:facet>  
+                                    </p:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseStrain"
+                                    value="#{MouseQuery_Backing.search.selectMouseStrain}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['strain']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <rich:collapsiblePanel header="Select Filter" expanded="false">
+                                    <h:outputLabel value="#{msgs['strain']}" styleClass="collapsiblePanelLabel" />
+                                    <p:pickList value="#{MouseQuery_Backing.strains}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true" converter="strainConverter"
+                                                var="strain" itemLabel="#{strain.jrNum} : #{strain.strainName}" itemValue="#{strain}">
+                                        <f:facet name="sourceCaption">Select Strain(s)</f:facet>
+                                        <f:facet name="targetCaption">Selected Strain(s)</f:facet>  
+                                    </p:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseGeneration"
+                                    value="#{MouseQuery_Backing.search.selectMouseGeneration}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['generation']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <rich:collapsiblePanel header="Select Filter" expanded="false">
+                                    <h:outputLabel value="#{msgs['generation']}" styleClass="collapsiblePanelLabel" />
+                                    <p:pickList value="#{MouseQuery_Backing.generations}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true" converter="generationConverter"
+                                                var="generation" itemLabel="#{generation.generation}" itemValue="#{generation}">
+                                        <f:facet name="sourceCaption">Select Generation(s)</f:facet>
+                                        <f:facet name="targetCaption">Selected Generation(s)</f:facet>  
+                                    </p:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseOwner"
+                                    value="#{MouseQuery_Backing.search.selectMouseOwner}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['owner']}"  />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <rich:collapsiblePanel header="Select Filter" expanded="false">
+                                    <h:outputLabel value="#{msgs['owner']}" styleClass="collapsiblePanelLabel" />
+                                    <p:pickList value="#{MouseQuery_Backing.owners}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true" converter="ownerConverter"
+                                                var="owner" itemLabel="#{owner.owner}" itemValue="#{owner}">
+                                        <f:facet name="sourceCaption">Select Owner(s)</f:facet>
+                                        <f:facet name="targetCaption">Selected Owner(s)</f:facet>  
+                                    </p:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseCOD"
+                                    value="#{MouseQuery_Backing.search.selectMouseCOD}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['causeOfDeath']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <rich:collapsiblePanel header="Select Filter" expanded="false" >
+                                    <h:outputLabel value="Cause of Death" styleClass="collapsiblePanelLabel" />
+                                    <p:pickList value="#{MouseQuery_Backing.CODs}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true" converter="causeOfDeathConverter"
+                                                var="COD" itemLabel="#{COD.cod}" itemValue="#{COD}">
+                                        <f:facet name="sourceCaption">Select Cause Of Death</f:facet>
+                                        <f:facet name="targetCaption">Selected Cause Of Death</f:facet>  
+                                    </p:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseLitter"
+                                    value="#{MouseQuery_Backing.search.selectMouseLitter}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['litter#']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="2">
+                                    <h:panelGroup>
+                                        <h:outputText value="#{MouseQuery_Backing.search.litterFilter}"/>
+                                        &nbsp;&nbsp;
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <h:inputText value="#{MouseQuery_Backing.search.litterID}" />
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMousePenID"
+                                    value="#{MouseQuery_Backing.search.selectMousePenID}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['pen#']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="2">
+                                    <h:panelGroup>
+                                        <h:outputText value="#{MouseQuery_Backing.search.penIdFilter}"/>
+                                        &nbsp;&nbsp;
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <h:inputText value="#{MouseQuery_Backing.search.penIDFrom}" 
+                                                     size="10" />
+                                        &nbsp;&nbsp;
+                                        <h:outputText value="#{msgs['search.to']}" ></h:outputText>
+                                        &nbsp;&nbsp;
+                                        <h:inputText value="#{MouseQuery_Backing.search.penIDTo}"
+                                                     size="10" />
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMousePenName"
+                                    value="#{MouseQuery_Backing.search.selectMousePenName}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['penName']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="2">
+                                    <h:panelGroup>
+                                        <h:outputText value="#{MouseQuery_Backing.search.penNameFilter}" />
+                                        &nbsp;&nbsp;
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <h:inputText value="#{MouseQuery_Backing.search.pName}" />
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseRoom"
+                                    value="#{MouseQuery_Backing.search.selectRoomName}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Room" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <rich:collapsiblePanel header="Select Filter" expanded="false">
+                                    <p:pickList value="#{MouseQuery_Backing.rooms}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true" converter="roomConverter"
+                                                var="room" itemLabel="#{room.roomName}" itemValue="#{room}">
+                                        <f:facet name="sourceCaption">Select Room(s)</f:facet>
+                                        <f:facet name="targetCaption">Selected Room(s)</f:facet>  
+                                    </p:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseProtocolID"
+                                    value="#{MouseQuery_Backing.search.selectMouseProtocolID}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['protocolId']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <rich:collapsiblePanel header="Select Filter" expanded="false" >
+                                    <h:outputLabel value="#{msgs['protocolId']}" styleClass="collapsiblePanelLabel" />
+                                    <p:pickList value="#{MouseQuery_Backing.protocolIDs}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true" converter="mouseProtocolConverter"
+                                                var="protocol" itemLabel="#{protocol.id}" itemValue="#{protocol}">
+                                        <f:facet name="sourceCaption">Select Protocol ID(s)</f:facet>
+                                        <f:facet name="targetCaption">Selected Protocol ID(s)</f:facet>  
+                                    </p:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectUseScheduleTerm"
+                                    value="#{MouseQuery_Backing.search.selectUseSchedules}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Use Schedules" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <rich:collapsiblePanel header="Select Filter" expanded="false" >
+                                    <h:outputLabel value="Use Schedules" styleClass="collapsiblePanelLabel" />
+                                    <p:pickList value="#{MouseQuery_Backing.useSchedules}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true" converter="useScheduleTermConverter"
+                                                var="ust" itemLabel="#{ust.useScheduleTermName}" itemValue="#{ust}">
+                                        <f:facet name="sourceCaption">Use Schedule(s)</f:facet>
+                                        <f:facet name="targetCaption">Selected Schedule(s)</f:facet>  
+                                    </p:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseGenotype"
+                                    value="#{MouseQuery_Backing.search.selectMouseGenotype}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['genotype']}" />
+                            </h:panelGroup>
+                            <h:panelGroup id="genotypePanelGroup">
+                                <rich:collapsiblePanel id="genotypeCollapsePanel" header="Select Filter" expanded="false">
+                                    <p:pickList value="#{MouseQuery_Backing.genes}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true" converter="genesConverter"
+                                                var="gene" itemLabel="#{gene.labSymbol}" itemValue="#{gene}">
+                                        <f:facet name="sourceCaption">Select Gene(s)</f:facet>
+                                        <f:facet name="targetCaption">Selected Gene(s)</f:facet>  
+                                    </p:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseUse"
+                                    value="#{MouseQuery_Backing.search.selectMouseUse}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['mouseUse']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <rich:collapsiblePanel header="Select Filter" expanded="false" >
+                                    <h:outputLabel value="#{msgs['mouseUse']}" styleClass="collapsiblePanelLabel" />
+                                    <p:pickList value="#{MouseQuery_Backing.mouseUses}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true" converter="mouseUseConverter"
+                                                var="mouseUse" itemLabel="#{mouseUse.mouseUse}" itemValue="#{mouseUse}">
+                                        <f:facet name="sourceCaption">Select Use(s)</f:facet>
+                                        <f:facet name="targetCaption">Selected Use(s)</f:facet>  
+                                    </p:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup> 
+
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMousePhenotypes"
+                                    value="#{MouseQuery_Backing.search.selectMousePhenotypes}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Phenotypes" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <rich:collapsiblePanel header="Select Filter" expanded="false" >
+                                    <h:outputLabel value="Phenotypes" styleClass="collapsiblePanelLabel" />
+                                    <p:pickList value="#{MouseQuery_Backing.mousePhenotypes}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true" converter="cvPhenotypeConverter"
+                                                var="pt" itemLabel="#{pt.phenotypeTermName}" itemValue="#{pt}">
+                                        <f:facet name="sourceCaption">Phenotype(s)</f:facet>
+                                        <f:facet name="targetCaption">Selected Phenotype(s)</f:facet>  
+                                    </p:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseGenotypeDate"
+                                    value="#{MouseQuery_Backing.search.selectMouseGenotypeDate}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['genotypeDate']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <rich:calendar id="genotypeStartDate"
+                                               value="#{MouseQuery_Backing.search.genotypeStartDate}"
+                                               inputSize="#{msgs['common.minMaxSize']}"
+                                               datePattern="#{MouseQuery_Backing.date_format}"
+                                               showInput="true"
+                                               showWeeksBar="true"
+                                               enableManualInput="true">
+                                </rich:calendar>
+                                &nbsp;&nbsp;
+                                <h:outputText value="#{msgs['search.to']}"></h:outputText>
+                                &nbsp;&nbsp;
+                                <rich:calendar id="genotypeEndDate"
+                                               value="#{MouseQuery_Backing.search.genotypeEndDate}"
+                                               inputSize="#{msgs['common.minMaxSize']}"
+                                               datePattern="#{MouseQuery_Backing.date_format}"
+                                               showInput="true"
+                                               showWeeksBar="true"
+                                               enableManualInput="true">
+                                </rich:calendar>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+                    <h:panelGroup styleClass="formTitle">
+                        <h:panelGrid columns="2"
+                                     columnClasses="innerTableTD, rowHeader"
+                                     styleClass="innerTable">
+                            <h:panelGroup>
+                                <h3><h:outputText value="Output"></h:outputText></h3>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h3><h:outputText value="Field"></h:outputText></h3>
+                            </h:panelGroup>       
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseMating"
+                                    value="#{MouseQuery_Backing.search.selectMouseMating}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['matings']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseLitterMates"
+                                    value="#{MouseQuery_Backing.search.selectMouseLitterMates}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['littermates']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseParents"
+                                    value="#{MouseQuery_Backing.search.selectMouseParents}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['parents']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseCoatColor"
+                                    value="#{MouseQuery_Backing.search.selectMouseCoatColor}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['coatColor']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseDiet"
+                                    value="#{MouseQuery_Backing.search.selectMouseDiet}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['diet']}" />
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseComment"
+                                    value="#{MouseQuery_Backing.search.selectMouseComment}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Mouse Comment" />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+                </h:panelGrid>
+                </div>
+
+            <hr /><div align="left">
+                <a4j:commandButton
+                    value="#{msgs['common.run']}"
+                    styleClass="mediumButton"
+                    oncomplete="if (#{facesContext.maximumSeverity eq null}) #{rich:component('runMouseQueryPanel')}.show()"
+                    action="#{MouseQuery_Backing.runQueryAction}"
+                    render="datResults, resultsMouseQueryRowCnt, resultsMouseQueryDisplay"
+                    id="run2" 
+                    status="statusPage"/>
+
+                &nbsp;&nbsp;
+
+                <h:panelGroup id="saveButtonsBottom">
+                    <a4j:commandButton
+                        value="#{msgs['common.save']}"
+                        styleClass="mediumButton"
+                        action="#{MouseQuery_Backing.saveQueryAction}"
+                        render="mouseQueryFormId"
+                        rendered="#{!(MouseQuery_Backing.isOverwrite)}"
+                        status="statusPage">
+                        <a4j:param value="false" assignTo="#{MouseQuery_Backing.isOverwrite}"/>
+                    </a4j:commandButton>
+                    <a4j:commandButton
+                        value="#{msgs['common.save']}"
+                        styleClass="mediumButton"
+                        oncomplete="overwriteQueryNameWarning()"
+                        rendered="#{MouseQuery_Backing.isOverwrite}" />
+                </h:panelGroup>                    
+
+                &nbsp;&nbsp;
+
+                <a4j:commandButton
+                    value="#{msgs['common.clear']}"
+                    styleClass="mediumButton"
+                    action="#{MouseQuery_Backing.clearQueryAction}"
+                    render="mouseQueryFormId"
+                    id="clear2" 
+                    status="statusPage"/>
+                </div>
+            </h:form>
+
+        <!-- Run Query modal panel -->
+        <rich:popupPanel id="runMouseQueryPanel" width="750" top="10"
+                         height="650" resizeable="true">
+            <f:facet name="header">
+                <h:outputText value="#{msgs['mouseSearchResults']}" />
+            </f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="/images/delete.gif" id="hidelinkId2" title="#{msgs['common.close']}"
+                                    onclick="#{rich:component('runMouseQueryPanel')}.hide();"
+                                    alt="#{msgs['common.close']}" height="20"
+                                    width="20" styleClass="hidelink" />
+                </h:panelGroup>
+            </f:facet>
+            <h:form id="mouseSearchResultsTable">
+                <rich:messages />
+                <h:panelGroup id="resultsMouseQueryRowCnt">
+                    <h3><h:outputText value="#{MouseQuery_Backing.rowCnt}"/> Search results </h3>
+                </h:panelGroup>
+                <h:panelGroup id="resultsMouseQueryDisplay">
+                    <h3><h:outputText rendered="#{MouseQuery_Backing.resultData.messageToDisplay == true}" value="#{MouseQuery_Backing.resultData.message}"   />  </h3>
+                </h:panelGroup>
+                <div align="left">
+                    <h:panelGrid columns="1">
+                        <h:panelGroup id="okCancelGroupId1">
+                            <a4j:commandButton id="cancelId1"
+                                               value="Return To Search"
+                                               oncomplete="#{rich:component('runMouseQueryPanel')}.hide();"
+                                               styleClass="btn_med">
+                            </a4j:commandButton>
+                            <a4j:status name="statusTable">
+                                <f:facet name="start">
+                                    &nbsp;&nbsp;
+                                    <h:graphicImage  value="../images/bhi_ball.gif"/>
+                                </f:facet>
+                            </a4j:status>    
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </div>
+                <hr />
+                <h:commandLink value="Download Result"
+                               action="#{MouseQuery_Backing.downloadSearchResultsAction}">
+                </h:commandLink>
+                <br /><br />
+
+                <rich:dataTable id="datResults" 
+                                value="#{MouseQuery_Backing.resultData.result}"
+                                sortMode="single"
+                                rows="#{restrict['size.list.numberOfRows']}"
+                                var="row" 
+                                headerClass="tableSortHeader">
+                    <f:facet name="footer" class="dataScroller">
+                        <div style="text-align: left;">
+                            <rich:dataScroller for="datResults" maxPages="#{restrict['size.list.maxPages']}" />
+                        </div>
+                    </f:facet>
+
+                    <rich:column id="actions">
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['common.actions']}" />
+                        </f:facet>
+                        <h:commandLink id="editLink"
+                                       styleClass="smallText"
+                                       rendered="#{row.editable eq 'true'}"
+                                       action="#{Mouse_Backing.editAction}"
+                                       target="_blank" >
+                            <h:graphicImage value="/images/edit.gif" style="border:0" 
+                                            title="#{msgs['common.edit']}"/>
+                            <f:param name="paramMouseKey" value="#{row.MouseKey}" />
+                            <f:param name="paramReturnToSearch" value="false" />
+                        </h:commandLink>
+                        <h:graphicImage value="/images/edit-disable.gif" 
+                                        rendered="#{row.editable eq 'false'}"
+                                        style="border:0" 
+                                        title="#{msgs['common.edit']}"/>
+                    </rich:column>
+
+                    <rich:column rendered="#{MouseQuery_Backing.search.selectMouseID == true}"
+                                 sortBy="#{row.MouseID}"
+                                 sortOrder="#{sortingBean.column1Order}"
+                                 filterValue="#{filterBean.column1Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.MouseID, filterBean.column1Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['mouseId']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column1Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn1}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column1Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.MouseID}"/>
+                    </rich:column>
+                    <rich:column rendered="#{MouseQuery_Backing.search.selectMouseStrain == true}"
+                                 sortBy="#{row.Strain}"
+                                 sortOrder="#{sortingBean.column2Order}"
+                                 filterValue="#{filterBean.column2Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.Strain, filterBean.column2Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['strain']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column2Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn2}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column2Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.Strain}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.LifeStatus}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseLifeStatus == true}"
+                                 sortOrder="#{sortingBean.column3Order}"
+                                 filterValue="#{filterBean.column3Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.LifeStatus, filterBean.column3Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['lifeStatus']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column3Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn3}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column3Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.LifeStatus}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.BreedingStatus}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseBreedingStatus == true}"
+                                 sortOrder="#{sortingBean.column4Order}"
+                                 filterValue="#{filterBean.column4Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.BreedingStatus, filterBean.column4Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['breedingStatus']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column4Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn4}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column4Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.BreedingStatus}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.Generation}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseGeneration == true}"
+                                 sortOrder="#{sortingBean.column5Order}"
+                                 filterValue="#{filterBean.column5Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.Generation, filterBean.column5Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['generation']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column5Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn5}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column5Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.Generation}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.Owner}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseOwner == true}"
+                                 sortOrder="#{sortingBean.column28Order}"
+                                 filterValue="#{filterBean.column28Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.Owner, filterBean.column28Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['owner']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column28Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn28}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column28Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.Owner}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.Origin}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseOrigin == true}"
+                                 sortOrder="#{sortingBean.column6Order}"
+                                 filterValue="#{filterBean.column6Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.Origin, filterBean.column6Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['origin']}" style="white-space: nowrap"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column6Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn6}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column6Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.Origin}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.Sex}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseSex == true}"
+                                 sortOrder="#{sortingBean.column7Order}"
+                                 filterValue="#{filterBean.column7Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.Sex, filterBean.column7Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['sex']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column7Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn7}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column7Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.Sex}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.CauseOfDeath}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseCOD == true}"
+                                 sortOrder="#{sortingBean.column8Order}"
+                                 filterValue="#{filterBean.column8Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.CauseOfDeath, filterBean.column8Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['causeOfDeath']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column8Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn8}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column8Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.CauseOfDeath}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.BirthDate}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseDOB == true}"
+                                 sortOrder="#{sortingBean.column9Order}"
+                                 filterValue="#{filterBean.column9Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.BirthDate, filterBean.column9Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['dateOfBirth']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column9Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn9}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column9Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.BirthDate}">
+                            <f:convertDateTime pattern="#{msgs['rs.dateFormatVisible']}" />
+                        </h:outputText>
+                    </rich:column>
+                    <rich:column sortBy="#{row.ExitDate}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseExitDate == true}"
+                                 sortOrder="#{sortingBean.column10Order}"
+                                 filterValue="#{filterBean.column10Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.ExitDate, filterBean.column10Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['exitDate']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column10Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn10}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column10Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.ExitDate}">
+                            <f:convertDateTime pattern="#{msgs['rs.dateFormatVisible']}" />
+                        </h:outputText>
+                    </rich:column>
+                    <rich:column sortBy="#{row.LitterID}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseLitter == true}"
+                                 sortOrder="#{sortingBean.column11Order}"
+                                 filterValue="#{filterBean.column11Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.LitterID, filterBean.column11Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['litter#']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column11Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn11}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column11Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.LitterID}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.PenID}"
+                                 rendered="#{MouseQuery_Backing.search.selectMousePenID == true}"
+                                 sortOrder="#{sortingBean.column12Order}"
+                                 filterValue="#{filterBean.column12Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.PenID, filterBean.column12Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['pen#']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column12Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn12}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column12Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.PenID}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.PenName}"
+                                 rendered="#{MouseQuery_Backing.search.selectMousePenName == true}"
+                                 sortOrder="#{sortingBean.column13Order}"
+                                 filterValue="#{filterBean.column13Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.PenName, filterBean.column13Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['penName']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column13Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn13}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column13Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.PenName}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.Protocol}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseProtocolID == true}"
+                                 sortOrder="#{sortingBean.column14Order}"
+                                 filterValue="#{filterBean.column14Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.Protocol, filterBean.column14Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['protocolId']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column14Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn14}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column14Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.Protocol}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.UseScheduleTerms}"
+                                 rendered="#{MouseQuery_Backing.search.selectUseSchedules == true}"
+                                 sortOrder="#{sortingBean.column15Order}"
+                                 filterValue="#{filterBean.column15Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.UseScheduleTerms, filterBean.column15Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="Use Schedules"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column15Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn15}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column15Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.UseScheduleTerms}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.MouseUse}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseUse == true}"
+                                 sortOrder="#{sortingBean.column16Order}"
+                                 filterValue="#{filterBean.column16Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.MouseUse, filterBean.column16Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['mouseUse']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column16Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn16}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column16Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.MouseUse}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.PhenotypeTerms}"
+                                 rendered="#{MouseQuery_Backing.search.selectMousePhenotypes == true}"
+                                 sortOrder="#{sortingBean.column17Order}"
+                                 filterValue="#{filterBean.column17Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.PhenotypeTerms, filterBean.column17Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="PhenotypeTerms"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column17Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn17}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column17Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.phenotypeTerms}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.Genotype}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseGenotype == true}"
+                                 sortOrder="#{sortingBean.column18Order}"
+                                 filterValue="#{filterBean.column18Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.Genotype, filterBean.column18Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['genotype']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column18Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn18}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column18Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.Genotype}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.GenotypeDate}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseGenotypeDate == true}"
+                                 sortOrder="#{sortingBean.column19Order}"
+                                 filterValue="#{filterBean.column19Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.GenotypeDate, filterBean.column19Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['genotypeDate']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column19Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn19}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column19Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.GenotypeDate}">
+                            <f:convertDateTime pattern="#{msgs['rs.dateFormatVisible']}" />
+                        </h:outputText>
+                    </rich:column>
+                    <!-- Age In Days -->
+                    <rich:column sortBy="#{row.AgeInDays}"
+                                 rendered="#{ MouseQuery_Backing.search.selectMouseAge == true and MouseQuery_Backing.search.ageMeasure == 'Days'}"
+                                 sortOrder="#{sortingBean.column20Order}"
+                                 filterValue="#{filterBean.column20Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.AgeInDays, filterBean.column20Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="Age In Days"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column20Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn20}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column20Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.AgeInDays}"/>
+                    </rich:column>
+                    <!-- Age In Weeks -->
+                    <rich:column sortBy="#{row.AgeInWeeks}"
+                                 rendered="#{ MouseQuery_Backing.search.selectMouseAge == true and MouseQuery_Backing.search.ageMeasure == 'Weeks'}"
+                                 sortOrder="#{sortingBean.column21Order}"
+                                 filterValue="#{filterBean.column21Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.AgeInWeeks, filterBean.column21Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="Age In Weeks"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column21Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn21}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column21Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.AgeInWeeks}"/>
+                    </rich:column>
+                    <!-- Age In Months -->
+                    <rich:column sortBy="#{row.AgeInMonths}"
+                                 rendered="#{ MouseQuery_Backing.search.selectMouseAge == true and MouseQuery_Backing.search.ageMeasure == 'Months'}"
+                                 sortOrder="#{sortingBean.column22Order}"
+                                 filterValue="#{filterBean.column22Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.AgeInMonths, filterBean.column22Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="Age In Months"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column22Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn22}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column22Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.AgeInMonths}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.MatingID}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseMating == true}"
+                                 sortOrder="#{sortingBean.column23Order}"
+                                 filterValue="#{filterBean.column23Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.MatingID, filterBean.column23Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['matingId']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column23Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn23}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column23Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.MatingID}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.LitterMates}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseLitterMates == true}"
+                                 sortOrder="#{sortingBean.column24Order}"
+                                 filterValue="#{filterBean.column24Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.LitterMates, filterBean.column24Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['littermates']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column24Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn24}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column24Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.LitterMates}"/>
+                    </rich:column>
+                    <!-- Parents Start -->
+                    <rich:column sortBy="#{row.Dam1}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseParents == true}"
+                                 sortOrder="#{sortingBean.column25Order}"
+                                 filterValue="#{filterBean.column25Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.Dam1, filterBean.column25Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['parents']} : #{msgs['dam1']}" />
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column25Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn25}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column25Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.Dam1}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.Dam2}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseParents == true}"
+                                 sortOrder="#{sortingBean.column26Order}"
+                                 filterValue="#{filterBean.column26Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.Dam2, filterBean.column26Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['parents']} : #{msgs['dam2']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column26Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn26}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column26Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.Dam2}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.Sire}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseParents == true}"
+                                 sortOrder="#{sortingBean.column27Order}"
+                                 filterValue="#{filterBean.column27Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.Sire, filterBean.column27Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['parents']} : #{msgs['sire']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column27Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn27}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column27Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.Sire}"/>
+                    </rich:column>
+                    <!-- Parents End -->
+                    <rich:column sortBy="#{row.CoatColor}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseCoatColor == true}"
+                                 sortOrder="#{sortingBean.column28Order}"
+                                 filterValue="#{filterBean.column28Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.CoatColor, filterBean.column28Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['coatColor']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column28Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn28}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column28Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.CoatColor}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.Diet}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseDiet == true}"
+                                 sortOrder="#{sortingBean.column29Order}"
+                                 filterValue="#{filterBean.column29Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.Diet, filterBean.column29Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['diet']}"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column29Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn29}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column29Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.Diet}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.RoomName}"
+                                 rendered="#{MouseQuery_Backing.search.selectRoomName == true}"
+                                 sortOrder="#{sortingBean.column30Order}"
+                                 filterValue="#{filterBean.column30Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.RoomName, filterBean.column30Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="Room"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column30Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn30}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column30Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.RoomName}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.mouseComment}"
+                                 rendered="#{MouseQuery_Backing.search.selectMouseComment == true}"
+                                 sortOrder="#{sortingBean.column31Order}"
+                                 filterValue="#{filterBean.column31Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.mouseComment, filterBean.column31Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="Mouse Comment"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column31Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn31}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column31Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.mouseComment}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{row.replacementTag}"
+                                 rendered="#{MouseQuery_Backing.search.selectReplacementTag == true}"
+                                 sortOrder="#{sortingBean.column32Order}"
+                                 filterValue="#{filterBean.column32Filter}" 
+                                 filterExpression="#{fn:containsIgnoreCase(row.replacementTag, filterBean.column32Filter)}" >
+                        <f:facet name="header">
+                            <h:outputText value="Replacement Tag"/>
+                            <br />
+                            <a4j:commandButton image="#{sortingBean.column32Image}" 
+                                               render="datResults" 
+                                               action="#{sortingBean.sortByColumn32}" 
+                                               status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{filterBean.column32Filter}" styleClass="w100">
+                                <a4j:ajax event="blur" render="datResults" status="statusTable" />
+                            </h:inputText>
+                        </f:facet>
+                        <h:outputText value="#{row.replacementTag}"/>
+                    </rich:column>
+                </rich:dataTable>
+                <br />
+                <h:commandLink value="Download Result"
+                               action="#{MouseQuery_Backing.downloadSearchResultsAction}">
+                </h:commandLink>
+                <hr />
+                <div align="left">
+                    <h:panelGrid columns="1">
+                        <h:panelGroup id="okCancelGroupId2">
+                            <a4j:commandButton id="cancelId2"
+                                               value="Return To Search"
+                                               oncomplete="#{rich:component('runMouseQueryPanel')}.hide();"
+                                               styleClass="btn_med">
+                            </a4j:commandButton>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </div>
+            </h:form>
+        </rich:popupPanel>
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+    </h:body>
+</html>

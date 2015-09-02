@@ -1,0 +1,782 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.1"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+
+    <!-- Application settings -->
+
+    <application>
+        <resource-bundle>
+            <base-name>jcms.web.resources.Build</base-name>
+            <var>build</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>jcms.web.resources.UIResources</base-name>
+            <var>msgs</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>jcms.web.resources.FieldRestrictions</base-name>
+            <var>restrict</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>jcms.web.resources.CustomMessages</base-name>
+            <var>customMessage</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>jcms.web.resources.HttpRequest</base-name>
+            <var>httpRequest</var>
+        </resource-bundle>
+        <locale-config>
+            <default-locale>en</default-locale>
+        </locale-config>
+    </application>
+
+    <!-- Navigation Rules -->
+
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>welcome</from-outcome>
+            <to-view-id>/welcome.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>home</from-outcome>
+            <to-view-id>/home.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>query</from-outcome>
+            <to-view-id>/search/queryPages.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/home.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>LoginSuccess</from-outcome>
+            <to-view-id>/home.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>administrationHome</from-outcome>
+            <to-view-id>/admin/administrationHome.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>adminStrainView</from-outcome>
+            <to-view-id>/admin/adminStrainView.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>listCenters</from-outcome>
+            <to-view-id>/admin/adminCenterList.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+    </navigation-rule>
+
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>mouseQuery</from-outcome>
+            <to-view-id>/search/mouseQuery.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>MouseQueryResults</from-outcome>
+            <to-view-id>/search/mouseSearchResults.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>matingQuery</from-outcome>
+            <to-view-id>/search/matingQuery.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>MatingQueryResults</from-outcome>
+            <to-view-id>/search/matingSearchResults.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>loadQuery</from-outcome>
+            <to-view-id>/search/loadQueries.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>experimentQuery</from-outcome>
+            <to-view-id>/search/experimentQuery.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>reports</from-outcome>
+            <to-view-id>/reports/reports.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>histogram</from-outcome>
+            <to-view-id>/reports/histogram.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>colonyManagement</from-outcome>
+            <to-view-id>/colonyManagement/colonyManagementHome.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cageCard</from-outcome>
+            <to-view-id>/cagecards/cageCardPage.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>customCageCard</from-outcome>
+            <to-view-id>/cagecards/customCageCard.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>loadCageCard</from-outcome>
+            <to-view-id>/cagecards/loadCageCard.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>addMouse</from-outcome>
+            <to-view-id>/colonyManagement/mouseEdit.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>miceList</from-outcome>
+            <to-view-id>/colonyManagement/mouseList.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editMouse</from-outcome>
+            <to-view-id>/colonyManagement/mouseEdit.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>addMating</from-outcome>
+            <to-view-id>/colonyManagement/matingEdit.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>matingList</from-outcome>
+            <to-view-id>/colonyManagement/matingList.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>levelView</from-outcome>
+            <to-view-id>/colonyManagement/levelView.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editMating</from-outcome>
+            <to-view-id>/colonyManagement/matingEdit.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>addLitter</from-outcome>
+            <to-view-id>/colonyManagement/litterEdit.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>litterList</from-outcome>
+            <to-view-id>/colonyManagement/litterList.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editLitter</from-outcome>
+            <to-view-id>/colonyManagement/litterEdit.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>addUse</from-outcome>
+            <to-view-id>/colonyManagement/useEdit.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>calendar</from-outcome>
+            <to-view-id>/mouseScheduling/calendar.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editUse</from-outcome>
+            <to-view-id>/colonyManagement/useEdit.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>mouseGenotypeList</from-outcome>
+            <to-view-id>/colonyManagement/mouseGenotypeList.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>plugDate</from-outcome>
+            <to-view-id>/colonyManagement/plugDate.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>useScheduleList</from-outcome>
+            <to-view-id>/colonyManagement/mouseUseScheduleList.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>colonyReport</from-outcome>
+            <to-view-id>/reports/colonySummaryReport.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cageReport</from-outcome>
+            <to-view-id>/reports/cageSummaryReport.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cageReportResults</from-outcome>
+            <to-view-id>/reports/cageSummaryResults.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>weanReportResults</from-outcome>
+            <to-view-id>/reports/weanReportResults.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>jpt</from-outcome>
+            <to-view-id>/reports/jpt.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>myPreferences</from-outcome>
+            <to-view-id>/preferences/myPreferences.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>sample</from-outcome>
+            <to-view-id>/samples/addSample.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>editSample</from-outcome>
+            <to-view-id>/samples/editSample.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>sampleList</from-outcome>
+            <to-view-id>/samples/sampleList.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>bulkUpdate</from-outcome>
+            <to-view-id>/colonyManagement/bulkUpdate.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>bulkAddGenotype</from-outcome>
+            <to-view-id>/colonyManagement/bulkAddGenotype.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>bubbleStrain</from-outcome>
+            <to-view-id>/reports/bubbleStrain.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>kaplanMeier</from-outcome>
+            <to-view-id>/reports/kaplanMeier.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>experiment</from-outcome>
+            <to-view-id>/experiments/experimentHome.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>experimentSideBar</from-outcome>
+            <to-view-id>/experiments/experimentSideBar.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>experimentEditData</from-outcome>
+            <to-view-id>/experiments/experimentEditData.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>experimentTestType</from-outcome>
+            <to-view-id>/experiments/experimentTestType.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+    </navigation-rule>
+
+    <managed-bean>
+        <managed-bean-name>ColonySummary_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.reports.ColonySummaryBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>Histogram_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.reports.HistogramBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>BulkAddGenotype_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.colonyManagement.BulkAddGenotypeBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>    
+    
+    <managed-bean>
+        <managed-bean-name>LevelView_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.colonyManagement.LevelViewBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+        
+    <managed-bean>
+        <managed-bean-name>UseSchedule_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.colonyManagement.UseScheduleListBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>KaplanMeier_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.reports.KaplanMeierBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>CageSummary_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.reports.CageSummaryBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>WeanReport_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.reports.WeanReportBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>MouseQuery_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.search.MouseQueryBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>JPT_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.reports.JPTBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>AdminTree_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.admin.AdminTreeBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>AdminSample_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.admin.AdminSampleBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>      
+        
+    <managed-bean>
+        <managed-bean-name>AdminUseSchedule_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.admin.AdminUseScheduleBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+                
+    <managed-bean>
+        <managed-bean-name>Login_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.main.LoginOwnerBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>    
+    
+    <managed-bean>
+        <managed-bean-name>Main_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.main.MainBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>    
+
+    <managed-bean>
+        <managed-bean-name>MatingQuery_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.search.MatingQueryBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>ErrorBean_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.common.ErrorBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>ExperimentEditData_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.experiments.ExperimentEditDataBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>ExperimentQuery_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.search.ExperimentQueryBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>FileDownload_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.common.FileDownloadBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>fileName</property-name>
+            <value>#{param.fileName}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>inputPath</property-name>
+            <value>#{param.inputPath}</value>
+        </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>AboutBox_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.main.AboutBoxBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>LoadQuery_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.search.LoadQueryBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>LoadCageCard_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.cagecards.LoadCageCardBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>Mouse_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.colonyManagement.MouseBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>Calendar_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.reports.CalendarBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>BubbleStrain_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.reports.BubbleStrain</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>MouseList_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.colonyManagement.MouseListBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>MouseGenotypeList_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.colonyManagement.MouseGenotypeListBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>Use_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.colonyManagement.UseBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>CageCard_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.cagecards.CageCardBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>CustomCageCard_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.cagecards.CustomCageCardBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>Mating_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.colonyManagement.MatingBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>MatingList_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.colonyManagement.MatingListBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>Litter_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.colonyManagement.LitterBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>LitterList_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.colonyManagement.LitterListBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>PlugDate_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.colonyManagement.PlugDateBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>Pen_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.colonyManagement.PenBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>PenList_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.colonyManagement.PenListCommon</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>Sample_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.sample.SampleBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>EditSample_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.sample.EditSampleBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>SampleList_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.sample.SampleListBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>AdminPreservation_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.admin.AdminPreservationBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>AdminUserWizard_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.admin.AdminUserWizard</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>StorageManager_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.sample.StorageManagerBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>BulkUpdate_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.colonyManagement.BulkUpdateBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>Level_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.admin.AdminLevelManagerBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>Preferences_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.common.PreferencesBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>ExperimentHome_Backing</managed-bean-name>
+        <managed-bean-class>jcms.web.experiments.ExperimentHomeBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <converter>
+        <converter-id>containerConverter</converter-id>
+        <converter-class>jcms.web.converter.ContainerConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>workgroupConverter</converter-id>
+        <converter-class>jcms.web.converter.WorkgroupConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>causeOfDeathConverter</converter-id>
+        <converter-class>jcms.web.converter.CauseOfDeathConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>generationConverter</converter-id>
+        <converter-class>jcms.web.converter.GenerationConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>mouseOriginConverter</converter-id>
+        <converter-class>jcms.web.converter.MouseOriginConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>coatColorConverter</converter-id>
+        <converter-class>jcms.web.converter.CoatColorConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>dietConverter</converter-id>
+        <converter-class>jcms.web.converter.DietConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>mouseProtocolConverter</converter-id>
+        <converter-class>jcms.web.converter.MouseProtocolConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>useScheduleTermConverter</converter-id>
+        <converter-class>jcms.web.converter.UseScheduleTermConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>mouseUseConverter</converter-id>
+        <converter-class>jcms.web.converter.MouseUseConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>cvMouseUseConverter</converter-id>
+        <converter-class>jcms.web.converter.CvMouseUseConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>cvPhenotypeConverter</converter-id>
+        <converter-class>jcms.web.converter.CvPhenotypeConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>timeUnitConverter</converter-id>
+        <converter-class>jcms.web.converter.TimeUnitConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>breedingStatusConverter</converter-id>
+        <converter-class>jcms.web.converter.BreedingStatusConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>genesConverter</converter-id>
+        <converter-class>jcms.web.converter.GenesConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>lifeStatusConverter</converter-id>
+        <converter-class>jcms.web.converter.LifeStatusConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>litterNumbersConverter</converter-id>
+        <converter-class>jcms.web.converter.LitterNumbersConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>mouseIDConverter</converter-id>
+        <converter-class>jcms.web.converter.MouseIDConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>strainConverter</converter-id>
+        <converter-class>jcms.web.converter.StrainConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>adminStrainDTOConverter</converter-id>
+        <converter-class>jcms.web.converter.AdminStrainDTOConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>strainDTOConverter</converter-id>
+        <converter-class>jcms.web.converter.StrainDTOConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>ownerConverter</converter-id>
+        <converter-class>jcms.web.converter.OwnerConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>penConverter</converter-id>
+        <converter-class>jcms.web.converter.PenConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>sexConverter</converter-id>
+        <converter-class>jcms.web.converter.SexConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>matingIDConverter</converter-id>
+        <converter-class>jcms.web.converter.MatingIDConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>containerStatusConverter</converter-id>
+        <converter-class>jcms.web.converter.ContainerStatusConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>crossStatusConverter</converter-id>
+        <converter-class>jcms.web.converter.CrossStatusConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>roomConverter</converter-id>
+        <converter-class>jcms.web.converter.RoomConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>alleleConverter</converter-id>
+        <converter-class>jcms.web.converter.AlleleConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>alleleStringsConverter</converter-id>
+        <converter-class>jcms.web.converter.AlleleStringsConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>expDataDTOConverter</converter-id>
+        <converter-class>jcms.web.converter.ExpDataDTOConverter</converter-class>
+    </converter>
+    <converter>
+        <converter-id>testTypeConverter</converter-id>
+        <converter-class>jcms.web.converter.TestTypeConverter</converter-class>
+    </converter>
+    <!-- Validator Custom Components -->
+    <validator>
+        <validator-id>UniqueMouseIDValidator</validator-id>
+        <validator-class>jcms.web.validator.UniqueMouseIDValidator</validator-class>
+    </validator>
+    <validator>
+        <validator-id>UniqueNewTagValidator</validator-id>
+        <validator-class>jcms.web.validator.UniqueNewTagValidator</validator-class>
+    </validator>
+    <validator>
+        <validator-id>LitterGenerationValidator</validator-id>
+        <validator-class>jcms.web.validator.LitterGenerationValidator</validator-class>
+    </validator>
+
+<!-- Renderer Definitions -->
+    <render-kit>
+        <renderer>
+            <component-family>javax.faces.Output</component-family>
+            <renderer-type>com.corejsf.Pager</renderer-type>
+            <renderer-class>com.corejsf.PagerRenderer</renderer-class>
+        </renderer>
+    </render-kit>
+
+</faces-config>

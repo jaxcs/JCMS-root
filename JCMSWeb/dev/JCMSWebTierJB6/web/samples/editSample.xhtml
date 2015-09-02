@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>                
+            <h:outputText value="Edit Sample"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js" >
+        </script>
+        <style type="text/css" media="screen">
+            .rf-cal-inp {
+                color:#000000 !important;
+                font:10px arial,sans-serif;
+            }
+        </style>
+        <style type="text/css" media="screen">
+            .rightButton td {
+                text-align: right !important;
+            }
+        </style>
+        <style type="text/css" media="screen">
+            .customIcon {
+                background-image: url('../images/Center_Enabled.png') !important;
+                height:16px;
+                width:16px;
+            }
+        </style>
+        <style type="text/css" media="screen">
+            .disabledIcon {
+                background-image: url('../images/Center_Disabled.png') !important;
+                height:16px;
+                width:16px;
+            }
+        </style>
+        <style type="text/css" media="screen">
+            .addedRow {
+                background-color: #00CCCC;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form>
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+        </h:form>
+        <div style="margin-left:10px;margin-right:10px">
+            <h:form>
+                <h1>
+                    <h:outputText value="Samples" style="h1"/>
+                </h1>
+                <hr />
+            </h:form>
+            <h:form >
+                <h:panelGroup id="title">
+                    <h2>
+                        <h:outputText value="Edit Sample"/>
+                    </h2>
+                </h:panelGroup>
+            </h:form>
+            <img src="../images/bhi_ball_white.gif" />
+            <a4j:status>
+                <f:facet name="start">
+                    <h:graphicImage  value="../images/bhi_ball.gif"/>
+                </f:facet>
+            </a4j:status>
+            <hr/>                    
+            <h:form>
+                <p:messages id="messages" autoUpdate="true" />
+                <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5" width="100%" 
+                             columnClasses="sideBar,detailPane" id="sampleDetails">
+                    <h:panelGroup>
+                        <f:subview id="adminSideBar"><ui:include src="/samples/sampleSideBar.xhtml"/></f:subview>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                    <!-- THE ACTUAL FIELDS AND EDITING STUFF GOES HERE -->
+                        <h2>
+                            <h:outputText value="Sample Details"/>
+                        </h2>
+                        <a4j:commandButton value="Save" styleClass="smallButton"
+                                           action="#{EditSample_Backing.updateSample}"/>
+                        &nbsp;
+                        <a4j:commandButton value="Return to Search"
+                                           styleClass="mediumButton"
+                                           action="#{EditSample_Backing.returnToSearchAction}" />
+                        <h:panelGrid columns="2" 
+                                     columnClasses="rowHeader, innerTableTD"
+                                     styleClass="innerTable, blackTextStyle, border-collapse:collapse"
+                                     border="0">
+                            <h:panelGroup>
+                                <h:outputText value="Sample ID"/>
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                            </h:panelGroup>   
+                            <h:panelGroup>
+                                <h:inputText value="#{EditSample_Backing.sampleID}" id="sampleID" 
+                                             disabled="#{EditSample_Backing.sampleIDDisabled}">
+                                    <a4j:ajax event="change" listener="#{EditSample_Backing.sampleIDChangeListener}" render="sampleDetails"/>
+                                </h:inputText>
+                                &nbsp;&nbsp;
+                                <a4j:commandButton value="Change ID" styleClass="mediumButton"
+                                                   render="idPanel"
+                                                   oncomplete="#{rich:component('changeIDPanel')}.show();"/>
+                                &nbsp;&nbsp;
+                                <a4j:commandButton value="Edit Different Sample"
+                                                   id="different"
+                                                   styleClass="largeButton"
+                                                   rendered="#{EditSample_Backing.sampleIDDisabled}"
+                                                   action="#{EditSample_Backing.enableSampleID}" 
+                                                   render="sampleID, cancel"/>
+                                <a4j:commandButton value="Cancel"
+                                                   id="cancel"
+                                                   styleClass="mediumButton"
+                                                   rendered="#{!EditSample_Backing.sampleIDDisabled}"
+                                                   action="#{EditSample_Backing.enableSampleID}" 
+                                                   render="sampleID, different"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputText value="Owner"/>
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                            </h:panelGroup>   
+                            <h:selectOneMenu value="#{EditSample_Backing.owner}" converter="ownerConverter">
+                                <f:selectItems value="#{EditSample_Backing.wrapper.colonyManageOwnerItems}"/>
+                                <a4j:ajax event="change" execute="@this"/>
+                            </h:selectOneMenu>
+                            <h:panelGroup>
+                                <h:outputText value="Sample Class"/>
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                            </h:panelGroup>  
+                            <h:selectOneMenu value="#{EditSample_Backing.sampleClass}">
+                                <f:selectItems value="#{EditSample_Backing.sampleClasses}"/>
+                                <a4j:ajax event="change" listener="#{EditSample_Backing.sampleClassChangeListener}" render="sampleDetails"/>
+                            </h:selectOneMenu>
+                            <h:panelGroup>
+                                <h:outputText value="Sample Type"/>
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                            </h:panelGroup>  
+                            <h:selectOneMenu value="#{EditSample_Backing.sampleType}">
+                                <f:selectItems value="#{EditSample_Backing.sampleTypes}"/>
+                                <a4j:ajax event="change" execute="@this"/>
+                            </h:selectOneMenu>
+                            <h:outputText value="Description"/>
+                            <h:inputTextarea value="#{EditSample_Backing.description}">
+                                <a4j:ajax event="change" execute="@this"/>
+                            </h:inputTextarea>
+                            <h:panelGroup>
+                                <h:outputText value="Sample Date"/>
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                            </h:panelGroup>  
+                            <h:panelGroup>
+                                <rich:calendar datePattern="#{Sample_Backing.date_format}"  value="#{EditSample_Backing.sampleDate}"/>
+                                &nbsp;&nbsp;
+                                <h:selectOneMenu value="#{EditSample_Backing.sampleDateType}">
+                                    <f:selectItems value="#{EditSample_Backing.sampleDateTypes}"/>
+                                    <a4j:ajax event="change" execute="@this"/>
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                            <h:outputText value="Harvest Method"/>
+                            <h:selectOneMenu value="#{EditSample_Backing.harvestMethod}">
+                                <f:selectItems value="#{EditSample_Backing.harvestMethods}"/>
+                                <a4j:ajax event="change" execute="@this"/>
+                            </h:selectOneMenu>
+                            <h:panelGroup>
+                                <h:outputText value="Weight"/>
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                            </h:panelGroup>  
+                            <h:panelGroup>
+                                <h:inputText value="#{EditSample_Backing.weight}">
+                                    <a4j:ajax event="change" execute="@this"/>
+                                </h:inputText>
+                                &nbsp;&nbsp;
+                                <h:selectOneMenu value="#{EditSample_Backing.weightUnit}">
+                                    <f:selectItems value="#{EditSample_Backing.weightUnits}"/>
+                                    <a4j:ajax event="change" execute="@this"/>
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputText value="Age"/>
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                            </h:panelGroup>  
+                            <h:panelGroup>
+                                <h:inputText id="age" value="#{EditSample_Backing.age}">
+                                    <a4j:ajax event="change" execute="@this"/>
+                                </h:inputText>
+                                &nbsp;&nbsp;
+                                <h:selectOneMenu value="#{EditSample_Backing.timeUnit}">
+                                    <f:selectItems value="#{EditSample_Backing.timeUnits}"/>
+                                    <a4j:ajax event="change" execute="@this"/>
+                                </h:selectOneMenu>
+                                &nbsp;&nbsp;
+                                <h:selectOneMenu value="#{EditSample_Backing.epoch}">
+                                    <f:selectItems value="#{EditSample_Backing.epochs}"/>
+                                    <a4j:ajax event="change" listener="#{EditSample_Backing.ageFromChangeListener}" render="calculateAgeButton"/>
+                                </h:selectOneMenu>
+                                &nbsp;&nbsp;
+                                <a4j:commandButton value="Calculate Age" disabled="#{EditSample_Backing.calculateAgeDisabled}" render="age"
+                                                   action="#{EditSample_Backing.calculateSampleAge}" styleClass="mediumButton" id="calculateAgeButton"/>
+                            </h:panelGroup>
+                            <h:outputText value="Preservation Type"/>
+                            <h:selectOneMenu value="#{EditSample_Backing.preservationType}">
+                                <f:selectItems value="#{EditSample_Backing.preservationTypes}"/>
+                                <a4j:ajax event="change" listener="#{EditSample_Backing.preservationTypeChangeListener}" render="sampleDetails"/>
+                            </h:selectOneMenu>
+                            <h:outputText value="Preservation Method"/>
+                            <h:selectOneMenu value="#{EditSample_Backing.preservationMethod}">
+                                <f:selectItems value="#{EditSample_Backing.preservationMethods}"/>
+                                <a4j:ajax event="change" listener="#{EditSample_Backing.preservationMethodChangeListener}" render="sampleDetails"/>
+                            </h:selectOneMenu>
+                            <h:outputText value="Preservation Detail"/>
+                            <h:selectOneMenu value="#{EditSample_Backing.preservationDetail}">
+                                <f:selectItems value="#{EditSample_Backing.preservationDetails}"/>
+                                <a4j:ajax event="change" execute="@this"/>
+                            </h:selectOneMenu>
+                            <h:panelGroup>
+                                <h:outputText value="Sample Status"/>
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                            </h:panelGroup>  
+                            <h:selectOneMenu value="#{EditSample_Backing.sampleStatus}">
+                                <f:selectItems value="#{EditSample_Backing.sampleStatuses}"/>
+                                <a4j:ajax event="change" execute="@this"/>
+                            </h:selectOneMenu>
+                            <h:panelGroup>
+                                <h:outputText value="Location"/>
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                            </h:panelGroup>  
+                            <rich:collapsiblePanel header="Location">
+                                <p:tree id="locationTree" selectionMode="single" 
+                                        value="#{EditSample_Backing.root}" var="node">
+                                    <p:treeNode type="storage" icon="disabledIcon">
+                                        <h:outputText value="#{node.label}"/>
+                                    </p:treeNode>
+                                    <p:treeNode type="location" icon="customIcon">
+                                        <h:outputText value="#{node.label}"/>
+                                    </p:treeNode>
+                                    <p:ajax event="select" listener="#{EditSample_Backing.onNodeSelect}" />  
+                                </p:tree>
+                            </rich:collapsiblePanel>
+                        </h:panelGrid>      
+                        <hr/>       
+                        <h2>
+                            <h:outputText value="Source Details"/>
+                        </h2>
+                        <p:messages id="messages2" autoUpdate="true" />
+                        <h:panelGrid columns="2" columnClasses="listColumnEven, listColumnEven" styleClass="blackTextStyle">
+                            <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5" width="100%" 
+                                columnClasses="rowHeader, innerTableTD" styleClass="innerTable, blackTextStyle, border-collapse:collapse">
+                                <h:panelGroup>
+                                    <h:outputText value="Source Type"/>
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                                </h:panelGroup>  
+                                <h:selectOneRadio value="#{EditSample_Backing.sourceType}" id="sourceRadio" layout="pageDirection" disabled="#{EditSample_Backing.sourceTypeDisabled}">
+                                    <f:selectItem itemLabel="Parent Sample" itemValue="1"/>
+                                    <f:selectItem itemLabel="Mouse" itemValue="2"/>
+                                    <f:selectItem itemLabel="Litter" itemValue="3"/>
+                                    <f:selectItem itemLabel="Mating" itemValue="4"/>
+                                    <f:selectItem itemLabel="Other" itemValue="5"/>
+                                    <a4j:ajax event="change" listener="#{EditSample_Backing.sourceTypeValueChangeListener}" render="sourceTables, sourceID, buttonsGroup"/> 
+                                </h:selectOneRadio>
+                                <h:panelGroup>
+                                    <h:outputText value="Sample Strain"/>
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                                </h:panelGroup>  
+                                <p:selectOneMenu value="#{EditSample_Backing.sampleStrain}" id="sampleStrain" converter="strainConverter" 
+                                                 filterMatchMode="contains" filter="true" >
+                                    <f:selectItems value="#{EditSample_Backing.wrapper.activeStrainsOptional}"/>
+                                    <p:ajax event="change" listener="#{EditSample_Backing.sampleStrainValueChangeListener}" update="sourceID"/>
+                                </p:selectOneMenu>
+                                <h:outputText value="Source ID"/>
+                                <p:autoComplete id="sourceID" completeMethod="#{EditSample_Backing.myComplete}" minQueryLength="3" scrollHeight="150"
+                                                value="#{EditSample_Backing.sourceID}" disabled="#{EditSample_Backing.sourceType eq '5' or EditSample_Backing.sampleStrain eq null}">
+                                    <p:ajax event="change" listener="#{EditSample_Backing.sourceIDChangeListener}"/>
+                                </p:autoComplete>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" id="sourceTables">
+                                <rich:dataTable id="sampleTable" value="#{EditSample_Backing.sampleSources}"
+                                                rendered="#{EditSample_Backing.sourceType eq '1'}" var="sample"
+                                                rowKeyVar="tableRowIndex">
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Actions"/>
+                                        </f:facet>
+                                        <a4j:commandLink action="#{EditSample_Backing.deleteSampleSource}" render="sampleTable, sourceRadio">
+                                            <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        </a4j:commandLink>
+                                    </h:column>
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Sample ID"/>
+                                        </f:facet>
+                                        <h:outputText value="#{sample.sampleID}"/>
+                                    </h:column>
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Sample Date"/>
+                                        </f:facet>
+                                        <rich:calendar datePattern="#{Sample_Backing.date_format}"  value="#{sample.sampleDate}" disabled="true"/>
+                                    </h:column>
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Strain"/>
+                                        </f:facet>
+                                        <h:outputText value="#{sample.strainName}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Sample Status"/>
+                                        </f:facet>
+                                        <h:outputText value="#{sample.storage.sampleStatus}"/>
+                                    </h:column>
+                                </rich:dataTable>
+                                <rich:dataTable id="mouseTable" rendered="#{EditSample_Backing.sourceType eq '2'}"
+                                                value="#{EditSample_Backing.mouseSources}" var="mouse"
+                                                rowKeyVar="tableRowIndex">
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Actions"/>
+                                        </f:facet>
+                                        <a4j:commandLink action="#{EditSample_Backing.deleteMouseSource}" render="mouseTable, sourceRadio, calculateAgeButton">
+                                            <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        </a4j:commandLink>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Mouse ID"/>
+                                        </f:facet>
+                                        <h:outputText value="#{mouse.id}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Birth Date"/>
+                                        </f:facet>
+                                        <rich:calendar datePattern="#{Sample_Backing.date_format}"  value="#{mouse.birthDate}" disabled="true"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Sex"/>
+                                        </f:facet>
+                                        <h:outputText value="#{mouse.sex}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Strain"/>
+                                        </f:facet>
+                                        <h:outputText value="#{mouse.strainKey.strainName}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Life Status"/>
+                                        </f:facet>
+                                        <h:outputText value="#{mouse.lifeStatus}"/>
+                                    </h:column>
+                                </rich:dataTable>
+                                <rich:dataTable id="litterTable" value="#{EditSample_Backing.litterSources}"
+                                                rendered="#{EditSample_Backing.sourceType eq '3'}" var="litter"
+                                                rowKeyVar="tableRowIndex">
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Actions"/>
+                                        </f:facet>
+                                        <a4j:commandLink action="#{EditSample_Backing.deleteLitterSource}" render="litterTable, sourceRadio, calculateAgeButton">
+                                            <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        </a4j:commandLink>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Litter ID"/>
+                                        </f:facet>
+                                        <h:outputText value="#{litter.litterID}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Birth Date"/>
+                                        </f:facet>
+                                        <rich:calendar datePattern="#{Sample_Backing.date_format}"  value="#{litter.birthDate}" disabled="true"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Strain"/>
+                                        </f:facet>
+                                        <h:outputText value="#{litter.matingKey.strainKey.strainName}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Total Born"/>
+                                        </f:facet>
+                                        <h:outputText value="#{litter.totalBorn}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Status"/>
+                                        </f:facet>
+                                        <h:outputText value="#{litter.status}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Harvest Date"/>
+                                        </f:facet>
+                                        <rich:calendar datePattern="#{Sample_Backing.date_format}"  value="#{litter.harvestDate}" disabled="true"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Number Harvested"/>
+                                        </f:facet>
+                                        <h:outputText value="#{litter.numberHarvested}"/>
+                                    </h:column>
+                                </rich:dataTable>
+                                <rich:dataTable id="matingTable" value="#{EditSample_Backing.matingSources}"
+                                                rendered="#{EditSample_Backing.sourceType eq '4'}" var="mating"
+                                                rowKeyVar="tableRowIndex" >
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Actions"/>
+                                        </f:facet>
+                                        <a4j:commandLink action="#{EditSample_Backing.deleteMatingSource}" render="matingTable, sourceRadio, calculateAgeButton">
+                                            <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        </a4j:commandLink>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Mating ID"/>
+                                        </f:facet>
+                                        <h:outputText value="#{mating.matingID}"/>
+                                    </h:column>
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Mating Date"/>
+                                        </f:facet>
+                                        <rich:calendar datePattern="#{Sample_Backing.date_format}"  value="#{mating.matingDate}" disabled="true"/>
+                                    </h:column>
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Strain"/>
+                                        </f:facet>
+                                        <h:outputText value="#{mating.strainKey.strainName}"/>
+                                    </h:column>
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Generation"/>
+                                        </f:facet>
+                                        <h:outputText value="#{mating.generation}"/>
+                                    </h:column>
+                                </rich:dataTable>
+                            </h:panelGrid>
+                            <h:panelGroup id="buttonsGroup">
+                                <a4j:commandButton value="Add Source" styleClass="mediumButton" rendered="#{EditSample_Backing.sourceType ne '5'}"
+                                                   action="#{EditSample_Backing.addSampleSource}" render="sourceTables, calculateAgeButton, sourceRadio"/>
+                                &nbsp;&nbsp;
+                                <a4j:commandButton value="Clear Sources" styleClass="mediumButton" rendered="#{EditSample_Backing.sourceType ne '5'}"
+                                                   action="#{EditSample_Backing.clearSources}" render="sourceTables, calculateAgeButton, sourceRadio"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <hr/>
+                        <a4j:commandButton value="Save" styleClass="smallButton"
+                                           action="#{EditSample_Backing.updateSample}"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </h:form>
+        </div>
+        <rich:popupPanel id="changeIDPanel" autosized="true"
+                        top="10">
+            <f:facet name="header">
+                <h:outputText value="Change ID" />
+            </f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="/images/delete.gif" id="hidelink"  
+                                    onclick="#{rich:component('changeIDPanel')}.hide();"
+                                    alt="Close Window" height="20" width="20"
+                                    styleClass="hidelink" title="Close" />
+                </h:panelGroup>
+            </f:facet>
+            <h:form id="existingSamplesForm">
+                <p:messages id="messages3" autoUpdate="true" />
+                <h:panelGrid columns="2" id="idPanel"
+                             columnClasses="rowHeader, innerTableTD">
+                    <h:outputText value="Old ID"/>
+                    <h:outputText value="#{EditSample_Backing.sampleID}"/>
+                    <h:outputText value="New ID"/>
+                    <h:inputText value="#{EditSample_Backing.newID}"/>
+                </h:panelGrid>
+                <div align="center">
+                    <h:panelGroup>
+                        <a4j:commandButton value="Save" render="sampleID" styleClass="smallButton"
+                                           action="#{EditSample_Backing.changeSampleID}"
+                                        oncomplete="if (#{facesContext.maximumSeverity.ordinal lt 2}) #{rich:component('changeIDPanel')}.hide();"/>
+                        &nbsp;&nbsp;
+                        <a4j:commandButton value="Cancel" styleClass="smallButton"
+                                        oncomplete="#{rich:component('changeIDPanel')}.hide();"/>
+                    </h:panelGroup>
+                </div>
+            </h:form>
+        </rich:popupPanel>
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+    </h:body>
+</html>
+                

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- $Id: jboss-service.xml 110166 2010-12-22 23:03:59Z bstansberry@jboss.com $ -->
+
+<!-- ===================================================================== -->
+<!--  JBoss Server Configuration                                           -->
+<!-- ===================================================================== -->
+
+<server>
+
+   <!-- Load all jars from the JBOSS_HOME/server/<config>/lib directory and
+        the shared JBOSS_HOME/common/lib directory. This can be restricted to
+        specific jars by specifying them in the archives attribute.
+        TODO: Move this configuration elsewhere
+   -->
+   <classpath codebase="${jboss.server.lib.url}" archives="*"/>
+   <classpath codebase="${jboss.common.lib.url}" archives="*"/>
+
+   <!-- 
+        JBAS-7274. Workaround to set java.rmi.server.codebase
+        early in the startup process.
+   -->
+   <mbean code="org.jboss.web.RMICodebaseConfigurer"
+      name="jboss:service=RMICodebaseConfigurer">
+      
+      <attribute name="CodebaseHost">${java.rmi.server.hostname}</attribute>      
+      <attribute name="CodebasePort">
+         <!-- Get the port to use from ServiceBindingManager. -->
+         <value-factory bean="ServiceBindingManager" method="getIntBinding" parameter="jboss:service=WebService"/>
+      </attribute>
+   </mbean>
+
+</server>

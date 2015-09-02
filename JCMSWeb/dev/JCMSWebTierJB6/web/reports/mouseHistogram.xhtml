@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>
+            <h:outputText value="Colony Status Histograms"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <link href="/jcms/stylesheet/histogram.css" rel="stylesheet" media="screen" />
+        <script src="/jcms/javascript/histogram.js" type="text/javascript"></script>
+        <script type="text/javascript" src="/jcms/javascript/d3.v3.js"></script>
+    </h:head>
+    <h:body>
+        <h:form>
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <p><h2><h:outputText value="Colony Status Histograms"/></h2></p>
+            <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">  
+                <f:facet name="start">  
+                    <h:graphicImage  value="../images/bhi_ball.gif"/>
+                </f:facet>
+                <f:facet name="complete">  
+                    <h:graphicImage value="../images/bhi_ball_white.gif" />  
+                </f:facet>  
+            </p:ajaxStatus>       
+            <p:remoteCommand name="buildHistogramData"
+                             action="#{Histogram_Backing.buildMouseHistogramData}"
+                             onstart="d3.selectAll('svg').remove();"
+                             oncomplete="buildMouseHistogram(xhr, status, args);"/>
+            <!-- SVG is rendered inside the div -->
+            <div style="margin-left:10px;margin-right:10px;" class="contentDiv">
+                
+            </div> 
+            <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+        </h:form>
+    </h:body>
+    <script type="text/javascript">
+        buildHistogramData();
+    </script>
+</html>

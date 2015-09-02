@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: jpai
+Build-Jdk: 1.6.0_16
+Specification-Title: JBoss EJB 3.x TimerService Mark 2
+Specification-Version: 1.0.0-alpha-13
+Specification-Vendor: JBoss, a division of Red Hat, Inc.
+Implementation-Title: JBoss EJB 3.x TimerService Mark 2
+Implementation-Version: 1.0.0-alpha-13
+Implementation-Vendor-Id: org.jboss.ejb3.timerservice
+Implementation-Vendor: JBoss, a division of Red Hat, Inc.
+Implementation-URL: http://labs.jboss.com/jbossejb3/
+

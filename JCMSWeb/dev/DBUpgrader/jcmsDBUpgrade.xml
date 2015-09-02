@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- DOCTYPE dbUpgrade.dtd -->
+
+<!-- This is a sample DBUpgrader configuration file template. Use it to create customized database upgrades for your application. DBUpgrader is intended to be application- and
+  ** database vendor-independent. If, for any reason, you find that it is not, please contact the original author, Mike Relac, at mike.relac@jax.org.
+  **
+  ** To run the DBUpgrader, simply execute the DBUpgrader.jar file, supplying the required parameters '-c' (config file) and '-t' (to-version) and any desired optional
+  ** parameters. Output is sent to stdout. It is also sent to the logfile, if one was specified with the '-l' flag and the file is writeable.
+  **
+  ** NOTE: The to_version specified on the command-line must exactly match one of the upgradeFile 'revisionNumber' values in the configuration file, or an
+  **              exception is thrown. It must exist because the decision whether or not to execute a given upgradeFile is based on that file's position relative to the upgradeFile
+  **              with the same revisionNumber as to_revision.
+  **
+  ** Following are the tag descriptions. Optional tags defined in a DBUpgrader configuration file act as defaults to DBUpgrader. Command-line equivalents always superceed
+  **  values specified in the configuration file.
+  **
+  ** Tag Descriptions:
+  **     dbUpgrade -  (exactly one is required). This is the top-level tag identifiying this XML file as compatible with DBUpgrader. The filename (relative- or fully-qualified)
+  **                                                                         is specified as the node value. See example below.
+  **         connection -  (optional - 0 or 1 occurrence).This tag encapsulates as much of the database connection information as you choose to place into it. Valid child names are:
+  **                dbDriver -  (optional - 0 or 1 occurrence). The JDBC driver class name
+  **                dbURL -      (optional - 0 or 1 occurrence). The JDBC-style url identifying the database vendor, hostname, port, and database name.
+  **                username - (optional - 0 or 1 occurrence). The database username
+  **                password - (optional - 0 or 1 occurrence). The database username's password
+  **                upgradeFile - (optional - 0 or more occurrences). This is the parent tag of the upgradeFile elements. Valid child names are:
+  **                alwaysRun - (optional - 0 or more occurrences). Files with this tag are always run first, before any files with revisionNumber values, and before any files with the
+  **                                                                                                 'alwaysRunIfSuccess' or 'alwaysRunIfFailure' tags. The files with the 'alwaysRun' tag are executed in the order
+  **                                                                                                  that they appear in the configuration file.
+  **               alwaysRunIfSuccess - (optional - 0 or more occurrences). Files with this tag are always run last, after any files with revisionNumber values. These files are run only
+  **                                                                                                                  if no errors occurred. They are always run in the order that they appear in the configuration file.
+  **               alwaysRunIfFailure  - (optional - 0 or more occurrences).  Files with this tag are always run last, after any files with revisionNumber values. These files are run only
+  **                                                                                                                  if errors occurred. They are always run in the order that they appear in the configuration file.
+  **               revisionNumber - (optional - 0 or more occurrences). Files with this tag are the actual update SQL files. They are run only if:
+  **                                                                                                          1. they appear in your configuration file AFTER the file entry whose revisionNumber matches your current 
+  **                                                                                                              database version, AND
+  **                                                                                                          2. they appear BEFORE (or their revisionNumber values are equal to) the revisionNumber of the file entry
+  **                                                                                                               matching the required 'toVersion' parameter specified on the command-line.
+  **
+  -->
+<!-- NOTE: dbURL is in the format jdbc:mysql://[host][,failoverhost...][:port]/[database][?propertyName1][=propertyValue1][&amp;propertyName2][-propertyValue2]... -->
+
+<dbUpgrade>
+	<connection
+		dbDriver="com.mysql.jdbc.Driver"
+		dbURL="jdbc:mysql://localhost:3306/jcms_db"
+		username="root"
+                password="myadmin" >
+	</connection>
+	<upgradeFile alwaysRun="true">STARTTRANSACTION.sql</upgradeFile>
+	<upgradeFile revisionNumber="1">dbChange_1.sql</upgradeFile>
+        <upgradeFile alwaysRunIfSuccess="true">COMMIT.sql</upgradeFile>
+	<upgradeFile alwaysRunIfFailure="true">ROLLBACK.sql</upgradeFile>
+	<logfile>mylogfile.txt</logfile>
+</dbUpgrade>

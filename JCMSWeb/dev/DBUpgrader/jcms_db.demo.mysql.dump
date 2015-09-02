@@ -1,0 +1,2670 @@
+-- MySQL dump 10.13  Distrib 5.1.52, for redhat-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: jcms_db
+-- ------------------------------------------------------
+-- Server version	5.1.52
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Allele`
+--
+
+DROP TABLE IF EXISTS `Allele`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Allele` (
+  `_gene_key` int(11) DEFAULT NULL,
+  `allele` varchar(8) NOT NULL,
+  `genericAlleleGeneClass` varchar(16) DEFAULT NULL,
+  `_allele_key` int(11) NOT NULL AUTO_INCREMENT,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_allele_key`),
+  KEY `_gene_key` (`_gene_key`),
+  KEY `allele` (`allele`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Allele`
+--
+
+LOCK TABLES `Allele` WRITE;
+/*!40000 ALTER TABLE `Allele` DISABLE KEYS */;
+INSERT INTO `Allele` VALUES (NULL,'-','E',1,1),(NULL,'+','E',2,1),(NULL,'-','KI',3,1),(NULL,'+','KI',4,1),(NULL,'-','KO',5,1),(NULL,'+','KO',6,1),(NULL,'-','TG',7,1),(NULL,'+','TG',8,1),(NULL,'0','TG',9,1),(1,'tm1Bres',NULL,10,1),(2,'ahl',NULL,11,1);
+/*!40000 ALTER TABLE `Allele` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ApprovedStrainRegistry`
+--
+
+DROP TABLE IF EXISTS `ApprovedStrainRegistry`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ApprovedStrainRegistry` (
+  `_approvedStrain_key` int(11) NOT NULL AUTO_INCREMENT,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `_damStrain_key` int(11) NOT NULL DEFAULT '0',
+  `_sireStrain_key` int(11) NOT NULL DEFAULT '0',
+  `_litterStrain_key` int(11) NOT NULL DEFAULT '0',
+  `_owner_key` int(11) DEFAULT '0',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_approvedStrain_key`),
+  KEY `_approvedStrain_key` (`_approvedStrain_key`),
+  KEY `_damStrain_key` (`_damStrain_key`),
+  KEY `_litterStrain_key` (`_litterStrain_key`),
+  KEY `_owner_key` (`_owner_key`),
+  KEY `_sireStrain_key` (`_sireStrain_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ApprovedStrainRegistry`
+--
+
+LOCK TABLES `ApprovedStrainRegistry` WRITE;
+/*!40000 ALTER TABLE `ApprovedStrainRegistry` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ApprovedStrainRegistry` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Container`
+--
+
+DROP TABLE IF EXISTS `Container`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Container` (
+  `_container_key` int(11) NOT NULL,
+  `containerID` int(11) NOT NULL,
+  `containerName` varchar(16) DEFAULT NULL,
+  `comment` varchar(64) DEFAULT NULL,
+  `_containerHistory_key` int(11) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_container_key`),
+  UNIQUE KEY `_container_key` (`_container_key`),
+  UNIQUE KEY `_currentContainerHistory_key` (`_containerHistory_key`),
+  UNIQUE KEY `containerID` (`containerID`),
+  KEY `containerName` (`containerName`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Container`
+--
+
+LOCK TABLES `Container` WRITE;
+/*!40000 ALTER TABLE `Container` DISABLE KEYS */;
+INSERT INTO `Container` VALUES (1,1,NULL,NULL,1,1),(2,2,NULL,NULL,2,1),(3,3,NULL,NULL,3,1),(4,4,NULL,NULL,4,1),(5,5,NULL,NULL,5,1),(6,6,NULL,NULL,6,1),(7,7,NULL,NULL,7,1),(8,8,NULL,NULL,8,1),(9,9,NULL,NULL,9,1),(10,10,NULL,NULL,10,1),(11,11,NULL,NULL,11,1),(12,12,NULL,NULL,12,1),(13,13,NULL,NULL,13,1),(14,14,NULL,NULL,14,1),(15,15,NULL,NULL,15,1),(16,16,NULL,NULL,16,1),(17,17,NULL,NULL,17,1),(18,18,NULL,NULL,18,1),(19,19,NULL,NULL,19,1),(20,20,NULL,NULL,20,1),(21,21,NULL,NULL,21,1),(22,22,NULL,NULL,22,1),(23,23,NULL,NULL,23,1),(24,24,NULL,NULL,24,1),(25,25,NULL,NULL,25,1),(26,26,NULL,NULL,26,1),(27,27,NULL,NULL,27,1),(28,28,NULL,NULL,28,1),(29,29,NULL,NULL,29,1),(30,30,NULL,NULL,30,1),(31,31,NULL,NULL,31,1),(32,32,NULL,NULL,32,1),(33,33,'Clinical',NULL,33,1),(34,34,'Clinical',NULL,34,1),(35,35,'IOP',NULL,35,1),(36,36,'IOP',NULL,36,1),(37,37,'Breeding Pen 35',NULL,37,1),(38,38,'Breeding Pen 36',NULL,38,1),(39,39,'Breeding Pen 37',NULL,39,1),(40,40,'Breeding Pen 38',NULL,40,1),(41,41,'Breeding Pen 40',NULL,41,1),(42,42,'Breeding Pen 41',NULL,42,1),(43,43,NULL,NULL,43,1),(44,44,NULL,NULL,44,1),(45,45,NULL,NULL,45,1),(46,46,NULL,NULL,46,1),(47,47,NULL,NULL,47,1),(48,48,NULL,NULL,48,1),(49,49,NULL,NULL,49,1),(50,50,NULL,NULL,50,1),(51,51,NULL,NULL,51,1),(52,52,'Holding',NULL,52,1),(53,53,'Holding',NULL,53,1),(54,54,NULL,NULL,54,1),(55,55,NULL,NULL,55,1),(56,56,NULL,NULL,56,1),(57,57,NULL,NULL,57,1),(58,58,NULL,NULL,58,1),(59,59,NULL,NULL,59,1),(60,60,NULL,NULL,60,1),(61,61,NULL,NULL,61,1),(62,62,NULL,NULL,62,1),(63,63,'HH-001',NULL,63,1),(64,64,'HH-002',NULL,64,1),(65,65,'Holding',NULL,65,1),(66,66,'Holding',NULL,66,1),(67,67,'Temporary',NULL,67,1),(68,68,NULL,NULL,68,1),(69,69,'129 Breeding',NULL,69,1),(70,70,'129 Breeding',NULL,70,1),(71,71,'129 Breeding',NULL,71,1),(72,72,NULL,NULL,72,1),(73,73,NULL,NULL,73,1),(74,74,NULL,NULL,74,1);
+/*!40000 ALTER TABLE `Container` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ContainerHistory`
+--
+
+DROP TABLE IF EXISTS `ContainerHistory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ContainerHistory` (
+  `_containerHistory_key` int(11) NOT NULL,
+  `_room_key` int(11) NOT NULL,
+  `_container_key` int(11) NOT NULL,
+  `actionDate` datetime NOT NULL,
+  `_containerStatus_key` int(11) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_containerHistory_key`),
+  UNIQUE KEY `_containerHistory_key` (`_containerHistory_key`),
+  KEY `_containerStatus_key` (`_containerStatus_key`),
+  KEY `_room_key` (`_room_key`),
+  KEY `{1F1D55DA-9ACF-4B77-8012-ED2A465339C6}` (`_container_key`),
+  KEY `{277C8D1E-C37A-486B-BB12-4C1E2D487D14}` (`_containerStatus_key`),
+  KEY `{6798035A-5A6A-4286-A48B-08EC7BCBDA88}` (`_room_key`),
+  KEY `actionDate` (`actionDate`),
+  KEY `_container_key` (`_container_key`),
+  KEY `FK6F6590F36A7929C2` (`_room_key`),
+  KEY `FK6F6590F3A34B5743` (`_containerStatus_key`),
+  KEY `FK6F6590F36533DADC` (`_container_key`),
+  CONSTRAINT `FK6F6590F36533DADC` FOREIGN KEY (`_container_key`) REFERENCES `Container` (`_container_key`),
+  CONSTRAINT `FK6F6590F36A7929C2` FOREIGN KEY (`_room_key`) REFERENCES `Room` (`_room_key`),
+  CONSTRAINT `FK6F6590F3A34B5743` FOREIGN KEY (`_containerStatus_key`) REFERENCES `cv_ContainerStatus` (`_containerStatus_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ContainerHistory`
+--
+
+LOCK TABLES `ContainerHistory` WRITE;
+/*!40000 ALTER TABLE `ContainerHistory` DISABLE KEYS */;
+INSERT INTO `ContainerHistory` VALUES (1,1,1,'2009-12-29 12:54:45',2,1),(2,1,2,'2009-12-29 12:54:45',2,1),(3,1,3,'2009-12-29 12:54:45',2,1),(4,1,4,'2009-12-29 12:54:45',2,1),(5,1,5,'2009-12-29 12:54:45',2,1),(6,2,6,'2009-12-29 16:28:28',2,1),(7,2,7,'2009-12-29 16:28:28',2,1),(8,2,8,'2009-12-29 16:28:28',2,1),(9,2,9,'2009-12-29 16:28:28',2,1),(10,2,10,'2009-12-29 16:28:28',2,1),(11,2,11,'2009-12-29 16:28:28',2,1),(12,2,12,'2009-12-29 16:28:28',2,1),(13,2,13,'2009-12-29 16:28:28',2,1),(14,2,14,'2009-12-29 16:28:28',2,1),(15,2,15,'2009-12-29 16:28:28',2,1),(16,2,16,'2009-12-29 16:28:28',2,1),(17,2,17,'2009-12-29 16:28:28',2,1),(18,1,18,'2009-12-29 17:06:15',2,1),(19,1,19,'2009-12-29 17:06:15',2,1),(20,1,20,'2009-12-29 17:06:15',2,1),(21,1,21,'2009-12-29 17:06:15',2,1),(22,1,22,'2009-12-29 17:06:15',2,1),(23,1,23,'2009-12-29 14:57:28',2,1),(24,1,24,'2009-12-29 14:57:28',2,1),(25,1,25,'2009-12-29 14:57:28',2,1),(26,1,26,'2009-12-29 17:15:09',2,1),(27,1,27,'2009-12-29 17:15:09',2,1),(28,2,28,'2010-01-13 15:29:19',2,1),(29,2,29,'2010-01-13 15:29:19',2,1),(30,2,30,'2010-01-13 15:29:19',2,1),(31,2,31,'2010-01-13 16:51:41',2,1),(32,2,32,'2010-01-13 16:51:41',2,1),(33,2,33,'2010-03-11 14:37:17',2,1),(34,2,34,'2010-03-11 14:37:17',2,1),(35,2,35,'2010-03-11 14:37:17',2,1),(36,2,36,'2010-03-11 14:37:17',2,1),(37,2,37,'2010-03-15 13:30:05',2,1),(38,2,38,'2010-03-15 13:30:05',2,1),(39,2,39,'2010-03-15 13:35:49',2,1),(40,2,40,'2010-03-15 13:35:49',2,1),(41,2,41,'2010-03-15 13:35:49',2,1),(42,2,42,'2010-03-15 13:35:49',2,1),(43,2,43,'2010-03-15 13:30:05',2,1),(44,2,44,'2010-03-15 13:30:05',2,1),(45,2,45,'2010-03-15 13:30:05',2,1),(46,2,46,'2010-03-15 13:30:05',2,1),(47,2,47,'2010-03-15 13:30:05',2,1),(48,2,48,'2010-03-15 13:30:05',2,1),(49,2,49,'2010-03-15 15:48:19',2,1),(50,2,50,'2010-03-15 15:48:19',2,1),(51,2,51,'2010-03-15 15:48:19',2,1),(52,2,52,'2010-03-15 16:52:21',2,1),(53,2,53,'2010-03-15 16:52:21',2,1),(54,2,54,'2010-03-15 16:54:04',2,1),(55,2,55,'2010-03-15 16:54:04',2,1),(56,2,56,'2010-03-16 09:07:32',2,1),(57,2,57,'2010-03-16 09:07:32',2,1),(58,2,58,'2010-03-16 09:52:52',2,1),(59,2,59,'2010-03-16 09:52:52',2,1),(60,2,60,'2010-03-16 09:52:52',2,1),(61,2,61,'2010-03-16 10:00:24',2,1),(62,2,62,'2010-03-16 10:00:24',2,1),(63,2,63,'2010-03-16 13:46:08',2,1),(64,2,64,'2010-03-16 13:46:08',2,1),(65,2,65,'2010-03-15 16:52:21',2,1),(66,2,66,'2010-03-15 16:52:21',2,1),(67,2,67,'2010-03-17 09:56:35',2,1),(68,2,68,'2010-03-17 16:06:32',2,1),(69,2,69,'2010-03-17 16:21:00',2,1),(70,2,70,'2010-03-17 16:21:00',2,1),(71,2,71,'2010-03-17 16:21:00',2,1),(72,2,72,'2010-03-17 16:26:05',2,1),(73,2,73,'2010-03-17 16:26:05',2,1),(74,2,74,'2010-09-13 16:10:54',2,1);
+/*!40000 ALTER TABLE `ContainerHistory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `DbFormPrivileges`
+--
+
+DROP TABLE IF EXISTS `DbFormPrivileges`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `DbFormPrivileges` (
+  `_dbFormPrivileges_key` int(11) NOT NULL AUTO_INCREMENT,
+  `formName` varchar(32) NOT NULL,
+  `privilegeLevel` varchar(8) NOT NULL,
+  `completeFormName` varchar(64) NOT NULL,
+  `description` varchar(128) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_dbFormPrivileges_key`),
+  UNIQUE KEY `completeFormName` (`completeFormName`),
+  UNIQUE KEY `formName` (`formName`),
+  KEY `privilegeLevel` (`privilegeLevel`)
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `DbFormPrivileges`
+--
+
+LOCK TABLES `DbFormPrivileges` WRITE;
+/*!40000 ALTER TABLE `DbFormPrivileges` DISABLE KEYS */;
+INSERT INTO `DbFormPrivileges` VALUES (1,'Activate Matings','Owner','ActivateMatings','Add Mating: Finalize the creation of a mating that was designed previously by entering the mating date.',1),(2,'Add Experimental Data','Sec','AddExpData','Experiment: Add experimental data for a mouse.',1),(3,'Add Test Type Defaults','Owner','AddExpDataDefaults','Experiment: Add a new set of default values for the data corresponding to a particular test type.',1),(4,'Add Test Type - Data Description','Owner','AddExpDataDescriptor','Experiment: Add a new test type and describe the data to be collected.',1),(5,'Bulk Add Experimental Data','Sec','AddExpDataToSpecificTest','Experiment: Add data values that are the same to a group of mice all at once.',1),(6,'Add Experimental Plan','Owner','AddExpPlan','Experiment: Add a new experimental plan.',1),(7,'Add Experimental Test','Owner','AddExpTest','Experiment: Add a new experimental test.',1),(8,'Add Genotype','Owner','AddGenotype','Add Genotype: Add new genotype information for a particular mouse.',1),(9,'Add Litter','Sec','AddLitter','Add Litter: Add a litter.',1),(10,'Add Litter w/Pups','Sec','AddLitterWithPups','Add Litter: Add a litter and optionally create mouse records for each pup at the same time.',1),(11,'Add Matings','Owner','AddMatings','Add Mating: Add a mating record after it has been done in the mouse room.',1),(12,'Add Mouse','Sec','AddMouse','Add Mice: Add new mice, one at a time.',1),(13,'Add Mice at Wean','Owner','AddMouseAtWeaning','Add Mice: Add a new mouse from a specific JCMS litter.',1),(14,'Add Use','Owner','AddMouseUse','Add Mouse Use: Add a new use for a particular mouse. Uses can store small amounts of associated data.',1),(15,'Add Pen','Owner','AddPen','Pens: Add a new empty mouse cage.',1),(16,'Add Plug Date','Sec','AddPlugDate','Add Plug Date: Associate a plug date with a specific mating and dam',1),(17,'Add Sample','Sec','AddSample','Add Sample: Add new samples.',1),(18,'Browse Sample By Location','Sec','BrowseSampleByLocation','Query Samples: Look at the locations of samples using a browse type interface.',1),(19,'Bulk Add Genotype','Owner','BulkAddGenoType','Add Genotype: Add new genotype information for a group of mice.',1),(20,'Bulk Add Mice from Query','Owner','BulkAddMiceFromQuery','Experiment: Add a group of mice into an experimental plan or test - mice are selected with the mouse query form.',1),(21,'Bulk Add or Edit Use','Owner','BulkAddOrEditMouseUse','Add Mouse Use: Add or edit mouse uses for a group of mice.',1),(22,'Bulk Edit Life Status or Diet','Owner','BulkChangeLifeStatusOrDietMouse','Edit Mice: Make a change to either the life status or diet of a group of mice.',1),(23,'Bulk Edit Sample','Sec','BulkUpdateSample','Bulk Edit Sample: Add or edit mouse Owner/Status/Location a group of samples.',1),(24,'Cage Use Report','Owner','CageUseReport','Allows the user to see how many Pens were active for a specified period.',1),(25,'Cage Use Report Summary','Owner','CageUseReportSummary','Summary of Billable Pens.',1),(26,'Change Mouse ID','Owner','ChangeMouseIDForm','Misc: Create a new ID number for an existing mouse',1),(27,'Data Statistics','Sec','DB Statistics','Misc: Show the current number of mice, matings, and pens in JCMS',1),(28,'Design Matings','Owner','DesignMatings','Add Mating: Create a mating \"on paper\" before doing it for real.',1),(29,'Edit Experimental Data','Sec','EditExpData','Experiment: Make changes to the experimental data associated with a mouse.',1),(30,'Edit Test Type Defaults','Admin','EditExpDataDefaults','Experiment: Make changes to the default data values for a particular test type.',1),(31,'Edit Test Type','Owner','EditExpDataDescriptor','Experiment: Make changes to a test type.',1),(32,'Edit & Manage Experimental Plan','Owner','EditExpPlan','Experiment: Make changes to an experimental plan or manage the mice and tests that are part of the plan.',1),(33,'Edit Experimental Test','Owner','EditExpTest','Experiment: Make changes to an experimental test.',1),(34,'Edit Genotype','Owner','EditGenotype','Edit Genotype: Make changes to the genotype information for a mouse.',1),(35,'Edit Litter','Sec','EditLitter','Edit Litter: Make changes to the information about a litter of mice.',1),(36,'Edit Matings','Owner','EditMatings','Edit Mating: Make changes to the information about a mating.',1),(37,'Edit Mouse','Sec','EditMouse','Edit Mice: Make changes to the information about a mouse.',1),(38,'Edit Use','Owner','EditMouseUse','Edit Mouse Use: Make changes to the information about a mouse\'s use and add or update associated data.',1),(39,'Edit Pen','Owner','EditPenGroup','Pens: Edit the basic information about a mouse cage.',1),(40,'Edit Plug Date','Sec','EditPlugDate','Edit Plug Date: Edit plug dates associated with a mating',1),(41,'Edit Sample','Sec','EditSample','Edit Sample: Modify exsiting samples.',1),(42,'Genotype Work Report','Sec','GenotypeWorkReport','Reports: Genotyping - List litters that are expected to be genotyped based on a date range.',1),(43,'Add Litter w/Mice (handheld)','Sec','HandheldAddLitter','Handheld: Add a litter and add mouse records for the pups at the same time.',1),(44,'Edit Life Status (handheld)','Owner','HandheldChangeMice','Handheld: Change the life status of mice in one or more pens.',1),(45,'Handheld Forms','Sec','HandHeldMain','Handheld: Main menu of choices.',1),(46,'Add Pair Mating (handheld)','Sec','HandheldMating','Handheld: Add a pair or trio mating by moving the mice into a new pen.',1),(47,'Move Mice (handheld)','Owner','HandheldMoveMice','Handheld: Move mice from a selected pen into a new pen.',1),(48,'Print Cage Card (handheld)','Sec','HandheldPrintCageCards','Handheld: Print a new cage card for a selected pen.',1),(49,'Wean and/or Exit (handheld)','Sec','HandheldWeanAndExit','Handheld: Wean pups, Wean and Exit pups, or Bulk change life status.',1),(50,'Import Experimental Data','Owner','ImportExpData','Experiment: Import external data',1),(51,'Import Mice','Owner','ImportMice','Add Mice: Add a group of mice at once. All must be similar.',1),(52,'Edit Ear Tags','Admin','LastTagEdit','Misc: The strain record can contain a range of ear tags for use with only that strain.',1),(53,'Move Mice','Owner','MoveMouse','Pens: Use this form to move mice from one pen into another.',1),(54,'Pen Info','Sec','PenInfo','Pens: Show what pen a mouse is in, list the other mice in the pen, and print a cage card.',1),(55,'Plug Date and Pregnancy Reports','Sec','PlugDateReports','Reports: Plug check, Preganancy check, Stage check, Litter check work reports',1),(56,'Print Cage Cards','Sec','PrintCageCards','Pens: Print blank cage cards.',1),(57,'Print Sample Labels','Sec','PrintSampleLabels','Reports: Select samples for printing sample label report.',1),(58,'Query Experiment','Sec','QueryExperimentalData','Query: Show information about the data collected for a mouse, experiment, or test.',1),(59,'Query Matings','Sec','QueryMatings','Query: Show information about matings based on user criteria',1),(60,'Query Mouse','Sec','QueryMouse','Query: Show information about mice based on user criteria.',1),(61,'Query Samples','Sec','QuerySample','Query Samples:  Show information about samples based on user criteria.',1),(62,'Owner Experiment Work Report','Sec','RequestExperimentWorkReport','Reports: Experiments - Show all the mice due for processing based on age and proposed test date.',1),(63,'Mouse-Use Work Report','Sec','RequestMouseUseReport','Reports: Mouse Uses - List mice with uses that are not marked done.',1),(64,'Wean Work Report','Sec','RequestWeanReport','Reports: Wean - List litters that have not been weaned.',1),(65,'Retire Matings','Owner','RetireMatings','Other Mating: Finalize the end of a mating by retiring it.',1),(66,'Test Type Experiment Work Report','Sec','TestTypeBasedWorkReport','Reports: Experiments - Show the mice due for processing for selected test types.',1),(67,'Design Retire Matings','Owner','TSDesignRetireMating','Other Mating: Decide ahead of time what matings to retire.',1);
+/*!40000 ALTER TABLE `DbFormPrivileges` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `DbSetup`
+--
+
+DROP TABLE IF EXISTS `DbSetup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `DbSetup` (
+  `_dbSetup_key` int(11) NOT NULL AUTO_INCREMENT,
+  `MTSVar` varchar(64) NOT NULL DEFAULT '',
+  `MTSValue` varchar(128) DEFAULT NULL,
+  `MTSVarDescription` varchar(255) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_dbSetup_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `DbSetup`
+--
+
+LOCK TABLES `DbSetup` WRITE;
+/*!40000 ALTER TABLE `DbSetup` DISABLE KEYS */;
+INSERT INTO `DbSetup` VALUES (1,'JCMS_ACTIVATE_MATINGS_INCREMENT','false','true or false; if true the mating ID is automatically incremented after activating a mating. May be overridden on the form.',1),(2,'JCMS_ADD_AT_WEAN_INCREMENT','false','true or false; if true the mouse ID is automatically incremented after adding a mouse at weaning. May be overridden on the form.',1),(3,'JCMS_ADD_GENOTYPE_INCREMENT','false','true or false; if true the mouse ID is automatically incremented after adding a genotype. May be overridden on the form.',1),(4,'JCMS_ADD_LITTER_INCREMENT','false','true or false; if true the litter ID is automatically incremented after adding a litter. May be overridden on the form.',1),(5,'JCMS_ADD_LITTER_PUPS_INCREMENT','false','true or false; if true the litter ID is automatically incremented after adding a litter with pups. May be overridden on the form.',1),(6,'JCMS_ADD_MOUSE_INCREMENT','false','true or false; if true the mouse ID is automatically incremented after adding a mouse. May be overridden on the form.',1),(7,'JCMS_ADD_MOUSE_USE_INCREMENT','false','true or false; if true the mouse ID is automatically incremented after adding a mouse use. May be overridden on the form.',1),(8,'JCMS_ALLELE_CONF_HIGH',NULL,'Character(s) displayed/printed as part of a genotype to indicate high confidence in an allele. May be blank.',1),(9,'JCMS_ALLELE_CONF_LOW','?','Character(s) displayed/printed as part of a genotype to indicate low confidence in an allele. May be blank. Ex: use ? To display Abc +?/+? For low confidence in both alleles.',1),(10,'JCMS_ALLELE_GENE_SEPARATORS',NULL,'Specify separators to display around the alleles. Ex: specify [] to get Abc[+/+] or leave blank for Abc +/+',1),(11,'JCMS_ALLOW_USERDEFINED_GENERATIONS','false','true or false; If true user may add generations to the Generations table on the fly.',1),(12,'JCMS_ALLOW_USERDEFINED_STRAINS','false','true or false; If true user may add strains to the Strains table (via the Strains form) on the fly.',1),(13,'JCMS_AUTOINCREMENT_GENERATION','false','true or false; If true the generation for a litter will be automatically incremented when creating matings. May be overridden on the form.',1),(14,'JCMS_AUTO_RETIRE_MATINGS','true','this variable will trigger the auto retire of matings when mice are exited',1),(15,'JCMS_AUTO_RETIRE_PENS','true','true or false; If true automatically retire a pen when it becomes empty or all occupants are not alive.',1),(16,'JCMS_BILL_PARTIAL_FIRST_DAY','true','true or false; if true a pen is counted for billing on the day it is created or moved into a room.',1),(17,'JCMS_BILL_PARTIAL_LAST_DAY','false','true or false; if true a pen is counted for billing on the day it is retired or moved out of a room.',1),(18,'JCMS_CREATE_PEN_INCREMENT','false','true or false; if true the pen ID is automatically incremented when adding new pens.',1),(19,'JCMS_DATA_FILE_DIRECTORY',NULL,'The root directory where JCMS data files are stored',1),(20,'JCMS_DAYS_TO_GENOTYPE','14','The number of days from the birth date to when the pups should be genotyped.',1),(21,'JCMS_DEFAULT_CONTAINER_STATUS','active','Specify the default value for pen status; must match a value in the pen status table.',1),(22,'JCMS_DEFAULT_EXIT_TERM','E','Specify the default term used when exiting mice from the colony, usually E or K; must match a value in the life status table. May be overridden on forms.',1),(23,'JCMS_DESIGN_RETIRE_MATINGS_INCREMENT','false','true or false; if true the mating ID is automatically incremented when using the design retire mating form. May be overridden on the form.',1),(24,'JCMS_EDIT_LITTER_INCREMENT','false','true or false; if true the litter ID is automatically incremented after editing a litter. May be overridden on the form.',1),(25,'JCMS_EDIT_MOUSE_INCREMENT','false','true or false; if true the mouse ID is automatically incremented after editing a mouse. May be overridden on the form.',1),(26,'JCMS_EDIT_MOUSE_USE_INCREMENT','false','true or false; if true the mouse ID is automatically incremented after editing a use. May be overridden on the form.',1),(27,'JCMS_ENABLE_GENOTYPE_IMPORT','true','true or false; must be set to true to allow importing genotypes.',1),(28,'JCMS_ENFORCE_APPROVED_MATINGS','false','true or false; if true then user is only allowed to set litter strain to pre-approved matings. May be overridden on the form.',1),(29,'JCMS_EXT_WEAN_TIME','28','the number of days from the birth date to when a litter should be weaned - used for late weanings/\"long\" wean time.',1),(30,'JCMS_FEMALES_FIRST','true','true or false; if true females are the first to be assigned mouse IDs when adding mice with a bulk add.',1),(31,'JCMS_GENERATION_INCREMENT_RIGHTMOST','true','true or false; if true, increment the rightmost numeric portion of the generation; if false the leftmost.',1),(32,'JCMS_IMPORT_EXP_DATA_MICE_MUST_BE_PRESELECTED','true','true or false; if false, any mouse IDs not pre-selected will be automatically added to the plan and test.',1),(33,'JCMS_LITTERID_INCREMENT_RIGHTMOST','true','true or false; if true, increment the rightmost numeric portion of the litter ID; if false the leftmost.',1),(34,'JCMS_LOOP_LITTER_NUMBERS','true','true or false; if true the litter numbers recycle after 10 litters, appending a character to the number.',1),(35,'JCMS_MAX_IMPORT_EXP_DATA_ERRORS','10','Import Experimental data; when this number of errors is reached, verification stops and a report is printed.',1),(36,'JCMS_MOUSEID_INCREMENT_RIGHTMOST','true','true or false; if true, increment the rightmost numeric portion of the mouse ID; if false the leftmost.',1),(37,'JCMS_PEN_NAMES_INCREMENT_RIGHTMOST','true','true or false; if true, increment the rightmost numeric portion of the pen name; if false the leftmost.',1),(38,'JCMS_PRINT_EXITED_MICE_ON_CAGE_CARDS','true','true or false; if true, mice with an exit status such as dead, euthanized, missing, shipped, etc. will print on cage cards.',1),(39,'JCMS_RETIRE_MATINGS_INCREMENT','false','true or false; if true the mating ID is automatically incremented after retiring a mating. May be overridden on the form.',1),(40,'JCMS_SAMPLE_LABEL_REPORT','PrintSampleLabels','The name of the report used to print sample labels from the Print Sample Label form.',1),(41,'JCMS_SORT_BY_PEN_NAME','false','true or false; if true then lists with pen ID and pen name will sort alphabetically by pen name instead of pen ID.',1),(42,'JCMS_STANDARD_WEAN_TIME','18','the number of days from the birth date to when a litter should normally be weaned.',1),(43,'JCMS_STRAINNAME_FIRST','true','true or false, if true the strain name will appear first (to the left of the JR number) in all the dropdown lists.',1),(44,'JCMS_USING_HEALTH_LEVEL','true','true or false; if false the room health level will not be displayed on most forms.',1),(45,'JCMS_USING_PEN_COMMENTS','true','true or false; if false the pen comment field will not be displayed on most forms.',1),(46,'JCMS_USING_PEN_NAMES','true','true or false; if false pen names will not be displayed on most forms.',1),(47,'JCMS_WARN_DUPLICATE_PEN_NAME','false','true or false; if true warn if a duplicate pen name is used.',1),(48,'JCMS_WARN_LITTER_NOT_UPDATED','true','true or false, if true, add mice at weaning will warn if litter record was not updated.',1),(49,'JCMS_WRITE_FAILED_TRANSACTIONS','false','true or false; used by the Add Sample form for debugging, should be set to false.',1),(50,'MTS_1PEN_WEAN_CAGE_CARD','CC_JCMS_WeanCageCardUsingPenNames','The name of the cage card report for 1-pen wean cage cards.',1),(51,'MTS_2PEN_WEAN_CAGE_CARD','OS_2PWeanCageCard','The name of the cage card report for 2-pen wean cage cards.',1),(52,'MTS_AUTOINCR_DAMS_SIRES','false','true or false, if true the dams and sire are automatically incremented on the handheld trio/pair mating form. May be overridden on the form.',1),(53,'MTS_AUTO_COLOR','true','true or false; if true, then many forms get all data entry fields colored after user hits submit. Color is cleared after user visits the field.',1),(54,'MTS_AUTO_LITTER_NUMS','on','on or off; if on litter numbers are automatically generated for matings.',1),(55,'MTS_CAGE_CARD_DETAIL_NOTE','Put card note here (dbsetup)','A note that will be printed on all Detail cage cards.',1),(56,'MTS_DEFAULT_AUTO_INCREMENT','off','on or off; if on then auto increment is the default on forms with functions that do not have a specific auto increrment setup variable.',1),(57,'MTS_DEFAULT_COD',NULL,'Specify the default cause of death; must match a value in the cv_CauseOfDeath table.',1),(58,'MTS_DEFAULT_HEALTH_LEVEL','2','Specify the default room health level; must match a value in the Health Level table.',1),(59,'MTS_DEFAULT_MOUSE_ORIGIN',NULL,'Specify the default mouse origin; must match a value in the cv_MouseOrigin table.',1),(60,'MTS_DEFAULT_MOUSE_ROOM','AX02','Specify the default mouse room; must match a value in the Room table.',1),(61,'MTS_DEFAULT_PRINTCARDS','false','true or false; if true the print cage card option on the handheld trio/pair mating form is set on. May be overridden on the form.',1),(62,'MTS_DEFAULT_USE_BASEMOUSE_ID','false','true or false; if true indicates using a base mouse id on the handheld add litter form. May be overridden on the form.',1),(63,'MTS_DETAIL_CAGE_CARD','CC_JCMS_DetailCageCardUsingPenNames','The name of the cage card report for detail cage cards.',1),(64,'MTS_DOB_ROLLBACK_OFFSET','7','Subtract this number of days from today\'s date to get the date of birth.',1),(65,'MTS_HELP_EMAIL','http://community.jax.org/forums/default.aspx?GroupID=7','Specify an email address that users can send JCMS support questions to. Used as the link for \"Report a problem\" on the JCMS welcome window.',1),(66,'MTS_IMPORT_MAX_WARNING','20','Users will be warned if they try to import more than this number of mice at once (only effects bulk imports of mice).',1),(67,'MTS_INSTALLATION_NAME','JCMS','Name of this JCMS installation (anything you want to call it).',1),(68,'MTS_LITTER_ID_PREFIX','L','A short string of characters that are prefixed on litter IDs generated by JCMS (not all litter IDs are generated by JCMS).',1),(69,'MTS_MAIN_BUTTON_BAR','MainButtonBarJCMS','Name of the main button bar form displayed when user hits start CMS from welcome window.',1),(70,'MTS_MATING_CAGE_CARD','CC_JCMS_MatingCageCardUsingPenNames','The name of the cage card report for mating cage cards.',1),(71,'MTS_MATING_CAGE_CARD2','TS_MatingCageCardStyle2WithBarCode','The name of the cage card report for mating cage cards style 2; handheld only, print cage card form.',1),(72,'MTS_MATING_ID_PREFIX','M','A short string of characters that are prefixed on mating IDs when printed on some cage cards.',1),(73,'MTS_MAX_MICE_PER_PEN','10','Maximum number of live mice in any pen.',1),(74,'MTS_MOUSE_ID_PREFIX','A','A short string of characters that are prefixed on mouse IDs generated by JCMS (not all mouse IDs are generated by JCMS).',1),(75,'MTS_NUM_AUTO_LITTER_NUMS','10','this variable sets the number of litter numbers that are assigned to a mating. It should be set to a value bigger than the max number of litters you ever expect. Suggested values are 10 or 100.',1),(76,'MTS_PEN_ID_PREFIX','P','A short string of characters that are prefixed on pen IDs when printed on some cage cards.',1),(77,'MTS_PI_NAME','PI Name','Name of lab PI who owns colonies tracked by JCMS, printed on some cage cards.',1),(78,'MTS_PI_PHONE','555-1212 (office)','Phone numbers, printed on mating card.',1),(79,'MTS_RELAXED_PEN_NUMS','true','true or false; if false, then it is required that a cage card is printed for all pens.',1),(80,'MTS_THRESHOLD_MICE_BATCH_OPERATION','50','This variable will trigger a warning from the handheld wean and exit form when the number of affected mice exceeds this value.',1);
+/*!40000 ALTER TABLE `DbSetup` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Document`
+--
+
+DROP TABLE IF EXISTS `Document`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Document` (
+  `_document_key` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL DEFAULT 'None' COMMENT 'Title',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_document_key`),
+  UNIQUE KEY `_document_key_UNIQUE` (`_document_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Document`
+--
+
+LOCK TABLES `Document` WRITE;
+/*!40000 ALTER TABLE `Document` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Document` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `DocumentMapping`
+--
+
+DROP TABLE IF EXISTS `DocumentMapping`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `DocumentMapping` (
+  `_documentMapping_key` int(11) NOT NULL AUTO_INCREMENT,
+  `_documentVersion_key` int(11) NOT NULL,
+  `_table_key` int(11) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  `_tableName_key` int(11) NOT NULL,
+  PRIMARY KEY (`_documentMapping_key`),
+  UNIQUE KEY `_documentMapping_key_UNIQUE` (`_documentMapping_key`),
+  KEY `_documentVersion_key` (`_documentVersion_key`),
+  KEY `DocumentMapping_ibfk_1` (`_tableName_key`),
+  KEY `DocumentMapping_ibfk_2` (`_documentVersion_key`),
+  CONSTRAINT `DocumentMapping_ibfk_1` FOREIGN KEY (`_tableName_key`) REFERENCES `cv_TableName` (`_tableName_key`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `DocumentMapping_ibfk_2` FOREIGN KEY (`_documentVersion_key`) REFERENCES `DocumentVersion` (`_documentVersion_key`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `DocumentMapping`
+--
+
+LOCK TABLES `DocumentMapping` WRITE;
+/*!40000 ALTER TABLE `DocumentMapping` DISABLE KEYS */;
+/*!40000 ALTER TABLE `DocumentMapping` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `DocumentVersion`
+--
+
+DROP TABLE IF EXISTS `DocumentVersion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `DocumentVersion` (
+  `_documentVersion_key` int(11) NOT NULL AUTO_INCREMENT,
+  `FilePath` varchar(255) DEFAULT NULL,
+  `FileName` varchar(64) DEFAULT NULL,
+  `DateUpload` datetime DEFAULT NULL,
+  `Owner` varchar(75) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  `majorVersion` int(11) DEFAULT NULL COMMENT 'Major version',
+  `minorVersion` int(11) DEFAULT NULL COMMENT 'Minor version',
+  `revision` int(11) DEFAULT NULL COMMENT 'Revision',
+  `isActive` tinyint(4) DEFAULT '-1' COMMENT 'Is active',
+  `URL` varchar(50) DEFAULT NULL,
+  `_document_key` int(11) NOT NULL,
+  PRIMARY KEY (`_documentVersion_key`),
+  UNIQUE KEY `_document_key` (`_documentVersion_key`),
+  UNIQUE KEY `_documentVersion_key` (`_documentVersion_key`),
+  UNIQUE KEY `_document_key_UNIQUE` (`_document_key`),
+  KEY `DocumentVersion_ibfk_1` (`_document_key`),
+  CONSTRAINT `DocumentVersion_ibfk_1` FOREIGN KEY (`_document_key`) REFERENCES `Document` (`_document_key`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `DocumentVersion`
+--
+
+LOCK TABLES `DocumentVersion` WRITE;
+/*!40000 ALTER TABLE `DocumentVersion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `DocumentVersion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ExpData`
+--
+
+DROP TABLE IF EXISTS `ExpData`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ExpData` (
+  `_expData_key` int(11) NOT NULL,
+  `_expDataDesc_key` int(11) NOT NULL,
+  `_expTest_key` int(11) DEFAULT NULL,
+  `_specimen_key` int(11) NOT NULL,
+  `dataID` int(11) NOT NULL,
+  `specimen_type` varchar(8) NOT NULL,
+  `owner` varchar(8) NOT NULL,
+  `expDate` datetime DEFAULT NULL,
+  `age` float DEFAULT NULL,
+  `abnormalData` tinyint(1) DEFAULT NULL,
+  `d1` varchar(64) DEFAULT NULL,
+  `d2` varchar(64) DEFAULT NULL,
+  `d3` varchar(64) DEFAULT NULL,
+  `d4` varchar(64) DEFAULT NULL,
+  `d5` varchar(64) DEFAULT NULL,
+  `d6` varchar(64) DEFAULT NULL,
+  `d7` varchar(64) DEFAULT NULL,
+  `d8` varchar(64) DEFAULT NULL,
+  `d9` varchar(64) DEFAULT NULL,
+  `d10` varchar(64) DEFAULT NULL,
+  `d11` varchar(64) DEFAULT NULL,
+  `d12` varchar(64) DEFAULT NULL,
+  `d13` varchar(64) DEFAULT NULL,
+  `d14` varchar(64) DEFAULT NULL,
+  `d15` varchar(64) DEFAULT NULL,
+  `d16` varchar(64) DEFAULT NULL,
+  `d17` varchar(64) DEFAULT NULL,
+  `d18` varchar(64) DEFAULT NULL,
+  `d19` varchar(64) DEFAULT NULL,
+  `d20` varchar(64) DEFAULT NULL,
+  `d21` varchar(64) DEFAULT NULL,
+  `d22` varchar(64) DEFAULT NULL,
+  `d23` varchar(64) DEFAULT NULL,
+  `d24` varchar(64) DEFAULT NULL,
+  `d25` varchar(64) DEFAULT NULL,
+  `d26` varchar(64) DEFAULT NULL,
+  `d27` varchar(64) DEFAULT NULL,
+  `d28` varchar(64) DEFAULT NULL,
+  `d29` varchar(64) DEFAULT NULL,
+  `d30` varchar(64) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_expData_key`),
+  UNIQUE KEY `_expData_key` (`_expData_key`),
+  UNIQUE KEY `dataID` (`dataID`),
+  KEY `_expDataDesc_key` (`_expDataDesc_key`),
+  KEY `_expTest_key` (`_expTest_key`),
+  KEY `_specimen_key` (`_specimen_key`),
+  KEY `{0373CB02-86E7-47BD-8650-412B678B5FFB}` (`_specimen_key`),
+  KEY `{11C010E9-0B1B-4BB0-BF1C-339B3E6ECC73}` (`_expDataDesc_key`),
+  KEY `{E9571E60-A116-4B30-B102-180076BF4E9D}` (`_expTest_key`),
+  KEY `abnormalData` (`abnormalData`),
+  KEY `owner` (`owner`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ExpData`
+--
+
+LOCK TABLES `ExpData` WRITE;
+/*!40000 ALTER TABLE `ExpData` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ExpData` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ExpDataDefault`
+--
+
+DROP TABLE IF EXISTS `ExpDataDefault`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ExpDataDefault` (
+  `_expDataDefault_key` int(11) NOT NULL,
+  `_expDataDescriptor_key` int(11) NOT NULL,
+  `defaultName` varchar(32) NOT NULL,
+  `comment` varchar(128) DEFAULT NULL,
+  `d1_default` varchar(64) DEFAULT NULL,
+  `d2_default` varchar(64) DEFAULT NULL,
+  `d3_default` varchar(64) DEFAULT NULL,
+  `d4_default` varchar(64) DEFAULT NULL,
+  `d5_default` varchar(64) DEFAULT NULL,
+  `d6_default` varchar(64) DEFAULT NULL,
+  `d7_default` varchar(64) DEFAULT NULL,
+  `d8_default` varchar(64) DEFAULT NULL,
+  `d9_default` varchar(64) DEFAULT NULL,
+  `d10_default` varchar(64) DEFAULT NULL,
+  `d11_default` varchar(64) DEFAULT NULL,
+  `d12_default` varchar(64) DEFAULT NULL,
+  `d13_default` varchar(64) DEFAULT NULL,
+  `d14_default` varchar(64) DEFAULT NULL,
+  `d15_default` varchar(64) DEFAULT NULL,
+  `d16_default` varchar(64) DEFAULT NULL,
+  `d17_default` varchar(64) DEFAULT NULL,
+  `d18_default` varchar(64) DEFAULT NULL,
+  `d19_default` varchar(64) DEFAULT NULL,
+  `d20_default` varchar(64) DEFAULT NULL,
+  `d21_default` varchar(64) DEFAULT NULL,
+  `d22_default` varchar(64) DEFAULT NULL,
+  `d23_default` varchar(64) DEFAULT NULL,
+  `d24_default` varchar(64) DEFAULT NULL,
+  `d25_default` varchar(64) DEFAULT NULL,
+  `d26_default` varchar(64) DEFAULT NULL,
+  `d27_default` varchar(64) DEFAULT NULL,
+  `d28_default` varchar(64) DEFAULT NULL,
+  `d29_default` varchar(64) DEFAULT NULL,
+  `d30_default` varchar(64) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_expDataDefault_key`),
+  UNIQUE KEY `_expDataDefault_key` (`_expDataDefault_key`),
+  KEY `_expDataDescriptor_key` (`_expDataDescriptor_key`),
+  KEY `{E15865FD-F1C1-4DEA-8672-679907C6A5DF}` (`_expDataDescriptor_key`),
+  KEY `defaultName` (`defaultName`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ExpDataDefault`
+--
+
+LOCK TABLES `ExpDataDefault` WRITE;
+/*!40000 ALTER TABLE `ExpDataDefault` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ExpDataDefault` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ExpDataDescriptor`
+--
+
+DROP TABLE IF EXISTS `ExpDataDescriptor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ExpDataDescriptor` (
+  `_expDataDescriptor_key` int(11) NOT NULL,
+  `testType` varchar(32) NOT NULL,
+  `d1_caption` varchar(32) DEFAULT NULL,
+  `d1_fieldDescription` varchar(32) DEFAULT NULL,
+  `d1_dataFormat` varchar(4) DEFAULT NULL,
+  `d1_required` tinyint(1) DEFAULT NULL,
+  `d1_minValue` float DEFAULT NULL,
+  `d1_maxValue` float DEFAULT NULL,
+  `d2_caption` varchar(32) DEFAULT NULL,
+  `d2_fieldDescription` varchar(32) DEFAULT NULL,
+  `d2_dataFormat` varchar(4) DEFAULT NULL,
+  `d2_required` tinyint(1) DEFAULT NULL,
+  `d2_minValue` float DEFAULT NULL,
+  `d2_maxValue` float DEFAULT NULL,
+  `d3_caption` varchar(32) DEFAULT NULL,
+  `d3_fieldDescription` varchar(32) DEFAULT NULL,
+  `d3_dataFormat` varchar(4) DEFAULT NULL,
+  `d3_required` tinyint(1) DEFAULT NULL,
+  `d3_minValue` float DEFAULT NULL,
+  `d3_maxValue` float DEFAULT NULL,
+  `d4_caption` varchar(32) DEFAULT NULL,
+  `d4_fieldDescription` varchar(32) DEFAULT NULL,
+  `d4_dataFormat` varchar(4) DEFAULT NULL,
+  `d4_required` tinyint(1) DEFAULT NULL,
+  `d4_minValue` float DEFAULT NULL,
+  `d4_maxValue` float DEFAULT NULL,
+  `d5_caption` varchar(32) DEFAULT NULL,
+  `d5_fieldDescription` varchar(32) DEFAULT NULL,
+  `d5_dataFormat` varchar(4) DEFAULT NULL,
+  `d5_required` tinyint(1) DEFAULT NULL,
+  `d5_minValue` float DEFAULT NULL,
+  `d5_maxValue` float DEFAULT NULL,
+  `d6_caption` varchar(32) DEFAULT NULL,
+  `d6_fieldDescription` varchar(32) DEFAULT NULL,
+  `d6_dataFormat` varchar(4) DEFAULT NULL,
+  `d6_required` tinyint(1) DEFAULT NULL,
+  `d6_minValue` float DEFAULT NULL,
+  `d6_maxValue` float DEFAULT NULL,
+  `d7_caption` varchar(32) DEFAULT NULL,
+  `d7_fieldDescription` varchar(32) DEFAULT NULL,
+  `d7_dataFormat` varchar(4) DEFAULT NULL,
+  `d7_required` tinyint(1) DEFAULT NULL,
+  `d7_minValue` float DEFAULT NULL,
+  `d7_maxValue` float DEFAULT NULL,
+  `d8_caption` varchar(32) DEFAULT NULL,
+  `d8_fieldDescription` varchar(32) DEFAULT NULL,
+  `d8_dataFormat` varchar(4) DEFAULT NULL,
+  `d8_required` tinyint(1) DEFAULT NULL,
+  `d8_minValue` float DEFAULT NULL,
+  `d8_maxValue` float DEFAULT NULL,
+  `d9_caption` varchar(32) DEFAULT NULL,
+  `d9_fieldDescription` varchar(32) DEFAULT NULL,
+  `d9_dataFormat` varchar(4) DEFAULT NULL,
+  `d9_required` tinyint(1) DEFAULT NULL,
+  `d9_minValue` float DEFAULT NULL,
+  `d9_maxValue` float DEFAULT NULL,
+  `d10_caption` varchar(32) DEFAULT NULL,
+  `d10_fieldDescription` varchar(32) DEFAULT NULL,
+  `d10_dataFormat` varchar(4) DEFAULT NULL,
+  `d10_required` tinyint(1) DEFAULT NULL,
+  `d10_minValue` float DEFAULT NULL,
+  `d10_maxValue` float DEFAULT NULL,
+  `d11_caption` varchar(32) DEFAULT NULL,
+  `d11_fieldDescription` varchar(32) DEFAULT NULL,
+  `d11_dataFormat` varchar(4) DEFAULT NULL,
+  `d11_required` tinyint(1) DEFAULT NULL,
+  `d11_minValue` float DEFAULT NULL,
+  `d11_maxValue` float DEFAULT NULL,
+  `d12_caption` varchar(32) DEFAULT NULL,
+  `d12_fieldDescription` varchar(32) DEFAULT NULL,
+  `d12_dataFormat` varchar(4) DEFAULT NULL,
+  `d12_required` tinyint(1) DEFAULT NULL,
+  `d12_minValue` float DEFAULT NULL,
+  `d12_maxValue` float DEFAULT NULL,
+  `d13_caption` varchar(32) DEFAULT NULL,
+  `d13_fieldDescription` varchar(32) DEFAULT NULL,
+  `d13_dataFormat` varchar(4) DEFAULT NULL,
+  `d13_required` tinyint(1) DEFAULT NULL,
+  `d13_minValue` float DEFAULT NULL,
+  `d13_maxValue` float DEFAULT NULL,
+  `d14_caption` varchar(32) DEFAULT NULL,
+  `d14_fieldDescription` varchar(32) DEFAULT NULL,
+  `d14_dataFormat` varchar(4) DEFAULT NULL,
+  `d14_required` tinyint(1) DEFAULT NULL,
+  `d14_minValue` float DEFAULT NULL,
+  `d14_maxValue` float DEFAULT NULL,
+  `d15_caption` varchar(32) DEFAULT NULL,
+  `d15_fieldDescription` varchar(32) DEFAULT NULL,
+  `d15_dataFormat` varchar(4) DEFAULT NULL,
+  `d15_required` tinyint(1) DEFAULT NULL,
+  `d15_minValue` float DEFAULT NULL,
+  `d15_maxValue` float DEFAULT NULL,
+  `d16_caption` varchar(32) DEFAULT NULL,
+  `d16_fieldDescription` varchar(32) DEFAULT NULL,
+  `d16_dataFormat` varchar(4) DEFAULT NULL,
+  `d16_required` tinyint(1) DEFAULT NULL,
+  `d16_minValue` float DEFAULT NULL,
+  `d16_maxValue` float DEFAULT NULL,
+  `d17_caption` varchar(32) DEFAULT NULL,
+  `d17_fieldDescription` varchar(32) DEFAULT NULL,
+  `d17_dataFormat` varchar(4) DEFAULT NULL,
+  `d17_required` tinyint(1) DEFAULT NULL,
+  `d17_minValue` float DEFAULT NULL,
+  `d17_maxValue` float DEFAULT NULL,
+  `d18_caption` varchar(32) DEFAULT NULL,
+  `d18_fieldDescription` varchar(32) DEFAULT NULL,
+  `d18_dataFormat` varchar(4) DEFAULT NULL,
+  `d18_required` tinyint(1) DEFAULT NULL,
+  `d18_minValue` float DEFAULT NULL,
+  `d18_maxValue` float DEFAULT NULL,
+  `d19_caption` varchar(32) DEFAULT NULL,
+  `d19_fieldDescription` varchar(32) DEFAULT NULL,
+  `d19_dataFormat` varchar(4) DEFAULT NULL,
+  `d19_required` tinyint(1) DEFAULT NULL,
+  `d19_minValue` float DEFAULT NULL,
+  `d19_maxValue` float DEFAULT NULL,
+  `d20_caption` varchar(32) DEFAULT NULL,
+  `d20_fieldDescription` varchar(32) DEFAULT NULL,
+  `d20_dataFormat` varchar(4) DEFAULT NULL,
+  `d20_required` tinyint(1) DEFAULT NULL,
+  `d20_minValue` float DEFAULT NULL,
+  `d20_maxValue` float DEFAULT NULL,
+  `d21_caption` varchar(32) DEFAULT NULL,
+  `d21_fieldDescription` varchar(32) DEFAULT NULL,
+  `d21_dataFormat` varchar(4) DEFAULT NULL,
+  `d21_required` tinyint(1) DEFAULT NULL,
+  `d21_minValue` float DEFAULT NULL,
+  `d21_maxValue` float DEFAULT NULL,
+  `d22_caption` varchar(32) DEFAULT NULL,
+  `d22_fieldDescription` varchar(32) DEFAULT NULL,
+  `d22_dataFormat` varchar(4) DEFAULT NULL,
+  `d22_required` tinyint(1) DEFAULT NULL,
+  `d22_minValue` float DEFAULT NULL,
+  `d22_maxValue` float DEFAULT NULL,
+  `d23_caption` varchar(32) DEFAULT NULL,
+  `d23_fieldDescription` varchar(32) DEFAULT NULL,
+  `d23_dataFormat` varchar(4) DEFAULT NULL,
+  `d23_required` tinyint(1) DEFAULT NULL,
+  `d23_minValue` float DEFAULT NULL,
+  `d23_maxValue` float DEFAULT NULL,
+  `d24_caption` varchar(32) DEFAULT NULL,
+  `d24_fieldDescription` varchar(32) DEFAULT NULL,
+  `d24_dataFormat` varchar(4) DEFAULT NULL,
+  `d24_required` tinyint(1) DEFAULT NULL,
+  `d24_minValue` float DEFAULT NULL,
+  `d24_maxValue` float DEFAULT NULL,
+  `d25_caption` varchar(32) DEFAULT NULL,
+  `d25_fieldDescription` varchar(32) DEFAULT NULL,
+  `d25_dataFormat` varchar(4) DEFAULT NULL,
+  `d25_required` tinyint(1) DEFAULT NULL,
+  `d25_minValue` float DEFAULT NULL,
+  `d25_maxValue` float DEFAULT NULL,
+  `d26_caption` varchar(32) DEFAULT NULL,
+  `d26_fieldDescription` varchar(32) DEFAULT NULL,
+  `d26_dataFormat` varchar(4) DEFAULT NULL,
+  `d26_required` tinyint(1) DEFAULT NULL,
+  `d26_minValue` float DEFAULT NULL,
+  `d26_maxValue` float DEFAULT NULL,
+  `d27_caption` varchar(32) DEFAULT NULL,
+  `d27_fieldDescription` varchar(32) DEFAULT NULL,
+  `d27_dataFormat` varchar(4) DEFAULT NULL,
+  `d27_required` tinyint(1) DEFAULT NULL,
+  `d27_minValue` float DEFAULT NULL,
+  `d27_maxValue` float DEFAULT NULL,
+  `d28_caption` varchar(32) DEFAULT NULL,
+  `d28_fieldDescription` varchar(32) DEFAULT NULL,
+  `d28_dataFormat` varchar(4) DEFAULT NULL,
+  `d28_required` tinyint(1) DEFAULT NULL,
+  `d28_minValue` float DEFAULT NULL,
+  `d28_maxValue` float DEFAULT NULL,
+  `d29_caption` varchar(32) DEFAULT NULL,
+  `d29_fieldDescription` varchar(32) DEFAULT NULL,
+  `d29_dataFormat` varchar(4) DEFAULT NULL,
+  `d29_required` tinyint(1) DEFAULT NULL,
+  `d29_minValue` float DEFAULT NULL,
+  `d29_maxValue` float DEFAULT NULL,
+  `d30_caption` varchar(32) DEFAULT NULL,
+  `d30_fieldDescription` varchar(32) DEFAULT NULL,
+  `d30_dataFormat` varchar(4) DEFAULT NULL,
+  `d30_required` tinyint(1) DEFAULT NULL,
+  `d30_minValue` float DEFAULT NULL,
+  `d30_maxValue` float DEFAULT NULL,
+  `testTypeNotes` longtext,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_expDataDescriptor_key`),
+  UNIQUE KEY `_expDataDescriptor_key` (`_expDataDescriptor_key`),
+  UNIQUE KEY `testType` (`testType`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ExpDataDescriptor`
+--
+
+LOCK TABLES `ExpDataDescriptor` WRITE;
+/*!40000 ALTER TABLE `ExpDataDescriptor` DISABLE KEYS */;
+INSERT INTO `ExpDataDescriptor` VALUES (1,'Body weight','Weight (grams)',NULL,'dec',-1,0,80,'Tester','Person doing the test','text',0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1),(2,'Blood Pressure','Room temp ( C )','degrees celcious','dec',-1,0,50,'Diastolic',NULL,'dec',-1,50,100,'Systolic',NULL,'dec',-1,100,200,'Heart rate',NULL,'dec',-1,600,700,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1),(3,'Metoprolol Blood Test','Concentration (mg/l)',NULL,'dec',-1,0,50,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1),(4,'GTT One Touch Test','Glucose',NULL,'int',-1,80,150,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1);
+/*!40000 ALTER TABLE `ExpDataDescriptor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ExpPlan`
+--
+
+DROP TABLE IF EXISTS `ExpPlan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ExpPlan` (
+  `_expPlan_key` int(11) NOT NULL,
+  `planID` int(11) NOT NULL,
+  `expPlanName` varchar(64) NOT NULL,
+  `owner` varchar(8) NOT NULL,
+  `fieldOfStudy` varchar(32) DEFAULT NULL,
+  `expNotes` longtext,
+  `expStatus` varchar(16) NOT NULL DEFAULT 'ACTIVE',
+  `keyword1` varchar(32) DEFAULT NULL,
+  `keyword2` varchar(32) DEFAULT NULL,
+  `keyword3` varchar(32) DEFAULT NULL,
+  `keyword4` varchar(32) DEFAULT NULL,
+  `keyword5` varchar(32) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_expPlan_key`),
+  UNIQUE KEY `_expPlan_key` (`_expPlan_key`),
+  UNIQUE KEY `expPlanName` (`expPlanName`),
+  UNIQUE KEY `planID` (`planID`),
+  KEY `expStatus` (`expStatus`),
+  KEY `keyword1` (`keyword1`),
+  KEY `keyword11` (`keyword2`),
+  KEY `keyword12` (`keyword3`),
+  KEY `keyword13` (`keyword4`),
+  KEY `keyword14` (`keyword5`),
+  KEY `owner` (`owner`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ExpPlan`
+--
+
+LOCK TABLES `ExpPlan` WRITE;
+/*!40000 ALTER TABLE `ExpPlan` DISABLE KEYS */;
+INSERT INTO `ExpPlan` VALUES (1,1,'Blood Sugar (GTT)','EX_Owner','Diabetes',NULL,'active',NULL,NULL,NULL,NULL,NULL,1);
+/*!40000 ALTER TABLE `ExpPlan` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ExpPlanMouseMap`
+--
+
+DROP TABLE IF EXISTS `ExpPlanMouseMap`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ExpPlanMouseMap` (
+  `_expPlanMouseMap_key` int(11) NOT NULL,
+  `_mouse_key` int(11) NOT NULL,
+  `_expPlan_key` int(11) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_expPlanMouseMap_key`),
+  UNIQUE KEY `_expPlanMouseMap_key` (`_expPlanMouseMap_key`),
+  UNIQUE KEY `MiceInPlan` (`_expPlan_key`,`_mouse_key`),
+  KEY `_expPlan_key` (`_expPlan_key`),
+  KEY `_mouse_key` (`_mouse_key`),
+  KEY `{70BAF00A-BED2-4F1B-873D-876E28293B17}` (`_expPlan_key`),
+  KEY `{D5133FE1-C215-4B4A-8FFA-E7A59E8044E7}` (`_mouse_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ExpPlanMouseMap`
+--
+
+LOCK TABLES `ExpPlanMouseMap` WRITE;
+/*!40000 ALTER TABLE `ExpPlanMouseMap` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ExpPlanMouseMap` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ExpTest`
+--
+
+DROP TABLE IF EXISTS `ExpTest`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ExpTest` (
+  `_expTest_key` int(11) NOT NULL,
+  `_expPlan_key` int(11) NOT NULL,
+  `_expDataDescriptor_key` int(11) NOT NULL,
+  `testName` varchar(32) DEFAULT NULL,
+  `testID` int(11) NOT NULL,
+  `proposedTestDate` datetime DEFAULT NULL,
+  `proposedMinAge` double DEFAULT NULL,
+  `proposedMaxAge` double DEFAULT NULL,
+  `numMice` int(11) DEFAULT NULL,
+  `testStatus` varchar(8) NOT NULL,
+  `d1_defaultValue` varchar(64) DEFAULT NULL,
+  `d2_defaultValue` varchar(64) DEFAULT NULL,
+  `d3_defaultValue` varchar(64) DEFAULT NULL,
+  `d4_defaultValue` varchar(64) DEFAULT NULL,
+  `d5_defaultValue` varchar(64) DEFAULT NULL,
+  `d6_defaultValue` varchar(64) DEFAULT NULL,
+  `d7_defaultValue` varchar(64) DEFAULT NULL,
+  `d8_defaultValue` varchar(64) DEFAULT NULL,
+  `d9_defaultValue` varchar(64) DEFAULT NULL,
+  `d10_defaultValue` varchar(64) DEFAULT NULL,
+  `d11_defaultValue` varchar(64) DEFAULT NULL,
+  `d12_defaultValue` varchar(64) DEFAULT NULL,
+  `d13_defaultValue` varchar(64) DEFAULT NULL,
+  `d14_defaultValue` varchar(64) DEFAULT NULL,
+  `d15_defaultValue` varchar(64) DEFAULT NULL,
+  `d16_defaultValue` varchar(64) DEFAULT NULL,
+  `d17_defaultValue` varchar(64) DEFAULT NULL,
+  `d18_defaultValue` varchar(64) DEFAULT NULL,
+  `d19_defaultValue` varchar(64) DEFAULT NULL,
+  `d20_defaultValue` varchar(64) DEFAULT NULL,
+  `d21_defaultValue` varchar(64) DEFAULT NULL,
+  `d22_defaultValue` varchar(64) DEFAULT NULL,
+  `d23_defaultValue` varchar(64) DEFAULT NULL,
+  `d24_defaultValue` varchar(64) DEFAULT NULL,
+  `d25_defaultValue` varchar(64) DEFAULT NULL,
+  `d26_defaultValue` varchar(64) DEFAULT NULL,
+  `d27_defaultValue` varchar(64) DEFAULT NULL,
+  `d28_defaultValue` varchar(64) DEFAULT NULL,
+  `d29_defaultValue` varchar(64) DEFAULT NULL,
+  `d30_defaultValue` varchar(64) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  `multipleMeasurements` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Multiple measurements',
+  PRIMARY KEY (`_expTest_key`),
+  UNIQUE KEY `_expTest_key` (`_expTest_key`),
+  UNIQUE KEY `testID` (`testID`),
+  KEY `_expDataDescriptor_key` (`_expDataDescriptor_key`),
+  KEY `{53A9BFB5-8908-463B-B430-D02B529FFDA3}` (`_expPlan_key`),
+  KEY `{72C96D6B-C828-43BF-8C0B-23A468402DEC}` (`_expDataDescriptor_key`),
+  KEY `numMice` (`numMice`),
+  KEY `planID` (`_expPlan_key`),
+  KEY `testStatus` (`testStatus`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ExpTest`
+--
+
+LOCK TABLES `ExpTest` WRITE;
+/*!40000 ALTER TABLE `ExpTest` DISABLE KEYS */;
+INSERT INTO `ExpTest` VALUES (1,1,4,'GTT One Touch Test 7 wks',1,NULL,49,56,10,'active',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0),(2,1,4,'GTT One Touch Test 14 wks',2,NULL,98,105,10,'active',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,0);
+/*!40000 ALTER TABLE `ExpTest` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ExpTestPlanMap`
+--
+
+DROP TABLE IF EXISTS `ExpTestPlanMap`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ExpTestPlanMap` (
+  `_expTest_key` int(11) NOT NULL,
+  `_expPlanMouseMap_key` int(11) NOT NULL,
+  `_exptestplan_key` int(11) NOT NULL AUTO_INCREMENT,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_exptestplan_key`),
+  UNIQUE KEY `MiceInExpTest` (`_expTest_key`,`_expPlanMouseMap_key`),
+  KEY `_expPlanMouseMap_key` (`_expPlanMouseMap_key`),
+  KEY `_expTest_key` (`_expTest_key`),
+  KEY `{3D06B987-B139-4F80-A744-7EAD762B1434}` (`_expPlanMouseMap_key`),
+  KEY `{F0520ADE-8F92-472E-A4BF-173FE20A1E9F}` (`_expTest_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ExpTestPlanMap`
+--
+
+LOCK TABLES `ExpTestPlanMap` WRITE;
+/*!40000 ALTER TABLE `ExpTestPlanMap` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ExpTestPlanMap` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Gene`
+--
+
+DROP TABLE IF EXISTS `Gene`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Gene` (
+  `_gene_key` int(11) NOT NULL DEFAULT '0',
+  `geneSymbol` varchar(32) DEFAULT NULL,
+  `labSymbol` varchar(32) NOT NULL,
+  `geneClass` varchar(16) DEFAULT NULL,
+  `chromosome` varchar(2) DEFAULT NULL,
+  `cM` double DEFAULT NULL,
+  `megabase` float DEFAULT '0',
+  `comment` longtext,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_gene_key`),
+  UNIQUE KEY `_gene_key` (`_gene_key`),
+  UNIQUE KEY `labSymbol` (`labSymbol`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Gene`
+--
+
+LOCK TABLES `Gene` WRITE;
+/*!40000 ALTER TABLE `Gene` DISABLE KEYS */;
+INSERT INTO `Gene` VALUES (1,'Apob','Apob','E',NULL,NULL,0,NULL,1),(2,'Cdh23','Cdh23','E',NULL,NULL,0,NULL,1),(3,'Igf1','Igf1','KO',NULL,NULL,0,NULL,1);
+/*!40000 ALTER TABLE `Gene` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Genotype`
+--
+
+DROP TABLE IF EXISTS `Genotype`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Genotype` (
+  `_genotype_key` int(11) NOT NULL DEFAULT '0',
+  `_mouse_key` int(11) NOT NULL,
+  `_gene_key` int(11) NOT NULL,
+  `allele1` varchar(8) DEFAULT NULL,
+  `all1Conf` tinyint(1) NOT NULL DEFAULT '0',
+  `allele2` varchar(8) DEFAULT NULL,
+  `all2Conf` tinyint(1) NOT NULL DEFAULT '0',
+  `genoPage` varchar(16) NOT NULL,
+  `sampleLocation` varchar(16) DEFAULT NULL COMMENT 'Genotype specimen location',
+  `gtDate` datetime DEFAULT NULL,
+  `comment` longtext,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_genotype_key`),
+  UNIQUE KEY `_genotype_key` (`_genotype_key`),
+  KEY `{6C864ADE-CA4D-429E-B7B4-5BBB26CF8FCE}` (`_gene_key`),
+  KEY `{75104B7D-74DA-40BF-8970-21738009A207}` (`_mouse_key`),
+  KEY `allele1` (`allele1`),
+  KEY `allele2` (`allele2`),
+  KEY `ID#` (`_mouse_key`),
+  KEY `Marker` (`_gene_key`),
+  KEY `FK7050A6F99E32B1A4` (`_mouse_key`),
+  KEY `FK7050A6F987C11DB6` (`_gene_key`),
+  CONSTRAINT `FK7050A6F987C11DB6` FOREIGN KEY (`_gene_key`) REFERENCES `Gene` (`_gene_key`),
+  CONSTRAINT `FK7050A6F99E32B1A4` FOREIGN KEY (`_mouse_key`) REFERENCES `Mouse` (`_mouse_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Genotype`
+--
+
+LOCK TABLES `Genotype` WRITE;
+/*!40000 ALTER TABLE `Genotype` DISABLE KEYS */;
+INSERT INTO `Genotype` VALUES (1,17,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(2,16,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(3,15,3,'-',-1,'-',0,'None',NULL,'2009-12-29 16:48:25',NULL,1),(4,14,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(5,13,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(6,12,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(7,11,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(8,10,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(9,9,3,'-',0,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(10,8,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(11,27,3,'+',-1,'+',0,'None',NULL,'2009-12-29 16:48:25',NULL,1),(12,26,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(13,25,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(14,24,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(15,23,3,'+',0,'+',0,'None',NULL,'2009-12-29 16:48:25',NULL,1),(16,22,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(17,21,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(18,20,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(19,19,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(20,18,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(21,37,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(22,36,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(23,35,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(24,34,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(25,33,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(26,32,3,'-',0,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(27,31,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(28,30,3,'-',-1,'-',0,'None',NULL,'2009-12-29 16:48:25',NULL,1),(29,29,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(30,28,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(31,47,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(32,46,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(33,45,3,'+',0,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(34,44,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(35,43,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(36,42,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(37,41,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(38,40,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(39,39,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(40,38,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(41,57,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(42,56,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(43,55,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(44,54,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(45,53,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(46,52,3,'-',0,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(47,51,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(48,50,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(49,49,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(50,48,3,'-',-1,'-',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(51,67,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(52,66,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(53,65,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(54,64,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(55,63,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(56,62,3,'+',0,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(57,61,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(58,60,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(59,59,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(60,58,3,'+',-1,'+',-1,'None',NULL,'2009-12-29 16:48:25',NULL,1),(61,5,1,'tm1Bres',-1,NULL,0,'None',NULL,NULL,NULL,1),(62,68,1,'+',-1,'+',-1,'None',NULL,NULL,NULL,1),(63,69,1,'+',-1,'-',-1,'None',NULL,NULL,NULL,1),(64,70,2,'+',-1,'+',-1,'None',NULL,NULL,NULL,1),(65,71,2,'-',-1,'+',-1,'None',NULL,NULL,NULL,1);
+/*!40000 ALTER TABLE `Genotype` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `HealthLevelHistory`
+--
+
+DROP TABLE IF EXISTS `HealthLevelHistory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `HealthLevelHistory` (
+  `_healthLevelHistory_key` int(11) NOT NULL,
+  `_room_key` int(11) NOT NULL,
+  `_healthLevel_key` int(11) NOT NULL,
+  `startDate` datetime NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_healthLevelHistory_key`),
+  KEY `_healthLevel_key` (`_healthLevel_key`),
+  KEY `_healthLevelHistory_key` (`_healthLevelHistory_key`),
+  KEY `{6460FFEE-6EE9-40EC-A344-1FA78DB7AB4B}` (`_healthLevel_key`),
+  KEY `{88CB125D-F75D-4C17-826C-309EEADAF349}` (`_room_key`),
+  KEY `startDate` (`startDate`),
+  KEY `_room_key` (`_room_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `HealthLevelHistory`
+--
+
+LOCK TABLES `HealthLevelHistory` WRITE;
+/*!40000 ALTER TABLE `HealthLevelHistory` DISABLE KEYS */;
+INSERT INTO `HealthLevelHistory` VALUES (1,1,2,'1990-01-01 00:00:00',1),(2,2,2,'2009-12-29 11:49:11',1),(3,3,1,'2010-09-10 22:45:42',1);
+/*!40000 ALTER TABLE `HealthLevelHistory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `LifeStatus`
+--
+
+DROP TABLE IF EXISTS `LifeStatus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `LifeStatus` (
+  `_lifeStatus_key` int(11) NOT NULL AUTO_INCREMENT,
+  `lifeStatus` varchar(2) NOT NULL COMMENT 'Life status',
+  `description` varchar(64) DEFAULT NULL,
+  `exitStatus` tinyint(1) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_lifeStatus_key`),
+  UNIQUE KEY `lifeStatus` (`lifeStatus`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `LifeStatus`
+--
+
+LOCK TABLES `LifeStatus` WRITE;
+/*!40000 ALTER TABLE `LifeStatus` DISABLE KEYS */;
+INSERT INTO `LifeStatus` VALUES (1,'A','Alive',0,1),(2,'D','Dead',-1,1),(3,'E','Euthanized',-1,1),(4,'K','Killed',-1,1),(5,'M','Missing',-1,1),(6,'S','Shipped',-1,1);
+/*!40000 ALTER TABLE `LifeStatus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Litter`
+--
+
+DROP TABLE IF EXISTS `Litter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Litter` (
+  `_litter_key` int(11) NOT NULL,
+  `_mating_key` int(11) NOT NULL,
+  `litterID` varchar(16) NOT NULL,
+  `totalBorn` smallint(6) NOT NULL DEFAULT '0',
+  `birthDate` datetime NOT NULL,
+  `numFemale` smallint(6) DEFAULT NULL,
+  `numMale` smallint(6) DEFAULT NULL,
+  `weanDate` datetime DEFAULT NULL,
+  `tagDate` datetime DEFAULT NULL,
+  `status` varchar(1) NOT NULL DEFAULT 'A',
+  `comment` longtext,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_litter_key`),
+  UNIQUE KEY `cross#` (`_litter_key`),
+  UNIQUE KEY `litterID` (`litterID`),
+  KEY `{6072EE3C-5AC2-4241-9972-DFF448F65088}` (`_mating_key`),
+  KEY `matingLink` (`_mating_key`),
+  KEY `numFemale` (`numFemale`),
+  KEY `numMale` (`numMale`),
+  KEY `FK87AE6E4A270D6A10` (`_mating_key`),
+  CONSTRAINT `FK87AE6E4A270D6A10` FOREIGN KEY (`_mating_key`) REFERENCES `Mating` (`_mating_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Litter`
+--
+
+LOCK TABLES `Litter` WRITE;
+/*!40000 ALTER TABLE `Litter` DISABLE KEYS */;
+INSERT INTO `Litter` VALUES (1,1,'10',7,'2009-12-29 00:00:00',NULL,NULL,NULL,NULL,'A',NULL,1),(2,2,'20',5,'2009-12-29 00:00:00',NULL,NULL,NULL,NULL,'A',NULL,1),(3,3,'30',7,'2010-04-13 00:00:00',2,3,'2010-05-01 00:00:00','2010-05-01 00:00:00','A',NULL,1),(4,3,'31',8,'2010-06-16 00:00:00',4,4,'2010-07-04 00:00:00','2010-07-04 00:00:00','A',NULL,1),(5,4,'40',7,'2010-03-15 00:00:00',3,3,'2010-04-02 00:00:00','2010-04-02 00:00:00','A',NULL,1),(6,4,'41',5,'2010-03-15 00:00:00',2,3,'2010-04-02 00:00:00','2010-04-02 00:00:00','A',NULL,1),(7,4,'42',7,'2010-05-12 00:00:00',4,3,'2010-05-30 00:00:00','2010-05-30 00:00:00','A',NULL,1),(8,4,'43',6,'2010-08-11 00:00:00',2,4,'2010-08-29 00:00:00','2010-08-29 00:00:00','A',NULL,1),(9,4,'44',3,'2010-08-11 00:00:00',2,0,'2010-08-29 00:00:00','2010-08-29 00:00:00','A',NULL,1),(10,6,'60',8,'2010-03-15 00:00:00',2,3,'2010-04-02 00:00:00',NULL,'A',NULL,1),(11,11,'110',2,'2010-09-13 00:00:00',NULL,NULL,NULL,NULL,'A',NULL,1);
+/*!40000 ALTER TABLE `Litter` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `LitterSample`
+--
+
+DROP TABLE IF EXISTS `LitterSample`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `LitterSample` (
+  `_litterSample_key` int(11) NOT NULL,
+  `_litter_key` int(11) NOT NULL,
+  `_sample_key` int(11) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_litterSample_key`),
+  KEY `_litter_key` (`_litter_key`),
+  KEY `_litterSample_key` (`_litterSample_key`),
+  KEY `{795B1C13-00F8-4F68-9D16-7699A43BD69D}` (`_litter_key`),
+  KEY `LitterSample_sample_key` (`_sample_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `LitterSample`
+--
+
+LOCK TABLES `LitterSample` WRITE;
+/*!40000 ALTER TABLE `LitterSample` DISABLE KEYS */;
+/*!40000 ALTER TABLE `LitterSample` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Location`
+--
+
+DROP TABLE IF EXISTS `Location`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Location` (
+  `_location_key` int(11) NOT NULL DEFAULT '0',
+  `_storage_key` int(11) NOT NULL DEFAULT '0',
+  `_locationType_key` int(11) NOT NULL DEFAULT '0',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_location_key`),
+  UNIQUE KEY `_location_key` (`_location_key`),
+  KEY `{970C589F-92B7-47B7-8237-ADD91B9B04F8}` (`_locationType_key`),
+  KEY `{E03E1898-541D-4222-9D48-2D1572622F52}` (`_storage_key`),
+  KEY `Location_locationDetail_key` (`_locationType_key`),
+  KEY `Location_storage_key` (`_storage_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Location`
+--
+
+LOCK TABLES `Location` WRITE;
+/*!40000 ALTER TABLE `Location` DISABLE KEYS */;
+INSERT INTO `Location` VALUES (1,1,6,1),(2,2,6,1),(3,3,6,1),(4,4,6,1),(5,5,7,1),(6,6,7,1),(7,7,7,1),(8,8,7,1),(9,9,8,1),(10,10,8,1),(11,11,8,1),(12,12,8,1),(13,13,3,1),(14,14,3,1),(15,15,3,1),(16,16,3,1),(17,17,4,1),(18,18,4,1),(19,19,4,1),(20,20,4,1),(21,21,4,1),(22,22,4,1),(23,23,4,1);
+/*!40000 ALTER TABLE `Location` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Mating`
+--
+
+DROP TABLE IF EXISTS `Mating`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Mating` (
+  `_mating_key` int(11) NOT NULL,
+  `_dam1_key` int(11) NOT NULL,
+  `_dam2_key` int(11) DEFAULT NULL,
+  `_sire_key` int(11) NOT NULL,
+  `_strain_key` int(11) NOT NULL,
+  `matingID` int(11) NOT NULL,
+  `suggestedPenID` int(11) DEFAULT NULL,
+  `weanTime` tinyint(1) NOT NULL DEFAULT '0',
+  `matingDate` datetime DEFAULT NULL,
+  `retiredDate` datetime DEFAULT NULL,
+  `generation` varchar(16) NOT NULL,
+  `owner` varchar(8) NOT NULL,
+  `weanNote` varchar(64) DEFAULT NULL,
+  `needsTyping` tinyint(1) NOT NULL DEFAULT '0',
+  `comment` varchar(255) DEFAULT NULL,
+  `proposedDiet` varchar(32) DEFAULT NULL,
+  `proposedRetireDate` datetime DEFAULT NULL,
+  `proposedRetireD1Diet` varchar(32) DEFAULT NULL,
+  `proposedRetireD2Diet` varchar(32) DEFAULT NULL,
+  `proposedRetireSDiet` varchar(32) DEFAULT NULL,
+  `proposedRetireD1BrStatus` varchar(1) DEFAULT NULL,
+  `proposedRetireD2BrStatus` varchar(1) DEFAULT NULL,
+  `proposedRetireSBrStatus` varchar(1) DEFAULT NULL,
+  `proposedRetireD1LfStatus` varchar(2) DEFAULT NULL,
+  `proposedRetireD2LfStatus` varchar(2) DEFAULT NULL,
+  `proposedRetireSLfStatus` varchar(2) DEFAULT NULL,
+  `proposedRetirePenStatus` varchar(1) DEFAULT NULL,
+  `suggestedFirstLitterNum` int(11) DEFAULT '0',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_mating_key`),
+  UNIQUE KEY `matingID` (`matingID`),
+  KEY `{73020FB1-E471-4893-B872-5A66AA863B75}` (`_strain_key`),
+  KEY `dam1` (`_dam1_key`),
+  KEY `dam2` (`_dam2_key`),
+  KEY `gen` (`generation`),
+  KEY `owner` (`owner`),
+  KEY `sire` (`_sire_key`),
+  KEY `strain` (`_strain_key`),
+  KEY `suggestedFirstLitterNum` (`suggestedFirstLitterNum`),
+  KEY `suggestedPenID` (`suggestedPenID`),
+  KEY `FK88F262A2FE38B8E6` (`_sire_key`),
+  KEY `FK88F262A27E130C36` (`_strain_key`),
+  CONSTRAINT `FK88F262A27E130C36` FOREIGN KEY (`_strain_key`) REFERENCES `Strain` (`_strain_key`),
+  CONSTRAINT `FK88F262A2FE38B8E6` FOREIGN KEY (`_sire_key`) REFERENCES `Mouse` (`_mouse_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Mating`
+--
+
+LOCK TABLES `Mating` WRITE;
+/*!40000 ALTER TABLE `Mating` DISABLE KEYS */;
+INSERT INTO `Mating` VALUES (1,78,79,83,3,1,NULL,-1,'2009-12-29 00:00:00',NULL,'F01','BR_Owner',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,10,1),(2,80,NULL,84,3,2,NULL,-1,'2009-12-29 00:00:00',NULL,'F01','BR_Owner',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,20,1),(3,116,117,119,6,3,NULL,-1,'2010-03-15 00:00:00',NULL,'F02','BR_Owner',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,30,1),(4,118,NULL,120,6,4,NULL,-1,'2010-03-15 00:00:00',NULL,'F02','BR_Owner',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,40,1),(5,162,161,165,6,5,NULL,-1,'2010-03-09 00:00:00',NULL,'F02','BR_Owner',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,50,1),(6,160,NULL,164,6,6,NULL,-1,'2010-03-02 00:00:00',NULL,'F02','BR_Owner',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,60,1),(7,174,NULL,172,3,7,NULL,-1,'2010-03-16 00:00:00',NULL,'F01','BR_Owner',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,70,1),(8,173,NULL,171,3,8,NULL,-1,'2010-03-16 00:00:00',NULL,'F01','BR_Owner',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,80,1),(9,193,NULL,195,16,9,NULL,-1,'2010-03-17 00:00:00',NULL,'F01','BR_Owner',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,90,1),(10,194,197,196,16,10,NULL,-1,'2010-03-17 00:00:00',NULL,'F01','BR_Owner',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,100,1),(11,185,NULL,177,8,11,NULL,-1,'2010-09-13 00:00:00',NULL,'F02','HH_Owner',NULL,-1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,110,1);
+/*!40000 ALTER TABLE `Mating` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `MatingSample`
+--
+
+DROP TABLE IF EXISTS `MatingSample`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `MatingSample` (
+  `_matingSample_key` int(11) NOT NULL,
+  `_sample_key` int(11) NOT NULL,
+  `_mating_key` int(11) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_matingSample_key`),
+  KEY `_mating_key` (`_mating_key`),
+  KEY `_matingSample_key` (`_matingSample_key`),
+  KEY `{0C438114-BD5C-4F78-AD08-BDAECDCB5E0B}` (`_mating_key`),
+  KEY `MatingSample_sample_key` (`_sample_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `MatingSample`
+--
+
+LOCK TABLES `MatingSample` WRITE;
+/*!40000 ALTER TABLE `MatingSample` DISABLE KEYS */;
+/*!40000 ALTER TABLE `MatingSample` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Mouse`
+--
+
+DROP TABLE IF EXISTS `Mouse`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Mouse` (
+  `_mouse_key` int(11) NOT NULL,
+  `_litter_key` int(11) DEFAULT NULL,
+  `_strain_key` int(11) NOT NULL,
+  `_pen_key` int(11) NOT NULL,
+  `ID` varchar(16) NOT NULL,
+  `newTag` varchar(16) DEFAULT NULL,
+  `birthDate` datetime NOT NULL,
+  `exitDate` datetime DEFAULT NULL,
+  `cod` varchar(32) DEFAULT NULL,
+  `codNotes` varchar(255) DEFAULT NULL,
+  `generation` varchar(16) NOT NULL,
+  `sex` varchar(1) NOT NULL DEFAULT '-',
+  `lifeStatus` varchar(2) NOT NULL DEFAULT 'A',
+  `breedingStatus` varchar(1) NOT NULL DEFAULT 'V',
+  `coatColor` varchar(8) DEFAULT NULL,
+  `diet` varchar(32) DEFAULT NULL,
+  `owner` varchar(8) NOT NULL,
+  `origin` varchar(32) NOT NULL COMMENT 'Origin',
+  `protocol` varchar(32) DEFAULT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  `sampleVialID` varchar(32) DEFAULT NULL,
+  `sampleVialTagPosition` varchar(32) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_mouse_key`),
+  UNIQUE KEY `_mouse_key` (`_mouse_key`),
+  UNIQUE KEY `ID` (`ID`),
+  UNIQUE KEY `newTag` (`newTag`),
+  KEY `{2F66CC57-A73E-40CF-AD71-89F8E43E2DF8}` (`_litter_key`),
+  KEY `{92B62DBE-CCE6-4F56-9BF4-2B97175FE6A6}` (`_pen_key`),
+  KEY `{E36AF02C-D14C-4795-B60A-BADD24F24D04}` (`_strain_key`),
+  KEY `Generation` (`generation`),
+  KEY `lifeStatus` (`lifeStatus`),
+  KEY `litter` (`_litter_key`),
+  KEY `owner` (`owner`),
+  KEY `Pen#` (`_pen_key`),
+  KEY `sampleVialID` (`sampleVialID`),
+  KEY `StrainKey` (`_strain_key`),
+  KEY `FK4714C8582820834` (`_pen_key`),
+  KEY `FK4714C857E130C36` (`_strain_key`),
+  KEY `FK4714C85A96A0F60` (`_litter_key`),
+  CONSTRAINT `FK4714C857E130C36` FOREIGN KEY (`_strain_key`) REFERENCES `Strain` (`_strain_key`),
+  CONSTRAINT `FK4714C8582820834` FOREIGN KEY (`_pen_key`) REFERENCES `Container` (`_container_key`),
+  CONSTRAINT `FK4714C85A96A0F60` FOREIGN KEY (`_litter_key`) REFERENCES `Litter` (`_litter_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Mouse`
+--
+
+LOCK TABLES `Mouse` WRITE;
+/*!40000 ALTER TABLE `Mouse` DISABLE KEYS */;
+INSERT INTO `Mouse` VALUES (1,NULL,6,1,'STM_0001',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Agouti','4%','ST_Owner','internal','BT-00345',NULL,NULL,NULL,1),(2,NULL,6,1,'STM_0002',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Agouti','4%','ST_Owner','internal','BT-00345',NULL,NULL,NULL,1),(3,NULL,6,1,'STM_0003',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Agouti','4%','ST_Owner','internal','BT-00345',NULL,NULL,NULL,1),(4,NULL,6,4,'STM_0004',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','ST_Owner','internal','BT-00345',NULL,NULL,NULL,1),(5,NULL,6,4,'STM_0005',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','ST_Owner','internal','BT-00345',NULL,NULL,NULL,1),(6,NULL,8,5,'EX-M0001',NULL,'2009-12-29 00:00:00',NULL,NULL,'','F02','M','A','B','Black','6%','BR_Owner','internal','BT-00345','','','',1),(7,NULL,8,5,'EX-M0002',NULL,'2009-12-29 00:00:00',NULL,NULL,'','F02','M','A','B','Black','6%','BR_Owner','internal','BT-00345','','','',1),(8,NULL,13,6,'EX-IGF0001',NULL,'2009-12-29 00:00:00','2010-09-11 00:00:00','Euthanasia','','F01','M','E','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10','','','',1),(9,NULL,13,6,'EX-IGF0002',NULL,'2009-12-29 00:00:00','2010-09-11 00:00:00','Euthanasia','','F01','M','E','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10','','','',1),(10,NULL,13,6,'EX-IGF0003',NULL,'2009-12-29 00:00:00','2010-09-11 00:00:00','Euthanasia','','F01','M','E','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10','','','',1),(11,NULL,13,6,'EX-IGF0004',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(12,NULL,13,6,'EX-IGF0005',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(13,NULL,13,7,'EX-IGF0006',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(14,NULL,13,7,'EX-IGF0007',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(15,NULL,13,7,'EX-IGF0008',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(16,NULL,13,7,'EX-IGF0009',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(17,NULL,13,7,'EX-IGF0010',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(18,NULL,13,8,'EX-IGF0011',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(19,NULL,13,8,'EX-IGF0012',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(20,NULL,13,8,'EX-IGF0013',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(21,NULL,13,8,'EX-IGF0014',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(22,NULL,13,8,'EX-IGF0015',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(23,NULL,13,9,'EX-IGF0016',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(24,NULL,13,9,'EX-IGF0017',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(25,NULL,13,9,'EX-IGF0018',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(26,NULL,13,9,'EX-IGF0019',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(27,NULL,13,9,'EX-IGF0020',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','20 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(28,NULL,13,10,'EX-IGF0021',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(29,NULL,13,10,'EX-IGF0022',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(30,NULL,13,10,'EX-IGF0023',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(31,NULL,13,10,'EX-IGF0024',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(32,NULL,13,10,'EX-IGF0025',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(33,NULL,13,11,'EX-IGF0026',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(34,NULL,13,11,'EX-IGF0027',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(35,NULL,13,11,'EX-IGF0028',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(36,NULL,13,11,'EX-IGF0029',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(37,NULL,13,11,'EX-IGF0030',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(38,NULL,13,12,'EX-IGF0031',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(39,NULL,13,12,'EX-IGF0032',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(40,NULL,13,12,'EX-IGF0033',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(41,NULL,13,12,'EX-IGF0034',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(42,NULL,13,12,'EX-IGF0035',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(43,NULL,13,13,'EX-IGF0036',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(44,NULL,13,13,'EX-IGF0037',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(45,NULL,13,13,'EX-IGF0038',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(46,NULL,13,13,'EX-IGF0039',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(47,NULL,13,13,'EX-IGF0040',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','40 mg/kg Metoprolol','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(48,NULL,13,14,'EX-IGF0041',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(49,NULL,13,14,'EX-IGF0042',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(50,NULL,13,14,'EX-IGF0043',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(51,NULL,13,14,'EX-IGF0044',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(52,NULL,13,14,'EX-IGF0045',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(53,NULL,13,15,'EX-IGF0046',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(54,NULL,13,15,'EX-IGF0047',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(55,NULL,13,15,'EX-IGF0048',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(56,NULL,13,15,'EX-IGF0049',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(57,NULL,13,15,'EX-IGF0050',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(58,NULL,13,16,'EX-IGF0051',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(59,NULL,13,16,'EX-IGF0052',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(60,NULL,13,16,'EX-IGF0053',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(61,NULL,13,16,'EX-IGF0054',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(62,NULL,13,16,'EX-IGF0055',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(63,NULL,13,17,'EX-IGF0056',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(64,NULL,13,17,'EX-IGF0057',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(65,NULL,13,17,'EX-IGF0058',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(66,NULL,13,17,'EX-IGF0059',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(67,NULL,13,17,'EX-IGF0060',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','BTLab','EX-GMMPS-10',NULL,NULL,NULL,1),(68,NULL,16,18,'BR_EX001',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F02','F','A','V','Agouti','6%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(69,NULL,16,18,'BR_EX002',NULL,'2009-12-29 00:00:00',NULL,NULL,'','F02','-','A','V','Agouti','6%','BR_Owner','internal','BT-00345','','','',1),(70,NULL,16,19,'BR_EX003',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F02','F','A','V','Agouti','6%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(71,NULL,16,19,'BR_EX004',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F02','F','A','V','Agouti','6%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(72,NULL,16,20,'BR_EX005',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F02','F','A','V','Agouti','6%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(73,NULL,16,20,'BR_EX006',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F02','F','A','V','Agouti','6%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(74,NULL,16,21,'BR_EX007',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F02','F','A','V','Agouti','6%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(75,NULL,16,21,'BR_EX008',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F02','F','A','V','Agouti','6%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(76,NULL,16,22,'BR_EX009',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F02','F','A','V','Agouti','6%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(77,NULL,16,22,'BR_EX010',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F02','F','A','V','Agouti','6%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(78,NULL,3,26,'BR_WR001',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','F','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(79,NULL,3,26,'BR_WR002',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','F','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(80,NULL,3,27,'BR_WR003',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','F','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(81,NULL,3,23,'BR_WR004',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(82,NULL,3,23,'BR_WR005',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(83,NULL,3,26,'BR_WR006',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(84,NULL,3,27,'BR_WR007',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(85,NULL,3,24,'BR_WR008',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(86,NULL,3,24,'BR_WR009',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(87,NULL,3,25,'BR_WR010',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(88,NULL,3,25,'BR_WR011',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(89,NULL,5,28,'BT-GT001',NULL,'2010-01-13 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Agouti','4%','BT_Owner','BTLab','BT-00345',NULL,NULL,NULL,1),(90,NULL,5,28,'BT-GT002',NULL,'2010-01-13 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Agouti','4%','BT_Owner','BTLab','BT-00345',NULL,NULL,NULL,1),(91,NULL,5,28,'BT-GT003',NULL,'2010-01-13 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Agouti','4%','BT_Owner','BTLab','BT-00345',NULL,NULL,NULL,1),(92,NULL,5,28,'BT-GT004',NULL,'2010-01-13 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Agouti','4%','BT_Owner','BTLab','BT-00345',NULL,NULL,NULL,1),(93,NULL,5,29,'BT-GT005',NULL,'2010-01-13 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BT_Owner','BTLab','BT-00345',NULL,NULL,NULL,1),(94,NULL,5,29,'BT-GT006',NULL,'2010-01-13 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BT_Owner','BTLab','BT-00345',NULL,NULL,NULL,1),(95,NULL,5,29,'BT-GT007',NULL,'2010-01-13 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BT_Owner','BTLab','BT-00345',NULL,NULL,NULL,1),(96,NULL,5,29,'BT-GT008',NULL,'2010-01-13 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BT_Owner','BTLab','BT-00345',NULL,NULL,NULL,1),(97,NULL,5,30,'BT-GT009',NULL,'2010-01-13 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BT_Owner','BTLab','BT-00345',NULL,NULL,NULL,1),(98,NULL,8,31,'STF_SS_0001',NULL,'2010-01-13 00:00:00','2010-01-13 00:00:00','Necropsy','Sent to necropsy for sample extraction','F02','F','E','R','Agouti','4%','ST_Owner','internal','BT-00345',NULL,NULL,NULL,1),(99,NULL,8,31,'STF_SS_0002',NULL,'2010-01-13 00:00:00','2010-01-13 00:00:00','Necropsy','Sent to necropsy for sample extraction','F02','F','E','R','Agouti','4%','ST_Owner','internal','BT-00345',NULL,NULL,NULL,1),(100,NULL,8,31,'STF_SS_0003',NULL,'2010-01-13 00:00:00','2010-01-13 00:00:00','Necropsy','Sent to necropsy for sample extraction','F02','F','E','R','Agouti','4%','ST_Owner','internal','BT-00345',NULL,NULL,NULL,1),(101,NULL,8,32,'STF_SS_0004',NULL,'2010-01-13 00:00:00','2010-01-13 00:00:00','Necropsy','Sent to necropsy for sample extraction','F02','F','E','R','Agouti','4%','ST_Owner','internal','BT-00345',NULL,NULL,NULL,1),(102,NULL,8,32,'STF_SS_0005',NULL,'2010-01-13 00:00:00','2010-01-13 00:00:00','Necropsy','Sent to necropsy for sample extraction','F02','F','E','R','Agouti','4%','ST_Owner','internal','BT-00345',NULL,NULL,NULL,1),(103,NULL,8,32,'STF_SS_0006',NULL,'2010-01-13 00:00:00','2010-01-13 00:00:00','Necropsy','Sent to necropsy for sample extraction','F02','F','E','R','Agouti','4%','ST_Owner','internal','BT-00345',NULL,NULL,NULL,1),(104,NULL,3,33,'BR_US-0001',NULL,'2010-03-11 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Agouti','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(105,NULL,3,33,'BR_US-0002',NULL,'2010-03-11 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Agouti','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(106,NULL,3,33,'BR_US-0003',NULL,'2010-03-11 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Agouti','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(107,NULL,3,34,'BR_US-0004',NULL,'2010-03-11 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(108,NULL,3,34,'BR_US-0005',NULL,'2010-03-11 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(109,NULL,3,34,'BR_US-0006',NULL,'2010-03-11 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(110,NULL,3,35,'BR_US-0007',NULL,'2010-03-11 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(111,NULL,3,35,'BR_US-0008',NULL,'2010-03-11 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(112,NULL,3,35,'BR_US-0009',NULL,'2010-03-11 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Agouti','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(113,NULL,3,36,'BR_US-0010',NULL,'2010-03-11 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Agouti','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(114,NULL,3,36,'BR_US-0011',NULL,'2010-03-11 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Agouti','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(115,NULL,3,36,'BR_US-0012',NULL,'2010-03-11 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Agouti','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(116,NULL,6,39,'BR_MR_0001',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F01','F','A','B','Black','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(117,NULL,6,39,'BR_MR_0002',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F01','F','A','B','Black','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(118,NULL,6,40,'BR_MR_0003',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F01','F','A','B','Black','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(119,NULL,6,39,'BR_MR_0004',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F01','M','A','B','Black','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(120,NULL,6,40,'BR_MR_0005',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F01','M','A','B','Black','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(121,3,6,39,'BR_MA_0010',NULL,'2010-04-13 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(122,3,6,39,'BR_MA_0011',NULL,'2010-04-13 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(123,3,6,39,'BR_MA_0012',NULL,'2010-04-13 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(124,3,6,39,'BR_MA_0013',NULL,'2010-04-13 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(125,3,6,39,'BR_MA_0014',NULL,'2010-04-13 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(126,4,6,41,'BR_MA_0020',NULL,'2010-06-16 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(127,4,6,41,'BR_MA_0021',NULL,'2010-06-16 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(128,4,6,41,'BR_MA_0022',NULL,'2010-06-16 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(129,4,6,41,'BR_MA_0023',NULL,'2010-06-16 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(130,4,6,42,'BR_MA_0024',NULL,'2010-06-16 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(131,4,6,42,'BR_MA_0025',NULL,'2010-06-16 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(132,4,6,42,'BR_MA_0026',NULL,'2010-06-16 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(133,4,6,42,'BR_MA_0027',NULL,'2010-06-16 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(134,5,6,43,'BR_MA_0030',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(135,5,6,43,'BR_MA_0031',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(136,5,6,43,'BR_MA_0032',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(137,5,6,44,'BR_MA_0033',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(138,5,6,44,'BR_MA_0034',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(139,5,6,44,'BR_MA_0035',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(140,6,6,45,'BR_MA_0040',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(141,6,6,45,'BR_MA_0041',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(142,6,6,46,'BR_MA_0042',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(143,6,6,46,'BR_MA_0043',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(144,6,6,46,'BR_MA_0044',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(145,7,6,47,'BR_MA_0050',NULL,'2010-05-12 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(146,7,6,47,'BR_MA_0051',NULL,'2010-05-12 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(147,7,6,47,'BR_MA_0052',NULL,'2010-05-12 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(148,7,6,47,'BR_MA_0053',NULL,'2010-05-12 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(149,7,6,48,'BR_MA_0054',NULL,'2010-05-12 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(150,7,6,48,'BR_MA_0055',NULL,'2010-05-12 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(151,7,6,48,'BR_MA_0056',NULL,'2010-05-12 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(152,8,6,49,'BR_MA_0060',NULL,'2010-08-11 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(153,8,6,49,'BR_MA_0061',NULL,'2010-08-11 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(154,8,6,50,'BR_MA_0062',NULL,'2010-08-11 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(155,8,6,50,'BR_MA_0063',NULL,'2010-08-11 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(156,8,6,50,'BR_MA_0064',NULL,'2010-08-11 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(157,8,6,50,'BR_MA_0065',NULL,'2010-08-11 00:00:00',NULL,NULL,NULL,'F02','M','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(158,9,6,51,'BR_MA_0070',NULL,'2010-08-11 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(159,9,6,51,'BR_MA_0071',NULL,'2010-08-11 00:00:00',NULL,NULL,NULL,'F02','F','A','V',NULL,NULL,'BR_Owner','internal',NULL,'ADDED IN BULK AS LITTER by user: mtsadmin',NULL,NULL,1),(160,4,6,55,'BR_PD_0001',NULL,'2010-02-01 00:00:00',NULL,NULL,NULL,'F02','F','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(161,4,6,54,'BR_PD_0002',NULL,'2010-01-08 00:00:00',NULL,NULL,NULL,'F02','F','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(162,4,6,54,'BR_PD_0003',NULL,'2010-02-10 00:00:00',NULL,NULL,NULL,'F02','F','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(163,4,6,53,'BR_PD_0004',NULL,'2010-02-16 00:00:00',NULL,NULL,NULL,'F02','M','A','V','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(164,4,6,55,'BR_PD_0005',NULL,'2010-01-05 00:00:00',NULL,NULL,NULL,'F02','M','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(165,4,6,54,'BR_PD_0006',NULL,'2010-06-16 00:00:00',NULL,NULL,NULL,'F02','M','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(166,10,6,58,'BR_PD_0007',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','F','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(167,10,6,58,'BR_PD_0008',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','F','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(168,10,6,58,'BR_PD_0009',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','M','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(169,10,6,58,'BR_PD_0010',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','M','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(170,10,6,55,'BR_PD_0011',NULL,'2010-03-15 00:00:00',NULL,NULL,NULL,'F02','M','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(171,1,3,62,'BR_PD_0012',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(172,1,3,61,'BR_PD_0013',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','M','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(173,1,3,62,'BR_PD_0014',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','F','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(174,1,3,61,'BR_PD_0015',NULL,'2009-12-29 00:00:00',NULL,NULL,NULL,'F01','F','A','B','Brown','4%','BR_Owner','internal','BT-00345',NULL,NULL,NULL,1),(175,NULL,8,63,'HH-M-00001',NULL,'2010-03-16 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Black','4%','HH_Owner','internal','HH-01',NULL,NULL,NULL,1),(176,NULL,8,63,'HH-M-00002',NULL,'2010-03-16 00:00:00',NULL,NULL,NULL,'F01','M','A','V','Black','4%','HH_Owner','internal','HH-01',NULL,NULL,NULL,1),(177,NULL,8,74,'HH-M-00003',NULL,'2010-03-16 00:00:00',NULL,NULL,NULL,'F01','M','A','B','Black','4%','HH_Owner','internal','HH-01',NULL,NULL,NULL,1),(178,NULL,8,64,'HH-M-00004',NULL,'2010-03-16 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Black','4%','HH_Owner','internal','HH-01',NULL,NULL,NULL,1),(179,NULL,8,64,'HH-M-00005',NULL,'2010-03-16 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Black','4%','HH_Owner','internal','HH-01',NULL,NULL,NULL,1),(180,NULL,8,64,'HH-M-00006',NULL,'2010-03-16 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Black','4%','HH_Owner','internal','HH-01',NULL,NULL,NULL,1),(181,NULL,8,65,'HH-0010',NULL,'2010-03-16 00:00:00',NULL,NULL,NULL,'F01','F','A','R','Black','4%','HH_Owner','internal','HH-01',NULL,NULL,NULL,1),(182,NULL,8,65,'HH-0011',NULL,'2010-03-16 00:00:00',NULL,NULL,'','F01','F','A','R','Black','4%','ST_Owner','internal','HH-01','','','',1),(183,NULL,8,65,'HH-0012',NULL,'2010-03-16 00:00:00',NULL,NULL,'','F01','F','A','R','Black','4%','ST_Owner','internal','HH-01','','','',1),(184,NULL,8,66,'HH-0013',NULL,'2010-03-16 00:00:00',NULL,NULL,'','F01','F','A','R','Black','4%','ST_Owner','internal','HH-01','','','',1),(185,NULL,8,74,'HH-0014',NULL,'2010-03-16 00:00:00',NULL,NULL,'','F01','F','A','B','Black','4%','ST_Owner','internal','HH-01','','','',1),(186,NULL,10,67,'HH-MM-0001',NULL,'2010-03-17 00:00:00',NULL,NULL,NULL,'F02','F','A','B','Brown','4%','BR_Owner','internal','HH-01',NULL,NULL,NULL,1),(187,NULL,10,67,'HH-MM-0002',NULL,'2010-03-17 00:00:00',NULL,NULL,NULL,'F02','F','A','B','Brown','4%','BR_Owner','internal','HH-01',NULL,NULL,NULL,1),(188,NULL,10,67,'HH-MM-0003',NULL,'2010-03-17 00:00:00',NULL,NULL,NULL,'F02','F','A','B','Brown','4%','BR_Owner','internal','HH-01',NULL,NULL,NULL,1),(189,NULL,10,67,'HH-MM-0004',NULL,'2010-03-17 00:00:00',NULL,NULL,NULL,'F02','F','A','B','Brown','4%','BR_Owner','internal','HH-01',NULL,NULL,NULL,1),(190,NULL,10,67,'HH-MM-0005',NULL,'2010-03-17 00:00:00',NULL,NULL,NULL,'F02','F','A','B','Brown','4%','BR_Owner','internal','HH-01',NULL,NULL,NULL,1),(191,NULL,10,68,'HH-MM-00010',NULL,'2010-03-17 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Black','4%','HH_Owner','internal','HH-01',NULL,NULL,NULL,1),(192,NULL,10,68,'HH-MM-00011',NULL,'2010-03-17 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Black','4%','HH_Owner','internal','HH-01',NULL,NULL,NULL,1),(193,NULL,16,72,'BR_PD_0020',NULL,'2010-03-17 00:00:00',NULL,NULL,NULL,'F01','F','A','B','Brown','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(194,NULL,16,73,'BR_PD_0021',NULL,'2010-03-17 00:00:00',NULL,NULL,NULL,'F01','F','A','B','Brown','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(195,NULL,16,72,'BR_PD_0022',NULL,'2010-03-17 00:00:00',NULL,NULL,NULL,'F01','M','A','B','Brown','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(196,NULL,16,73,'BR_PD_0023',NULL,'2010-03-17 00:00:00',NULL,NULL,NULL,'F01','M','A','B','Brown','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(197,NULL,16,73,'BR_PD_0024',NULL,'2010-03-17 00:00:00',NULL,NULL,NULL,'F01','F','A','B','Brown','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(198,NULL,16,71,'BR_PD_0025',NULL,'2010-03-17 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Brown','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1),(199,NULL,16,71,'BR_PD_0026',NULL,'2010-03-17 00:00:00',NULL,NULL,NULL,'F01','F','A','V','Brown','4%','BR_Owner','internal',NULL,NULL,NULL,NULL,1);
+/*!40000 ALTER TABLE `Mouse` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `MouseSample`
+--
+
+DROP TABLE IF EXISTS `MouseSample`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `MouseSample` (
+  `_mouseSample_key` int(11) NOT NULL,
+  `_mouse_key` int(11) NOT NULL,
+  `_sample_key` int(11) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_mouseSample_key`),
+  KEY `_mouse_key` (`_mouse_key`),
+  KEY `_mouseSample_key` (`_mouseSample_key`),
+  KEY `{23A57FF5-723F-48C8-B72E-82C0B8E8A7CB}` (`_mouse_key`),
+  KEY `MouseSample_sample_key` (`_sample_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `MouseSample`
+--
+
+LOCK TABLES `MouseSample` WRITE;
+/*!40000 ALTER TABLE `MouseSample` DISABLE KEYS */;
+INSERT INTO `MouseSample` VALUES (1,98,1,1),(2,98,2,1),(3,98,3,1),(4,98,4,1),(5,99,5,1),(6,99,6,1),(7,99,7,1),(8,99,8,1),(9,100,9,1),(10,100,10,1),(11,100,11,1),(12,100,12,1),(13,101,13,1),(14,101,14,1),(15,101,15,1),(16,101,16,1),(17,101,17,1),(18,101,18,1),(19,101,19,1),(20,101,20,1),(21,103,21,1),(22,103,22,1),(23,103,23,1);
+/*!40000 ALTER TABLE `MouseSample` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `MouseUsage`
+--
+
+DROP TABLE IF EXISTS `MouseUsage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `MouseUsage` (
+  `_usage_key` int(11) NOT NULL DEFAULT '0',
+  `_mouse_key` int(11) NOT NULL,
+  `use` varchar(32) NOT NULL,
+  `useAge` double DEFAULT NULL,
+  `projectedDate` datetime DEFAULT NULL,
+  `actualDate` datetime DEFAULT NULL,
+  `done` tinyint(1) NOT NULL DEFAULT '0',
+  `comment` varchar(255) DEFAULT NULL,
+  `D1` varchar(128) DEFAULT NULL,
+  `D2` varchar(128) DEFAULT NULL,
+  `D3` varchar(128) DEFAULT NULL,
+  `D4` varchar(128) DEFAULT NULL,
+  `D5` varchar(128) DEFAULT NULL,
+  `D6` varchar(128) DEFAULT NULL,
+  `D7` varchar(128) DEFAULT NULL,
+  `D8` varchar(128) DEFAULT NULL,
+  `D9` varchar(128) DEFAULT NULL,
+  `D10` varchar(128) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_usage_key`),
+  UNIQUE KEY `_usage_key` (`_usage_key`),
+  KEY `_mouse_key` (`_mouse_key`),
+  KEY `{99E7B616-8523-4BB0-B8E2-F03B03EF4A4E}` (`_mouse_key`),
+  KEY `useCode` (`use`),
+  KEY `FKB2564C1C9E32B1A4` (`_mouse_key`),
+  CONSTRAINT `FKB2564C1C9E32B1A4` FOREIGN KEY (`_mouse_key`) REFERENCES `Mouse` (`_mouse_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `MouseUsage`
+--
+
+LOCK TABLES `MouseUsage` WRITE;
+/*!40000 ALTER TABLE `MouseUsage` DISABLE KEYS */;
+INSERT INTO `MouseUsage` VALUES (1,104,'Clinical Exam',1,'2010-04-10 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(2,105,'Clinical Exam',1,'2010-04-10 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(3,106,'Clinical Exam',1,'2010-04-10 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(4,107,'Clinical Exam',1,'2010-04-10 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(5,108,'Clinical Exam',1,'2010-04-10 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(6,109,'Clinical Exam',1,'2010-04-10 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(7,110,'Clinical Exam',1,'2010-04-10 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(8,104,'Body Weight',1,'2010-04-10 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(9,105,'Body Weight',1,'2010-04-10 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(10,106,'Body Weight',1,'2010-04-10 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(11,107,'Body Weight',1,'2010-04-10 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(12,108,'Body Weight',1,'2010-04-10 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(13,109,'Body Weight',1,'2010-04-10 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(14,110,'Body Weight',1,'2010-04-10 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(15,111,'Body Weight',1,'2010-04-10 00:00:00',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
+/*!40000 ALTER TABLE `MouseUsage` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Owner`
+--
+
+DROP TABLE IF EXISTS `Owner`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Owner` (
+  `_owner_key` int(11) NOT NULL DEFAULT '0',
+  `owner` varchar(75) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_owner_key`),
+  UNIQUE KEY `_owner_key` (`_owner_key`),
+  UNIQUE KEY `owner` (`owner`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Owner`
+--
+
+LOCK TABLES `Owner` WRITE;
+/*!40000 ALTER TABLE `Owner` DISABLE KEYS */;
+INSERT INTO `Owner` VALUES (1,'nobody',1),(2,'BT_Owner',1),(3,'ST_Owner',1),(4,'EX_Owner',1),(5,'BR_Owner',1),(6,'HH_Owner',1);
+/*!40000 ALTER TABLE `Owner` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `PenGroup`
+--
+
+DROP TABLE IF EXISTS `PenGroup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `PenGroup` (
+  `_pen_key` int(11) NOT NULL,
+  `penID` int(11) NOT NULL,
+  `room` varchar(8) DEFAULT NULL,
+  `penStatus` tinyint(1) NOT NULL DEFAULT '0',
+  `beginDate` datetime NOT NULL,
+  `healthLevel` smallint(6) NOT NULL,
+  `version` int(11) DEFAULT NULL,
+  PRIMARY KEY (`_pen_key`),
+  UNIQUE KEY `_pen_key` (`_pen_key`),
+  UNIQUE KEY `Pen#` (`penID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PenGroup`
+--
+
+LOCK TABLES `PenGroup` WRITE;
+/*!40000 ALTER TABLE `PenGroup` DISABLE KEYS */;
+/*!40000 ALTER TABLE `PenGroup` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `PlugDate`
+--
+
+DROP TABLE IF EXISTS `PlugDate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `PlugDate` (
+  `_plugDate_key` int(11) NOT NULL,
+  `_mating_key` int(11) NOT NULL,
+  `_mouse_key` int(11) NOT NULL,
+  `plugDate` datetime NOT NULL,
+  `obsolete` tinyint(1) DEFAULT '0',
+  `comment` varchar(255) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_plugDate_key`),
+  UNIQUE KEY `plugDate_key` (`_plugDate_key`),
+  KEY `_mating_key` (`_mating_key`),
+  KEY `_mouse_key` (`_mouse_key`),
+  KEY `{338BBD46-6518-4A72-BB63-F9D0E15926D3}` (`_mating_key`),
+  KEY `{5623BC86-F5AA-432E-A731-1ECAEC3DA1E4}` (`_mouse_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PlugDate`
+--
+
+LOCK TABLES `PlugDate` WRITE;
+/*!40000 ALTER TABLE `PlugDate` DISABLE KEYS */;
+/*!40000 ALTER TABLE `PlugDate` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Room`
+--
+
+DROP TABLE IF EXISTS `Room`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Room` (
+  `_room_key` int(11) NOT NULL,
+  `roomName` varchar(8) NOT NULL,
+  `_healthLevelHistory_key` int(11) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_room_key`),
+  UNIQUE KEY `_currentHealthLevelHistory_key` (`_healthLevelHistory_key`),
+  UNIQUE KEY `_room_key` (`_room_key`),
+  UNIQUE KEY `roomName` (`roomName`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Room`
+--
+
+LOCK TABLES `Room` WRITE;
+/*!40000 ALTER TABLE `Room` DISABLE KEYS */;
+INSERT INTO `Room` VALUES (1,'unknown',1,1),(2,'AX02',2,1),(3,'PB',3,1);
+/*!40000 ALTER TABLE `Room` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `SNPLoader`
+--
+
+DROP TABLE IF EXISTS `SNPLoader`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SNPLoader` (
+  `_snp_loader_key` int(11) NOT NULL DEFAULT '0',
+  `status_Description` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '1',
+  `sequence` int(11) DEFAULT '0',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_snp_loader_key`),
+  KEY `_snp_loader_key` (`_snp_loader_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `SNPLoader`
+--
+
+LOCK TABLES `SNPLoader` WRITE;
+/*!40000 ALTER TABLE `SNPLoader` DISABLE KEYS */;
+INSERT INTO `SNPLoader` VALUES (1,'Input file 06-05.csv is well-formed',-1,1,1),(2,'The file 06-05.csv is a valid JAX-CMS formatted genotype importation file',-1,1,1),(3,'Added 0 geneclass records',-1,2,1),(4,'Added 0 gene records',-1,3,1);
+/*!40000 ALTER TABLE `SNPLoader` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Sample`
+--
+
+DROP TABLE IF EXISTS `Sample`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Sample` (
+  `_sample_key` int(11) NOT NULL,
+  `_parentSample_key` int(11) NOT NULL,
+  `age` float NOT NULL,
+  `_timeUnit_key` int(11) NOT NULL,
+  `_epoch_key` int(11) NOT NULL,
+  `harvestMethod` varchar(32) DEFAULT NULL,
+  `description` longtext NOT NULL,
+  `weight` float NOT NULL,
+  `_weightUnit_key` int(11) NOT NULL,
+  `_sampleType_key` int(11) NOT NULL,
+  `sampleDate` datetime NOT NULL,
+  `_sampleDateType_key` int(11) NOT NULL DEFAULT '0',
+  `_strain_key` int(11) NOT NULL,
+  `owner` varchar(8) NOT NULL,
+  `SampleID` varchar(32) NOT NULL,
+  `SourceType` int(11) DEFAULT '0',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_sample_key`),
+  UNIQUE KEY `Sample_sample_key` (`_sample_key`),
+  UNIQUE KEY `SampleID` (`SampleID`),
+  KEY `_parentSample_key` (`_parentSample_key`),
+  KEY `_strain_key` (`_strain_key`),
+  KEY `{0A065CDA-3C35-424C-A4C1-75B30FF1DF51}` (`_sampleDateType_key`),
+  KEY `{131DE75E-852C-40C4-9255-8783821A971F}` (`_sampleType_key`),
+  KEY `{35D0136D-877E-4C80-918A-0826BF7A112F}` (`_epoch_key`),
+  KEY `{5416C4BF-18E9-47B1-ADF7-D4D5BF93CD35}` (`_timeUnit_key`),
+  KEY `{98429B0E-3CCD-4B66-A17B-F76A30DBD64F}` (`_weightUnit_key`),
+  KEY `Sample_epoch_key` (`_epoch_key`),
+  KEY `Sample_harvestMethod_key` (`harvestMethod`),
+  KEY `Sample_sampleDateType_key` (`_sampleDateType_key`),
+  KEY `Sample_sampleType_key` (`_sampleType_key`),
+  KEY `Sample_timeUnit_key` (`_timeUnit_key`),
+  KEY `Sample_weightUnit_key` (`_weightUnit_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Sample`
+--
+
+LOCK TABLES `Sample` WRITE;
+/*!40000 ALTER TABLE `Sample` DISABLE KEYS */;
+INSERT INTO `Sample` VALUES (1,0,0,2,1,NULL,'',0,1,10,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0001-L01',2,1),(2,0,0,2,1,NULL,'',0,1,9,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0001-L02',2,1),(3,0,0,2,1,NULL,'',0,1,11,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0001-L03',2,1),(4,0,0,2,1,NULL,'',0,1,8,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0001-L04',2,1),(5,0,0,2,1,NULL,'',0,1,8,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0002-L01',2,1),(6,0,0,2,1,NULL,'',0,1,9,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0002-L02',2,1),(7,0,0,2,1,NULL,'',0,1,10,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0002-L03',2,1),(8,0,0,2,1,NULL,'',0,1,11,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0002-L04',2,1),(9,0,0,2,1,NULL,'',0,1,8,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0003-L01',2,1),(10,0,0,2,1,NULL,'',0,1,9,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0003-L02',2,1),(11,0,0,2,1,NULL,'',0,1,9,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0003-L03',2,1),(12,0,0,2,1,NULL,'',0,1,11,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0003-L04',2,1),(13,0,0,2,1,NULL,'',0,1,11,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0004-L01',2,1),(14,0,0,2,1,NULL,'',0,1,10,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0004-L02',2,1),(15,0,0,2,1,NULL,'',0,1,9,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0004-L03',2,1),(16,0,0,2,1,NULL,'',0,1,8,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0004-L04',2,1),(17,0,0,2,1,NULL,'',0,1,8,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0005-L01',2,1),(18,0,0,2,1,NULL,'',0,1,9,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0005-L02',2,1),(19,0,0,2,1,NULL,'',0,1,10,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0005-L03',2,1),(20,0,0,2,1,NULL,'',0,1,10,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0005-L04',2,1),(21,0,0,2,1,NULL,'',0,1,5,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0006-L05',2,1),(22,0,0,2,1,NULL,'',0,1,5,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0006-L01',2,1),(23,0,0,2,1,NULL,'',0,1,6,'2010-01-13 00:00:00',1,8,'ST_Owner','STF_SS_0006-L02',2,1);
+/*!40000 ALTER TABLE `Sample` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Secretary`
+--
+
+DROP TABLE IF EXISTS `Secretary`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Secretary` (
+  `_secretary_key` int(11) NOT NULL DEFAULT '0',
+  `_owner_key` int(11) NOT NULL DEFAULT '0',
+  `secretary` varchar(75) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_secretary_key`),
+  UNIQUE KEY `_secretary_key` (`_secretary_key`),
+  KEY `_owner_key` (`_owner_key`),
+  KEY `{35AF4FC1-32E5-4F05-AB97-D2176047DA65}` (`_owner_key`),
+  KEY `secretary` (`secretary`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Secretary`
+--
+
+LOCK TABLES `Secretary` WRITE;
+/*!40000 ALTER TABLE `Secretary` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Secretary` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Storage`
+--
+
+DROP TABLE IF EXISTS `Storage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Storage` (
+  `_storage_key` int(11) NOT NULL DEFAULT '0',
+  `_sample_key` int(11) NOT NULL,
+  `_sampleStatus_key` int(11) NOT NULL DEFAULT '0',
+  `_preservationMethod_key` int(11) DEFAULT '0',
+  `_preservationType_key` int(11) DEFAULT '0',
+  `_preservationDetail_key` int(11) DEFAULT '0',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_storage_key`),
+  UNIQUE KEY `Storage_storage_key` (`_storage_key`),
+  KEY `_preservationDetail_key` (`_preservationDetail_key`),
+  KEY `_preservationMethod_key` (`_preservationMethod_key`),
+  KEY `_preservationType_key` (`_preservationType_key`),
+  KEY `{2C64B4AF-7F7F-40AE-B704-5435BF602406}` (`_sample_key`),
+  KEY `{C4F4ACE6-B480-4483-9C0F-C6B60B16B46F}` (`_sampleStatus_key`),
+  KEY `Storage_sample_key` (`_sample_key`),
+  KEY `Storage_sampleStatus_key` (`_sampleStatus_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Storage`
+--
+
+LOCK TABLES `Storage` WRITE;
+/*!40000 ALTER TABLE `Storage` DISABLE KEYS */;
+INSERT INTO `Storage` VALUES (1,1,1,2,4,2,1),(2,2,1,2,4,2,1),(3,3,1,2,4,2,1),(4,4,1,2,4,2,1),(5,5,1,2,4,2,1),(6,6,1,2,4,2,1),(7,7,1,2,4,2,1),(8,8,1,2,4,2,1),(9,9,1,2,4,2,1),(10,10,1,2,4,2,1),(11,11,1,2,4,2,1),(12,12,1,2,4,2,1),(13,13,1,2,4,2,1),(14,14,1,2,4,2,1),(15,15,1,2,4,2,1),(16,16,1,2,4,2,1),(17,17,1,2,4,2,1),(18,18,1,2,4,2,1),(19,19,1,2,4,2,1),(20,20,1,2,4,2,1),(21,21,1,1,1,1,1),(22,22,1,1,1,1,1),(23,23,1,1,1,1,1);
+/*!40000 ALTER TABLE `Storage` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Strain`
+--
+
+DROP TABLE IF EXISTS `Strain`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Strain` (
+  `_strain_key` int(11) NOT NULL,
+  `strainName` varchar(64) NOT NULL,
+  `nickname` varchar(128) DEFAULT NULL,
+  `formalName` varchar(128) DEFAULT NULL,
+  `strainStatus` varchar(1) NOT NULL DEFAULT 'A',
+  `tagMin` varchar(16) DEFAULT NULL,
+  `tagMax` varchar(16) DEFAULT NULL,
+  `lastTag` varchar(16) DEFAULT NULL,
+  `jrNum` int(11) DEFAULT '0' COMMENT 'Stock #',
+  `feNumEmbryos` smallint(6) NOT NULL DEFAULT '0',
+  `feMaxGen` varchar(16) DEFAULT NULL,
+  `fsNumMales` smallint(6) NOT NULL DEFAULT '0',
+  `fsMaxGen` varchar(16) DEFAULT NULL,
+  `foNumFemales` smallint(6) NOT NULL DEFAULT '0',
+  `foMaxGen` varchar(16) DEFAULT NULL,
+  `section_` varchar(32) DEFAULT NULL COMMENT 'Section',
+  `cardColor` varchar(32) DEFAULT NULL,
+  `strainType` varchar(32) DEFAULT NULL,
+  `comment` longtext,
+  `lineViabilityYellowMinNumMales` int(11) DEFAULT NULL,
+  `lineViabilityYellowMinNumFemales` int(11) DEFAULT NULL,
+  `lineViabilityYellowMaxAgeMales` int(11) DEFAULT NULL,
+  `lineViabilityYellowMaxAgeFemales` int(11) DEFAULT NULL,
+  `lineViabilityRedMinNumMales` int(11) DEFAULT NULL,
+  `lineViabilityRedMinNumFemales` int(11) DEFAULT NULL,
+  `lineViabilityRedMaxAgeMales` int(11) DEFAULT NULL,
+  `lineViabilityRedMaxAgeFemales` int(11) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  `section` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`_strain_key`),
+  UNIQUE KEY `StrainName` (`strainName`),
+  KEY `jrNum` (`jrNum`),
+  KEY `StrainKey` (`_strain_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Strain`
+--
+
+LOCK TABLES `Strain` WRITE;
+/*!40000 ALTER TABLE `Strain` DISABLE KEYS */;
+INSERT INTO `Strain` VALUES (1,'B6D2F1/J','B6D2','B6D2F1/J','A',NULL,NULL,NULL,100006,0,NULL,0,NULL,0,NULL,NULL,NULL,'F1 hybrid',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),(2,'B6.129P2-Apoe<tmlUnc>/J',NULL,'B6.129P2-Apoe<tmlUnc>/J','A',NULL,NULL,NULL,2052,0,NULL,0,NULL,0,NULL,NULL,NULL,'congenic',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),(3,'BALB/cJ','C','BALB/cJ','A',NULL,NULL,NULL,651,0,NULL,0,NULL,0,NULL,NULL,NULL,'inbred',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),(4,'BALB/cByJ','CBy; BALB Bailey; BALB/c Bailey J','BALB/cByJ','A',NULL,NULL,NULL,1026,0,NULL,0,NULL,0,NULL,NULL,NULL,'inbred',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),(5,'C3H/HeJ','C3; C3H Heston','C3H/HeJ','A',NULL,NULL,NULL,659,0,NULL,0,NULL,0,NULL,NULL,NULL,'inbred',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),(6,'C57BL/6J','C57 Black; B6; B6J; Black 6','C57BL/6J','A',NULL,NULL,NULL,664,0,NULL,0,NULL,0,NULL,NULL,NULL,'inbred',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),(7,'CBA/J','CBA Jackson','CBA/J','A',NULL,NULL,NULL,656,0,NULL,0,NULL,0,NULL,NULL,NULL,'inbred',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),(8,'DBA/2J','D2; D2J','DBA/2J','A',NULL,NULL,NULL,671,0,NULL,0,NULL,0,NULL,NULL,NULL,'inbred',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),(9,'FVB/NJ','FVB; Friend Virus B NIH Jackson','FVB/NJ','A',NULL,NULL,NULL,1800,0,NULL,0,NULL,0,NULL,NULL,NULL,'inbred',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),(10,'NOD/ShiLtJ','NOD/LtJ; Non-obese Diabetic','NOD/ShiLtJ','A',NULL,NULL,NULL,1976,0,NULL,0,NULL,0,NULL,NULL,NULL,'inbred',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),(11,'NOD.CB17-Prkdc<scid>/J','NOD SCID','NOD.CB17-Prkdc<scid>/J','A',NULL,NULL,NULL,1303,0,NULL,0,NULL,0,NULL,NULL,NULL,'congenic',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),(12,'BT-129',NULL,NULL,'A',NULL,NULL,NULL,0,0,NULL,0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),(13,'STOCK Igf1<tm1Ts>/ImJ',NULL,NULL,'A',NULL,NULL,NULL,0,0,NULL,0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),(14,'BR-Strain-1',NULL,NULL,'A',NULL,NULL,NULL,0,0,NULL,0,NULL,0,NULL,NULL,NULL,NULL,NULL,3,6,100,100,2,4,130,130,1,NULL),(15,'BR-Strain-2',NULL,NULL,'A',NULL,NULL,NULL,0,0,NULL,0,NULL,0,NULL,NULL,NULL,NULL,NULL,5,10,100,100,2,4,120,120,1,NULL),(16,'129S1/SvlmJ',NULL,NULL,'A',NULL,NULL,NULL,0,0,NULL,0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL);
+/*!40000 ALTER TABLE `Strain` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_BirthEventStatus`
+--
+
+DROP TABLE IF EXISTS `cv_BirthEventStatus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_BirthEventStatus` (
+  `_birthEventStatus_key` int(11) NOT NULL AUTO_INCREMENT,
+  `birthEventStatus` varchar(75) NOT NULL COMMENT 'Litter status',
+  `abbreviation` varchar(2) DEFAULT NULL COMMENT 'Abbreviation',
+  `isActive` tinyint(4) DEFAULT NULL COMMENT 'Is active',
+  `isDefault` tinyint(4) DEFAULT NULL COMMENT 'Is default',
+  `sortOrder` int(11) DEFAULT NULL COMMENT 'Sort order',
+  `_vocabularySource_key` int(11) DEFAULT NULL,
+  `elementID` varchar(18) DEFAULT NULL COMMENT 'Element ID',
+  `isDeprecated` tinyint(4) DEFAULT NULL COMMENT 'Is deprecated',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_birthEventStatus_key`),
+  UNIQUE KEY `idcv_birthEventStatus_UNIQUE` (`_birthEventStatus_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_BirthEventStatus`
+--
+
+LOCK TABLES `cv_BirthEventStatus` WRITE;
+/*!40000 ALTER TABLE `cv_BirthEventStatus` DISABLE KEYS */;
+INSERT INTO `cv_BirthEventStatus` VALUES (1,'Alive','A',-1,-1,NULL,NULL,NULL,NULL,1),(2,'Born dead','B',-1,0,NULL,NULL,NULL,NULL,1),(3,'Dead at weaning','D',-1,0,NULL,NULL,NULL,NULL,1),(4,'Harvested','H',-1,0,NULL,NULL,NULL,NULL,1),(5,'Killed','K',-1,0,NULL,NULL,NULL,NULL,1),(6,'Missing','M',-1,0,NULL,NULL,NULL,NULL,1);
+/*!40000 ALTER TABLE `cv_BirthEventStatus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_BreedingStatus`
+--
+
+DROP TABLE IF EXISTS `cv_BreedingStatus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_BreedingStatus` (
+  `_breedingStatus_key` int(11) NOT NULL AUTO_INCREMENT,
+  `breedingStatus` varchar(75) NOT NULL COMMENT 'Breeding Status',
+  `abbreviation` varchar(2) DEFAULT NULL COMMENT 'Abbreviation',
+  `isActive` tinyint(4) DEFAULT NULL COMMENT 'Is active',
+  `isDefault` tinyint(4) DEFAULT NULL COMMENT 'Is default',
+  `sortOrder` int(11) DEFAULT NULL COMMENT 'Sort order',
+  `_vocabularySource_key` int(11) DEFAULT NULL,
+  `elementID` varchar(18) DEFAULT NULL COMMENT 'Element ID',
+  `isDeprecated` tinyint(4) DEFAULT NULL COMMENT 'Is deprecated',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_breedingStatus_key`),
+  UNIQUE KEY `idcv_breedingStatus_UNIQUE` (`_breedingStatus_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_BreedingStatus`
+--
+
+LOCK TABLES `cv_BreedingStatus` WRITE;
+/*!40000 ALTER TABLE `cv_BreedingStatus` DISABLE KEYS */;
+INSERT INTO `cv_BreedingStatus` VALUES (1,'Breeding','B',-1,0,NULL,NULL,NULL,NULL,1),(2,'Retired breeder','R',-1,0,NULL,NULL,NULL,NULL,1),(3,'Virgin','V',-1,-1,NULL,NULL,NULL,NULL,1),(4,'Unknown','U',-1,0,NULL,NULL,NULL,NULL,1);
+/*!40000 ALTER TABLE `cv_BreedingStatus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_CauseOfDeath`
+--
+
+DROP TABLE IF EXISTS `cv_CauseOfDeath`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_CauseOfDeath` (
+  `_causeOfDeath_key` int(11) NOT NULL AUTO_INCREMENT,
+  `cod` varchar(32) NOT NULL DEFAULT '',
+  `description` varchar(255) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_causeOfDeath_key`),
+  UNIQUE KEY `cod` (`cod`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_CauseOfDeath`
+--
+
+LOCK TABLES `cv_CauseOfDeath` WRITE;
+/*!40000 ALTER TABLE `cv_CauseOfDeath` DISABLE KEYS */;
+INSERT INTO `cv_CauseOfDeath` VALUES (1,'Culled',NULL,1),(2,'Euthanasia',NULL,1),(3,'Necropsy','Sent to necropsy',1);
+/*!40000 ALTER TABLE `cv_CauseOfDeath` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_CoatColor`
+--
+
+DROP TABLE IF EXISTS `cv_CoatColor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_CoatColor` (
+  `_coatColor_key` int(11) NOT NULL AUTO_INCREMENT,
+  `coatColor` varchar(8) NOT NULL,
+  `description` varchar(64) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_coatColor_key`),
+  UNIQUE KEY `coatColor` (`coatColor`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_CoatColor`
+--
+
+LOCK TABLES `cv_CoatColor` WRITE;
+/*!40000 ALTER TABLE `cv_CoatColor` DISABLE KEYS */;
+INSERT INTO `cv_CoatColor` VALUES (1,'Agouti','Agouti',1),(2,'Albino','Albino',1),(3,'Black','Black (non-agouti)',1),(4,'BrAgouti','Brown agouti',1),(5,'Brown','Brown',1),(6,'Buff','Buff',1),(7,'Chinchil','Light-bellied chinchilla',1),(8,'DarkGrey','Dark grey',1),(9,'DlBrown','Dilute brown',1),(10,'DlBrPieb','Dilute brown, Piebald',1),(11,'Fawn','Fawn',1),(12,'GreyWhit','Greyish white',1),(13,'Gunmetal','Gunmetal',1),(14,'Lagouti','Light agouti',1),(15,'Lchinchi','Light-bellied, Light chinchilla',1),(16,'Leaden','Leaden (grey)',1),(17,'Misty','Misty (grey)',1),(18,'Piebald','Piebald, White-bellied agouti',1),(19,'Sandy','Sandy',1),(20,'Yellow','Yellow',1);
+/*!40000 ALTER TABLE `cv_CoatColor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_ContainerStatus`
+--
+
+DROP TABLE IF EXISTS `cv_ContainerStatus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_ContainerStatus` (
+  `_containerStatus_key` int(11) NOT NULL AUTO_INCREMENT,
+  `containerStatus` varchar(8) NOT NULL,
+  `billable` tinyint(1) DEFAULT '0',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_containerStatus_key`),
+  UNIQUE KEY `containerStatus_UNIQUE` (`containerStatus`),
+  KEY `_containerStatus_key` (`_containerStatus_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_ContainerStatus`
+--
+
+LOCK TABLES `cv_ContainerStatus` WRITE;
+/*!40000 ALTER TABLE `cv_ContainerStatus` DISABLE KEYS */;
+INSERT INTO `cv_ContainerStatus` VALUES (1,'proposed',0,1),(2,'active',-1,1),(3,'retired',0,1);
+/*!40000 ALTER TABLE `cv_ContainerStatus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_Diet`
+--
+
+DROP TABLE IF EXISTS `cv_Diet`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_Diet` (
+  `_diet_key` int(11) NOT NULL AUTO_INCREMENT,
+  `diet` varchar(32) NOT NULL,
+  `dietDescription` varchar(64) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_diet_key`),
+  UNIQUE KEY `diet` (`diet`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_Diet`
+--
+
+LOCK TABLES `cv_Diet` WRITE;
+/*!40000 ALTER TABLE `cv_Diet` DISABLE KEYS */;
+INSERT INTO `cv_Diet` VALUES (1,'20 mg/kg Metoprolol',NULL,1),(2,'4%',NULL,1),(3,'40 mg/kg Metoprolol',NULL,1),(4,'6%',NULL,1);
+/*!40000 ALTER TABLE `cv_Diet` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_Epoch`
+--
+
+DROP TABLE IF EXISTS `cv_Epoch`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_Epoch` (
+  `_epoch_key` int(11) NOT NULL AUTO_INCREMENT,
+  `epoch` varchar(32) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_epoch_key`),
+  UNIQUE KEY `cv_Epoch_epoch_key` (`_epoch_key`),
+  UNIQUE KEY `epoch` (`epoch`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_Epoch`
+--
+
+LOCK TABLES `cv_Epoch` WRITE;
+/*!40000 ALTER TABLE `cv_Epoch` DISABLE KEYS */;
+INSERT INTO `cv_Epoch` VALUES (1,'From Birth',1),(2,'From Conception',1),(3,'From Harvest',1);
+/*!40000 ALTER TABLE `cv_Epoch` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_ExpSampleLocation`
+--
+
+DROP TABLE IF EXISTS `cv_ExpSampleLocation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_ExpSampleLocation` (
+  `_expSampleLocation_key` int(11) NOT NULL AUTO_INCREMENT,
+  `location` varchar(16) NOT NULL,
+  `version` int(11) NOT NULL,
+  PRIMARY KEY (`_expSampleLocation_key`),
+  UNIQUE KEY `location` (`location`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_ExpSampleLocation`
+--
+
+LOCK TABLES `cv_ExpSampleLocation` WRITE;
+/*!40000 ALTER TABLE `cv_ExpSampleLocation` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cv_ExpSampleLocation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_ExpStatus`
+--
+
+DROP TABLE IF EXISTS `cv_ExpStatus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_ExpStatus` (
+  `_expStatus_key` int(11) NOT NULL AUTO_INCREMENT,
+  `status` varchar(16) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_expStatus_key`),
+  UNIQUE KEY `status` (`status`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_ExpStatus`
+--
+
+LOCK TABLES `cv_ExpStatus` WRITE;
+/*!40000 ALTER TABLE `cv_ExpStatus` DISABLE KEYS */;
+INSERT INTO `cv_ExpStatus` VALUES (1,'aborted',1),(2,'active',1),(3,'completed',1);
+/*!40000 ALTER TABLE `cv_ExpStatus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_FieldOfStudy`
+--
+
+DROP TABLE IF EXISTS `cv_FieldOfStudy`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_FieldOfStudy` (
+  `_fieldOfStudy_key` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldOfStudyName` varchar(32) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_fieldOfStudy_key`),
+  UNIQUE KEY `expGroup` (`fieldOfStudyName`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_FieldOfStudy`
+--
+
+LOCK TABLES `cv_FieldOfStudy` WRITE;
+/*!40000 ALTER TABLE `cv_FieldOfStudy` DISABLE KEYS */;
+INSERT INTO `cv_FieldOfStudy` VALUES (1,'Cancer stem cells',1),(2,'Diabetes',1),(3,'Pre clinical drug testing',1);
+/*!40000 ALTER TABLE `cv_FieldOfStudy` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_GeneClass`
+--
+
+DROP TABLE IF EXISTS `cv_GeneClass`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_GeneClass` (
+  `_geneClass_key` int(11) NOT NULL AUTO_INCREMENT,
+  `GeneClass` varchar(16) NOT NULL DEFAULT '',
+  `Description` varchar(50) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_geneClass_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_GeneClass`
+--
+
+LOCK TABLES `cv_GeneClass` WRITE;
+/*!40000 ALTER TABLE `cv_GeneClass` DISABLE KEYS */;
+INSERT INTO `cv_GeneClass` VALUES (1,'CTK','Combonation transgene + KO',1),(2,'E','endogenous',1),(3,'Floxed','tissue specific knock out',1),(4,'KI','knock in',1),(5,'KO','knock out',1),(6,'MKO','multi allele knock out',1),(7,'MTG','multi allele transgene',1),(8,'TG','transgene',1);
+/*!40000 ALTER TABLE `cv_GeneClass` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_Generation`
+--
+
+DROP TABLE IF EXISTS `cv_Generation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_Generation` (
+  `_generation_key` int(11) NOT NULL AUTO_INCREMENT,
+  `generation` varchar(16) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_generation_key`),
+  UNIQUE KEY `genName` (`generation`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_Generation`
+--
+
+LOCK TABLES `cv_Generation` WRITE;
+/*!40000 ALTER TABLE `cv_Generation` DISABLE KEYS */;
+INSERT INTO `cv_Generation` VALUES (1,'F01',1),(2,'F02',1),(3,'F03',1),(4,'N02',1),(5,'N03',1),(6,'N04',1),(7,'N05',1),(8,'N06',1),(9,'N07',1),(10,'N08',1),(11,'N09',1),(12,'N10',1),(13,'N11',1),(14,'N12',1),(15,'N13',1),(16,'N14',1),(17,'N15',1),(18,'N16',1),(19,'N17',1),(20,'N18',1),(21,'N19',1),(22,'N20',1),(23,'N21',1),(24,'N22',1),(25,'N23',1),(26,'N24',1),(27,'N25',1),(28,'N26',1),(29,'N27',1),(30,'N28',1),(31,'N29',1),(32,'N30',1);
+/*!40000 ALTER TABLE `cv_Generation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_GenotypeSpecimenLocation`
+--
+
+DROP TABLE IF EXISTS `cv_GenotypeSpecimenLocation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_GenotypeSpecimenLocation` (
+  `_genotypeSpecimenLocation_key` int(11) NOT NULL AUTO_INCREMENT,
+  `genotypeSpecimenLocation` varchar(16) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_genotypeSpecimenLocation_key`),
+  UNIQUE KEY `sampleLocation` (`genotypeSpecimenLocation`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_GenotypeSpecimenLocation`
+--
+
+LOCK TABLES `cv_GenotypeSpecimenLocation` WRITE;
+/*!40000 ALTER TABLE `cv_GenotypeSpecimenLocation` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cv_GenotypeSpecimenLocation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_HarvestMethod`
+--
+
+DROP TABLE IF EXISTS `cv_HarvestMethod`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_HarvestMethod` (
+  `_harvestMethod_key` int(11) NOT NULL AUTO_INCREMENT,
+  `harvestMethod` varchar(32) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_harvestMethod_key`),
+  UNIQUE KEY `harvestMethod` (`harvestMethod`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_HarvestMethod`
+--
+
+LOCK TABLES `cv_HarvestMethod` WRITE;
+/*!40000 ALTER TABLE `cv_HarvestMethod` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cv_HarvestMethod` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_HealthLevel`
+--
+
+DROP TABLE IF EXISTS `cv_HealthLevel`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_HealthLevel` (
+  `_healthLevel_key` int(11) NOT NULL AUTO_INCREMENT,
+  `healthLevel` varchar(8) NOT NULL,
+  `description` varchar(32) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_healthLevel_key`),
+  UNIQUE KEY `healthLevel` (`healthLevel`),
+  KEY `_healthLevel_key` (`_healthLevel_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_HealthLevel`
+--
+
+LOCK TABLES `cv_HealthLevel` WRITE;
+/*!40000 ALTER TABLE `cv_HealthLevel` DISABLE KEYS */;
+INSERT INTO `cv_HealthLevel` VALUES (1,'1',NULL,1),(2,'2',NULL,1),(3,'3',NULL,1),(4,'4',NULL,1);
+/*!40000 ALTER TABLE `cv_HealthLevel` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_Keywords`
+--
+
+DROP TABLE IF EXISTS `cv_Keywords`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_Keywords` (
+  `_keyword_key` int(11) NOT NULL AUTO_INCREMENT,
+  `keyword` varchar(32) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_keyword_key`),
+  UNIQUE KEY `keyword` (`keyword`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_Keywords`
+--
+
+LOCK TABLES `cv_Keywords` WRITE;
+/*!40000 ALTER TABLE `cv_Keywords` DISABLE KEYS */;
+INSERT INTO `cv_Keywords` VALUES (1,'Aging',1),(2,'Cancer',1),(3,'Cell',1),(4,'Diabetes',1),(5,'HHMI',1),(6,'Nature Genetics',1);
+/*!40000 ALTER TABLE `cv_Keywords` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_LineStatus`
+--
+
+DROP TABLE IF EXISTS `cv_LineStatus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_LineStatus` (
+  `_lineStatus_key` int(11) NOT NULL AUTO_INCREMENT,
+  `lineStatus` varchar(75) NOT NULL COMMENT 'Strain status',
+  `abbreviation` varchar(2) DEFAULT NULL COMMENT 'Abbreviation',
+  `isActive` tinyint(4) DEFAULT NULL COMMENT 'Is active',
+  `isDefault` tinyint(4) DEFAULT NULL COMMENT 'Is default',
+  `sortOrder` int(11) DEFAULT NULL COMMENT 'Sort order',
+  `_vocabularySource_key` int(11) DEFAULT NULL,
+  `elementID` varchar(18) DEFAULT NULL COMMENT 'Element ID',
+  `isDeprecated` tinyint(4) DEFAULT NULL COMMENT 'Is deprecated',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_lineStatus_key`),
+  UNIQUE KEY `idcv_lineStatus_UNIQUE` (`_lineStatus_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_LineStatus`
+--
+
+LOCK TABLES `cv_LineStatus` WRITE;
+/*!40000 ALTER TABLE `cv_LineStatus` DISABLE KEYS */;
+INSERT INTO `cv_LineStatus` VALUES (1,'Active','A',-1,-1,NULL,NULL,NULL,NULL,1),(2,'See comments','C',-1,0,NULL,NULL,NULL,NULL,1),(3,'Discarded','D',-1,0,NULL,NULL,NULL,NULL,1),(4,'Frozen and not active','F',-1,0,NULL,NULL,NULL,NULL,1);
+/*!40000 ALTER TABLE `cv_LineStatus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_LocationType`
+--
+
+DROP TABLE IF EXISTS `cv_LocationType`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_LocationType` (
+  `_locationType_key` int(11) NOT NULL AUTO_INCREMENT,
+  `locationType` varchar(32) NOT NULL,
+  `_storageFacility_key` int(11) NOT NULL DEFAULT '0',
+  `locationDetail` longtext,
+  `locationTypeRef` int(11) DEFAULT '0',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_locationType_key`),
+  UNIQUE KEY `cv_LocationType_locationType_key` (`_locationType_key`),
+  KEY `{7C34A96D-1914-438E-A567-864E12BFBB36}` (`_storageFacility_key`),
+  KEY `cv_LocationType_storageFacility_key` (`_storageFacility_key`),
+  KEY `FK650684FBEF340259` (`_storageFacility_key`),
+  CONSTRAINT `FK650684FBEF340259` FOREIGN KEY (`_storageFacility_key`) REFERENCES `cv_StorageFacility` (`_storageFacility_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_LocationType`
+--
+
+LOCK TABLES `cv_LocationType` WRITE;
+/*!40000 ALTER TABLE `cv_LocationType` DISABLE KEYS */;
+INSERT INTO `cv_LocationType` VALUES (1,'GRB',1,NULL,0,1),(2,'Cryo Tank Farm',1,NULL,1,1),(3,'LNF-1',1,NULL,2,1),(4,'LNF-2',1,NULL,2,1),(5,'Revco-80',1,NULL,2,1),(6,'Shelf-1',1,NULL,5,1),(7,'Shelf-2',1,NULL,5,1),(8,'Shelf-3',1,NULL,5,1),(9,'NRB',1,NULL,0,1);
+/*!40000 ALTER TABLE `cv_LocationType` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_MatingCardNotes`
+--
+
+DROP TABLE IF EXISTS `cv_MatingCardNotes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_MatingCardNotes` (
+  `_matingCardNotes_key` int(11) NOT NULL AUTO_INCREMENT,
+  `matingNotes` varchar(64) NOT NULL DEFAULT '',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_matingCardNotes_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_MatingCardNotes`
+--
+
+LOCK TABLES `cv_MatingCardNotes` WRITE;
+/*!40000 ALTER TABLE `cv_MatingCardNotes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cv_MatingCardNotes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_MouseOrigin`
+--
+
+DROP TABLE IF EXISTS `cv_MouseOrigin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_MouseOrigin` (
+  `_mouseOrigin_key` int(11) NOT NULL AUTO_INCREMENT,
+  `mouseOrigin` varchar(32) NOT NULL COMMENT 'Origin',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_mouseOrigin_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_MouseOrigin`
+--
+
+LOCK TABLES `cv_MouseOrigin` WRITE;
+/*!40000 ALTER TABLE `cv_MouseOrigin` DISABLE KEYS */;
+INSERT INTO `cv_MouseOrigin` VALUES (1,'BTLab',1),(2,'internal',1),(3,'JAX',1);
+/*!40000 ALTER TABLE `cv_MouseOrigin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_MouseProtocol`
+--
+
+DROP TABLE IF EXISTS `cv_MouseProtocol`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_MouseProtocol` (
+  `_mouseProtocol_key` int(11) NOT NULL AUTO_INCREMENT,
+  `id` varchar(32) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_mouseProtocol_key`),
+  UNIQUE KEY `protocolId` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_MouseProtocol`
+--
+
+LOCK TABLES `cv_MouseProtocol` WRITE;
+/*!40000 ALTER TABLE `cv_MouseProtocol` DISABLE KEYS */;
+INSERT INTO `cv_MouseProtocol` VALUES (1,'BT-00345',NULL,1),(2,'EX-GMMPS-10',NULL,1),(3,'HH-01',NULL,1);
+/*!40000 ALTER TABLE `cv_MouseProtocol` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_MouseUse`
+--
+
+DROP TABLE IF EXISTS `cv_MouseUse`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_MouseUse` (
+  `_mouseUse_key` int(11) NOT NULL AUTO_INCREMENT,
+  `mouseUse` varchar(32) NOT NULL,
+  `useDescription` varchar(64) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_mouseUse_key`),
+  UNIQUE KEY `mouseUse` (`mouseUse`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_MouseUse`
+--
+
+LOCK TABLES `cv_MouseUse` WRITE;
+/*!40000 ALTER TABLE `cv_MouseUse` DISABLE KEYS */;
+INSERT INTO `cv_MouseUse` VALUES (1,'Body Weight',NULL,1),(2,'Clinical Exam',NULL,1);
+/*!40000 ALTER TABLE `cv_MouseUse` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_PreservationDetail`
+--
+
+DROP TABLE IF EXISTS `cv_PreservationDetail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_PreservationDetail` (
+  `_preservationDetail_key` int(11) NOT NULL AUTO_INCREMENT,
+  `preservationDetail` varchar(32) NOT NULL,
+  `_preservationMethod_key` int(11) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_preservationDetail_key`),
+  KEY `cv_PreservationDetail_preservationDetail_key` (`_preservationDetail_key`),
+  KEY `cv_PreservationDetail_preservationMethod_key` (`_preservationMethod_key`),
+  KEY `FKB56DF039EF667BE3` (`_preservationMethod_key`),
+  CONSTRAINT `FKB56DF039EF667BE3` FOREIGN KEY (`_preservationMethod_key`) REFERENCES `cv_PreservationMethod` (`_preservationMethod_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_PreservationDetail`
+--
+
+LOCK TABLES `cv_PreservationDetail` WRITE;
+/*!40000 ALTER TABLE `cv_PreservationDetail` DISABLE KEYS */;
+INSERT INTO `cv_PreservationDetail` VALUES (1,'4% Formaldehyde',1,1),(2,'AF',2,1);
+/*!40000 ALTER TABLE `cv_PreservationDetail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_PreservationMethod`
+--
+
+DROP TABLE IF EXISTS `cv_PreservationMethod`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_PreservationMethod` (
+  `_preservationMethod_key` int(11) NOT NULL AUTO_INCREMENT,
+  `preservationMethod` varchar(32) NOT NULL,
+  `_preservationType_key` int(11) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_preservationMethod_key`),
+  KEY `cv_PreservationMethod_preservationMethod_key` (`_preservationMethod_key`),
+  KEY `cv_PreservationMethod_preservationType_key` (`_preservationType_key`),
+  KEY `FKC4C9A8C9B43494D5` (`_preservationType_key`),
+  CONSTRAINT `FKC4C9A8C9B43494D5` FOREIGN KEY (`_preservationType_key`) REFERENCES `cv_PreservationType` (`_preservationType_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_PreservationMethod`
+--
+
+LOCK TABLES `cv_PreservationMethod` WRITE;
+/*!40000 ALTER TABLE `cv_PreservationMethod` DISABLE KEYS */;
+INSERT INTO `cv_PreservationMethod` VALUES (1,'Immersion',1,1),(2,'Paraffin Block',4,1);
+/*!40000 ALTER TABLE `cv_PreservationMethod` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_PreservationType`
+--
+
+DROP TABLE IF EXISTS `cv_PreservationType`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_PreservationType` (
+  `_preservationType_key` int(11) NOT NULL AUTO_INCREMENT,
+  `preservationType` varchar(32) NOT NULL,
+  `_sampleClass_key` int(11) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_preservationType_key`),
+  UNIQUE KEY `cv_PreservationType_preservationType_key` (`_preservationType_key`),
+  KEY `{2C6EC29F-7572-4A76-8CCD-57C28F896C5B}` (`_sampleClass_key`),
+  KEY `cv_PreservationType_sampleClass_key` (`_sampleClass_key`),
+  KEY `FK7C9F4122766CFEF9` (`_sampleClass_key`),
+  CONSTRAINT `FK7C9F4122766CFEF9` FOREIGN KEY (`_sampleClass_key`) REFERENCES `cv_SampleClass` (`_sampleClass_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_PreservationType`
+--
+
+LOCK TABLES `cv_PreservationType` WRITE;
+/*!40000 ALTER TABLE `cv_PreservationType` DISABLE KEYS */;
+INSERT INTO `cv_PreservationType` VALUES (1,'Fixed',1,1),(2,'Frozen',1,1),(3,'Dried',1,1),(4,'10% NBF',2,1);
+/*!40000 ALTER TABLE `cv_PreservationType` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_SampleClass`
+--
+
+DROP TABLE IF EXISTS `cv_SampleClass`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_SampleClass` (
+  `_sampleClass_key` int(11) NOT NULL AUTO_INCREMENT,
+  `sampleClass` varchar(32) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_sampleClass_key`),
+  UNIQUE KEY `cv_SampleClass_sampleClass_key` (`_sampleClass_key`),
+  UNIQUE KEY `sampleClass` (`sampleClass`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_SampleClass`
+--
+
+LOCK TABLES `cv_SampleClass` WRITE;
+/*!40000 ALTER TABLE `cv_SampleClass` DISABLE KEYS */;
+INSERT INTO `cv_SampleClass` VALUES (1,'Live',1),(2,'Histology',1),(3,'Mol-Bio',1);
+/*!40000 ALTER TABLE `cv_SampleClass` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_SampleDateType`
+--
+
+DROP TABLE IF EXISTS `cv_SampleDateType`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_SampleDateType` (
+  `_sampleDateType_key` int(11) NOT NULL AUTO_INCREMENT,
+  `sampleDateType` varchar(32) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_sampleDateType_key`),
+  UNIQUE KEY `cv_SampleDateType_sampleDateType_key` (`_sampleDateType_key`),
+  UNIQUE KEY `sampleDateType` (`sampleDateType`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_SampleDateType`
+--
+
+LOCK TABLES `cv_SampleDateType` WRITE;
+/*!40000 ALTER TABLE `cv_SampleDateType` DISABLE KEYS */;
+INSERT INTO `cv_SampleDateType` VALUES (1,'Date Harvested',1);
+/*!40000 ALTER TABLE `cv_SampleDateType` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_SampleStatus`
+--
+
+DROP TABLE IF EXISTS `cv_SampleStatus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_SampleStatus` (
+  `_sampleStatus_key` int(11) NOT NULL AUTO_INCREMENT,
+  `sampleStatus` varchar(32) NOT NULL,
+  `isInStorage` tinyint(1) DEFAULT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_sampleStatus_key`),
+  UNIQUE KEY `cv_SampleStatus_sampleStatus_key` (`_sampleStatus_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_SampleStatus`
+--
+
+LOCK TABLES `cv_SampleStatus` WRITE;
+/*!40000 ALTER TABLE `cv_SampleStatus` DISABLE KEYS */;
+INSERT INTO `cv_SampleStatus` VALUES (1,'Unprocessed',0,1),(2,'Processed',0,1),(3,'Archived',-1,1);
+/*!40000 ALTER TABLE `cv_SampleStatus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_SampleType`
+--
+
+DROP TABLE IF EXISTS `cv_SampleType`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_SampleType` (
+  `_sampleType_key` int(11) NOT NULL AUTO_INCREMENT,
+  `sampleType` varchar(32) NOT NULL,
+  `_sampleClass_key` int(11) NOT NULL DEFAULT '0',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_sampleType_key`),
+  UNIQUE KEY `cv_SampleType_sampleType_key` (`_sampleType_key`),
+  KEY `{78221742-ACAC-4BB6-9B1F-3B21C85AC003}` (`_sampleClass_key`),
+  KEY `cv_SampleType_sampleClass_key` (`_sampleClass_key`),
+  KEY `FK88C68370766CFEF9` (`_sampleClass_key`),
+  CONSTRAINT `FK88C68370766CFEF9` FOREIGN KEY (`_sampleClass_key`) REFERENCES `cv_SampleClass` (`_sampleClass_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_SampleType`
+--
+
+LOCK TABLES `cv_SampleType` WRITE;
+/*!40000 ALTER TABLE `cv_SampleType` DISABLE KEYS */;
+INSERT INTO `cv_SampleType` VALUES (3,'DNA',3,1),(4,'RNA',3,1),(5,'Sperm',1,1),(6,'Embryo',1,1),(7,'Cell Line',1,1),(8,'Brain',2,1),(9,'Heart',2,1),(10,'Liver',2,1),(11,'Lung',2,1);
+/*!40000 ALTER TABLE `cv_SampleType` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_Sex`
+--
+
+DROP TABLE IF EXISTS `cv_Sex`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_Sex` (
+  `_sex_key` int(11) NOT NULL AUTO_INCREMENT,
+  `sex` varchar(75) NOT NULL COMMENT 'Sex',
+  `abbreviation` varchar(2) DEFAULT NULL COMMENT 'Abbreviation',
+  `isActive` tinyint(4) DEFAULT NULL COMMENT 'Is active',
+  `isDefault` tinyint(4) DEFAULT NULL COMMENT 'Is default',
+  `sortOrder` int(11) DEFAULT NULL COMMENT 'Sort order',
+  `_vocabularySource_key` int(11) DEFAULT NULL,
+  `elementID` varchar(18) DEFAULT NULL COMMENT 'Element ID',
+  `isDeprecated` tinyint(4) DEFAULT NULL COMMENT 'Is deprecated',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_sex_key`),
+  UNIQUE KEY `idcv_sex_UNIQUE` (`_sex_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_Sex`
+--
+
+LOCK TABLES `cv_Sex` WRITE;
+/*!40000 ALTER TABLE `cv_Sex` DISABLE KEYS */;
+INSERT INTO `cv_Sex` VALUES (1,'Male','M',-1,0,NULL,NULL,NULL,NULL,1),(2,'Female','F',-1,0,NULL,NULL,NULL,NULL,1),(3,'Unknown','-',-1,-1,NULL,NULL,NULL,NULL,1);
+/*!40000 ALTER TABLE `cv_Sex` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_StorageFacility`
+--
+
+DROP TABLE IF EXISTS `cv_StorageFacility`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_StorageFacility` (
+  `_storageFacility_key` int(11) NOT NULL AUTO_INCREMENT,
+  `storageFacility` varchar(64) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_storageFacility_key`),
+  UNIQUE KEY `storageFacility` (`storageFacility`),
+  KEY `cv_StorageFacility_storageFacility_key` (`_storageFacility_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_StorageFacility`
+--
+
+LOCK TABLES `cv_StorageFacility` WRITE;
+/*!40000 ALTER TABLE `cv_StorageFacility` DISABLE KEYS */;
+INSERT INTO `cv_StorageFacility` VALUES (1,'TJL',1);
+/*!40000 ALTER TABLE `cv_StorageFacility` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_StrainType`
+--
+
+DROP TABLE IF EXISTS `cv_StrainType`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_StrainType` (
+  `_strainType_key` int(11) NOT NULL AUTO_INCREMENT,
+  `strainType` varchar(64) NOT NULL DEFAULT '',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  `versiion` int(11) DEFAULT NULL,
+  PRIMARY KEY (`_strainType_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_StrainType`
+--
+
+LOCK TABLES `cv_StrainType` WRITE;
+/*!40000 ALTER TABLE `cv_StrainType` DISABLE KEYS */;
+INSERT INTO `cv_StrainType` VALUES (1,'coisogenic',1,NULL),(2,'congenic',1,NULL),(3,'conplastic',1,NULL),(4,'consomic',1,NULL),(5,'F1 hybrid',1,NULL),(6,'F2 hybrid',1,NULL),(7,'inbred',1,NULL),(8,'outbred',1,NULL),(9,'recombinant congenic',1,NULL),(10,'recombinant inbred',1,NULL),(11,'wild-derived inbred',1,NULL);
+/*!40000 ALTER TABLE `cv_StrainType` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_TableName`
+--
+
+DROP TABLE IF EXISTS `cv_TableName`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_TableName` (
+  `_tableName_key` int(11) NOT NULL AUTO_INCREMENT,
+  `tableName` varchar(255) NOT NULL COMMENT 'Table name',
+  `abbreviation` varchar(10) NOT NULL COMMENT 'Abbreviation',
+  `isActive` tinyint(4) DEFAULT '-1' COMMENT 'Is active',
+  `isDefault` tinyint(4) DEFAULT '0' COMMENT 'Is default',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_tableName_key`),
+  UNIQUE KEY `idcv_tableName_UNIQUE` (`_tableName_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_TableName`
+--
+
+LOCK TABLES `cv_TableName` WRITE;
+/*!40000 ALTER TABLE `cv_TableName` DISABLE KEYS */;
+INSERT INTO `cv_TableName` VALUES (1,'Genotype','Genotype',-1,-1,1),(2,'ExpPlan','Exp Plan',-1,0,1),(3,'Litter','Litter',-1,0,1),(4,'Mating','Mating',-1,0,1),(5,'Mouse','Mouse',-1,0,1),(6,'Sample','Sample',-1,0,1);
+/*!40000 ALTER TABLE `cv_TableName` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_TestStatus`
+--
+
+DROP TABLE IF EXISTS `cv_TestStatus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_TestStatus` (
+  `_testStatus_key` int(11) NOT NULL AUTO_INCREMENT,
+  `testStatus` varchar(8) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_testStatus_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_TestStatus`
+--
+
+LOCK TABLES `cv_TestStatus` WRITE;
+/*!40000 ALTER TABLE `cv_TestStatus` DISABLE KEYS */;
+INSERT INTO `cv_TestStatus` VALUES (1,'active',1),(2,'done',1),(3,'proposed',1);
+/*!40000 ALTER TABLE `cv_TestStatus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_TimeUnit`
+--
+
+DROP TABLE IF EXISTS `cv_TimeUnit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_TimeUnit` (
+  `_timeUnit_key` int(11) NOT NULL AUTO_INCREMENT,
+  `timeUnit` varchar(32) NOT NULL,
+  `abbreviation` varchar(10) NOT NULL,
+  `minutesPerUnit` int(11) NOT NULL DEFAULT '0',
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_timeUnit_key`),
+  UNIQUE KEY `cv_TimeUnit_timeUnit_key` (`_timeUnit_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_TimeUnit`
+--
+
+LOCK TABLES `cv_TimeUnit` WRITE;
+/*!40000 ALTER TABLE `cv_TimeUnit` DISABLE KEYS */;
+INSERT INTO `cv_TimeUnit` VALUES (1,'Hours','h',60,1),(2,'Days','d',1440,1),(3,'Weeks','ww',10080,1),(4,'Months','m',43800,1);
+/*!40000 ALTER TABLE `cv_TimeUnit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_WeightUnit`
+--
+
+DROP TABLE IF EXISTS `cv_WeightUnit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cv_WeightUnit` (
+  `_weightUnit_key` int(11) NOT NULL AUTO_INCREMENT,
+  `weightUnit` varchar(32) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1' COMMENT 'Version',
+  PRIMARY KEY (`_weightUnit_key`),
+  UNIQUE KEY `cv_WeightUnit_weightUnit_key` (`_weightUnit_key`),
+  UNIQUE KEY `weightUnit` (`weightUnit`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cv_WeightUnit`
+--
+
+LOCK TABLES `cv_WeightUnit` WRITE;
+/*!40000 ALTER TABLE `cv_WeightUnit` DISABLE KEYS */;
+INSERT INTO `cv_WeightUnit` VALUES (1,'gram',1),(2,'ounces',1),(3,'milligrams',1);
+/*!40000 ALTER TABLE `cv_WeightUnit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dbInfo`
+--
+
+DROP TABLE IF EXISTS `dbInfo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dbInfo` (
+  `_dbinfo_key` int(11) NOT NULL,
+  `dbVers` varchar(8) NOT NULL,
+  `versDate` datetime NOT NULL,
+  `maxPenID` int(11) NOT NULL DEFAULT '0',
+  `releaseNum` varchar(16) NOT NULL,
+  `releaseDate` datetime DEFAULT NULL,
+  `maxAutoLitterNum` int(11) DEFAULT '0',
+  `maxAutoMouseID` int(11) DEFAULT '0',
+  `majorVersion` int(11) NOT NULL,
+  `minorVersion` int(11) NOT NULL,
+  `bugFixVersion` int(11) DEFAULT NULL,
+  `buildVersion` int(11) DEFAULT NULL,
+  `releaseType` varchar(32) DEFAULT NULL,
+  `releaseNotes` varchar(1024) DEFAULT NULL,
+  `databaseReleaseNum` varchar(255) NOT NULL,
+  PRIMARY KEY (`_dbinfo_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dbInfo`
+--
+
+LOCK TABLES `dbInfo` WRITE;
+/*!40000 ALTER TABLE `dbInfo` DISABLE KEYS */;
+INSERT INTO `dbInfo` VALUES (1,'58','2010-11-19 00:00:00',74,'4.2.0','2010-11-19 00:00:00',119,0,4,2,0,1,'init','release notes','4.2.0');
+/*!40000 ALTER TABLE `dbInfo` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2010-12-22 14:56:07

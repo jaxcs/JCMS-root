@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+
+<web-app version="3.0" 
+         xmlns="http://java.sun.com/xml/ns/javaee" 
+         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="jcms">
+    <description>The Jackson Laboratory Colony Management System</description>
+    <display-name>JCMS</display-name>
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+    <context-param>
+        <description>
+            If comments are enabled, the copyright header will prevent the login form
+            from working on Internet Explorer. Alternatively, you can remove the copyright
+            header.
+        </description>
+        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>    
+    <context-param>
+        <param-name>org.richfaces.enableControlSkinning</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.richfaces.enableControlSkinningClasses</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.richfaces.skin</param-name>
+        <param-value>blueSky</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.verifyObjects</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.validateXml</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.richfaces.push.jms.enabled</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>bluesky</param-value>
+    </context-param>
+    
+
+    <filter>
+        <filter-name>RichFacesFirefox11Filter</filter-name>
+        <filter-class>jcms.web.common.RichFacesFirefox11Filter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RichFacesFirefox11Filter</filter-name>
+        <url-pattern>/a4j/*</url-pattern>
+    </filter-mapping>
+
+    <!-- JSF Configuration-->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/jcmsWeb/*</url-pattern>
+    </servlet-mapping>
+    <!-- Trap servlet exceptions and display appropriate error page -->
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/sessionExpired.xhtml</location>
+    </error-page>
+
+    <session-config>
+        <session-timeout>240</session-timeout>
+    </session-config>
+
+
+    <welcome-file-list>
+        <welcome-file>jcmsWeb/welcome.xhtml</welcome-file>
+    </welcome-file-list>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Home</web-resource-name>
+            <url-pattern>/jcmsWeb/home.xhtml</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>All available Functional Areas must appear here.</description>
+            <role-name>Administration</role-name>
+            <role-name>Querying</role-name>
+            <role-name>Reporting</role-name>
+            <role-name>ColonyManagement</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint> 
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Query Page</web-resource-name>
+            <url-pattern>/jcmsWeb/search/queryPages.xhtml</url-pattern>
+            <url-pattern>/jcmsWeb/search/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <!-- All available Functional Areas must appear here. -->
+            <role-name>Administration</role-name>
+            <role-name>Querying</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>    
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Reports</web-resource-name>
+            <url-pattern>/jcmsWeb/reports/reports.xhtml</url-pattern>
+            <url-pattern>/jcmsWeb/reports/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <!-- All available Functional Areas must appear here. -->
+            <role-name>Administration</role-name>
+            <role-name>Reporting</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>JCMSWeb Administration pages</web-resource-name>
+            <description>Require users to authenticate</description>
+            <url-pattern>/jcmsWeb/admin/*</url-pattern>
+        </web-resource-collection>
+        
+        <auth-constraint>
+            <description>
+                Allow administration role access to admin pages.
+            </description>
+            <role-name>Administration</role-name>
+        </auth-constraint>    
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Sample Pages</web-resource-name>
+            <url-pattern>/jcmsWeb/samples/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <!-- All available Functional Areas must appear here. -->
+            <role-name>Administration</role-name>
+            <role-name>ColonyManagement</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint> 
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Colony Management</web-resource-name>
+            <url-pattern>/jcmsWeb/colonyManagement/colonyManagementHome.xhtml</url-pattern>
+            <url-pattern>/jcmsWeb/colonyManagement/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <!-- All available Functional Areas must appear here. -->
+            <role-name>Administration</role-name>
+            <role-name>ColonyManagement</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>    
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Mouse Scheduling Calendar</web-resource-name>
+            <url-pattern>/jcmsWeb/mouseScheduling/calendar.xhtml</url-pattern>
+            <url-pattern>/jcmsWeb/mouseScheduling/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <!-- All available Functional Areas must appear here. -->
+            <role-name>Administration</role-name>
+            <role-name>ColonyManagement</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>        
+    
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>JAXUser</realm-name>
+        <form-login-config>
+            <form-login-page>/jcmsWeb/login.xhtml</form-login-page>
+            <form-error-page>/jcmsWeb/loginError.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>    
+    
+    <security-role>
+        <role-name>Administration</role-name>
+    </security-role>
+    <security-role>
+        <role-name>Querying</role-name>
+    </security-role>
+    <security-role>
+        <role-name>Reporting</role-name>
+    </security-role>
+    <security-role>
+        <role-name>ColonyManagement</role-name>
+    </security-role>
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/jcmsWeb/403.xhtml</location>
+    </error-page>
+</web-app>

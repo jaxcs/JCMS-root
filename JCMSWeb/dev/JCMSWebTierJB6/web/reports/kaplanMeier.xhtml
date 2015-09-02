@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>
+            <h:outputText value="Kaplan Meier Plots"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <link href="/jcms/stylesheet/kaplanMeierStyles.css" rel="stylesheet" media="screen" />
+        <script src="/jcms/javascript/kaplanMeier.js" type="text/javascript"></script>
+        <script type="text/javascript" src="/jcms/javascript/d3.v3.js"></script>
+    </h:head>
+    <h:body>
+        <h:form>
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <p><h2><h:outputText value="Kaplan Meier Charts"/></h2></p>
+            <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">  
+                <f:facet name="start">  
+                    <h:graphicImage  value="../images/bhi_ball.gif"/>
+                </f:facet>
+                <f:facet name="complete">  
+                    <h:graphicImage value="../images/bhi_ball_white.gif" />  
+                </f:facet>  
+            </p:ajaxStatus>
+            <p:growl id="growl" autoUpdate="true"/>
+            &nbsp;
+            <h:panelGrid columns="1">
+                <p:panel id="containerPanel" toggleable="true" 
+                         toggleSpeed="500" header="Filters"
+                         collapsed="#{KaplanMeier_Backing.collapsed}">
+                    <p:tabView id="tabView" activeIndex="#{KaplanMeier_Backing.activeIndex}"
+                               value="#{KaplanMeier_Backing.lines}" var="line">
+                        <p:ajax event="tabClose" 
+                                listener="#{KaplanMeier_Backing.tabCloseListener}"/>
+                        <p:ajax event="tabChange" 
+                                listener="#{KaplanMeier_Backing.activeTabChangeListener}"/>
+                        <p:tab title="#{line.title}" closable="true">
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Title"/>
+                                <h:inputText value="#{line.title}"/>
+                                <h:outputText value="Color"/>
+                                <p:colorPicker value="#{line.color}"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="3" cellpadding="15" id="filterGrid">
+                                <p:pickList value="#{line.ownersModel}" filterMatchMode="contains"
+                                            showSourceFilter="true" showTargetFilter="true" converter="ownerConverter"
+                                            var="owner" itemLabel="#{owner.owner}" itemValue="#{owner}">
+                                    <f:facet name="sourceCaption">Select Owner(s)</f:facet>  
+                                    <f:facet name="targetCaption">Selected Owner(s)</f:facet>  
+                                </p:pickList>
+                                <p:pickList value="#{line.useSchedulesModel}" filterMatchMode="contains"
+                                            showTargetFilter="true" showSourceFilter="true" converter="useScheduleTermConverter"
+                                            var="ust" itemLabel="#{ust.useScheduleTermName}" itemValue="#{ust}">
+                                    <f:facet name="sourceCaption">Select Use Schedule(s)</f:facet>  
+                                    <f:facet name="targetCaption">Selected Use Schedule(s)</f:facet>  
+                                </p:pickList>
+                                <p:pickList value="#{line.strainsModel}" filterMatchMode="contains"
+                                            showSourceFilter="true" showTargetFilter="true" converter="strainConverter"
+                                            var="strain" itemLabel="#{strain.strainName}" itemValue="#{strain}">
+                                    <f:facet name="sourceCaption">Select Strain(s)</f:facet>  
+                                    <f:facet name="targetCaption">Selected Strain(s)</f:facet>  
+                                </p:pickList>    
+                                <p:pickList value="#{line.lifeStatusesModel}" filterMatchMode="contains"
+                                            showSourceFilter="true" showTargetFilter="true" converter="lifeStatusConverter"
+                                            var="lifeStatus" itemLabel="#{lifeStatus.lifeStatus}" itemValue="#{lifeStatus}">
+                                    <f:facet name="sourceCaption">Select Life Status(es)</f:facet>  
+                                    <f:facet name="targetCaption">Selected Life Status(es)</f:facet>  
+                                </p:pickList>                              
+                                <p:pickList value="#{line.codModel}" filterMatchMode="contains"
+                                            showSourceFilter="true" showTargetFilter="true" converter="causeOfDeathConverter"
+                                            var="cod" itemLabel="#{cod.cod}" itemValue="#{cod}">
+                                    <f:facet name="sourceCaption">Select COD(s)</f:facet>  
+                                    <f:facet name="targetCaption">Selected COD(s)</f:facet>  
+                                </p:pickList>                          
+                                <p:pickList value="#{line.dietModel}" filterMatchMode="contains"
+                                            showSourceFilter="true" showTargetFilter="true" converter="dietConverter"
+                                            var="diet" itemLabel="#{diet.diet}" itemValue="#{diet}">
+                                    <f:facet name="sourceCaption">Select Diet(s)</f:facet>  
+                                    <f:facet name="targetCaption">Selected Diet(s)</f:facet>  
+                                </p:pickList>                     
+                                <p:pickList value="#{line.geneModel}" filterMatchMode="contains"
+                                            showSourceFilter="true" showTargetFilter="true" 
+                                            converter="genesConverter" var="gene" 
+                                            itemLabel="#{gene.labSymbol}" itemValue="#{gene}">
+                                    <p:ajax event="transfer" listener="#{KaplanMeier_Backing.geneTransferListener}" 
+                                            update="allele1PickList, allele2PickList"/>
+                                    <f:facet name="sourceCaption">Select Gene(s)</f:facet>  
+                                    <f:facet name="targetCaption">Selected Genes(s)</f:facet>  
+                                </p:pickList>                 
+                                <p:pickList id="allele1PickList" 
+                                            value="#{line.allele1Model}" filterMatchMode="contains"
+                                            showSourceFilter="true" showTargetFilter="true" 
+                                            converter="alleleConverter" var="allele" 
+                                            itemLabel="#{allele.allele}" itemValue="#{allele}" >
+                                    <f:facet name="sourceCaption">Select Allele(s)</f:facet>  
+                                    <f:facet name="targetCaption">Selected Allele(s)</f:facet>  
+                                </p:pickList>               
+                                <p:pickList id="allele2PickList" 
+                                            value="#{line.allele2Model}" filterMatchMode="contains"
+                                            showSourceFilter="true" showTargetFilter="true" 
+                                            converter="alleleConverter" var="allele" 
+                                            itemLabel="#{allele.allele}" itemValue="#{allele}" >
+                                    <f:facet name="sourceCaption">Select Allele(s)</f:facet>  
+                                    <f:facet name="targetCaption">Selected Allele(s)</f:facet>  
+                                </p:pickList>                      
+                                <p:pickList value="#{line.roomModel}" filterMatchMode="contains"
+                                            showSourceFilter="true" showTargetFilter="true" converter="roomConverter"
+                                            var="room" itemLabel="#{room.roomName}" itemValue="#{room}">
+                                    <f:facet name="sourceCaption">Select Room(s)</f:facet>  
+                                    <f:facet name="targetCaption">Selected Room(s)</f:facet>  
+                                </p:pickList> 
+                            </h:panelGrid>
+                        </p:tab>                    
+                    </p:tabView>
+                    <h:panelGrid columns="3">
+                        <p:commandButton value="Add Line"           
+                                        update="tabView"
+                                        actionListener="#{KaplanMeier_Backing.addLine}"/>
+                        <p:commandButton value="Submit"                 
+                                        update="containerPanel"
+                                        action="#{KaplanMeier_Backing.buildKaplanMeier}" 
+                                        onstart="d3.selectAll('svg').remove();"
+                                        oncomplete="buildKaplanMeier(xhr, status, args);"/>
+                        <p:commandButton value="Clear Search"                 
+                                        update="tabView"
+                                        action="#{KaplanMeier_Backing.clearSearch}"/>
+                    </h:panelGrid>
+                </p:panel>
+            </h:panelGrid>
+            <!-- SVG is rendered inside the div -->
+            <div style="margin-left:10px;margin-right:10px;" class="contentDiv">
+                
+            </div> 
+            <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+        </h:form>
+    </h:body>
+</html>

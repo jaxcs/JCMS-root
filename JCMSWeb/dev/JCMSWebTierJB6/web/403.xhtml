@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>JCMS No Access Page</title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js" >
+        </script>
+    </h:head>
+
+    <h:body>
+        <table width="100%" cellspacing="0" cellpadding="0">
+            <tr bgcolor="#D8E3E6">
+                <td rowspan="2"><img src="/jcms/images/header.jpg" alt="Header image" /></td>
+                <td height="40" valign="bottom" align="right" nowrap="nowrap" id="logo">The Jackson Laboratory&nbsp;</td>
+            </tr>
+            <tr bgcolor="#D8E3E6">
+                <td height="31" valign="top" align="right"><h3>COLONY MANAGEMENT SYSTEM&nbsp;&nbsp;&nbsp;</h3></td>
+            </tr>
+        </table>
+
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr><td bgcolor="#808000"><img src="/jcms/images/spacer.gif" alt="" height="2" width="1" /></td></tr>
+            <tr>
+                <td colspan="2" align="right">
+                    <table width="100%" class="barBackground">
+                        <tr>
+                            <td align="right" class="menu">&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr><td bgcolor="#808000"><img src="/jcms/images/spacer.gif" alt="" height="2" width="1" /></td></tr>
+        </table>
+
+        <br />
+        <div style="margin-left:10px;margin-right:10px">
+
+            <h1>Application Login</h1>
+            <hr/><br/>
+        <h3>We&#039;re sorry that your request could not be processed.
+            The processing error message is:</h3>   
+            <!-- displays any error messages -->
+        <ul>
+            <li><span class="errorMessage">You do not have permissions to go further</span></li>
+        </ul>
+        <br />
+
+        <table width="100%">
+            <tbody><h2>Authorization failed. Please press your browser's <em>back</em> button and retry.</h2>
+        </tbody>
+        </table>
+        </div>
+        <f:subview id="footer"><ui:include src="footer.xhtml"/></f:subview>
+    </h:body>
+</html>

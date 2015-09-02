@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ JBoss, Home of Professional Open Source.
+  ~ Copyright 2009, Red Hat Middleware LLC, and individual contributors
+  ~ as indicated by the @author tags. See the copyright.txt file in the
+  ~ distribution for a full listing of individual contributors.
+  ~
+  ~ This is free software; you can redistribute it and/or modify it
+  ~ under the terms of the GNU Lesser General Public License as
+  ~ published by the Free Software Foundation; either version 2.1 of
+  ~ the License, or (at your option) any later version.
+  ~
+  ~ This software is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+  ~ Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public
+  ~ License along with this software; if not, write to the Free
+  ~ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+  ~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+  -->
+
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+   <!-- These two beans are to create the deployer for logging config files. -->
+   <bean name="JBossLoggingMetaDataFactoryDeployer" class="org.jboss.deployers.vfs.deployer.kernel.BeanMetaDataFactoryDeployer">
+      <constructor>
+         <parameter>org.jboss.logging.metadata.LoggingMetaData</parameter>
+      </constructor>
+   </bean>
+
+   <bean name="JBossLoggingMetaDataSchemaResolverDeployer" class="org.jboss.deployers.vfs.spi.deployer.SchemaResolverDeployer">
+      <constructor>
+         <parameter>org.jboss.logging.metadata.LoggingMetaData</parameter>
+      </constructor>
+      <property name="name">jboss-logging.xml</property>
+      <property name="registerWithJBossXB">true</property>
+   </bean>
+
+   <!--
+     ~ This is the system logging context, which is the default log context.  It is "started" on demand so that it
+     ~ the dependency (JBossLogService, below) isn't started until a jboss-logging.xml is deployed; in reality
+     ~ the backing object is present from the moment the log system is initialized in bootstrap.
+     -->
+   <bean name="Logging:CONTEXT:system" class="org.jboss.logmanager.LogContext" mode="On Demand">
+      <constructor factoryClass="org.jboss.logmanager.LogContext" factoryMethod="getSystemLogContext"/>
+      <depends>JBossLogService</depends>
+   </bean>
+
+   <!--
+     ~ This is the log service, which removes the bootstrap logging configuration when a logging configuration
+     ~ is deployed (but only for the system log context; a deployment to another context will not cause this service
+     ~ to start).
+     -->
+   <bean name="JBossLogService" class="org.jboss.logmanager.LogService" mode="On Demand"/>
+
+   <!-- This is the repository selector for log4j which causes it to bridge to the logmanager. -->
+   <bean name="JBossLog4jRepostiorySelector" class="org.jboss.logmanager.log4j.BridgeRepositorySelector"/>
+
+   <!--
+     ~ These two beans define the per-classloader log context selector which allows per-deployment logging.  Since
+     ~ enabling this feature may have a performance impact in certain cases, it's started up lazily (on demand)
+     ~ when a separate log context is defined in a user deployment.
+     -->
+   <bean name="JBossLogManagerContextSelectorService" class="org.jboss.logmanager.ClassLoaderLogContextSelector"/>
+
+   <bean name="OnDemandJBossLogManagerContextSelector" class="org.jboss.logmanager.LogContextSelectorService" mode="On Demand">
+      <property name="selector">
+         <inject bean="JBossLogManagerContextSelectorService"/>
+      </property>
+   </bean>
+    
+</deployment>

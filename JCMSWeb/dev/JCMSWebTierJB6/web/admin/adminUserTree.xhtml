@@ -1,0 +1,311 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+        <!-- ADD CENTER BUTTON -->
+        <div align="left">
+        <a4j:commandButton id="addCenterId"
+                            value="#{msgs['center.add']}"
+                            styleClass="mediumButton"
+                            disabled="#{AdminTree_Backing.currentUser.userName != 'mtsadmin'}"
+                            actionListener="#{AdminTree_Backing.addCenterDisplay}"
+                            render="centerPanelId"/>
+        &nbsp;&nbsp;
+        </div><hr />
+        <!-- CENTER PANEL -->
+        <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5" width="100%"
+                        columnClasses="topLeft, topLeft"
+                        id="centerPanelId">
+            <!-- CENTER TREE -->
+            <rich:tree id="centerTreeId"
+                        value="#{AdminTree_Backing.root}"
+                        var="node"
+                        selectionType="client"
+                        toggleType="client"
+                        selectionChangeListener="#{AdminTree_Backing.processSelection}">
+                <rich:treeNode iconLeaf="#{node.iconPath}"
+                                iconCollapsed="#{node.iconPath}"
+                                iconExpanded="#{node.iconPath}">
+                    <a4j:commandLink value="#{node.displayString}"  />
+                </rich:treeNode>
+                <a4j:ajax event="selectionchange"
+                            render="selectedPanel"/>
+            </rich:tree>
+            <h:panelGrid columns="1" id="selectedPanel">
+                <!--Selected user info panel-->
+                <h:panelGrid columns="1" rendered="#{AdminTree_Backing.selectedUser}" id="selectedUserPanel">
+                    <f:facet name="header">
+                        <h:outputText value="Selected User Info"/>
+                    </f:facet>
+                    <h:panelGrid columns="2">
+                        <h:panelGrid columns="2" style="white-space: nowrap;">
+                            <h:outputText value="User Name: "/>
+                            <h:inputText value="#{AdminTree_Backing.editUserItem.userName}"
+                                            disabled="#{AdminTree_Backing.editUserItem.userName == 'mtsadmin'}"
+                                            readonly="#{AdminTree_Backing.editUserItem.userName == 'mtsadmin'}"/>
+                            <h:outputText value="First Name: "/>
+                            <h:inputText value="#{AdminTree_Backing.editUserItem.firstName}"
+                                            disabled="#{AdminTree_Backing.editUserItem.userName == 'mtsadmin'}"
+                                            readonly="#{AdminTree_Backing.editUserItem.userName == 'mtsadmin'}"/>
+                            <h:outputText value="Last Name: "/>
+                            <h:inputText value="#{AdminTree_Backing.editUserItem.lastName}"
+                                            disabled="#{AdminTree_Backing.editUserItem.userName == 'mtsadmin'}"
+                                            readonly="#{AdminTree_Backing.editUserItem.userName == 'mtsadmin'}"/>
+                            <h:outputText value="Active: "/>
+                            <h:selectBooleanCheckbox value="#{AdminTree_Backing.isActiveUser}"
+                                                        disabled="#{AdminTree_Backing.editUserItem.userName == 'mtsadmin'}"/>
+                            <h:outputText value="Change Password: "/>  
+                            <h:selectBooleanCheckbox value="#{AdminTree_Backing.changingPassword}"
+                                                        disabled="#{AdminTree_Backing.editUserItem.userName == 'mtsadmin'
+                                                                    and AdminTree_Backing.currentUser.userName != 'mtsadmin'}">
+                                    <a4j:ajax event="change"
+                                            render="centerPanelId"/> 
+                            </h:selectBooleanCheckbox>
+                            <h:outputText value="Password: " 
+                                            rendered="#{AdminTree_Backing.changingPassword}"/>
+                            <h:inputSecret value="#{AdminTree_Backing.password}" 
+                                            rendered="#{AdminTree_Backing.changingPassword}"/>
+                            <h:outputText value="Verify Password: " 
+                                            rendered="#{AdminTree_Backing.changingPassword}"/>
+                            <h:inputSecret value="#{AdminTree_Backing.verifyPassword}"
+                                            rendered="#{AdminTree_Backing.changingPassword}"/>
+                            <h:panelGroup styleClass="nowrap">
+                                <a4j:commandButton value="Update"
+                                                    styleClass="mediumButton"
+                                                    action="#{AdminTree_Backing.validateChange}"
+                                                    oncomplete="if(#{AdminTree_Backing.warnBeforeUpdate}){warnUpdateUser();}
+                                                                else {updateUser();}"/>
+                                <a4j:jsFunction name="updateUser"
+                                                action="#{AdminTree_Backing.editUser}"
+                                                render="centerPanelId"/>
+                                &nbsp;&nbsp;
+                                <a4j:commandButton value="Remove"
+                                                    styleClass="mediumButton"
+                                                    action="#{AdminTree_Backing.validateChange}"
+                                                    oncomplete="if(#{AdminTree_Backing.warnBeforeRemove}){warnRemoveUser();}
+                                                                else {removeUser();}"/>
+                                <a4j:jsFunction name="removeUser"
+                                                action="#{AdminTree_Backing.removeUser}"
+                                                render="centerPanelId"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" style="text-align: center;">
+                            <h:outputText value="Role" style="font-weight: bold;"/>
+                            <h:panelGrid columns="2" style="text-align: center; font-weight: normal;">
+                                <h:selectOneRadio value="#{AdminTree_Backing.role}" layout="pageDirection" style="white-space: nowrap;"
+                                                    disabled="#{AdminTree_Backing.editUserItem.userName == 'mtsadmin'}">
+                                    <f:selectItem itemLabel="Administrator" itemValue="administrator"/>
+                                    <f:selectItem itemLabel="Colony Manager" itemValue="colonyWorker"/>
+                                    <f:selectItem itemLabel="Guest" itemValue="guest"/>
+                                </h:selectOneRadio>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </h:panelGrid> 
+                </h:panelGrid>
+                <!--Selected workgroup info panel -->
+                <h:panelGrid columns="1" rendered="#{AdminTree_Backing.selectedWorkgroup}" style="white-space: nowrap;">
+                    <f:facet name="header">
+                        <h:outputText value="Selected Workgroup Info"/>
+                    </f:facet>
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Workgroup Name: "/>
+                        <h:outputText value="#{AdminTree_Backing.selectedWorkgroupItem.workgroupName}"/>
+                        <h:outputText value="Active: "/>
+                        <h:selectBooleanCheckbox readonly="true"
+                                                    disabled="true"
+                                                    value="#{AdminTree_Backing.isActiveWorkgroup}"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" styleClass="nowrap">
+                        <h:panelGrid columns="2" style="text-align: center;"
+                                        rendered="#{AdminTree_Backing.addingExistingUser}">
+                            <rich:extendedDataTable rendered="#{AdminTree_Backing.addingExistingUser}"
+                                                    var="user"
+                                                    value="#{AdminTree_Backing.users}"
+                                                    selectionMode="multiple"
+                                                    selection="#{AdminTree_Backing.selection}">
+                                <f:facet name="header">
+                                        <h:outputText value="Select a User" />
+                                </f:facet>
+                                <a4j:ajax event="selectionchange" listener="#{AdminTree_Backing.selectionListener}"/>
+                                <rich:column id="userName"
+                                            sortBy="#{user.userName}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Username" />
+                                    </f:facet>
+                                    <h:outputText value="#{user.userName}"/>
+                                </rich:column>
+                                <rich:column id="lastName"
+                                            sortBy="#{user.lastName}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Last Name" />
+                                    </f:facet>
+                                    <h:outputText value="#{user.lastName}"/>
+                                </rich:column>
+                                <rich:column id="firstName"
+                                            sortBy="#{user.firstName}">
+                                    <f:facet name="header">
+                                        <h:outputText value="First Name" />
+                                    </f:facet>
+                                    <h:outputText value="#{user.firstName}"/>
+                                </rich:column>
+                            </rich:extendedDataTable>
+                            <h:panelGrid columns="1" style="text-align: center;"
+                                        rendered="#{AdminTree_Backing.addingExistingUser}">
+                                <h:outputText value="Role" style="font-weight: bold;"/>
+                                <h:panelGrid columns="2" style="text-align: center;">
+                                    <h:selectOneRadio value="#{AdminTree_Backing.role}" layout="pageDirection" style="white-space: nowrap;"
+                                                    disabled="#{AdminTree_Backing.editUserItem.userName == 'mtsadmin'}">
+                                        <f:selectItem itemLabel="Administrator" itemValue="administrator"/>
+                                        <f:selectItem itemLabel="Colony Manager" itemValue="colonyWorker"/>
+                                        <f:selectItem itemLabel="Guest" itemValue="guest"/>
+                                    </h:selectOneRadio>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                            </h:panelGrid>
+                            <h:panelGroup rendered="#{!AdminTree_Backing.addingExistingUser}" styleClass="nowrap">
+                                <a4j:commandButton value="Add New User" 
+                                                    styleClass="mediumButton"
+                                                actionListener="#{AdminTree_Backing.addUserDisplay}"
+                                                render="centerPanelId"/>
+                                &nbsp;&nbsp;
+                                <a4j:commandButton value="Add Existing User" 
+                                                    styleClass="largeButton"
+                                                actionListener="#{AdminTree_Backing.addExistingUserDisplay}"
+                                                render="centerPanelId"/>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{AdminTree_Backing.addingExistingUser}" styleClass="nowrap">
+                                <a4j:commandButton value="Add" 
+                                                    styleClass="smallButton"
+                                                    actionListener="#{AdminTree_Backing.addExistingUser}"
+                                                    render="centerPanelId"/>
+                                &nbsp;&nbsp;
+                                <a4j:commandButton value="Cancel"
+                                                    styleClass="mediumButton" 
+                                                    actionListener="#{AdminTree_Backing.addExistingUserHide}"
+                                                    render="centerPanelId"/>
+                            </h:panelGroup>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <!-- selected center panel -->
+                <h:panelGrid columns="1" rendered="#{AdminTree_Backing.selectedCenter}" style="white-space: nowrap;">
+                    <f:facet name="header">
+                        <h:outputText value="Selected Center Info"/>
+                    </f:facet>
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Center Name: "/>
+                        <h:outputText value="#{AdminTree_Backing.selectedCenterItem.center}"/>
+                        <h:outputText value="Active: "/>
+                        <h:selectBooleanCheckbox readonly="true"
+                                                    disabled="true"
+                                                    value="#{AdminTree_Backing.isActiveCenter}"/>
+                        <a4j:commandButton value="Add Workgroup"
+                                            styleClass="largeButton"
+                                            action="#{AdminTree_Backing.addWorkgroupDisplay}"
+                                            render="centerPanelId"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <!-- insert workgroup panel -->
+                <h:panelGrid columns="1" rendered="#{AdminTree_Backing.addingWorkgroup}"
+                                id="addWorkgroupPanel" style="white-space: nowrap;">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Workgroup Name: "/>
+                        <h:inputText value="#{AdminTree_Backing.addWorkgroupDTO.workgroupName}"
+                                        id="workgroupNameInput"/>
+                        <h:panelGroup styleClass="nowrap">
+                            <a4j:commandButton value="Add"
+                                                    styleClass="smallButton"
+                                            oncomplete="addWorkgroupWarning()"/>
+                            &nbsp;
+                            <a4j:commandButton value="Cancel"
+                                                styleClass="mediumButton"
+                                            action="#{AdminTree_Backing.addWorkgroupHide}"
+                                            render="centerPanelId"/>
+                            <a4j:commandButton id="secretAddWGButton"
+                                            style="visibility: hidden"
+                                            action="#{AdminTree_Backing.addNewWorkgroup}"
+                                            render="centerTreeId, workgroupNameInput"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <!-- adding new user panel -->
+                <h:panelGrid columns="1" rendered="#{AdminTree_Backing.addingUser}" style="white-space: nowrap;">
+                    <f:facet name="header">
+                        <h:outputText value="Add New User"/>
+                    </f:facet>
+                    <h:panelGrid columns="2">
+                        <h:panelGrid columns="2" style="white-space: nowrap;">
+                            <h:outputText value="First Name"/>
+                            <h:inputText value="#{AdminTree_Backing.addUserDTO.firstName}"/>
+                            <h:outputText value="Last Name"/>
+                            <h:inputText value="#{AdminTree_Backing.addUserDTO.lastName}"/>
+                            <h:outputText value="User Name"/>
+                            <h:inputText value="#{AdminTree_Backing.addUserDTO.userName}"/>
+                            <h:outputText value="Password"/>
+                            <h:inputSecret value="#{AdminTree_Backing.password}"/>
+                            <h:outputText value="Verify Password"/>
+                            <h:inputSecret value="#{AdminTree_Backing.verifyPassword}"/>
+                            <a4j:commandButton value="Add"
+                                                styleClass="smallButton"
+                                            action="#{AdminTree_Backing.addNewUser}"
+                                            render="centerPanelId"/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" style="text-align: center;">
+                            <h:outputText value="Role" style="font-weight: bold;"/>
+                            <h:panelGrid columns="2" style="text-align: center;">
+                                <h:selectOneRadio value="#{AdminTree_Backing.role}" layout="pageDirection" style="white-space: nowrap;"
+                                                    disabled="#{AdminTree_Backing.editUserItem.userName == 'mtsadmin'}">
+                                    <f:selectItem itemLabel="Administrator" itemValue="administrator"/>
+                                    <f:selectItem itemLabel="Colony Manager" itemValue="colonyWorker"/>
+                                    <f:selectItem itemLabel="Guest" itemValue="guest"/>
+                                </h:selectOneRadio>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <!--Adding center panel -->
+                <h:panelGrid columns="1" rendered="#{AdminTree_Backing.addingCenter}" style="white-space: nowrap;">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Center Name"/>
+                        <h:inputText value="#{AdminTree_Backing.addCenterDTO.center}"
+                                        id="centerNameInput"/>
+                        <h:panelGroup styleClass="nowrap">
+                            <a4j:commandButton value="Add"
+                                                styleClass="smallButton"
+                                                oncomplete="addCenterWarning()"/>
+                            &nbsp;&nbsp;
+                            <a4j:commandButton value="Cancel"
+                                                styleClass="mediumButton"
+                                                action="#{AdminTree_Backing.addCenterHide}"
+                                                render="centerPanelId"/>
+                        </h:panelGroup>
+                        <a4j:commandButton id="secretAddCenterButton"
+                                            style="visibility: hidden"
+                                            action="#{AdminTree_Backing.addNewCenter}"
+                                            render="centerTreeId, centerNameInput"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </h:panelGrid>
+        </h:panelGrid>
+</ui:composition>

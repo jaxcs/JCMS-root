@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>                
+            <h:outputText value="Bulk Updates"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js"/>
+    </h:head>
+    <h:body>
+        <h:form>
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+        </h:form>
+        <div style="margin-left:10px;margin-right:10px">
+            <h:form>
+                <h1>
+                    <h:outputText value="#{msgs['colonyManagement.header']}" style="h1"/>
+                </h1>
+                <hr />
+            </h:form>                  
+            <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5" width="100%" 
+                            columnClasses="colonyManagementSideBar,detailPane">
+                <h:panelGroup>
+                    <h:form>
+                        <f:subview id="adminSideBar"><ui:include src="/colonyManagement/colonyManagementSideBar.xhtml"/></f:subview>
+                    </h:form>
+                </h:panelGroup>                    
+                <h:panelGroup>
+                    <h2>
+                        <h:outputText value="Bulk Updates"/>
+                    </h2>
+                    <p:ajaxStatus id="ajaxStatusPanel">  
+                        <f:facet name="start">  
+                            <h:graphicImage value="../images/bhi_ball.gif"/>  
+                        </f:facet>  
+                        <f:facet name="complete">  
+                                <h:graphicImage value="../images/bhi_ball_white.gif" />  
+                        </f:facet>
+                    </p:ajaxStatus>   
+                    <hr/>      
+                    <h:form>
+                        <p:messages id="messages" autoUpdate="true" />
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Action: " for="edits" styleClass="blackTextStyle"/>
+                            <h:selectOneRadio id="edits" styleClass="blackTextStyle" value="#{BulkUpdate_Backing.editCategory}">
+                                <f:selectItem itemLabel="Edit Life Status" itemValue="editLifeStatus"/>
+                                <f:selectItem itemLabel="Edit Diet" itemValue="editDiet"/>
+                                <f:selectItem itemLabel="Edit Protocol" itemValue="editProtocol"/>
+                                <f:selectItem itemLabel="Edit Owner" itemValue="editOwner"/>
+                                <f:selectItem itemLabel="Add Phenotype" itemValue="addPhenotype"/>
+                                <a4j:ajax event="change" render="newValues buttons"/>
+                            </h:selectOneRadio>
+                            <h:outputLabel value="Select By: " for="editBy" styleClass="blackTextStyle"/>
+                            <h:selectOneRadio id="editBy" styleClass="blackTextStyle" value="#{BulkUpdate_Backing.updateUnit}">
+                                <f:selectItem itemLabel="Mouse ID" itemValue="mouseID"/>
+                                <f:selectItem itemLabel="Litter ID" itemValue="litterID"/>
+                                <f:selectItem itemLabel="Cage ID" itemValue="cageID"/>
+                                <a4j:ajax event="change" listener="#{BulkUpdate_Backing.updateUnitChangeListener}" render="unitList buttons"/>
+                            </h:selectOneRadio>
+                            <h:outputLabel value="Strain: " for="strain" styleClass="blackTextStyle"/>
+                            <p:selectOneMenu id="strain" value="#{BulkUpdate_Backing.strain}"
+                                             converter="strainConverter" filterMatchMode="contains"
+                                             filter="true">
+                                <f:selectItems value="#{BulkUpdate_Backing.wrapper.activeStrainsOptional}"/>
+                                <p:ajax event="change" listener="#{BulkUpdate_Backing.updateUnitChangeListener}" update="unitList buttons"/>
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        
+                        <!-- Container for dropdowns which indicate value being added -->
+                        <h:panelGroup id="newValues">
+                            <h:panelGrid columns="4" rendered="#{BulkUpdate_Backing.editCategory eq 'editLifeStatus'}">
+                                <h:outputText value="New Life Status: " styleClass="blackTextStyle" />
+                                <h:selectOneMenu value="#{BulkUpdate_Backing.newLifeStatus}" 
+                                                 converter="lifeStatusConverter">
+                                    <a4j:ajax event="change" render="exitDateCalendar, causeOfDeath"/>
+                                    <f:selectItems value="#{BulkUpdate_Backing.wrapper.cvLifeStatusItemsOptional}"/>
+                                </h:selectOneMenu>
+                                <rich:calendar id="exitDateCalendar"
+                                               value="#{BulkUpdate_Backing.exitDate}"
+                                               datePattern="#{BulkUpdate_Backing.date_format}"
+                                               disabled="#{not BulkUpdate_Backing.newLifeStatus.exitStatus}"/>
+                                <h:selectOneMenu id="causeOfDeath"
+                                                 value="#{BulkUpdate_Backing.cod}"
+                                                 converter="causeOfDeathConverter"
+                                                 disabled="#{not BulkUpdate_Backing.newLifeStatus.exitStatus}">
+                                    <f:selectItems value="#{BulkUpdate_Backing.wrapper.cvCauseOfDeathItemsOptional}"/>
+                                </h:selectOneMenu>
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="2" rendered="#{BulkUpdate_Backing.editCategory eq 'editDiet'}">
+                                <h:outputText value="New Diet: " 
+                                              styleClass="blackTextStyle"/>
+                                <h:selectOneMenu value="#{BulkUpdate_Backing.newDiet}" 
+                                                 converter="dietConverter">
+                                    <f:selectItems value="#{BulkUpdate_Backing.wrapper.cvDietItems}"/>
+                                </h:selectOneMenu>
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="2" rendered="#{BulkUpdate_Backing.editCategory eq 'editProtocol'}">
+                                <h:outputText value="New Protocol: " 
+                                              styleClass="blackTextStyle"/>
+                                <h:selectOneMenu value="#{BulkUpdate_Backing.newProtocol}" 
+                                                 converter="mouseProtocolConverter">
+                                    <f:selectItems value="#{BulkUpdate_Backing.wrapper.cvMouseProtocolItemsOptional}"/>
+                                </h:selectOneMenu>
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="2" rendered="#{BulkUpdate_Backing.editCategory eq 'editOwner'}">
+                                <h:outputText value="New Owner: " 
+                                              styleClass="blackTextStyle"/>
+                                <h:selectOneMenu value="#{BulkUpdate_Backing.newOwner}" 
+                                                 converter="ownerConverter">
+                                    <f:selectItems value="#{BulkUpdate_Backing.wrapper.colonyManageOwnerItemsOptional}"/>
+                                </h:selectOneMenu>
+                            </h:panelGrid>
+                                                        
+                            <h:panelGrid columns="2" rendered="#{BulkUpdate_Backing.editCategory eq 'addPhenotype'}">
+                                <h:outputText value="Add Phenotype: " styleClass="blackTextStyle"/>
+                                <h:selectOneMenu value="#{BulkUpdate_Backing.addPhenotype}" 
+                                                 converter="cvPhenotypeConverter">
+                                     <f:selectItems value="#{BulkUpdate_Backing.wrapper.cvPhenotypeActiveItems}"/> 
+                                </h:selectOneMenu>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                        
+                        <h:panelGrid columns="2" id="unitList" columnClasses="listColumnEven, listColumnEven">
+                            <p:pickList value="#{BulkUpdate_Backing.unitsModel}" filterMatchMode="contains"
+                                        showSourceFilter="true" showTargetFilter="true" var="unit"
+                                        itemLabel="#{unit}" itemValue="#{unit}"
+                                        rendered="#{BulkUpdate_Backing.updateUnit ne '' and BulkUpdate_Backing.strain ne null}">
+                                <f:facet name="sourceCaption"><h:outputText value="#{BulkUpdate_Backing.selectPicklistLabel}"/></f:facet>                                
+                                <f:facet name="targetCaption"><h:outputText value="#{BulkUpdate_Backing.selectedPicklistLabel}"/></f:facet>
+                                <p:ajax event="transfer" listener="#{BulkUpdate_Backing.unitAddListener}" update="mice"/>
+                            </p:pickList>
+                            <rich:dataTable value="#{BulkUpdate_Backing.mice}" rendered="#{BulkUpdate_Backing.updateUnit ne '' and BulkUpdate_Backing.strain ne null}"
+                                            var="mouse" id="mice" rowKeyVar="tableRowIndex">
+                                <rich:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Actions"/>
+                                    </f:facet>
+                                    <a4j:commandLink action="#{BulkUpdate_Backing.removeMouseListener}" render="mice">
+                                        <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                        <f:param name="paramMouseKey" value="#{mouse.mouseKey}" />
+                                        <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                    </a4j:commandLink>
+                                </rich:column>
+                                <rich:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Mouse ID"/>
+                                    </f:facet>
+                                    <h:outputText value="#{mouse.id}"/>
+                                </rich:column>
+                                <rich:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Life Status"/>
+                                    </f:facet>
+                                    <h:outputText value="#{mouse.lifeStatus}"/>                                    
+                                </rich:column>
+                                <rich:column >
+                                    <f:facet name="header">
+                                        <h:outputText value="Diet"/>
+                                    </f:facet>
+                                    <h:outputText value="#{mouse.diet}"/>
+                                </rich:column>
+                                <rich:column >
+                                    <f:facet name="header">
+                                        <h:outputText value="Strain"/>
+                                    </f:facet>
+                                    <h:outputText value="#{mouse.strainKey.strainName}"/>
+                                </rich:column>
+                                <rich:column >
+                                    <f:facet name="header">
+                                        <h:outputText value="Cage ID"/>
+                                    </f:facet>
+                                    <h:outputText value="#{mouse.penKey.containerID}"/>
+                                </rich:column>
+                                <rich:column >
+                                    <f:facet name="header">
+                                        <h:outputText value="Litter ID"/>
+                                    </f:facet>
+                                    <h:outputText value="#{mouse.litterKey.litterID}"/>
+                                </rich:column>
+                            </rich:dataTable>
+                        </h:panelGrid>
+                        <h:panelGroup id="buttons">
+                            <a4j:commandButton value="Save"
+                                            render="unitList"
+                                            action="#{BulkUpdate_Backing.saveChanges}"
+                                            styleClass="smallButton"
+                                            rendered="#{BulkUpdate_Backing.editCategory eq 'editDiet' and BulkUpdate_Backing.updateUnit ne '' and BulkUpdate_Backing.strain ne null}"/>
+                            <a4j:commandButton value="Save"
+                                            render="unitList"
+                                            action="#{BulkUpdate_Backing.saveChanges}"
+                                            styleClass="smallButton"
+                                            rendered="#{BulkUpdate_Backing.editCategory eq 'editLifeStatus' and BulkUpdate_Backing.updateUnit ne '' and BulkUpdate_Backing.strain ne null}"/>
+                            <a4j:commandButton value="Save"
+                                            render="unitList"
+                                            action="#{BulkUpdate_Backing.saveChanges}"
+                                            styleClass="smallButton"
+                                            rendered="#{BulkUpdate_Backing.editCategory eq 'editOwner' and BulkUpdate_Backing.updateUnit ne '' and BulkUpdate_Backing.strain ne null}"/>
+                            <a4j:commandButton value="Save"
+                                            render="unitList"
+                                            action="#{BulkUpdate_Backing.saveChanges}"
+                                            styleClass="smallButton"
+                                            rendered="#{BulkUpdate_Backing.editCategory eq 'editProtocol' and BulkUpdate_Backing.updateUnit ne '' and BulkUpdate_Backing.strain ne null}"/>
+                            <a4j:commandButton id="phenotypeButton"
+                                            value="Save"
+                                            render="unitList"
+                                            actionListener="#{BulkUpdate_Backing.addNewPhenotype}"
+                                            styleClass="smallButton"
+                                            rendered="#{BulkUpdate_Backing.editCategory eq 'addPhenotype' and BulkUpdate_Backing.updateUnit ne '' and BulkUpdate_Backing.strain ne null}"/>
+                        </h:panelGroup>
+                    </h:form>
+                </h:panelGroup>         
+            </h:panelGrid>
+        </div>
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+    </h:body>
+</html>

@@ -1,0 +1,416 @@
+-- MySQL dump 10.11
+--
+-- Host: localhost    Database: jcmsweb_db
+-- ------------------------------------------------------
+-- Server version	5.0.67
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Center`
+--
+
+DROP TABLE IF EXISTS `Center`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `Center` (
+  `_Center_key` int(11) NOT NULL auto_increment,
+  `Center` varchar(75) default NULL,
+  `CreatedBy` varchar(18) NOT NULL,
+  `DateCreated` datetime NOT NULL,
+  `ModifiedBy` varchar(18) NOT NULL,
+  `DateModified` datetime NOT NULL,
+  `Version` int(11) NOT NULL default '1',
+  PRIMARY KEY  (`_Center_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `Center`
+--
+
+LOCK TABLES `Center` WRITE;
+/*!40000 ALTER TABLE `Center` DISABLE KEYS */;
+INSERT INTO `Center` VALUES (1,'JCMS-DEV','Dave and Kavitha','2010-11-24 13:03:23','gremlins','2010-11-24 13:03:23',1);
+/*!40000 ALTER TABLE `Center` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `FunctionalArea`
+--
+
+DROP TABLE IF EXISTS `FunctionalArea`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `FunctionalArea` (
+  `_FunctionalArea_key` int(11) NOT NULL,
+  `FunctionalArea` varchar(75) NOT NULL,
+  `Description` varchar(1000) default NULL,
+  `CreatedBy` varchar(18) NOT NULL,
+  `DateCreated` datetime NOT NULL,
+  `ModifiedBy` varchar(18) NOT NULL,
+  `DateModified` datetime NOT NULL,
+  `Version` int(11) NOT NULL default '1',
+  PRIMARY KEY  (`_FunctionalArea_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `FunctionalArea`
+--
+
+LOCK TABLES `FunctionalArea` WRITE;
+/*!40000 ALTER TABLE `FunctionalArea` DISABLE KEYS */;
+INSERT INTO `FunctionalArea` VALUES (1,'Querying','Querying','dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1);
+/*!40000 ALTER TABLE `FunctionalArea` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Report`
+--
+
+DROP TABLE IF EXISTS `Report`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `Report` (
+  `_Report_key` int(11) NOT NULL,
+  `_User_key` int(11) default NULL,
+  `_Workgroup_key` int(11) default NULL,
+  `ReportName` varchar(45) default NULL,
+  `ReportQuery` text,
+  `Format` text,
+  `Version` int(11) NOT NULL default '1',
+  PRIMARY KEY  (`_Report_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `Report`
+--
+
+LOCK TABLES `Report` WRITE;
+/*!40000 ALTER TABLE `Report` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Report` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ReportRecipients`
+--
+
+DROP TABLE IF EXISTS `ReportRecipients`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `ReportRecipients` (
+  `_ReportRecipients_key` int(11) NOT NULL,
+  `_User_key` int(11) default NULL,
+  `_Workgroup_key` int(11) default NULL,
+  `RecipientList` text,
+  `Version` int(11) NOT NULL default '1',
+  PRIMARY KEY  (`_ReportRecipients_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ReportRecipients`
+--
+
+LOCK TABLES `ReportRecipients` WRITE;
+/*!40000 ALTER TABLE `ReportRecipients` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ReportRecipients` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `User`
+--
+
+DROP TABLE IF EXISTS `User`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `User` (
+  `_User_key` int(11) NOT NULL auto_increment,
+  `_DefaultWorkgroup_key` int(11) NOT NULL,
+  `NetworkID` varchar(18) NOT NULL,
+  `UserName` varchar(128) default NULL,
+  `Password_` varchar(40) NOT NULL,
+  `FirstName` varchar(18) NOT NULL,
+  `LastName` varchar(18) NOT NULL,
+  `Title` varchar(18) default NULL,
+  `EmailAddress` varchar(18) default NULL,
+  `InternalPhone` varchar(18) default NULL,
+  `ExternalPhone` varchar(18) default NULL,
+  `HireDate` date default NULL,
+  `IsMasterAdministrator` tinyint(4) default NULL,
+  `IsActive` tinyint(4) default NULL,
+  `CreatedBy` varchar(18) NOT NULL,
+  `DateCreated` datetime NOT NULL,
+  `ModifiedBy` varchar(18) NOT NULL,
+  `DateModified` datetime NOT NULL,
+  `Version` int(11) NOT NULL default '1',
+  PRIMARY KEY  USING BTREE (`_User_key`,`Password_`),
+  KEY `Ref181592` (`_DefaultWorkgroup_key`),
+  KEY `FK285FEB4A4B0A1D` (`_DefaultWorkgroup_key`),
+  CONSTRAINT `FK285FEB4A4B0A1D` FOREIGN KEY (`_DefaultWorkgroup_key`) REFERENCES `Workgroup` (`_Workgroup_key`),
+  CONSTRAINT `RefWorkgroup592` FOREIGN KEY (`_DefaultWorkgroup_key`) REFERENCES `Workgroup` (`_Workgroup_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `User`
+--
+
+LOCK TABLES `User` WRITE;
+/*!40000 ALTER TABLE `User` DISABLE KEYS */;
+INSERT INTO `User` VALUES (1,1,'rkavitha','rkavitha','','kavitha','rama',NULL,NULL,NULL,NULL,NULL,NULL,1,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(2,1,'kavitha','kavitha','1234','kavitha','rama',NULL,NULL,NULL,NULL,NULL,NULL,1,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(3,1,'dave','dave','1234','dave','springer',NULL,NULL,NULL,NULL,NULL,NULL,1,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(4,1,'nobody','nobody','1234','','',NULL,NULL,NULL,NULL,NULL,NULL,1,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(5,1,'BT_Owner','BT_Owner','1234','','',NULL,NULL,NULL,NULL,NULL,NULL,1,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(6,1,'ST_Owner','ST_Owner','1234','','',NULL,NULL,NULL,NULL,NULL,NULL,1,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(7,1,'EX_Owner','EX_Owner','1234','','',NULL,NULL,NULL,NULL,NULL,NULL,1,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(8,1,'BR_Owner','BR_Owner','1234','','',NULL,NULL,NULL,NULL,NULL,NULL,1,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(9,1,'HH_Owner','HH_Owner','1234','','',NULL,NULL,NULL,NULL,NULL,NULL,1,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(10,1,'daves','daves','','springer','dave',NULL,NULL,NULL,NULL,NULL,NULL,1,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1);
+/*!40000 ALTER TABLE `User` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `UserDefinedQueries`
+--
+
+DROP TABLE IF EXISTS `UserDefinedQueries`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `UserDefinedQueries` (
+  `_UserDefinedQueries_key` int(11) NOT NULL auto_increment,
+  `_User_key` int(11) default NULL,
+  `_Workgroup_key` int(11) default NULL,
+  `QueryName` varchar(45) default NULL,
+  `QueryOptions` text COMMENT 'This holds the text that represents XML serialized from the query page managed bean.',
+  `_QueryType_key` int(11) default '0' COMMENT '0 Mouse\n1 Mating\n\n',
+  `Version` int(11) NOT NULL default '1',
+  PRIMARY KEY  (`_UserDefinedQueries_key`),
+  KEY `fk_UserDefinedQueries_1` (`_QueryType_key`),
+  KEY `fk_UserDefinedQueries_2` (`_Workgroup_key`),
+  KEY `FK52F959E8942DA5E0` (`_Workgroup_key`),
+  KEY `FK52F959E8EF7004DD` (`_QueryType_key`),
+  CONSTRAINT `FK52F959E8EF7004DD` FOREIGN KEY (`_QueryType_key`) REFERENCES `cv_UserDefinedQueryType` (`_cv_UserDefinedQueryType_key`),
+  CONSTRAINT `FK52F959E8942DA5E0` FOREIGN KEY (`_Workgroup_key`) REFERENCES `Workgroup` (`_Workgroup_key`),
+  CONSTRAINT `fk_UserDefinedQueries_1` FOREIGN KEY (`_QueryType_key`) REFERENCES `cv_UserDefinedQueryType` (`_cv_UserDefinedQueryType_key`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_UserDefinedQueries_2` FOREIGN KEY (`_Workgroup_key`) REFERENCES `Workgroup` (`_Workgroup_key`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `UserDefinedQueries`
+--
+
+LOCK TABLES `UserDefinedQueries` WRITE;
+/*!40000 ALTER TABLE `UserDefinedQueries` DISABLE KEYS */;
+INSERT INTO `UserDefinedQueries` VALUES (8,5,1,'BT_Owner_Query','<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Properties>\n    <Property PropertyName=\"MouseIDSelect\">\n        <PropertyValue>true</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseStrain\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseLifeStatus\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseBreedingStatus\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseGeneration\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseOwner\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseOrigin\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseSex\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseCOD\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseBirthDate\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseExitDate\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseLitterNum\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MousePenID\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MousePenName\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseUse\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseGenotype\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseGenotypeDate\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseAge\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseMatings\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseParents\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseCoatColor\">\n        <PropertyValue>true</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseDiet\">\n        <PropertyValue>true</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseProtocolID\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseLitterMates\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseID\">\n        <PropertyValue/>\n    </Property>\n    <Property PropertyName=\"MouseIDFilter\">\n        <PropertyValue>Equals</PropertyValue>\n    </Property>\n    <Property PropertyName=\"AgeFromEntity\">\n        <PropertyValue>0</PropertyValue>\n    </Property>\n    <Property PropertyName=\"AgeToEntity\">\n        <PropertyValue>0</PropertyValue>\n    </Property>\n    <Property PropertyName=\"AgeFilter\">\n        <PropertyValue/>\n    </Property>\n    <Property PropertyName=\"AgeMeasure\">\n        <PropertyValue>Days</PropertyValue>\n    </Property>\n    <Property PropertyName=\"OwnerEntity\">\n        <PropertyValue>BT_Owner</PropertyValue>\n        <PropertyKey>2</PropertyKey>\n    </Property>\n</Properties>\n',1,0),(9,5,1,'allMice','<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Properties>\n    <Property PropertyName=\"MouseIDSelect\">\n        <PropertyValue>true</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseStrain\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseLifeStatus\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseBreedingStatus\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseGeneration\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseOwner\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseOrigin\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseSex\">\n        <PropertyValue>true</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseCOD\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseBirthDate\">\n        <PropertyValue>true</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseExitDate\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseLitterNum\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MousePenID\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MousePenName\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseUse\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseGenotype\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseGenotypeDate\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseAge\">\n        <PropertyValue>true</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseMatings\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseParents\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseCoatColor\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseDiet\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseProtocolID\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseLitterMates\">\n        <PropertyValue>false</PropertyValue>\n    </Property>\n    <Property PropertyName=\"MouseID\">\n        <PropertyValue/>\n    </Property>\n    <Property PropertyName=\"MouseIDFilter\">\n        <PropertyValue>Equals</PropertyValue>\n    </Property>\n    <Property PropertyName=\"AgeFromEntity\">\n        <PropertyValue>0</PropertyValue>\n    </Property>\n    <Property PropertyName=\"AgeToEntity\">\n        <PropertyValue>0</PropertyValue>\n    </Property>\n    <Property PropertyName=\"AgeFilter\">\n        <PropertyValue/>\n    </Property>\n    <Property PropertyName=\"AgeMeasure\">\n        <PropertyValue>Days</PropertyValue>\n    </Property>\n    <Property PropertyName=\"OwnerEntity\">\n        <PropertyValue>BT_Owner</PropertyValue>\n        <PropertyKey>2</PropertyKey>\n    </Property>\n</Properties>\n',1,0);
+/*!40000 ALTER TABLE `UserDefinedQueries` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Workgroup`
+--
+
+DROP TABLE IF EXISTS `Workgroup`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `Workgroup` (
+  `_Workgroup_key` int(11) NOT NULL auto_increment,
+  `WorkgroupName` varchar(75) NOT NULL,
+  `IsActive` tinyint(4) default NULL,
+  `CreatedBy` varchar(18) NOT NULL,
+  `DateCreated` datetime NOT NULL,
+  `ModifiedBy` varchar(18) NOT NULL,
+  `DateModified` datetime NOT NULL,
+  `Version` int(11) NOT NULL default '1',
+  `_Center_key` int(11) default NULL,
+  PRIMARY KEY  (`_Workgroup_key`),
+  KEY `FKB8E211EE6EF65E0C` (`_Center_key`),
+  CONSTRAINT `FKB8E211EE6EF65E0C` FOREIGN KEY (`_Center_key`) REFERENCES `Center` (`_Center_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `Workgroup`
+--
+
+LOCK TABLES `Workgroup` WRITE;
+/*!40000 ALTER TABLE `Workgroup` DISABLE KEYS */;
+INSERT INTO `Workgroup` VALUES (1,'JCMS',1,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1,1);
+/*!40000 ALTER TABLE `Workgroup` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `WorkgroupUser`
+--
+
+DROP TABLE IF EXISTS `WorkgroupUser`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `WorkgroupUser` (
+  `_WorkgroupUser_key` int(11) NOT NULL auto_increment,
+  `_Workgroup_key` int(11) NOT NULL,
+  `_User_key` int(11) NOT NULL,
+  `CreatedBy` varchar(18) NOT NULL,
+  `DateCreated` datetime NOT NULL,
+  `ModifiedBy` varchar(18) NOT NULL,
+  `DateModified` datetime NOT NULL,
+  `Version` int(11) NOT NULL default '1',
+  PRIMARY KEY  (`_WorkgroupUser_key`),
+  KEY `Ref181295` (`_Workgroup_key`),
+  KEY `Ref184590` (`_User_key`),
+  KEY `FK74B3CAD9942DA5E0` (`_Workgroup_key`),
+  KEY `FK74B3CAD967A37538` (`_User_key`),
+  CONSTRAINT `FK74B3CAD967A37538` FOREIGN KEY (`_User_key`) REFERENCES `User` (`_User_key`),
+  CONSTRAINT `FK74B3CAD9942DA5E0` FOREIGN KEY (`_Workgroup_key`) REFERENCES `Workgroup` (`_Workgroup_key`),
+  CONSTRAINT `RefUser590` FOREIGN KEY (`_User_key`) REFERENCES `User` (`_User_key`),
+  CONSTRAINT `RefWorkgroup295` FOREIGN KEY (`_Workgroup_key`) REFERENCES `Workgroup` (`_Workgroup_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `WorkgroupUser`
+--
+
+LOCK TABLES `WorkgroupUser` WRITE;
+/*!40000 ALTER TABLE `WorkgroupUser` DISABLE KEYS */;
+INSERT INTO `WorkgroupUser` VALUES (1,1,1,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(2,1,2,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(3,1,3,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(4,1,4,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(5,1,5,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(6,1,6,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(7,1,7,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(8,1,8,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(9,1,9,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1),(10,1,10,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1);
+/*!40000 ALTER TABLE `WorkgroupUser` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `WorkgroupUserFunctionalArea`
+--
+
+DROP TABLE IF EXISTS `WorkgroupUserFunctionalArea`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `WorkgroupUserFunctionalArea` (
+  `_WorkgroupUserFunctionalArea` int(11) NOT NULL,
+  `_FunctionalArea_key` int(11) NOT NULL,
+  `_WorkgroupUser_key` int(11) NOT NULL,
+  `CreatedBy` varchar(18) NOT NULL,
+  `DateCreated` datetime NOT NULL,
+  `ModifiedBy` varchar(18) NOT NULL,
+  `DateModified` datetime NOT NULL,
+  `Version` int(11) NOT NULL default '1',
+  `_WorkgroupUserFunctionalArea_key` int(11) default NULL,
+  `_Privilege_key` int(11) default NULL,
+  PRIMARY KEY  (`_WorkgroupUserFunctionalArea`),
+  KEY `Ref44` (`_FunctionalArea_key`),
+  KEY `Ref35` (`_WorkgroupUser_key`),
+  KEY `Ref187595` (`_WorkgroupUser_key`),
+  KEY `Ref213596` (`_FunctionalArea_key`),
+  KEY `FKA6149C69AB8D156` (`_WorkgroupUser_key`),
+  KEY `FKA6149C692F81A6E2` (`_FunctionalArea_key`),
+  CONSTRAINT `FKA6149C692F81A6E2` FOREIGN KEY (`_FunctionalArea_key`) REFERENCES `FunctionalArea` (`_FunctionalArea_key`),
+  CONSTRAINT `FKA6149C69AB8D156` FOREIGN KEY (`_WorkgroupUser_key`) REFERENCES `WorkgroupUser` (`_WorkgroupUser_key`),
+  CONSTRAINT `RefFunctionalArea596` FOREIGN KEY (`_FunctionalArea_key`) REFERENCES `FunctionalArea` (`_FunctionalArea_key`),
+  CONSTRAINT `RefWorkgroupUser595` FOREIGN KEY (`_WorkgroupUser_key`) REFERENCES `WorkgroupUser` (`_WorkgroupUser_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `WorkgroupUserFunctionalArea`
+--
+
+LOCK TABLES `WorkgroupUserFunctionalArea` WRITE;
+/*!40000 ALTER TABLE `WorkgroupUserFunctionalArea` DISABLE KEYS */;
+INSERT INTO `WorkgroupUserFunctionalArea` VALUES (1,1,1,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1,NULL,NULL),(2,1,2,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1,NULL,NULL),(3,1,3,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1,NULL,NULL),(4,1,4,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1,NULL,NULL),(5,1,5,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1,NULL,NULL),(6,1,6,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1,NULL,NULL),(7,1,7,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1,NULL,NULL),(8,1,8,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1,NULL,NULL),(9,1,9,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1,NULL,NULL),(10,1,10,'dba','2011-01-31 13:03:23','dba','2011-01-31 13:03:23',1,NULL,NULL);
+/*!40000 ALTER TABLE `WorkgroupUserFunctionalArea` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_ReportScheduleType`
+--
+
+DROP TABLE IF EXISTS `cv_ReportScheduleType`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `cv_ReportScheduleType` (
+  `_cv_ReportScheduleType_key` int(11) NOT NULL,
+  `cv_ReportScheduleType` varchar(45) default NULL,
+  `Version` int(11) NOT NULL default '1',
+  PRIMARY KEY  (`_cv_ReportScheduleType_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `cv_ReportScheduleType`
+--
+
+LOCK TABLES `cv_ReportScheduleType` WRITE;
+/*!40000 ALTER TABLE `cv_ReportScheduleType` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cv_ReportScheduleType` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cv_UserDefinedQueryType`
+--
+
+DROP TABLE IF EXISTS `cv_UserDefinedQueryType`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `cv_UserDefinedQueryType` (
+  `_cv_UserDefinedQueryType_key` int(11) NOT NULL,
+  `QueryType` varchar(45) default NULL,
+  `Version` int(11) NOT NULL default '1',
+  PRIMARY KEY  (`_cv_UserDefinedQueryType_key`),
+  UNIQUE KEY `QueryType_UNIQUE` (`QueryType`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `cv_UserDefinedQueryType`
+--
+
+LOCK TABLES `cv_UserDefinedQueryType` WRITE;
+/*!40000 ALTER TABLE `cv_UserDefinedQueryType` DISABLE KEYS */;
+INSERT INTO `cv_UserDefinedQueryType` VALUES (1,'MouseQuery',1),(2,'MatingQuery',1);
+/*!40000 ALTER TABLE `cv_UserDefinedQueryType` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dbInfo`
+--
+
+DROP TABLE IF EXISTS `dbInfo`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `dbInfo` (
+  `_dbinfo_key` int(11) NOT NULL,
+  `majorVersion` int(11) NOT NULL,
+  `minorVersion` int(11) NOT NULL,
+  `bugFixVersion` int(11) default NULL,
+  `buildVersion` int(11) default NULL,
+  `releaseDate` datetime NOT NULL,
+  `releaseType` varchar(32) default NULL,
+  `releaseNotes` varchar(1024) default NULL,
+  `databaseReleaseNum` varchar(256) NOT NULL,
+  PRIMARY KEY  (`_dbinfo_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `dbInfo`
+--
+
+LOCK TABLES `dbInfo` WRITE;
+/*!40000 ALTER TABLE `dbInfo` DISABLE KEYS */;
+INSERT INTO `dbInfo` VALUES (1,0,2,1,3,'2010-12-07 16:44:49','Eng Release','Precursor to Demo','1');
+/*!40000 ALTER TABLE `dbInfo` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2011-02-21 21:47:31

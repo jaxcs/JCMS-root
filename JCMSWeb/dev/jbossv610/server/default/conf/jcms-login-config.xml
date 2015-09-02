@@ -1,0 +1,88 @@
+<?xml version='1.0'?>
+<!DOCTYPE policy PUBLIC
+      "-//JBoss//DTD JBOSS Security Config 3.0//EN"
+      "http://www.jboss.org/j2ee/dtd/security_config.dtd">
+
+<!-- This customized login-config file contains only application-
+     specific security components. It is placed in this separate
+	 file for easier maintenance. Newer versions of JBoss typically
+	 overwrite the default login-config.xml. 
+	 
+	 In order for this file to be read and processed, you must install
+	 this new rs-login-config-service.xml file into the deploy directory.
+
+$Revision:  $
+-->
+
+<policy>
+
+	<!-- Security domain for JAXUser: handles both JAX active domain users and external (non-AD) users. -->
+	<application-policy name="JAXUser">
+		<authentication>
+			<!-- JAX active domain users are authenticated below. flag="optional" permits external
+			     users to fail this authentication and bubble down to the DatabaseServerLoginModule
+				 below. storePass is required in order to store username and credentials for
+				 useFirstPass in DatabaseServerLoginModule. In order for the Krb5LoginModule to work
+				 correctly, it must be configured correctly for the JAX active directory. The
+				 configuration file must exist on application web server as:
+				     Windows: C:\WINDOWS\krb5.ini
+					 Unix:    /etc/krb5.conf
+			     The configuration file content (a plain ascii file) is identical on both windows and unix.
+			<login-module code="com.sun.security.auth.module.Krb5LoginModule" flag="optional">
+				<module-option name="password-stacking">tryFirstPass</module-option>
+				<module-option name="storePass">true</module-option> 
+				<module-option name="debug">true</module-option>
+			</login-module>
+			-->
+			
+			<!-- This login module handles external user authentication. It also handles roles for
+			     both Active Directory users and external users. Since AD users are already authenticated,
+				 they are not re-authenticated below. External users are not yet authenticated, so they
+				 are authenticated here by execution of the principalsQuery below.
+				 
+				 External user passwords are stored in the database encoded and hashed.
+			-->
+			
+			<login-module code="org.jboss.security.auth.spi.DatabaseServerLoginModule" flag="required">
+				<module-option name="password-stacking">useFirstPass</module-option>
+				<module-option name="hashAlgorithm">SHA-256</module-option>
+				<module-option name="hashEncoding">BASE64</module-option>
+				<module-option name="dsJndiName">java:/JCMSWebDBDS</module-option>
+				<module-option name="principalsQuery">SELECT u.Password_ FROM User as u WHERE u.UserName=?</module-option>
+				<module-option name="rolesQuery">
+					SELECT DISTINCT fa.FunctionalArea, 'Roles' FROM FunctionalArea AS fa
+					JOIN WorkgroupUserFunctionalArea AS wufa ON wufa._FunctionalArea_key = fa._FunctionalArea_key
+					JOIN WorkgroupUser AS wu ON wu._WorkgroupUser_key = wufa._WorkgroupUser_key
+					JOIN User AS u ON u._User_key = wu._User_key
+					WHERE u.UserName = ? AND u.isActive = 1
+				</module-option>
+				<module-option name="debug">true</module-option>
+			</login-module>
+ 
+			<!-- This login module is used to clear the password information from the cache
+			     (for security reasons), as there is no need to carry it around.  -->
+			<!-- login-module code="com.sun.security.auth.module.Krb5LoginModule" flag="optional">
+				<module-option name="password-stacking">useFirstPass</module-option>
+				<module-option name="clearPass">true</module-option>
+			</login-module -->
+			
+		</authentication>
+    </application-policy>
+
+	<!-- Security domain for JAXUsersRoles -->
+	<!--
+	<application-policy name="JAXUsersRoles">
+		<authentication>
+			<login-module code="org.jboss.security.auth.spi.UsersRolesLoginModule" flag="required">
+				<module-option name="usersProperties">
+					props/rs-users.properties
+				</module-option>
+				<module-option name="rolesProperties">
+					props/rs-roles.properties
+				</module-option>
+			</login-module>
+		</authentication>
+	</application-policy>
+	-->
+
+</policy>

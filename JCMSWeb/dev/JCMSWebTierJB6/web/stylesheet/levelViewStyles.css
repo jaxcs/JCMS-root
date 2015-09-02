@@ -1,0 +1,62 @@
+/****
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+****/
+/* 
+    Document   : levelViewStyles
+    Created on : Jun 27, 2014, 12:58:27 PM
+    Author     : mkamato
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.empty .ui-panel-titlebar {
+    color: gray;
+}
+.strain-highlight {
+    background: yellow !important;
+}
+.delete-highlight {
+    background: red !important;
+}
+.shown-highlight {
+    background: lightskyblue !important;
+}
+.matingCage {
+    border: 10px solid rgb(190, 214, 248) !important;
+}
+.createMating {
+    background: pink !important;
+}
+.weanCage {
+    background: pink !important;
+}
+.purpleBackground {
+    background: mediumpurple !important;
+}
+.pup-highlight {
+    background: green !important;
+    font-style: italic;
+}
+.pupTable {
+    font-weight:bold; 
+    text-align: center;
+}
+.createCage {
+    background: orange !important;
+}
+input[type="text"][disabled]{
+    color: black;
+}

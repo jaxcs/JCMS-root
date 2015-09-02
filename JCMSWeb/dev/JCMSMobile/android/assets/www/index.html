@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<!--
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+	<head>
+		<title>Login</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+ 		<link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">   
+		<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="lib/bootstrap.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/login.js"></script>
+		<script type="text/javascript" charset="utf-8" src="lib/jquery-1.11.1.min.js"></script>
+	</head>
+	<body onload="initializeLogin()">
+		<img src="./img/header.png" alt="JCMS Mobile" style="width: 100%"/>
+		<div style="text-align: center"><h2>Welcome to JCMS Mobile!</h2></div>
+		<form id="loginForm" style="padding: 19px 29px 29px">
+			<input autocapitalize="off" type="text" class="input-block-level" id="host" placeholder="Hostname">
+			<input autocapitalize="off" type="text" name="userName" class="input-block-level" id="userName" placeholder="Username">
+			<input type="password" name="password" class="input-block-level" id="pw" placeholder="Password">
+			<div style="float: left; padding-right: 30px;">
+				<label class="checkbox">
+					<input id="rememberMe" type="checkbox">
+					Remember Me
+				</label>
+			</div>
+			<div>
+				<label class="checkbox">
+					<input id="https" type="checkbox">
+					HTTPS
+				</label>
+			</div>
+			<div style="text-align: center;">
+				<button id="login" onclick="loginAttempt();" type="button" class="btn btn-large btn-primary">Submit</button>
+			</div>
+		</form>
+	</body>
+</html>

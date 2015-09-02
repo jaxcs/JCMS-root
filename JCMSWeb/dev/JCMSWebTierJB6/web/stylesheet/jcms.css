@@ -1,0 +1,212 @@
+/****
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+****/
+/* Global Styles */
+
+body {
+	margin:0px;
+	font-family: "Trebuchet MS", Verdana;
+	color:#666666;
+	font-size:11px;
+	}
+/* 	background-color:#FFFFCC; */
+    
+td  {
+	font:11px "Trebuchet MS", Verdana;
+	color:#666666;
+	}
+
+textarea {
+    font:12px "Trebuchet MS", Verdana;
+}
+h1  {
+	font:24px "Trebuchet MS", Verdana;
+	color: #00476B;
+	letter-spacing:.2em;
+	margin-bottom:2px;
+	padding-bottom:2px;
+	margin-top:0px;
+	padding-top:0px;
+	vertical-align: top;
+}
+	
+h2  {
+	font:15px "Trebuchet MS", Verdana;
+	color: #00476B;
+	letter-spacing:.2em;
+	margin-bottom:2px;
+	padding-bottom:2px;
+	margin-top:0px;
+	padding-top:0px;
+	}	
+	
+h3  {
+	font:11px "Trebuchet MS", Verdana;
+	color:#00476B;
+	letter-spacing:.2em;
+	font-weight:bold;
+	margin-bottom:2px;
+	padding-bottom:2px;
+	margin-top:0px;
+	padding-top:0px;
+	display:inline;
+	}
+h4  {
+	font:11px "Trebuchet MS", Verdana;
+	color: #00476B;
+	letter-spacing:.2em;
+	line-height:20px;
+	}
+h5  {
+	font:11px "Trebuchet MS", Verdana;
+	color: #3D5C57;
+	letter-spacing:.2em;
+	line-height:20px;
+	}
+/* ID Styles */
+#logo {
+	font:24px "Trebuchet MS", Verdana;
+	color: #00476B;
+	letter-spacing:.2em;
+	line-height:30px;
+	margin-top:30px;
+	}
+
+	
+/* Class Styles */
+.msg_text {
+	font-weight: bolder;
+	font-size: 11px;
+	color:#CC0000;
+	}
+.btn_small {
+	font-weight: bolder;
+	font-size: 10px;
+	width: 50pt;
+	color: #3D5C57;
+	background-color:#E3E4E5;
+	border-top: 2px solid #D8E3E6;
+	border-right: 1px solid #00476B;
+	border-bottom: 1px solid #00476B;
+	border-left: 2px solid #D8E3E6;
+}
+.btn_med {
+	font-weight: bolder;
+	font-size: 10px;
+	width: 78pt;
+	color: #3D5C57;
+	background-color:#E3E4E5;
+	border-top: 2px solid #D8E3E6;
+	border-right: 1px solid #00476B;
+	border-bottom: 1px solid #00476B;
+	border-left: 2px solid #D8E3E6;
+    }
+.btn_large {
+	font-weight: bolder;
+	font-size: 10px;
+	color: #3D5C57;
+	width: 150pt;
+	background-color:#E9ECEE;
+	border-top: 2px solid #D8E3E6;
+	border-right: 1px solid #00476B;
+	border-bottom: 1px solid #00476B;
+	border-left: 2px solid #D8E3E6;
+    }
+.cbo_small {
+	width: 75pt;
+    }
+.cbo_med {
+	width: 125pt;
+    }
+.cbo_large {
+	width: 230pt;
+    }
+.BarBkgnd {
+    background-color: #E9ECEE;
+    }
+.menu {
+	font:11px Arial, Helvetica, sans-serif;
+	color: #993300;
+	letter-spacing:.2em;
+	margin-right:200px;
+	}
+	
+.menu a {
+	font:11px Arial, Helvetica, sans-serif;
+	color: #00476B;
+	font-weight:bold;
+	letter-spacing:.1em;
+	text-decoration:none;
+	margin-right:20px;
+	}
+	
+.menu a:hover {
+	color: #3D5C57;
+	letter-spacing:.1em;
+	}
+.main_th {
+	font:11px "Trebuchet MS", Verdana;
+	font-weight:bold;
+	background-color:#E3E4E5;
+	color:#3D5C57;
+	text-align:center;
+	}
+.main_th_right {
+	font:11px "Trebuchet MS", Verdana;
+	font-weight:bold;
+	text-align:right;
+	color:#3D5C57;
+	background-color:#E3E4E5;
+	}
+.main_th_left {
+	font:11px "Trebuchet MS", Verdana;
+	font-weight:bold;
+	background-color:#E3E4E5;
+	color:#3D5C57;
+	text-align:left;
+	    width: 20%;
+}
+.main_table {
+	padding:3px;
+	border-spacing:3px;
+	white-space:nowrap;
+	border-style:solid;
+	border-width:thin;
+	border-color:#E3E4E5;
+}
+.main_table td {
+	border: 1px solid #E3E4E5;
+}
+.borderless_table
+    {
+    border:0px;
+    }
+.borderless_table td
+    {
+    border:0px;
+    }
+
+hr
+{
+	color: #3D5C57;
+	background-color: #3D5C57;
+	height: 2px;
+	border:0px;
+}
+
+
+
+

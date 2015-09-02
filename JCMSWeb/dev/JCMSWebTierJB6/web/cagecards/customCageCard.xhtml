@@ -1,0 +1,435 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />    
+        <script type="text/javascript">
+            function getCard(){
+                var theTarget = document.getElementById('CustomCardForm').target;
+                document.getElementById('CustomCardForm').target = '_blank';
+                document.getElementById('CustomCardForm:secretButton').click();
+                document.getElementById('CustomCardForm').target = theTarget;
+            }
+        </script>
+        <title>Build Cage Card</title>
+    </h:head>
+    <h:body>
+        <h:form id="CustomCardForm">
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <h1>
+            <h:outputText value="Custom Card Builder" style="h1"/>
+            </h1><hr />
+            <h:panelGrid columns="2">
+                <h:panelGrid columns="2" border="0">
+                    <h:panelGroup>
+                    <h:outputText value="Card Name "
+                                style="color:#003352;"/>
+                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    </h:panelGroup>
+                    <h:inputText value="#{CustomCageCard_Backing.cardName}"
+                                requiredMessage="#{customMessage['customcard.cardName.missing']}"
+                                required="#{!empty param['CustomCardForm:save']}"/>
+                    <h:panelGroup>
+                        <h:outputText value="Card Type "
+                                    style="color:#003352;"/>
+                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    </h:panelGroup>
+                    <h:selectOneRadio style="color:#003352;"
+                                    value="#{CustomCageCard_Backing.cardTypeMask}"
+                                    required="#{!empty param['CustomCardForm:save'] ||
+                                                !empty param['CustomCardForm:secretButton']}">
+                        <f:selectItem id="detail" 
+                                    itemLabel="Detail" 
+                                    itemValue="detail"/>
+                        <f:selectItem id="wean" 
+                                    itemLabel="Wean" 
+                                    itemValue="wean"/>
+                        <f:selectItem id="mating" 
+                                    itemLabel="Mating" 
+                                    itemValue="mating"/>
+                        <a4j:ajax event="change"
+                                    listener="#{CustomCageCard_Backing.changeDropDownVals}"
+                                    render="field1, cardDetails"/>
+                    </h:selectOneRadio>
+                    <h:panelGroup>
+                        <h:outputText value="Orientation "
+                                    style="color:#003352;"/>
+                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    </h:panelGroup>
+                    <h:selectOneRadio style="color:#003352;"
+                                    value="#{CustomCageCard_Backing.orientation}"
+                                    requiredMessage="#{customMessage['customcard.orientation.missing']}"
+                                    required="#{!empty param['CustomCardForm:save'] ||
+                                                !empty param['CustomCardForm:secretButton']}">
+                        <f:selectItem id="portrait" 
+                                    itemLabel="Portrait" 
+                                    itemValue="portrait"/>
+                        <f:selectItem id="landscape" 
+                                    itemLabel="Landscape" 
+                                    itemValue="landscape"/>
+                        <a4j:ajax event="change"
+                                    listener="#{CustomCageCard_Backing.onOrientationChange}"
+                                    render="RowPortion, RowsAvailable"/>
+                    </h:selectOneRadio>
+                    <h:panelGroup>
+                        <h:outputText value="Print Settings "
+                                    style="color:#003352;"/>
+                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    </h:panelGroup>
+                    <h:selectOneMenu id="printSettings" 
+                                    value = "#{CustomCageCard_Backing.printSettings}">
+                        <f:selectItem itemLabel = "3x5" itemValue = "3x5"/>
+                        <f:selectItem itemLabel = "3x5 on 8.5x11 (Left)" itemValue = "left"/>
+                        <f:selectItem itemLabel = "3x5 on 8.5x11 (Center)" itemValue = "center"/>
+                        <f:selectItem itemLabel = "3x5 on 8.5x11 (Right)" itemValue = "right"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:panelGroup>
+                    <p:dataTable id="workgroups" 
+                                 rowKey="#{wg.workgroupkey}"
+                                 value="#{CustomCageCard_Backing.workgroups}" 
+                                 var="wg"
+                                 scrollable="true"
+                                 scrollHeight="100"
+                                 style="width: 100px;"
+                                 selectionMode="multiple"
+                                 selection="#{CustomCageCard_Backing.selectedWorkgroups}">  
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Workgroups"/>
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />   
+                            </f:facet>
+                            <h:outputText value="#{wg.workgroupName}"/>
+                        </p:column>                    
+                    </p:dataTable>
+                </h:panelGroup>
+            </h:panelGrid>
+            <hr/>
+            <rich:messages title="#{msgs['common.messages.reviewMsg']}" />
+            <h:panelGrid columns="6"
+                         border="0">
+                <a4j:commandButton id="addField"
+                                   value="Add Field"
+                                   action="#{CustomCageCard_Backing.updateDetails}"
+                                   styleClass="mediumButton"
+                                   render="cardDetails, remainingRows"/>
+                <a4j:commandButton id="preview"
+                                   value="Preview"
+                                   styleClass="mediumButton"
+                                   onclick="getCard()"/>
+                <a4j:commandButton id="clear"
+                                   value="Clear"
+                                   action="#{CustomCageCard_Backing.clear}"
+                                   immediate="true"
+                                   styleClass="mediumButton"
+                                   render="cardDetails, remainingRows"/>
+                <h:commandButton id="save"
+                                   value="Save Card"
+                                   styleClass="mediumButton"
+                                   action="#{CustomCageCard_Backing.saveCageCard}"/>
+                <h:commandButton   id="secretButton"
+                                   style="visibility:hidden"
+                                   action="#{CustomCageCard_Backing.preview}"/>                
+            </h:panelGrid>
+            <hr/>
+            <h:commandLink action="loadCageCard" immediate="true" >
+                <h:outputText value="Load Card" />
+            </h:commandLink>
+            <hr/>
+            <h:panelGrid id="optionTable" 
+                         columns="7" 
+                         styleClass="innerTable"
+                         columnClasses="">
+                <h:outputText value="Field"/>
+                <h:outputText value="Row Portion"/>
+                <h:outputText id="rowLabel"
+                              value="Number of Rows"/>
+                <h:outputText value="Bar Coded"/>
+                <h:outputText value="Labels"/>
+                <h:outputText value="Borders"/>
+                <h:outputText id="customTextLabel"
+                              value="Label"/>
+                <h:selectOneMenu id="field1"
+                                 value="#{CustomCageCard_Backing.fieldName}"
+                                 requiredMessage="#{customMessage['customcard.field.missing']}"
+                                 required="#{!empty param['CustomCardForm:addField']}">
+                    <f:selectItems id="fields"
+                                   value="#{CustomCageCard_Backing.displayFields}"/>                       
+                    <a4j:ajax event="change"
+                                 listener="#{CustomCageCard_Backing.autosetLabels}"
+                                 render="customTextLabel, customText, optionTable"/>
+                </h:selectOneMenu>
+                <h:selectOneMenu id="RowPortion"
+                                 value="#{CustomCageCard_Backing.rowPortion}"
+                                 required="#{!empty param['CustomCardForm:addField']}">
+                    <f:selectItems id="rowportionFields"
+                                   value="#{CustomCageCard_Backing.rowPortionFields}"/>
+                    <a4j:ajax event="change"
+                              listener="#{CustomCageCard_Backing.multiRowWarning}"/>
+                </h:selectOneMenu>
+                <h:inputText id="numberOfRows"
+                             value="#{CustomCageCard_Backing.numberOfRows}"
+                             requiredMessage="#{customMessage['customcard.numberOfRows.missing']}"
+                             required="#{!empty param['CustomCardForm:addField']}"
+                             converterMessage="#{customMessage['customcard.numberOfRows.format']}"
+                             converter="javax.faces.BigInteger">
+                    <a4j:ajax event="change"
+                              listener="#{CustomCageCard_Backing.multiRowWarning}"/>
+                </h:inputText>
+                <h:selectBooleanCheckbox id="barCoded1"
+                                         value="#{CustomCageCard_Backing.barCode}">
+                    <a4j:ajax event="change"
+                              listener="#{CustomCageCard_Backing.barcodeWarningHelper}"/>
+                </h:selectBooleanCheckbox>
+                <h:selectBooleanCheckbox id="label1"
+                                         value="#{CustomCageCard_Backing.labels}"/>
+                <h:selectBooleanCheckbox id="borders"
+                                         value="#{CustomCageCard_Backing.borders}"/>
+                <h:inputText id="customText"
+                             value="#{CustomCageCard_Backing.customText}"/>
+            </h:panelGrid>
+            <hr/>
+            <h:panelGrid columns="2"
+                         id="tables"
+                         columnClasses="customCardColumn"
+                         styleClass="customCardColumn">
+                <rich:dataTable id="cardDetails"
+                                value="#{CustomCageCard_Backing.customCard}"
+                                var="theField" rowKeyVar="theFieldIndex">
+                    <rich:column id="options" styleClass="#{theField.color}">
+                        <f:facet name="header"><h:outputText value="Options"/></f:facet>
+                        <h:panelGrid columns="3"
+                                     id="saveEdit">
+                            <a4j:commandLink id="deleteLink"
+                                             action="#{CustomCageCard_Backing.deleteField}"
+                                             styleClass="smallText"
+                                             immediate="true"
+                                             render="cardDetails, remainingRows">
+                                <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                <f:param name="fieldIndex" value="#{theFieldIndex}"/>
+                            </a4j:commandLink>
+                            <a4j:commandLink id="editLink"
+                                             action="#{CustomCageCard_Backing.editTheField}"
+                                             oncomplete="#{rich:component('editFieldPanel')}.show()"
+                                             styleClass="smallText"
+                                             render="field2, RowPortion2, numberOfRows2, barCoded2, label2, borders2, customText2"
+                                             immediate="true">
+                                <h:graphicImage value="/images/edit.gif" style="border:0" />
+                                <f:param name="fieldIndex" value="#{theFieldIndex}"/>
+                            </a4j:commandLink>
+                            <a4j:commandLink id="insertLink"
+                                             action="#{CustomCageCard_Backing.startInsert}"
+                                             oncomplete="#{rich:component('insertFieldPanel')}.show()"
+                                             render="field3, RowPortion3, numberOfRows3, barCoded3, label3"
+                                             immediate="true">
+                                <h:graphicImage value="/images/insert.gif" style="border:0" />
+                                <f:param name="fieldIndex" value="#{theFieldIndex}"/>
+                            </a4j:commandLink>
+                        </h:panelGrid>              
+                    </rich:column>
+                    <rich:column id="fieldName" styleClass="#{theField.color}">
+                        <f:facet name="header"><h:outputText value="Field Name"/></f:facet>
+                        <h:outputText value="#{theField.fieldName}"/>
+                    </rich:column>
+                    <rich:column id="rowPortion" styleClass="#{theField.color}">
+                        <f:facet name="header"><h:outputText value="Row Portion"/></f:facet>
+                        <h:outputText value="#{theField.rowPortion}"/>
+                    </rich:column>
+                    <rich:column id="numberOfRows" styleClass="#{theField.color}">
+                        <f:facet name="header"><h:outputText value="Number of Rows"/></f:facet>
+                        <h:outputText value="#{theField.numberOfRows}"/>
+                    </rich:column>
+                    <rich:column id="barcodes" styleClass="#{theField.color}">
+                        <f:facet name="header"><h:outputText value="Bar Codes"/></f:facet>
+                        <h:outputText value="#{theField.barCoded}"/>
+                    </rich:column>
+                    <rich:column id="labels" styleClass="#{theField.color}">
+                        <f:facet name="header"><h:outputText value="Labels"/></f:facet>
+                        <h:outputText value="#{theField.labeled}"/>
+                    </rich:column>
+                    <rich:column id="borders" styleClass="#{theField.color}">
+                        <f:facet name="header"><h:outputText value="Borders"/></f:facet>
+                        <h:outputText value="#{theField.borders}"/>
+                    </rich:column>
+                    <rich:column id="customText" styleClass="#{theField.color}">
+                        <f:facet name="header"><h:outputText value="Label"/></f:facet>
+                        <h:outputText value="#{theField.customText}"/>
+                    </rich:column>
+                </rich:dataTable>
+                <h:panelGrid columns="2"
+                             id="RowsAvailable"
+                             columnClasses="customCardColumn"
+                             styleClass = "customCardColumn">
+                    <h:outputText value="Number of Rows Available: "/>
+                    <h:outputText id="remainingRows" 
+                                 value="#{CustomCageCard_Backing.rowsAvailable}"
+                                 readonly="true"/>
+                </h:panelGrid>
+            </h:panelGrid>
+        </h:form>
+        <rich:popupPanel id="editFieldPanel"
+                         autosized="true">
+            <f:facet name="header"><h:outputText value="Edit Current Field"/></f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="/images/delete.gif" id="hidelink"
+                                    onclick="#{rich:component('editFieldPanel')}.hide();"
+                                    styleClass="hidelink" title="Close" />
+                </h:panelGroup> 
+            </f:facet>
+            <h:form id="editFieldForm">
+                <rich:messages />
+                <br />
+                <h:panelGrid id="optionTable" 
+                             columns="7" 
+                             styleClass="innerTable">
+                    <h:outputText value="field"/>
+                    <h:outputText value="Row Portion"/>
+                    <h:outputText id="columnsLabel"
+                                  value="Number of Rows"/>
+                    <h:outputText value="Bar Coded"/>
+                    <h:outputText value="Labels"/>
+                    <h:outputText value="Borders"/>
+                    <h:outputText id="customTextLabel2"
+                                  value="Label"/>
+                    <h:selectOneMenu id="field2"
+                                     value="#{CustomCageCard_Backing.editFieldName}"
+                                     requiredMessage="#{customMessage['customcard.field.missing']}"
+                                     required="true">
+                        <f:selectItems value="#{CustomCageCard_Backing.displayFields}"/>
+                        <a4j:ajax event="change"
+                                  listener="#{CustomCageCard_Backing.autosetEditLabels}"
+                                  render="customTextLabel2, customText2, optionTable"/>
+                    </h:selectOneMenu>
+                    <h:selectOneMenu id="RowPortion2"
+                                     value="#{CustomCageCard_Backing.editRowPortion}"
+                                     required="true">
+                         <f:selectItems id="rowportionFields"
+                                        value="#{CustomCageCard_Backing.rowPortionFields}"/>
+                    </h:selectOneMenu>
+                    <h:inputText id="numberOfRows2"
+                                 value="#{CustomCageCard_Backing.editNumberOfRows}"
+                                 required="true"
+                                 requiredMessage="#{customMessage['customcard.numberOfRows.missing']}"
+                                 converterMessage="#{customMessage['customcard.numberOfRows.format']}"
+                                 converter="javax.faces.BigInteger"/>
+                    <h:selectBooleanCheckbox id="barCoded2"
+                                             value="#{CustomCageCard_Backing.editBarCode}"/>
+                    <h:selectBooleanCheckbox id="label2"
+                                             value="#{CustomCageCard_Backing.editLabels}"/>
+                    <h:selectBooleanCheckbox id="borders2"
+                                             value="#{CustomCageCard_Backing.editBorders}"/>
+                    <h:inputText id="customText2"
+                                 value="#{CustomCageCard_Backing.editCustomText}"/>
+                </h:panelGrid>
+                <h:panelGrid id="panelButtons"
+                             columns="2">
+                    <a4j:commandButton id="editButton"
+                                       value="Save"
+                                       action="#{CustomCageCard_Backing.changeFields}"
+                                       oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('editFieldPanel')}.hide();"
+                                       render="cardDetails, remainingRows"/>
+                    <a4j:commandButton id="closePanel"
+                                       value="Close"
+                                       oncomplete="#{rich:component('editFieldPanel')}.hide()"
+                                       immediate="true"/>
+                </h:panelGrid>
+            </h:form>
+        </rich:popupPanel>
+        <rich:popupPanel id="insertFieldPanel"
+                         autosized="true">
+            <f:facet name="header"><h:outputText value="Insert Field"/></f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="/images/delete.gif" id="hidelink2"
+                                    onclick="#{rich:component('insertFieldPanel')}.hide();"
+                                    styleClass="hidelink" title="Close" />
+                </h:panelGroup> 
+            </f:facet>
+            <h:form id="insertFieldForm">
+                <rich:messages />
+                <br />
+                <h:panelGrid id="optionTable" 
+                             columns="7" 
+                             styleClass="innerTable">
+                    <h:outputText value="field"/>
+                    <h:outputText value="Row Portion"/>
+                    <h:outputText id="columnsLabel"
+                                  value="Number of Rows"/>
+                    <h:outputText value="Bar Coded"/>
+                    <h:outputText value="Labels"/>
+                    <h:outputText value="Borders"/>
+                    <h:outputText id="customTextLabel2"
+                                  value="Label"/>
+                    <h:selectOneMenu id="field3"
+                                     value="#{CustomCageCard_Backing.insertFieldName}"
+                                     requiredMessage="#{customMessage['customcard.field.missing']}"
+                                     required="true">
+                        <f:selectItems value="#{CustomCageCard_Backing.displayFields}"/>
+                        <a4j:ajax event="change"
+                                     listener="#{CustomCageCard_Backing.autosetInsertLabels}"
+                                     render="customTextLabel, customText, optionTable"/>
+                    </h:selectOneMenu>
+                    <h:selectOneMenu id="RowPortion3"
+                                     value="#{CustomCageCard_Backing.insertRowPortion}"
+                                     required="true">
+                         <f:selectItems id="rowportionFields"
+                                        value="#{CustomCageCard_Backing.rowPortionFields}"/>
+                    </h:selectOneMenu>
+                    <h:inputText id="numberOfRows3"
+                                 value="#{CustomCageCard_Backing.insertNumberOfRows}"
+                                 required="true"
+                                 converter="javax.faces.BigInteger"
+                                 requiredMessage="#{customMessage['customcard.numberOfRows.missing']}"
+                                 converterMessage="#{customMessage['customcard.numberOfRows.format']}"/>
+                    <h:selectBooleanCheckbox id="barCoded3"
+                                             value="#{CustomCageCard_Backing.insertBarCode}"/>
+                    <h:selectBooleanCheckbox id="label3"
+                                             value="#{CustomCageCard_Backing.insertLabels}"/>
+                    <h:selectBooleanCheckbox id="borders3"
+                                             value="#{CustomCageCard_Backing.insertBorders}"/>
+                    <h:inputText id="customText3"
+                                 value="#{CustomCageCard_Backing.insertCustomText}"/>
+                </h:panelGrid>
+                <h:panelGrid id="panelButtons"
+                             columns="2">
+                    <a4j:commandButton id="insertButton"
+                                       value="Save"
+                                       action="#{CustomCageCard_Backing.insertField}"
+                                       oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('insertFieldPanel')}.hide();"
+                                       render="cardDetails, remainingRows"/>
+                    <a4j:commandButton id="closePanel"
+                                       value="Close"
+                                       oncomplete="#{rich:component('insertFieldPanel')}.hide()"
+                                       immediate="true"/>
+                </h:panelGrid>
+            </h:form>
+        </rich:popupPanel>
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+    </h:body>
+</html>

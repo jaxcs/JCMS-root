@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Home</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+ 		<link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">   
+ 		<link href="css/histogramStyles.css" rel="stylesheet" type="text/css">  
+ 		<link href="css/JCMSMobileStyles.css" rel="stylesheet" type="text/css">  
+		<script type="text/javascript" charset="utf-8" src="./cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="./lib/bootstrap.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="./lib/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="./js/jcmsMobileUtilities.js"></script>
+		<script type="text/javascript" charset="utf-8" src="./js/histograms.js"></script>
+		<script type="text/javascript" charset="utf-8" src="./lib/d3.v3.js"></script>
+	</head>
+	<body onload="buildHistograms()">
+		<img src="./img/header.png" alt="JCMS Mobile" style="width: 100%"/>
+		<div style="text-align: center"><h2>JCMS Mobile Home</h2></div>
+		<form id="homeMenuForm" style="padding: 19px 29px 29px">
+			<ul class="nav nav-pills">
+				<li class="active">
+					<a href="#">Home</a>
+				</li>
+				<li onclick="window.location.href='./reporting/reportingHome.html'">
+					<a href="#">Reporting</a>
+				</li>
+				<li onclick="window.location.href='./vivariaLayout/vivariaLayout.html'">
+					<a href="#">Vivaria Layout</a>
+				</li>
+			</ul>
+			<div style="text-align: center;" class="loader"><img src="./img/loading.gif"/></div>
+			<div id="mouseHistogramDiv"></div>
+			<div id="cageHistogramDiv"></div>
+		</form>
+	</body>
+</html>

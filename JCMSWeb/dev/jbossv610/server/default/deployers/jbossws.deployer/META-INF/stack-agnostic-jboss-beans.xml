@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+  <!--  processes @WebServiceRef resources and their DD equivalents (EE.5.6 of Java EE6 spec) -->
+  <bean
+    name="org.jboss.switchboard.WebServiceRefResourceProvider"
+    class="org.jboss.webservices.integration.injection.ServiceRefResourceProvider"
+  />
+
+  <!--  processes @Resource annotated WebServiceContext beans (EE.5.6 of Java EE6 spec) -->
+  <bean
+    name="org.jboss.switchboard.WebServiceContextResourceProvider"
+    class="org.jboss.webservices.integration.injection.WebServiceContextResourceProvider"
+  />
+
+  <!-- Wraps single instance of the kernel -->
+  <bean name="WSIoCContainerProxy" class="org.jboss.webservices.integration.ioc.IoCContainerProxyImpl">
+    <property name="kernel"><inject bean="jboss.kernel:service=Kernel"/></property>
+  </bean>
+
+  <!-- Locate the single instance of the MBeanServer -->
+  <bean name="WSMBeanServerLocator" class="org.jboss.wsf.framework.management.MBeanServerLocator">
+    <constructor>
+      <parameter>
+        <inject bean="JMXKernel" property="mbeanServer"/>
+      </parameter>
+    </constructor>
+  </bean>
+
+  <!-- An abstraction of server configuration aspects. -->
+  <bean name="WSServerConfig" class="org.jboss.webservices.integration.config.ServerConfigImpl">
+    <property name="mbeanServer"><inject bean="WSMBeanServerLocator" property="mbeanServer"/></property>
+
+    <!--
+      The WSDL, that is a required deployment artifact for an endpoint, has a <soap:address>
+      element which points to the location of the endpoint. JBoss supports rewriting of that SOAP address.
+
+      If the content of <soap:address> is a valid URL, JBossWS will not rewrite it unless 'modifySOAPAddress' is true.
+      If the content of <soap:address> is not a valid URL, JBossWS will rewrite it using the attribute values given below.
+
+      If 'webServiceHost' is set to 'jbossws.undefined.host', JBossWS uses requesters host when rewriting the <soap:address>
+    -->
+    <property name="webServiceHost">${jboss.bind.address}</property>
+    <property name="modifySOAPAddress">true</property>
+
+    <!--
+      Set these properties to explicitly define the ports that will be used for rewriting the SOAP address.
+      Otherwise the ports will be identified by querying the list of installed connectors.
+      If multiple connectors are found the port of the first connector is used.
+      <property name="webServiceSecurePort">8443</property>
+      <property name="webServicePort">8080</property>
+    -->
+  </bean>
+
+  <!-- stack agnostic webservices.xml processor -->
+  <bean name="WSDescriptorProcessor" class="org.jboss.wsf.framework.deployment.jms.WebservicesDescriptorProcessorImpl">
+    <property name="validating">true</property>
+    <property name="descriptorName">webservices.xml</property>
+  </bean>
+
+  <!-- deployers -->
+ <bean name="WSDescriptorDeployer" class="org.jboss.webservices.integration.deployers.WSDescriptorDeployer">
+    <!-- Explicitly set processor bean to work around running JBOSS 6.x with JAVA 1.7 -->
+    <!-- <incallback method="setProcessor"/> -->
+    <property name="processor"><inject bean="WSDescriptorProcessor"/></property>
+    <incallback method="setParser"/>
+  </bean>
+
+  <bean name="JMSDescriptorDeployer" class="org.jboss.webservices.integration.deployers.JMSDescriptorDeployer">
+    <!-- Explicitly set processor bean to work around running JBOSS 6.x with JAVA 1.7 -->
+    <!-- <incallback method="setProcessor"/> -->
+    <property name="processor"><inject bean="CXFJMSDescriptorProcessor"/></property>
+    <incallback method="setParser"/>
+  </bean>
+
+  <bean name="WSEJBAdapterDeployer" class="org.jboss.webservices.integration.deployers.WSEJBAdapterDeployer"/>
+
+  <bean name="WSTypeDeployer" class="org.jboss.webservices.integration.deployers.WSTypeDeployer"/>
+
+  <bean name="WSDeploymentDeployer" class="org.jboss.webservices.integration.deployers.WSDeploymentDeployer"/>
+
+  <!-- WSDeploymentAspectDeployers factory -->
+  <bean name="WSAspectizedDeployersFactory" class="org.jboss.webservices.integration.deployers.WSAspectizedDeployersFactory">
+    <constructor>
+      <parameter>
+        <inject bean="Deployers"/>
+      </parameter>
+    </constructor>
+    <incallback method="addDeployer"/>
+    <uncallback method="removeDeployer"/>
+  </bean>
+
+  <!-- The AS specific deployment aspects -->
+  <bean name="WSContainerMetaDataDeploymentAspect" class="org.jboss.webservices.integration.metadata.ContainerMetaDataDeploymentAspect">
+    <property name="provides">ContainerMetaData, VFSRoot</property>
+  </bean>
+
+  <bean name="WSInjectionMetaDataDeploymentAspect" class="org.jboss.webservices.integration.injection.InjectionMetaDataDeploymentAspect">
+    <property name="requires">WebMetaData</property>
+    <property name="provides">InjectionMetaData</property>
+    <property name="ejbReferenceResolver"><inject bean="org.jboss.ejb3.ejbref.resolver.EjbReferenceResolver"/></property>
+  </bean>
+
+  <!-- TODO: remove this hacky aspect -->
+  <bean name="WSJACCPermissionsDeploymentAspect" class="org.jboss.webservices.integration.security.JACCPermissionsDeploymentAspect">
+    <property name="requires">WebMetaData</property>
+    <property name="provides">JACCPermisions</property>
+  </bean>
+
+  <bean name="WSContextRootDeploymentAspect" class="org.jboss.wsf.framework.deployment.BackwardCompatibleContextRootDeploymentAspect">
+    <property name="requires">ContainerMetaData</property>
+    <property name="provides">ContextRoot</property>
+  </bean>
+
+  <bean name="WSVirtualHostDeploymentAspect" class="org.jboss.wsf.framework.deployment.VirtualHostDeploymentAspect">
+    <property name="requires">ContainerMetaData</property>
+    <property name="provides">VirtualHosts</property>
+  </bean>
+
+  <bean name="WSEndpointAddressDeploymentAspect" class="org.jboss.wsf.framework.deployment.EndpointAddressDeploymentAspect">
+    <property name="requires">URLPattern</property>
+    <property name="provides">EndpointAddress</property>
+  </bean>
+
+  <bean name="WSEndpointLifecycleDeploymentAspect" class="org.jboss.wsf.framework.deployment.EndpointLifecycleDeploymentAspect">
+    <property name="provides">LifecycleHandler</property>
+    <property name="last">true</property>
+  </bean>
+
+  <bean name="WSEndpointMetricsDeploymentAspect" class="org.jboss.wsf.framework.deployment.EndpointMetricsDeploymentAspect">
+    <property name="provides">EndpointMetrics</property>
+  </bean>
+
+  <bean name="WSEndpointNameDeploymentAspect" class="org.jboss.wsf.framework.deployment.EndpointNameDeploymentAspect">
+    <property name="requires">URLPattern</property>
+    <property name="provides">EndpointName</property>
+  </bean>
+
+  <bean name="WSEndpointRegistryDeploymentAspect" class="org.jboss.wsf.framework.deployment.EndpointRegistryDeploymentAspect">
+    <property name="requires">EndpointName, EndpointAddress</property>
+    <property name="provides">RegisteredEndpoint</property>
+  </bean>
+
+  <bean name="WSURLPatternDeploymentAspect" class="org.jboss.wsf.framework.deployment.URLPatternDeploymentAspect">
+    <property name="requires">ContextRoot, ContainerMetaData</property>
+    <property name="provides">URLPattern</property>
+  </bean>
+
+  <bean name="WSWebMetaDataModifyingDeploymentAspect" class="org.jboss.webservices.integration.tomcat.WebMetaDataModifyingDeploymentAspect">
+    <property name="requires">WebMetaData, ContextProperties, StackDescriptor</property>
+    <property name="provides">WebMetaData</property>
+  </bean>
+
+  <bean name="WSWebMetaDataCreatingDeploymentAspect" class="org.jboss.webservices.integration.tomcat.WebMetaDataCreatingDeploymentAspect">
+    <property name="requires">VirtualHosts,URLPattern,EndpointAddress</property>
+    <property name="provides">WebMetaData</property>
+  </bean>
+
+  <bean name="WSWeldDeploymentAspect" class="org.jboss.webservices.integration.weld.WeldDeploymentAspect">
+    <property name="requires">StackEndpointHandler</property>
+    <property name="provides">CDIInjection</property>
+  </bean>
+
+</deployment>

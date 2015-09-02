@@ -1,0 +1,1097 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Mice List</title>            
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen"  />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js" ></script>
+        <script type="text/javascript" src="/jcms/javascript/jquery.scrollTo-1.4.3.1-min.js"></script>
+        <script type="text/javascript">
+            function scrollTo() {
+                $(window).scrollTo($('.message'), 100)
+            }
+        </script>
+    </h:head>
+    <h:body>  
+        <h:form id="mouseGenotypeListFormId">
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <div style="margin-left:10px;margin-right:10px">
+            <h1>
+                <h:outputText value="#{msgs['colonyManagement.header']}" style="h1"/>
+            </h1><hr />
+            <a class="message"></a>
+
+                <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5" width="100%"
+                             columnClasses="colonyManagementSideBar,detailPane">
+
+                    <h:panelGroup>
+                        <f:subview id="adminSideBar"><ui:include src="/colonyManagement/colonyManagementSideBar.xhtml"/></f:subview>
+                    </h:panelGroup>
+
+                    <!-- RIGHT SIDE OF PAGE -->
+                    <h:panelGroup  styleClass="formTitle">
+                        <h:outputText value="#{msgs['colonyManagement.miceGenotypeList']}"></h:outputText>
+                        <img alt="" src="../images/bhi_ball_white.gif" />
+
+                        <!-- STATUS -->
+                        <a4j:status name="statusPage">
+                            <f:facet name="start">
+                                <h:graphicImage value="../images/bhi_ball.gif"/>
+                            </f:facet>
+                        </a4j:status>    
+
+                        <br />
+                        <!-- Messages -->
+                        <rich:messages title="#{msgs['common.messages.reviewMsg']}"/>
+                        <br />
+
+                        <h:panelGroup id="idSearch">   
+                            <rich:collapsiblePanel header="Search"
+                                                   ondblclick="return false;"
+                                                   styleClass="collapsibleSearchPanel" 
+                                                   expanded="true" >
+                                <table class="searchTable">
+                                <tr>
+                                    <!-- Label -->
+                                    <td>
+                                        <h:outputLabel value="#{msgs['mouseId']}" id="lookForMouseId" />
+                                    </td>
+                                    <!-- Value -->
+                                    <td>
+                                        <h:selectOneMenu id="mouseIDFilter" value="#{MouseGenotypeList_Backing.mouseSearch.mouseFilter}" >
+                                            <f:selectItems value="#{MouseGenotypeList_Backing.selectItemWrapper.mouseFilters}"/>
+                                        </h:selectOneMenu>
+                                        <h:inputText id="searchById" value="#{MouseGenotypeList_Backing.mouseSearch.mouseID}" 
+                                                     maxlength="#{restrict['size.general.id']}"
+                                                     size="#{restrict['size.general.id']}" />
+                                    </td>
+                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <!-- Label -->
+                                    <td>
+                                        <h:outputLabel value="#{msgs['strain']}" id="lookForStrainId" />
+                                    </td>
+                                    <!-- Value -->
+                                    <td>
+                                        <h:selectOneMenu id="searchByStrain" value="#{MouseGenotypeList_Backing.mouseSearch.strain}" >
+                                            <f:selectItems value="#{MouseGenotypeList_Backing.selectItemWrapper.allStrains}"/>
+                                            <f:converter converterId="strainConverter" />
+                                        </h:selectOneMenu>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!-- Label -->
+                                    <td>
+                                        <h:outputLabel value="#{msgs['lifeStatus']}" id="lifeStatusId" />
+                                    </td>
+                                    <!-- Value -->
+                                    <td>
+                                        <h:selectOneMenu value="#{MouseGenotypeList_Backing.mouseSearch.lifeStatus}" >
+                                            <f:selectItems value="#{MouseGenotypeList_Backing.selectItemWrapper.cvLifeStatusItemsOptional}"/>
+                                            <f:converter converterId="lifeStatusConverter" />
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <!-- Label -->
+                                    <td>
+                                        <h:outputLabel value="#{msgs['dateOfBirth']}" />
+                                    </td>
+                                    <!-- Value -->
+                                    <td>
+                                        <rich:calendar id="birthDate1" 
+                                                       value="#{MouseGenotypeList_Backing.mouseSearch.DOBStartDate}"
+                                                       inputSize="#{msgs['common.minMaxSize']}"
+                                                       datePattern="#{MouseGenotypeList_Backing.date_format}"
+                                                       showInput="true"
+                                                       showWeeksBar="true"
+                                                       enableManualInput="true">
+                                        </rich:calendar>                            
+                                        &nbsp;&nbsp;
+                                        <h:outputLabel value="To" />
+                                        &nbsp;&nbsp;
+                                        <rich:calendar id="birthDate2"
+                                                       value="#{MouseGenotypeList_Backing.mouseSearch.DOBEndDate}"
+                                                       inputSize="#{msgs['common.minMaxSize']}"
+                                                       datePattern="#{MouseGenotypeList_Backing.date_format}"
+                                                       showInput="true"
+                                                       showWeeksBar="true"
+                                                       enableManualInput="true">
+                                        </rich:calendar>
+                                    </td>
+                                    </tr>
+                                <tr>
+                                    <!-- Label -->
+                                    <td>
+                                        <h:outputLabel value="#{msgs['pen#']}" />
+                                    </td>
+                                    <!-- Value -->
+                                    <td style="white-space: nowrap;">
+                                        <h:selectOneMenu id="penIDFilter" value="#{MouseGenotypeList_Backing.mouseSearch.penFilter}" >
+                                            <f:selectItems value="#{MouseGenotypeList_Backing.selectItemWrapper.integerFilters}"/>
+                                        </h:selectOneMenu>
+                                        <h:inputText id="searchByPenId" value="#{MouseGenotypeList_Backing.mouseSearch.penID}" 
+                                                     maxlength="#{restrict['size.general.id']}"
+                                                     size="#{restrict['size.general.id']}" />
+                                    </td>
+                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <!-- Label -->
+                                    <td>
+                                        <h:outputLabel value="#{msgs['genotype.gene']}" id="lookForGeneId1" />
+                                    </td>
+                                    <!-- Value -->
+                                    <td>
+                                        <h:selectOneMenu id="searchByGene" title="Equals this gene" 
+                                                         value="#{MouseGenotypeList_Backing.genotypeSearch.gene}" 
+                                                         valueChangeListener="#{MouseGenotypeList_Backing.geneFilterChanged}" >
+                                            <f:selectItems value="#{MouseGenotypeList_Backing.selectItemWrapper.genesItemsOptional}"/>
+                                            <f:converter converterId="genesConverter" />
+                                            <a4j:ajax event="change" render="lookForAllele1Id1, lookForAllele2Id1" status="statusPage" />
+                                        </h:selectOneMenu>               
+                                        &nbsp;&nbsp;
+                                        <h:inputText id="searchByPartialGene" title="Contains this gene" 
+                                                     value="#{MouseGenotypeList_Backing.genotypeSearch.partialGene}" 
+                                                     maxlength="#{restrict['size.general.id']}"
+                                                     size="#{restrict['size.general.id']}" >
+                                        </h:inputText>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <!-- Label -->
+                                    <td>
+                                        <h:outputLabel value="#{msgs['sex']}" id="sexId" />
+                                    </td>
+                                    <!-- Value -->
+                                    <td>
+                                        <h:selectOneMenu value="#{MouseGenotypeList_Backing.mouseSearch.sex}" >
+                                            <f:selectItems value="#{MouseGenotypeList_Backing.selectItemWrapper.cvSexItemsOptional}"/>
+                                            <f:converter converterId="sexConverter" />
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <!-- Label -->
+                                    <td>
+                                        <h:outputLabel value="#{msgs['genotype.firstAllele']}" />
+                                    </td>
+                                    <!-- Value -->
+                                    <td>
+                                        <h:selectOneMenu id="lookForAllele1Id1" value="#{MouseGenotypeList_Backing.genotypeSearch.alleleName1}" > 
+                                            <!-- <f:selectItems value="#{MouseGenotypeList_Backing.alleleByGeneItems}"/> -->
+                                            <f:selectItems value="#{MouseGenotypeList_Backing.allele1FilterItems}"/>
+<!--                                            <f:converter converterId="alleleConverter" />-->
+                                        </h:selectOneMenu>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <!-- Label -->
+                                    <td>
+                                        <h:outputLabel value="#{msgs['generation']}" id="generationId" />
+                                    </td>
+                                    <!-- Value -->
+                                    <td>
+                                        <h:selectOneMenu value="#{MouseGenotypeList_Backing.mouseSearch.generation}" >
+                                            <f:selectItems value="#{MouseGenotypeList_Backing.selectItemWrapper.cvGenerationItemsOptional}"/>
+                                            <f:converter converterId="generationConverter" />
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <!-- Label -->
+                                    <td style="white-space: nowrap;">
+                                        <h:outputLabel value="#{msgs['genotype.secondAllele']}" />
+                                    </td>
+                                    <!-- Value -->
+                                    <td>
+                                        <h:selectOneMenu id="lookForAllele2Id1" value="#{MouseGenotypeList_Backing.genotypeSearch.alleleName2}" > 
+                                            <f:selectItems value="#{MouseGenotypeList_Backing.allele2FilterItems}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <!-- Label -->
+                                    <td style="white-space: nowrap;">
+                                        <h:outputLabel value="#{msgs['genotype.genotypeSpecimenLocation']}" />
+                                    </td>
+                                    <!-- Value -->
+                                    <td>
+                                        <h:selectOneMenu value="#{MouseGenotypeList_Backing.genotypeSearch.location}">
+                                            <f:selectItems value="#{MouseGenotypeList_Backing.selectItemWrapper.cvGenotypeSpecimenLocationItemsOptional}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <!-- Label -->
+                                    <td>&nbsp;</td>
+                                    <!-- Value -->
+                                    <td>&nbsp;</td>
+                                </tr>
+
+                                <tr>
+                                    <!-- Label -->
+                                    <td colspan="5">
+                                        <h:outputLabel value="#{msgs['owner']}" />
+                                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+                                    <h:panelGroup id="ownersId">   
+                                        <rich:pickList value="#{MouseGenotypeList_Backing.mouseSearch.owners}" 
+                                                       disabled="false" >
+                                            <f:selectItems value="#{MouseGenotypeList_Backing.selectItemWrapper.colonyManageOwnerItems}"/>
+                                            <f:converter converterId="ownerConverter" />
+                                        </rich:pickList>
+                                    </h:panelGroup>
+                                </td></tr></table>
+
+                                <br />
+
+                                <hr />
+                                <a4j:commandButton
+                                    id="searchId"
+                                    value="#{msgs['line.search']}"
+                                    action="#{MouseGenotypeList_Backing.miceSearchAction}"
+                                    styleClass="mediumButton"
+                                    type="submit" 
+                                    render="ownersId, searchResultsGridId, resultsTextId" 
+                                    status="statusPage"/>
+                                &nbsp;&nbsp;
+                                <a4j:commandButton 
+                                    immediate="true"
+                                    id="clearId"
+                                    value="#{msgs['filter.clear']}"
+                                    action="#{MouseGenotypeList_Backing.clearSearchAction}"
+                                    oncomplete="document.getElementById('MouseGenotypeListFormId:lookForMouseId').focus();"
+                                    styleClass="mediumButton"
+                                    render="searchResultsGridId,lookForMouseId" 
+                                    status="statusPage"/>
+                            </rich:collapsiblePanel>
+                        </h:panelGroup>
+
+                        <h:panelGrid columns="1" id="searchResultsGridId">
+                            <h:panelGroup id="resultsId">
+                                <h:outputText id="resultsTextId"
+                                              rendered="#{MouseGenotypeList_Backing.isResultCountDisplayed}"
+                                              value="#{msgs['search.results']} #{MouseGenotypeList_Backing.mouseGenotypeDataModel.rowCount}" />
+                                &nbsp;&nbsp;
+                                <h:outputText rendered="#{MouseGenotypeList_Backing.mouseGenotypeDataModel.rowCount >= 300}"
+                                              value="-" />
+                                &nbsp;&nbsp;
+                                <h:outputText styleClass="reqColor" rendered="#{MouseGenotypeList_Backing.mouseGenotypeDataModel.rowCount >= 300}"
+                                              value="Please refine your Mice Search" />
+                                <a4j:status name="statusTable">
+                                    <f:facet name="start">
+                                        &nbsp;&nbsp;
+                                        <h:graphicImage  value="../images/bhi_ball.gif"/>
+                                    </f:facet>
+                                </a4j:status>    
+                            </h:panelGroup>
+
+                            <h:panelGroup id="resultsPanelId" rendered="#{MouseGenotypeList_Backing.mouseGenotypeDataModel.rowCount > 0}">                                        
+
+                                <rich:dataTable
+                                    id="tableId"
+                                    value="#{MouseGenotypeList_Backing.mouseGenotypeDataModel}"
+                                    sortMode="#{MouseGenotypeList_Backing.mouseGenotypeETB.sortMode}"
+                                    var="dm"
+                                    rowKeyVar="mouseRow"
+                                    rows="15"
+                                    columnClasses="w200 w200 w100 w150 w100 w100"
+                                    styleClass="maxSizeDataTable"  
+                                    headerClass="tableSortHeader">                                    
+
+                                    <f:facet name="header">
+                                        <h:outputText value="Mice" />
+                                    </f:facet>   
+                                    <f:facet name="footer" class="dataScroller">
+                                        <rich:dataScroller for="tableId" renderIfSinglePage="false" render="tableId" >
+                                        </rich:dataScroller>
+                                    </f:facet>
+                                    <rich:column id="actions2" styleClass="actions">
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:outputText value="Actions" />
+                                            </h:panelGroup>
+                                        </f:facet>   
+                                        <h:panelGroup>
+                                            <a4j:commandButton
+                                                title="Add Genotype"
+                                                image="/images/insert.gif"
+                                                immediate="true"
+                                                action="#{MouseGenotypeList_Backing.addGenotypeRecordAction}"
+                                                render="tableId">
+                                                <f:param name="paramMouseKey" value="#{dm.mouseEntity.mouseKey}" />
+                                                <f:param name="paramMouseIndex" value="#{mouseRow}" />
+                                            </a4j:commandButton>
+                                            &nbsp;&nbsp;                                            
+                                            <a4j:commandButton  
+                                                rendered="#{dm.genotypeCnt > 0}"
+                                                image="/images/search.png"
+                                                title="Search Genotypes"
+                                                id="genotypeSearchID"
+                                                styleClass="smallImageSize"
+                                                oncomplete="#{rich:component('genotypeSearchPanel')}.show()"
+                                                actionListener="#{MouseGenotypeList_Backing.handleClick}"
+                                                render="lookForMouseId2">
+                                                <f:attribute name="paramMouseId" value="#{dm.mouseEntity.id}" />
+                                                <f:attribute name="paramMouseKey" value="#{dm.mouseEntity.mouseKey}" />
+                                            </a4j:commandButton>
+                                            &nbsp;&nbsp;
+                                            <a4j:commandLink 
+                                                rendered="#{dm.genotypeCnt > 0 and !dm.showHideFlag}"
+                                                value="Show" 
+                                                title="Show Genotypes"
+                                                id="lnkShowID"
+                                                render="tableId"
+                                                action="#{MouseGenotypeList_Backing.showAction}">
+                                                <f:param name="paramMouseKey" value="#{dm.mouseEntity.mouseKey}" />
+                                                <f:param name="paramMouseIndex" value="#{mouseRow}" />
+                                            </a4j:commandLink>
+                                            <a4j:commandLink 
+                                                rendered="#{dm.genotypeCnt > 0 and dm.showHideFlag}"
+                                                value="Hide" 
+                                                title="Hide Genotypes"
+                                                id="lnkHideID"
+                                                render="tableId"
+                                                action="#{MouseGenotypeList_Backing.hideAction}">
+                                                <f:param name="paramMouseKey" value="#{dm.mouseEntity.mouseKey}" />
+                                                <f:param name="paramMouseIndex" value="#{mouseRow}" />
+                                            </a4j:commandLink>
+                                            <h:outputText rendered="#{dm.genotypeCnt > 0}"
+                                                id="txtPageBanner" 
+                                                value=" (#{dm.genotypeCnt} of #{dm.genotypeFilterTotal}, #{dm.genotypeMouseTotal})"  />
+                                            &nbsp;&nbsp;                                            
+                                        </h:panelGroup>
+                                    </rich:column>
+
+                                    <rich:column id="id"
+                                                 sortBy="#{dm.mouseEntity.id}"
+                                                 sortOrder="#{sortingBean.column1Order}"
+                                                 filterValue="#{filterBean.column1Filter}" 
+                                                 filterExpression="#{fn:containsIgnoreCase(dm.mouseEntity.id, filterBean.column1Filter)}" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['mouseId']}" />
+                                            <br />
+                                            <a4j:commandButton image="#{sortingBean.column1Image}" 
+                                                               render="tableId" 
+                                                               action="#{sortingBean.sortByColumn1}" 
+                                                               status="statusTable"/>
+                                            <br />
+                                            <h:inputText value="#{filterBean.column1Filter}" styleClass="w100">
+                                                <a4j:ajax event="blur" render="tableId" status="statusTable" />
+                                            </h:inputText>
+                                        </f:facet>
+                                        <h:outputText value="#{dm.mouseEntity.id}"/>
+                                    </rich:column>
+
+                                    <rich:column id="birthDate"
+                                                 sortBy="#{dm.mouseEntity.birthDate}"
+                                                 sortOrder="#{sortingBean.column2Order}"
+                                                 filterValue="#{filterBean.column2Filter}" 
+                                                 filterExpression="#{fn:containsIgnoreCase(dm.mouseEntity.birthDate, filterBean.column2Filter)}" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['dateOfBirth']}" />
+                                            <br />
+                                            <a4j:commandButton image="#{sortingBean.column2Image}" 
+                                                               render="tableId" 
+                                                               action="#{sortingBean.sortByColumn2}" 
+                                                               status="statusTable"/>
+                                            <br />
+                                            <h:inputText value="#{filterBean.column2Filter}" styleClass="w100">
+                                                <a4j:ajax event="blur" render="tableId" status="statusTable" />
+                                            </h:inputText>
+                                        </f:facet>
+                                        <h:outputText value="#{dm.mouseEntity.birthDate}"/>
+                                    </rich:column>
+
+                                    <rich:column id="owner"
+                                                 sortBy="#{dm.mouseEntity.owner}"
+                                                 sortOrder="#{sortingBean.column3Order}"
+                                                 filterValue="#{filterBean.column3Filter}" 
+                                                 filterExpression="#{fn:containsIgnoreCase(dm.mouseEntity.owner, filterBean.column3Filter)}" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['owner']}" />
+                                            <br />
+                                            <a4j:commandButton image="#{sortingBean.column3Image}" 
+                                                               render="tableId" 
+                                                               action="#{sortingBean.sortByColumn3}" 
+                                                               status="statusTable"/>
+                                            <br />
+                                            <h:inputText value="#{filterBean.column3Filter}" styleClass="w100">
+                                                <a4j:ajax event="blur" render="tableId" status="statusTable" />
+                                            </h:inputText>
+                                        </f:facet>
+                                        <h:outputText value="#{dm.mouseEntity.owner}"/>
+                                    </rich:column>
+
+                                    <rich:column id="sex"
+                                                 sortBy="#{dm.mouseEntity.sex}"
+                                                 sortOrder="#{sortingBean.column4Order}"
+                                                 filterValue="#{filterBean.column4Filter}" 
+                                                 filterExpression="#{fn:containsIgnoreCase(dm.mouseEntity.sex, filterBean.column4Filter)}" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['sex']}" />
+                                            <br />
+                                            <a4j:commandButton image="#{sortingBean.column4Image}" 
+                                                               render="tableId" 
+                                                               action="#{sortingBean.sortByColumn4}" 
+                                                               status="statusTable"/>
+                                            <br />
+                                            <h:inputText value="#{filterBean.column4Filter}" styleClass="w100">
+                                                <a4j:ajax event="blur" render="tableId" status="statusTable" />
+                                            </h:inputText>
+                                        </f:facet>
+                                        <h:outputText value="#{dm.mouseEntity.sex}"/>
+                                    </rich:column>
+
+                                    <rich:column id="penId" colspan="8"
+                                                 sortBy="#{dm.mouseEntity.penKey.containerID}"
+                                                 sortOrder="#{sortingBean.column5Order}"
+                                                 filterValue="#{filterBean.column5Filter}" 
+                                                 filterExpression="#{fn:containsIgnoreCase(dm.mouseEntity.penKey.containerID, filterBean.column5Filter)}" >
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['pen#']}" />
+                                            <br />
+                                            <a4j:commandButton image="#{sortingBean.column5Image}" 
+                                                               render="tableId" 
+                                                               action="#{sortingBean.sortByColumn5}" 
+                                                               status="statusTable"/>
+                                            <br />
+                                            <h:inputText value="#{filterBean.column5Filter}" styleClass="w100">
+                                                <a4j:ajax event="blur" render="tableId" status="statusTable" />
+                                            </h:inputText>
+                                        </f:facet>
+                                        <h:outputText value="#{dm.mouseEntity.penKey.containerID}" />
+                                    </rich:column>
+
+                                    <rich:collapsibleSubTable
+                                        id="subTableId"
+                                        headerClass="subTableHeaderBackground"       
+                                        rowClasses="subTableBackground"
+                                        var="row"
+                                        rowKeyVar="genotypeRow"
+                                        value="#{dm.genotypeList}"
+                                        rendered="#{dm.showHideFlag}">
+
+                                        <rich:column label="" id="emptyColumn">
+                                            <f:facet name="header">
+                                                <b><h:outputText value="" /></b>
+                                            </f:facet>   
+                                            &nbsp;
+                                        </rich:column>
+
+                                        <rich:column label="#{msgs['table.actions']}" rendered="#{row.genotypeKey == null}">
+                                            <f:facet name="header">
+                                                <h:panelGroup>
+                                                    <b><h:outputText value="#{msgs['table.actions']}" /></b>
+                                                </h:panelGroup>
+                                            </f:facet>   
+                                            <a4j:commandLink id="saveLink" title="#{msgs['common.save']}"
+                                                             styleClass="smallText"
+                                                             action="#{MouseGenotypeList_Backing.insertGenotypeAction}"
+                                                             render="mouseGenotypeListFormId"
+                                                             oncomplete="scrollTo();">
+                                                <h:graphicImage value="/images/icon-save.gif" style="border:0" />
+                                                <f:param name="paramMouseKey" value="#{dm.mouseEntity.mouseKey}" />
+                                                <f:param name="paramMouseIndex" value="#{mouseRow}" />
+                                                <f:param name="paramGenotypeIndex" value="#{genotypeRow}" />
+                                            </a4j:commandLink>
+                                            &nbsp;&nbsp;
+                                            <a4j:commandLink immediate="true" 
+                                                             styleClass="smallText"
+                                                             title="Cancel"
+                                                             action="#{MouseGenotypeList_Backing.cancelEditGenotypeAction}" 
+                                                             render="mouseGenotypeListFormId">
+                                                <h:graphicImage value="/images/cancel.png" style="border:0; width:16px; height:16px;" />
+                                                <f:param name="paramGenotypeKey" value="#{row.genotypeKey}" />
+                                                <f:param name="paramMouseKey" value="#{dm.mouseEntity.mouseKey}" />
+                                                <f:param name="paramMouseIndex" value="#{mouseRow}" />
+                                                <f:param name="paramGenotypeIndex" value="#{genotypeRow}" />
+                                            </a4j:commandLink>
+                                        </rich:column>
+
+                                        <rich:column label="#{msgs['table.actions']}" rendered="#{row.genotypeKey != null}">
+                                            <f:facet name="header">
+                                                <h:panelGroup>
+                                                    <b><h:outputText value="#{msgs['table.actions']}" /></b>
+                                                </h:panelGroup>
+                                            </f:facet>
+                                            <a4j:commandLink id="editlink"
+                                                             title="Edit Genotype"
+                                                             action="#{MouseGenotypeList_Backing.editGenotypeAction}"
+                                                             oncomplete="#{rich:component('editGenotypePanel')}.show()" >
+                                                <h:graphicImage value="/images/edit.gif" style="border:0" />
+                                                <f:param name="paramGenotypeKey" value="#{row.genotypeKey}" />
+                                                <f:param name="paramMouseKey" value="#{dm.mouseEntity.mouseKey}" />
+                                                <f:param name="paramMouseIndex" value="#{mouseRow}" />
+                                                <f:param name="paramGenotypeIndex" value="#{genotypeRow}" />                                                    
+                                            </a4j:commandLink>
+                                            &nbsp;&nbsp;
+                                            <a4j:commandLink immediate="true" id="deletelink"
+                                                             title="Delete Genotype"
+                                                             action="#{MouseGenotypeList_Backing.assignKeysAction}"                                                                                                                                
+                                                             oncomplete="#{rich:component('deletePanel')}.show()">
+                                                <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                                <f:param name="paramGenotypeKey" value="#{row.genotypeKey}" />
+                                                <f:param name="paramMouseKey" value="#{dm.mouseEntity.mouseKey}" />
+                                                <f:param name="paramMouseIndex" value="#{mouseRow}" />
+                                                <f:param name="paramGenotypeIndex" value="#{genotypeRow}" />
+                                            </a4j:commandLink>
+                                        </rich:column>
+
+                                        <rich:column label="#{msgs['genotype.gene']}">
+                                            <f:facet name="header">
+                                                <h:panelGroup>
+                                                    <b><h:outputText value="#{msgs['genotype.gene']}" /></b>
+                                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                                </h:panelGroup>
+                                            </f:facet>
+                                            <h:selectOneMenu value="#{row.geneKey}"  
+                                                         rendered="#{row.genotypeKey == null}"
+                                                         required="true" 
+                                                         requiredMessage="#{customMessage['genotype.gene.missing']}"
+                                                         valueChangeListener="#{MouseGenotypeList_Backing.valueChanged}">
+                                                <f:selectItems value="#{MouseGenotypeList_Backing.selectItemWrapper.genesItemsOptional}"/>
+                                                <f:param name="paramMouseKey" value="#{dm.mouseEntity.mouseKey}" />
+                                                <f:param name="paramMouseIndex" value="#{mouseRow}" />
+                                                <f:param name="paramGenotypeIndex" value="#{genotypeRow}" />
+                                                <f:converter converterId="genesConverter" />
+                                                <a4j:ajax event="valueChange" 
+                                                          execute="@this" 
+                                                          render="allele1, allele2" >
+                                                </a4j:ajax>
+                                            </h:selectOneMenu>
+                                            <h:outputText value="#{row.geneKey.labSymbol}"
+                                                          rendered="#{row.genotypeKey != null}" />
+                                        </rich:column>
+
+                                        <rich:column label="#{msgs['genotype']}">
+                                            <f:facet name="header">
+                                                <h:panelGroup>
+                                                    <b><h:outputText value="#{msgs['genotype']}" /></b>
+                                                </h:panelGroup>
+                                            </f:facet>
+                                            <h:outputText value="#{row.genotypeDisplayFormat}" rendered="#{row.genotypeKey != null}" />
+                                        </rich:column>
+
+                                        <rich:column label="#{msgs['genotype.firstAllele']}">
+                                            <f:facet name="header">
+                                                <h:panelGroup>
+                                                    <b><h:outputText value="#{msgs['genotype.firstAllele']}" /></b>
+                                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                                </h:panelGroup>
+                                            </f:facet>
+                                            <h:panelGroup id="allele1">
+                                                <h:selectOneMenu value="#{row.allele1}"
+                                                                 rendered="#{row.genotypeKey == null}"
+                                                                 required="true"
+                                                                 requiredMessage="#{customMessage['genotype.allele.missing']}">
+                                                    <f:selectItems value="#{MouseGenotypeList_Backing.allelesByGeneItems}"/>
+                                                </h:selectOneMenu>
+                                            </h:panelGroup>                                               
+                                            <h:outputText value="#{row.allele1}"
+                                                          rendered="#{row.genotypeKey != null}" />
+                                        </rich:column>
+
+                                        <rich:column label="#{msgs['genotype.allele1Confidence']}">
+                                            <f:facet name="header">
+                                                <h:panelGroup>
+                                                    <b><h:outputText value="#{msgs['genotype.allele1Confidence']}" /></b> 
+                                                </h:panelGroup>
+                                            </f:facet>                                                    
+                                            <h:selectBooleanCheckbox
+                                                id="allele1ConfidenceId"
+                                                value="#{row.all1Conf}" 
+                                                rendered="#{row.genotypeKey == null}">
+                                            </h:selectBooleanCheckbox>
+                                            <h:selectBooleanCheckbox
+                                                value="#{row.all1Conf}" 
+                                                disabled="true"
+                                                rendered="#{row.genotypeKey != null}">
+                                            </h:selectBooleanCheckbox>
+                                        </rich:column>
+
+                                        <rich:column label="#{msgs['genotype.secondAllele']}">
+                                            <f:facet name="header">
+                                                <h:panelGroup>
+                                                    <b><h:outputText value="#{msgs['genotype.secondAllele']}" /></b>
+                                                </h:panelGroup>
+                                            </f:facet>
+                                            <h:panelGroup id="allele2">
+                                                <h:selectOneMenu value="#{row.allele2}" 
+                                                                 rendered="#{row.genotypeKey == null}">
+                                                    <f:selectItems value="#{MouseGenotypeList_Backing.allelesByGeneItems}"/>
+                                                </h:selectOneMenu>
+                                            </h:panelGroup>
+                                            <h:outputText value="#{row.allele2}"
+                                                          rendered="#{row.genotypeKey != null}" />
+                                        </rich:column>
+
+                                        <rich:column label="#{msgs['genotype.allele2Confidence']}">
+                                            <f:facet name="header">
+                                                <h:panelGroup>
+                                                    <b><h:outputText value="#{msgs['genotype.allele2Confidence']}" /></b>    
+                                                </h:panelGroup>
+                                            </f:facet>
+                                            <h:selectBooleanCheckbox
+                                                id="allele2ConfidenceId"
+                                                value="#{row.all2Conf}"
+                                                rendered="#{row.genotypeKey == null}">
+                                            </h:selectBooleanCheckbox>
+                                            <h:selectBooleanCheckbox
+                                                value="#{row.all2Conf}"
+                                                disabled="true"
+                                                rendered="#{row.genotypeKey != null}">
+                                            </h:selectBooleanCheckbox>
+                                        </rich:column>
+
+                                        <rich:column style="text-align:center;width:20%;" id="genotypeDate"
+                                                     label="#{msgs['genotype.genotypeDate']}">
+                                            <f:facet name="header">
+                                                <h:panelGroup>
+                                                    <b><h:outputText value="#{msgs['genotype.genotypeDate']}" /></b>
+                                                </h:panelGroup>
+                                            </f:facet>
+                                            <rich:calendar id="genotypeDateId"
+                                                           value="#{row.gtDate}"
+                                                           inputSize="#{msgs['common.minMaxSize']}"
+                                                           datePattern="#{MouseGenotypeList_Backing.date_format}"
+                                                           showInput="true"
+                                                           showWeeksBar="true"
+                                                           enableManualInput="true"
+                                                           rendered="#{row.genotypeKey == null}" >
+                                            </rich:calendar>
+                                            <h:outputText value="#{row.gtDate}"
+                                                          rendered="#{row.genotypeKey != null}" >
+                                                <f:convertDateTime pattern="#{msgs['rs.dateFormatVisible']}" />
+                                            </h:outputText>
+                                        </rich:column>
+
+                                        <rich:column label="#{msgs['genotype.pageNo']}">
+                                            <f:facet name="header">
+                                                <h:panelGroup>
+                                                    <b><h:outputText value="#{msgs['genotype.pageNo']}" /></b>
+                                                </h:panelGroup>
+                                            </f:facet>
+                                            <h:inputText required="false" id="pageNoId"
+                                                         value="#{row.genoPage}"
+                                                         maxlength="#{restrict['size.general.id']}"
+                                                         size="15" 
+                                                         rendered="#{row.genotypeKey == null}"/>
+                                            <h:outputText value="#{row.genoPage}"
+                                                          rendered="#{row.genotypeKey != null}" />
+                                        </rich:column>
+
+                                        <rich:column id="genotypeSpecimenLocation"
+                                                     label="#{msgs['genotype.genotypeSpecimenLocation']}">
+                                            <f:facet name="header">
+                                                <h:panelGroup>
+                                                    <b><h:outputText value="#{msgs['genotype.genotypeSpecimenLocation']}" /></b>
+                                                </h:panelGroup>
+                                            </f:facet>
+                                            <h:selectOneMenu value="#{row.sampleLocation}" 
+                                                             rendered="#{row.genotypeKey == null}">
+                                                <f:selectItems value="#{MouseGenotypeList_Backing.selectItemWrapper.cvGenotypeSpecimenLocationItemsOptional}"/>
+                                            </h:selectOneMenu>
+                                            <h:outputText value="#{row.sampleLocation}"
+                                                          rendered="#{row.genotypeKey != null}" />
+                                        </rich:column>
+
+                                        <rich:column id="comments"
+                                                     label="#{msgs['genotype.comments']}">
+                                            <f:facet name="header">
+                                                <h:panelGroup>
+                                                    <b><h:outputText value="#{msgs['genotype.comments']}" /></b>
+                                                </h:panelGroup>
+                                            </f:facet>
+                                            <h:inputText required="false" id="commentId"
+                                                         value="#{row.comment}"
+                                                         size="35" 
+                                                         rendered="#{row.genotypeKey == null}" />
+                                            <h:outputText value="#{row.comment}"
+                                                          rendered="#{row.genotypeKey != null}" />
+                                        </rich:column>      
+
+                                        <rich:columnGroup rendered="#{genotypeRow == dm.genotypeCnt-1}">
+                                            <rich:column styleClass="blankRowBackground" colspan="13">&nbsp;</rich:column>
+                                        </rich:columnGroup>
+
+                                    </rich:collapsibleSubTable>
+
+                                </rich:dataTable>   
+
+                                <hr />                                        
+                            </h:panelGroup>  
+
+                        </h:panelGrid>
+                    </h:panelGroup>
+                </h:panelGrid>                            
+            </div>
+        </h:form>
+
+        <rich:popupPanel id="editGenotypePanel" autosized="true" width="450">
+            <f:facet name="header">
+                <h:outputText value="Edit Current Genotype" />
+            </f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="/images/delete.gif" id="hidelink"
+                                    onclick="#{rich:component('editGenotypePanel')}.hide();"
+                                    styleClass="hidelink" title="Close" />
+                </h:panelGroup>
+            </f:facet>
+            <h:panelGroup id="editId">
+
+            <br />
+            <h:form rendered="#{!MouseGenotypeList_Backing.setDirtyFlag}" 
+                    id="editGenotypeId">                    
+
+                <rich:messages id="messagesTop" />
+                    <a4j:outputPanel ajaxRendered="true">
+                        <h:panelGrid columns="2"
+                                     columnClasses="rowHeader, innerTableTD"
+                                     styleClass="innerTable">
+                            <h:outputText value="#{msgs['mouseId']}" />
+                            <h:outputText value="#{MouseGenotypeList_Backing.genotypeEntity.mouseKey.id}" />
+
+                            <h:panelGroup>
+                                <h:outputText value="#{msgs['genotype.gene']}" />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                            </h:panelGroup>
+                            <h:selectOneMenu value="#{MouseGenotypeList_Backing.genotypeEntity.geneKey}"
+                                             required="true"
+                                             requiredMessage="#{customMessage['genotype.gene.missing']}" > 
+                                <f:selectItems value="#{MouseGenotypeList_Backing.selectItemWrapper.genesItemsOptional}"/>
+                                <f:param name="paramMouseKey" value="#{dm.mouseEntity.mouseKey}" />
+                                <f:converter converterId="genesConverter" />
+                                <a4j:ajax event="valueChange" render="alleleId1 alleleId2" />
+                            </h:selectOneMenu>
+
+                            <h:panelGroup>
+                                <h:outputText value="#{msgs['genotype.firstAllele']}" />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                            </h:panelGroup>
+                            <h:panelGroup id="alleleId1">
+                                <h:selectOneMenu value="#{MouseGenotypeList_Backing.genotypeEntity.allele1}"
+                                                 required="true"
+                                                 requiredMessage="#{customMessage['genotype.allele.missing']}" >
+                                    <f:selectItems value="#{MouseGenotypeList_Backing.editAllelesByGeneItems}"/>
+                                </h:selectOneMenu>    
+                            </h:panelGroup>
+
+                            <h:outputText value="#{msgs['genotype.allele1Confidence']}" />                                    
+                            <h:selectBooleanCheckbox
+                                id="allele1ConfidenceId2"
+                                value="#{MouseGenotypeList_Backing.genotypeEntity.all1Conf}">
+                            </h:selectBooleanCheckbox>                                    
+
+                            <h:outputText value="#{msgs['genotype.secondAllele']}" /> 
+                            <h:panelGroup id="alleleId2">
+                                <h:selectOneMenu value="#{MouseGenotypeList_Backing.genotypeEntity.allele2}">
+                                    <f:selectItems value="#{MouseGenotypeList_Backing.editAllelesByGeneItems}"/>
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+
+                            <h:outputText value="#{msgs['genotype.allele2Confidence']}" />                                    
+                            <h:selectBooleanCheckbox
+                                id="allele2ConfidenceId2"
+                                value="#{MouseGenotypeList_Backing.genotypeEntity.all2Conf}">
+                            </h:selectBooleanCheckbox>
+
+                            <h:outputText value="#{msgs['genotype.genotypeDate']}" />                                    
+                            <rich:calendar id="genotypeDateId1"
+                                           label="#{msgs['common.calendarPicker']}"
+                                           value="#{MouseGenotypeList_Backing.genotypeEntity.gtDate}"
+                                           inputSize="#{msgs['common.minMaxSize']}"
+                                           datePattern="#{MouseGenotypeList_Backing.date_format}"
+                                           showInput="true"
+                                           showWeeksBar="true"
+                                           enableManualInput="true">
+                                <a4j:ajax event="change" render="genotypeDateId1"
+                                          oncomplete="#{MouseGenotypeList_Backing.editValidateDateAction}" >
+                                </a4j:ajax>
+                            </rich:calendar>
+
+                            <h:outputText value="#{msgs['genotype.pageNo']}" />                                    
+                            <h:inputText required="false" id="pageNoId2"
+                                         value="#{MouseGenotypeList_Backing.genotypeEntity.genoPage}"
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="15"/>                                                 
+
+                            <h:outputText value="#{msgs['genotype.genotypeSpecimenLocation']}" />
+                            <h:selectOneMenu value="#{MouseGenotypeList_Backing.genotypeEntity.sampleLocation}">
+                                <f:selectItems value="#{MouseGenotypeList_Backing.selectItemWrapper.cvGenotypeSpecimenLocationItemsOptional}"/>
+                            </h:selectOneMenu>
+
+                            <h:outputText value="#{msgs['genotype.comments']}" />                                    
+                            <h:inputText required="false" id="commentId2"
+                                         value="#{MouseGenotypeList_Backing.genotypeEntity.comment}"
+                                         size="35"/>                                                 
+                        </h:panelGrid>
+                    </a4j:outputPanel>
+<!--                </h:panelGrid>-->
+
+                &nbsp;&nbsp;
+
+                <div align="center">
+                    <h:panelGrid id="okCancelGrid" columns="1">
+                        <h:panelGroup id="okCancelGroupId1">
+                            <a4j:commandButton value="#{msgs['common.save']}"
+                                               action="#{MouseGenotypeList_Backing.updateGenotypeAction}"
+                                               oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('editGenotypePanel')}.hide();"
+                                               render="resultsPanelId"
+                                               styleClass="mediumButton">
+                            </a4j:commandButton>  
+                            &nbsp;&nbsp;
+                            <a4j:commandButton value="Cancel"
+                                               oncomplete="#{rich:component('editGenotypePanel')}.hide();"
+                                               styleClass="mediumButton">
+                                <!--render="subTableId">-->
+                            </a4j:commandButton>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </div>
+                </h:form>
+            </h:panelGroup>
+        </rich:popupPanel>
+
+        <rich:popupPanel id="deletePanel" autosized="true" width="200">
+            <f:facet name="header">
+                <h:outputText value="Delete Genotype"
+                              style="padding-right:15px;" />
+            </f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="/images/delete.gif"
+                                    onclick="#{rich:component('deletePanel')}.hide();"
+                                    styleClass="hidelink" id="hidelink2" />
+                </h:panelGroup>
+            </f:facet>
+            <h:panelGroup id="deleteId">
+
+            <br />
+            <h:form id="deletePanelFormId"
+                    rendered="#{!MouseGenotypeList_Backing.setDirtyFlag}">
+                <table width="100%">
+                    <tbody>
+                        <tr>
+                            <td colspan="2">
+                                <h:outputText value="Delete this genotype from list?"
+                                          style="padding-right:15px;" />
+                            </td>
+                        </tr>
+                        <tr><td>&nbsp;</td></tr>
+                        <tr>
+                            <td align="center" width="50%">
+                                <a4j:commandButton value="Yes" 
+                                    action="#{MouseGenotypeList_Backing.deleteGenotypeAction}"
+                                    render="mouseGenotypeListFormId" 
+                                    oncomplete="#{rich:component('deletePanel')}.hide();"/>
+                            </td>
+                            <td align="center" width="50%">
+                                <a4j:commandButton
+                                    value="Cancel"
+                                    onclick="#{rich:component('deletePanel')}.hide();" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </h:form>
+            </h:panelGroup>
+        </rich:popupPanel>
+
+        <!-- select genotype search modal panel -->            
+        <rich:popupPanel id="genotypeSearchPanel" autosized="true" width="850"
+                         onshow="document.getElementById('searchFormId:lookForMouseId2').focus();"
+                         top="10">
+            <f:facet name="header">
+                <h:outputText value="#{msgs['genotype.search']}" />
+            </f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="/images/delete.gif" id="hidelinkId01" alt="#{msgs['common.close']}" 
+                                    onclick="#{rich:component('genotypeSearchPanel')}.hide();"
+                                    height="20" width="20" styleClass="hidelink" title="#{msgs['common.close']}" />
+                </h:panelGroup>
+            </f:facet>
+            <h:form id="searchFormId">
+                <rich:messages style="color:red;"></rich:messages>
+
+                <h:outputLabel value="#{msgs['mouseId']}" />
+                &nbsp;&nbsp;
+                <h:inputText size="18" readonly="true" id="lookForMouseId2" 
+                             value="#{MouseGenotypeList_Backing.genotypePopupSearch.mouseID}" />
+                &nbsp;&nbsp;
+
+                <h:outputLabel value="#{msgs['genotype.gene']}" id="lookForGeneId" />
+                &nbsp;&nbsp;                
+                <h:selectOneMenu value="#{MouseGenotypeList_Backing.genotypePopupSearch.gene}" > 
+                    <f:selectItems value="#{MouseGenotypeList_Backing.selectItemWrapper.genesItemsOptional}"/>
+                    <f:converter converterId="genesConverter" />
+                    <a4j:ajax event="change" render="searchFormId" />
+                </h:selectOneMenu>                    
+                &nbsp;&nbsp;
+
+                <h:outputLabel value="#{msgs['genotype.firstAllele']}" />
+                &nbsp;&nbsp;                
+                <h:selectOneMenu id="lookForAllele1Id" value="#{MouseGenotypeList_Backing.genotypePopupSearch.alleleName1}" > 
+                    <f:selectItems value="#{MouseGenotypeList_Backing.alleleByGeneItemsPopup}"/>
+                </h:selectOneMenu>
+                &nbsp;&nbsp;
+
+                <h:outputLabel value="#{msgs['genotype.secondAllele']}" />
+                &nbsp;&nbsp;                
+                <h:selectOneMenu id="lookForAllele2Id" value="#{MouseGenotypeList_Backing.genotypePopupSearch.alleleName2}" > 
+                    <f:selectItems value="#{MouseGenotypeList_Backing.alleleByGeneItemsPopup}"/>
+                </h:selectOneMenu>
+                &nbsp;&nbsp;
+
+                <h:outputLabel value="#{msgs['genotype.genotypeSpecimenLocation']}" />
+                &nbsp;&nbsp;  
+                <h:selectOneMenu value="#{MouseGenotypeList_Backing.genotypePopupSearch.location}">
+                    <f:selectItems value="#{MouseGenotypeList_Backing.selectItemWrapper.cvGenotypeSpecimenLocationItemsOptional}"/>
+                </h:selectOneMenu>
+
+                <br />
+                <br />
+
+                <a4j:commandButton
+                    id="searchId2"
+                    value="#{msgs['line.search']}"
+                    action="#{MouseGenotypeList_Backing.genotypeSearchAction}"
+                    styleClass="mediumButton"
+                    type="submit" 
+                    render="searchResultsGridId2" />
+                <hr />
+
+                <h:panelGrid columns="1" id="searchResultsGridId2">
+                    <h:panelGroup id="resultsId2">
+                        <h:outputText id="resultsTextId2"
+                                      rendered="#{MouseGenotypeList_Backing.isGenotypeResultCountDisplayed}"
+                                      value="#{msgs['search.results']} #{MouseGenotypeList_Backing.genotypeDataModel.rowCount}" />                            
+                    </h:panelGroup>
+
+                    <h:panelGroup id="resultsPanelId2"
+                                  rendered="#{MouseGenotypeList_Backing.genotypeDataModel.rowCount > 0}">
+                        <hr/>
+
+                        <rich:extendedDataTable 
+                            id="genotypeResultsTableId"
+                            value="#{MouseGenotypeList_Backing.genotypeDataModel}"
+                            var="genotypeInfo"
+                            rows="15"
+                            styleClass="largeSizeExtendedDataTable"
+                            sortMode="#{MouseGenotypeList_Backing.genotypeSelectionETB.sortMode}"
+                            selectionMode="#{MouseGenotypeList_Backing.genotypeSelectionETB.selectionMode}"
+                            selection="#{MouseGenotypeList_Backing.genotypeSelectionETB.selection}">
+
+                            <f:facet name="footer">
+                                <rich:dataScroller for="genotypeResultsTableId" maxPages="5" renderIfSinglePage="false" />
+                            </f:facet>                     
+                            <rich:column sortBy="#{genotypeInfo.geneKey.labSymbol}" label="#{msgs['genotype.gene']}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['genotype.gene']}" id="geneId" />
+                                </f:facet>
+                                <h:outputText value="#{genotypeInfo.geneKey.labSymbol}" />
+                            </rich:column>
+                            <rich:column sortBy="#{genotypeInfo.allele1}" label="#{msgs['genotype.firstAllele']}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['genotype.firstAllele']}" id="firstAlleleId" />
+                                </f:facet>
+                                <h:outputText value="#{genotypeInfo.allele1}" />
+                            </rich:column>
+                            <rich:column sortBy="#{genotypeInfo.all1Conf}" label="#{msgs['genotype.allele1Confidence']}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['genotype.allele1Confidence']}" id="allele1ConfidenceId3" />
+                                </f:facet>
+                                <h:outputText value="#{genotypeInfo.all1Conf}" />
+                            </rich:column>
+                            <rich:column sortBy="#{genotypeInfo.allele2}" label="#{msgs['genotype.secondAllele']}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['genotype.secondAllele']}" id="secondAlleleId" />
+                                </f:facet>
+                                <h:outputText value="#{genotypeInfo.allele2}" />
+                            </rich:column>
+                            <rich:column sortBy="#{genotypeInfo.all2Conf}" label="#{msgs['genotype.allele2Confidence']}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['genotype.allele2Confidence']}" id="allele2ConfidenceId3" />
+                                </f:facet>
+                                <h:outputText value="#{genotypeInfo.all2Conf}" />
+                            </rich:column>                                
+                            <rich:column sortBy="#{genotypeInfo.sampleLocation}" label="#{msgs['genotype.genotypeSpecimenLocation']}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['genotype.genotypeSpecimenLocation']}" id="specimenLocationId" />
+                                </f:facet>
+                                <h:outputText value="#{genotypeInfo.sampleLocation}" />
+                            </rich:column>
+                            <rich:column sortBy="#{genotypeInfo.gtDate}" label="#{msgs['genotype.genotypeDate']}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['genotype.genotypeDate']}" id="gtDateId" />
+                                </f:facet>
+                                <h:outputText value="#{genotypeInfo.gtDate}" />
+                            </rich:column>
+                            <rich:column sortBy="#{genotypeInfo.genoPage}" label="#{msgs['genotype.pageNo']}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['genotype.pageNo']}" id="genoPageId" />
+                                </f:facet>
+                                <h:outputText value="#{genotypeInfo.genoPage}" />
+                            </rich:column>
+                            <rich:column sortBy="#{genotypeInfo.comment}" label="#{msgs['genotype.comments']}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['genotype.comments']}" id="commentId2" />
+                                </f:facet>
+                                <h:outputText value="#{genotypeInfo.comment}" />
+                            </rich:column>
+                        </rich:extendedDataTable>
+
+                        <hr /><div align="center">
+
+                            <h:panelGrid id="okCancelGrid2" columns="1"
+                                         rendered="#{MouseGenotypeList_Backing.genotypeDataModel.rowCount > 0}">
+                                <h:panelGroup id="okCancelGroupId">
+                                    <a4j:commandButton id="okPenId"
+                                                       value="#{msgs['common.ok']}"
+                                                       oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('genotypeSearchPanel')}.hide();"   
+                                                       styleClass="mediumButton">                                       
+                                    </a4j:commandButton>
+                                    &nbsp;&nbsp;
+                                    <a4j:commandButton id="cancelId"
+                                                       value="#{msgs['common.cancel']}"
+                                                       oncomplete="#{rich:component('genotypeSearchPanel')}.hide();"
+                                                       styleClass="mediumButton">
+                                    </a4j:commandButton>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </div>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </h:form>
+        </rich:popupPanel>
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+    </h:body>
+</html>
+     

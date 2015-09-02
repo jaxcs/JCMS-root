@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+    
+    <!-- EJB3.1 Singleton bean container deployer -->
+    <bean name="SingletonContainerDeployer" class="org.jboss.ejb3.singleton.deployer.SingletonContainerDeployer"/>
+       
+    <!-- Binds various views of the Singleton bean into JNDI -->     
+    <bean name="SingletonBeanJNDIBinderDeployer" class="org.jboss.ejb3.singleton.deployer.SingletonBeanJNDIBinderDeployer"/>
+
+</deployment>

@@ -1,0 +1,572 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+    <h:panelGroup styleClass="left">
+        <rich:collapsiblePanel header="Search"  
+                                styleClass="collapsibleSearchPanel" 
+                                expanded="true" >
+            <h:panelGrid id="strainSearchTable" 
+                            columns="6" 
+                            styleClass="searchTable"
+                            style="vertical-align: top;">
+
+                <h:panelGroup>
+                    <h:outputLabel value="Strain" id="searchStrain" />
+                </h:panelGroup>                            
+                <h:panelGroup>
+                    &nbsp;&nbsp;
+                    <h:inputText id="strainNameSearchId" 
+                                    value="#{adminStrainBean.strainSearchDTO.strainName}" />
+                </h:panelGroup>                            
+                <h:panelGroup>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <h:outputLabel value="Stock Number" id="searchJRNumber" />
+                </h:panelGroup>                            
+                <h:panelGroup>
+                    &nbsp;&nbsp;
+                    <h:inputText id="fromStockNumberSearchId" 
+                                    value="#{adminStrainBean.strainSearchDTO.jrNumFrom}" 
+                                    title="Greater than or equal to this stock number"/> 
+                    &nbsp;
+                    <h:outputLabel value="To" />
+                    &nbsp;
+                    <h:inputText id="toStockNumberSearchId" 
+                                    value="#{adminStrainBean.strainSearchDTO.jrNumTo}" 
+                                    title="Less than or equal to this stock number"/> 
+                </h:panelGroup>                            
+            </h:panelGrid>
+            <h:panelGrid styleClass="searchTable">
+                <br />
+                <h:panelGroup layout="block">
+                    <a4j:commandButton
+                        id="btnSearchStrain"
+                        value="#{msgs['line.search']}"
+                        action="#{adminStrainBean.loadVocabularyAction}"
+                        styleClass="mediumButton"
+                        render="strainResultsGridId" 
+                        oncomplete="setNumberOfFilteredRows();"
+                        status="statusTable"/>
+                    &nbsp;&nbsp;
+                    <a4j:commandButton
+                        id="btnSearchClear"
+                        value="#{msgs['filter.clear']}"
+                        action="#{adminStrainBean.clearSearchAction}"
+                        styleClass="mediumButton"
+                        render="strainResultsGridId strainNameSearchId fromStockNumberSearchId toStockNumberSearchId strainSearchIsActiveId" 
+                        status="statusTable"/>
+                </h:panelGroup>
+            </h:panelGrid>
+        </rich:collapsiblePanel>
+        <br />
+    </h:panelGroup>
+
+
+    <h:panelGrid columns="1" id="strainResultsGridId">
+        <h:panelGroup id="strainResultsPanelId"
+                        rendered="#{adminStrainBean.vocabularyDataModel.rowCount > 0}">
+
+            <h:panelGrid columns="1">
+                <h:panelGroup styleClass="left">
+                    <a4j:commandButton
+                        value="Add"
+                        title="Add"
+                        styleClass="mediumButton"
+                        action="#{adminStrainBean.addAction}"
+                        render="strainResultsTableId"
+                        onclick="#{rich:component('adminStrainDS')}.first()"
+                        oncomplete="moveFocusToInput();" >
+                    </a4j:commandButton>
+                </h:panelGroup>
+            </h:panelGrid>
+            <br />
+            <h:panelGrid columns="2">
+                <h:panelGroup>
+                    <h:inputText value="#{adminStrainBean.numberDataTableRows}" style="width:20px;" >
+                        <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable" oncomplete="setNumberOfFilteredRows();" />
+                    </h:inputText>
+                    <h:outputText value="&nbsp;rows per page"></h:outputText>
+                </h:panelGroup>
+                <h:panelGroup class="preTable">
+                    <h:outputText value="Results " /><h:outputText id="strainFilterCount"/>&nbsp;
+                    <h:outputText value="of #{adminStrainBean.vocabularyDataModel.rowCount}" />
+                </h:panelGroup>
+            </h:panelGrid>
+            <rich:dataTable 
+                id="strainResultsTableId"
+                value="#{adminStrainBean.vocabularyDataModel}"
+                var="dm"
+                rows="#{adminStrainBean.numberDataTableRows}"
+                rowKeyVar="tableRowIndex"
+                sortMode="#{adminStrainBean.searchStrainETB.sortMode}">
+<!--                                    selectionMode="#{adminStrainBean.searchStrainETB.selectionMode}"
+                selection="#{adminStrainBean.searchStrainETB.selection}" >-->
+
+                <f:facet name="header">
+                    <rich:columnGroup>
+                        <rich:column colspan="9">
+                        </rich:column>
+                        <rich:column colspan="4" style="background-color: yellow; background-image: none;" >
+                            <h:outputText value="Yellow Line Viability" />
+                        </rich:column>
+                        <rich:column colspan="4" style="background-color: red; background-image: none;" >
+                            <h:outputText value="Red Line Viability" />
+                        </rich:column>
+                        <rich:column breakRowBefore="true">
+                            <h:outputText value="#{msgs['common.actions']}" />
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="Active" />
+                            <br />
+                            <br />
+                            <h:selectBooleanCheckbox value="#{adminStrainBean.filterBO.columnBln1Filter}" 
+                                                        rendered="#{adminStrainBean.vocabularyDataModel.rowCount gt 0}" >
+                                <a4j:ajax event="click" 
+                                            render="strainResultsTableId" 
+                                            status="statusTable" 
+                                            oncomplete="setNumberOfFilteredRows();" />
+                            </h:selectBooleanCheckbox>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="Strain Name" />
+                            <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                            <br />
+                            <a4j:commandButton image="#{adminStrainBean.sortBO.column2Image}" 
+                                                render="strainResultsTableId" 
+                                                action="#{adminStrainBean.sortBO.sortByColumn2}" 
+                                                status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{adminStrainBean.filterBO.column2Filter}" style="width:270px;">
+                                <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable" 
+                                            oncomplete="setNumberOfFilteredRows();"/>
+                            </h:inputText>
+                        </rich:column>
+
+                        <rich:column>
+                            <h:outputText value="Status" />
+                            <br />
+                            <a4j:commandButton image="#{adminStrainBean.sortBO.column3Image}" 
+                                                render="strainResultsTableId" 
+                                                action="#{adminStrainBean.sortBO.sortByColumn3}" 
+                                                status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{adminStrainBean.filterBO.column3Filter}" style="width:30px;">
+                                <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable" 
+                                            oncomplete="setNumberOfFilteredRows();"/>
+                            </h:inputText>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="Stock Number" />
+                            <br />
+                            <a4j:commandButton image="#{adminStrainBean.sortBO.column4Image}" 
+                                                render="strainResultsTableId" 
+                                                action="#{adminStrainBean.sortBO.sortByColumn4}" 
+                                                status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{adminStrainBean.filterBO.column4Filter}" style="width:80px;">
+                                <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable" 
+                                            oncomplete="setNumberOfFilteredRows();"/>
+                            </h:inputText>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="Section" />
+                            <br />
+                            <a4j:commandButton image="#{adminStrainBean.sortBO.column13Image}" 
+                                                render="strainResultsTableId" 
+                                                action="#{adminStrainBean.sortBO.sortByColumn13}" 
+                                                status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{adminStrainBean.filterBO.column13Filter}" style="width:80px;">
+                                <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable" 
+                                            oncomplete="setNumberOfFilteredRows();"/>
+                            </h:inputText>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="Card Color" />
+                            <br />
+                            <a4j:commandButton image="#{adminStrainBean.sortBO.column14Image}" 
+                                                render="strainResultsTableId" 
+                                                action="#{adminStrainBean.sortBO.sortByColumn14}" 
+                                                status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{adminStrainBean.filterBO.column14Filter}" >
+                                <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable" 
+                                            oncomplete="setNumberOfFilteredRows();"/>
+                            </h:inputText>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="Strain Type" />
+                            <br />
+                            <a4j:commandButton image="#{adminStrainBean.sortBO.column15Image}" 
+                                                render="strainResultsTableId" 
+                                                action="#{adminStrainBean.sortBO.sortByColumn15}" 
+                                                status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{adminStrainBean.filterBO.column15Filter}" style="width:80px;">
+                                <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable" 
+                                            oncomplete="setNumberOfFilteredRows();"/>
+                            </h:inputText>                                            
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="Comments" />
+                            <br />
+                            <a4j:commandButton image="#{adminStrainBean.sortBO.column16Image}" 
+                                                render="strainResultsTableId" 
+                                                action="#{adminStrainBean.sortBO.sortByColumn16}" 
+                                                status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{adminStrainBean.filterBO.column16Filter}" >
+                                <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable"
+                                            oncomplete="setNumberOfFilteredRows();"/>
+                            </h:inputText>
+                        </rich:column>
+
+                        <rich:column>
+                            <h:outputText value="Min # Males" />
+                            <br />
+                            <a4j:commandButton image="#{adminStrainBean.sortBO.column5Image}" 
+                                                render="strainResultsTableId" 
+                                                action="#{adminStrainBean.sortBO.sortByColumn5}" 
+                                                status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{adminStrainBean.filterBO.column5Filter}" style="width:80px;">
+                                <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable"
+                                            oncomplete="setNumberOfFilteredRows();"/>
+                            </h:inputText>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="Min # Females" />
+                            <br />
+                            <a4j:commandButton image="#{adminStrainBean.sortBO.column6Image}" 
+                                                render="strainResultsTableId" 
+                                                action="#{adminStrainBean.sortBO.sortByColumn6}" 
+                                                status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{adminStrainBean.filterBO.column6Filter}" >
+                                <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable" 
+                                            oncomplete="setNumberOfFilteredRows();"/>
+                            </h:inputText>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="Max Age Males" />
+                            <br />
+                            <a4j:commandButton image="#{adminStrainBean.sortBO.column7Image}" 
+                                                render="strainResultsTableId" 
+                                                action="#{adminStrainBean.sortBO.sortByColumn7}" 
+                                                status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{adminStrainBean.filterBO.column7Filter}" >
+                                <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable" 
+                                            oncomplete="setNumberOfFilteredRows();"/>
+                            </h:inputText>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="Max Age Females" />
+                            <br />
+                            <a4j:commandButton image="#{adminStrainBean.sortBO.column8Image}" 
+                                                render="strainResultsTableId" 
+                                                action="#{adminStrainBean.sortBO.sortByColumn8}" 
+                                                status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{adminStrainBean.filterBO.column8Filter}" >
+                                <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable" 
+                                            oncomplete="setNumberOfFilteredRows();"/>
+                            </h:inputText>
+                        </rich:column>
+
+                        <rich:column>
+                            <h:outputText value="Min # Males" />
+                            <br />
+                            <a4j:commandButton image="#{adminStrainBean.sortBO.column9Image}" 
+                                                render="strainResultsTableId" 
+                                                action="#{adminStrainBean.sortBO.sortByColumn9}" 
+                                                status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{adminStrainBean.filterBO.column9Filter}" style="width:80px;">
+                                <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable" 
+                                            oncomplete="setNumberOfFilteredRows();"/>
+                            </h:inputText>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="Min # Females" />
+                            <br />
+                            <a4j:commandButton image="#{adminStrainBean.sortBO.column10Image}" 
+                                                render="strainResultsTableId" 
+                                                action="#{adminStrainBean.sortBO.sortByColumn10}" 
+                                                status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{adminStrainBean.filterBO.column10Filter}" style="width:80px;">
+                                <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable"
+                                            oncomplete="setNumberOfFilteredRows();"/>
+                            </h:inputText>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="Max Age Males" />
+                            <br />
+                            <a4j:commandButton image="#{adminStrainBean.sortBO.column11Image}" 
+                                                render="strainResultsTableId" 
+                                                action="#{adminStrainBean.sortBO.sortByColumn11}" 
+                                                status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{adminStrainBean.filterBO.column11Filter}" >
+                                <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable"
+                                            oncomplete="setNumberOfFilteredRows();"/>
+                            </h:inputText>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="Max Age Females" />
+                            <br />
+                            <a4j:commandButton image="#{adminStrainBean.sortBO.column12Image}" 
+                                                render="strainResultsTableId" 
+                                                action="#{adminStrainBean.sortBO.sortByColumn12}" 
+                                                status="statusTable"/>
+                            <br />
+                            <h:inputText value="#{adminStrainBean.filterBO.column12Filter}" >
+                                <a4j:ajax event="blur" render="strainResultsTableId" status="statusTable" 
+                                            oncomplete="setNumberOfFilteredRows();"/>
+                            </h:inputText>
+                        </rich:column>
+                    </rich:columnGroup>
+                </f:facet>
+
+
+                <f:facet name="footer" class="dataScroller" >
+                    <rich:dataScroller id="adminStrainDS" for="strainResultsTableId" renderIfSinglePage="false"/>
+                </f:facet>                     
+
+                <rich:column rendered="#{adminStrainBean.rowIndex == tableRowIndex}" styleClass="nowrap">
+                    <a4j:commandButton title="#{msgs['common.save']}"
+                                        image="/images/icon-save.gif"
+                                        action="#{adminStrainBean.saveAction}"
+                                        render="strainResultsGridId" 
+                                        oncomplete="setNumberOfFilteredRows();" >
+                        <f:param name="paramPrimaryKey" value="#{dm.strainKey}" />
+                        <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                    </a4j:commandButton>
+                    &nbsp;&nbsp;
+                    <a4j:commandButton title="Cancel"
+                                        image="/images/cancel.png"
+                                        action="#{adminStrainBean.cancelAction}"
+                                        style="width:16px; height:16px;"
+                                        render="strainResultsGridId" >
+                    </a4j:commandButton>
+                </rich:column>
+                <rich:column rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" styleClass="nowrap">
+                    <a4j:commandButton title="#{msgs['common.edit']}"
+                                        image="/images/edit.gif"
+                                        action="#{adminStrainBean.editAction}"
+                                        render="strainResultsGridId"
+                                        oncomplete="moveFocusToInput();">
+                        <f:param name="paramPrimaryKey" value="#{dm.strainKey}" />
+                        <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                    </a4j:commandButton>
+                </rich:column>                                        
+
+                <rich:column sortBy="#{dm.isActive}" 
+                                sortOrder="#{adminStrainBean.sortBO.column1Order}"
+                                filterValue="#{adminStrainBean.filterBO.columnBln1Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.isActive, adminStrainBean.filterBO.columnBln1Filter)}" 
+                                width="50px" >
+                    <h:selectBooleanCheckbox value="#{dm.isActive}" disabled="true" 
+                                                rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" />
+                    <h:selectBooleanCheckbox value="#{dm.isActive}" 
+                                                rendered="#{adminStrainBean.rowIndex == tableRowIndex}" />
+                </rich:column>
+
+                <rich:column sortBy="#{dm.strainName}" 
+                                sortOrder="#{adminStrainBean.sortBO.column2Order}"
+                                filterValue="#{adminStrainBean.filterBO.column2Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.strainName, adminStrainBean.filterBO.column2Filter)}" 
+                                width="300px" 
+                                rendered="#{adminStrainBean.rowIndex == tableRowIndex}">
+                    <h:inputTextarea value="#{dm.strainName}" 
+                                        style="width: 270px;"
+                                        rows="3"  
+                                        class="startHere" />
+                </rich:column>
+                <rich:column sortBy="#{dm.strainName}" 
+                                sortOrder="#{adminStrainBean.sortBO.column2Order}"
+                                filterValue="#{adminStrainBean.filterBO.column2Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.strainName, adminStrainBean.filterBO.column2Filter)}" 
+                                width="300px"  
+                                rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}">
+                    <h:outputText value="#{dm.strainName}" />
+                </rich:column>
+
+                <rich:column sortBy="#{dm.strainStatus}" 
+                                sortOrder="#{adminStrainBean.sortBO.column3Order}"
+                                filterValue="#{adminStrainBean.filterBO.column3Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.strainStatus, adminStrainBean.filterBO.column3Filter)}" 
+                                width="50px" >
+                    <h:outputText value="#{dm.strainStatus}"
+                                    rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" />
+                    <h:selectOneMenu value="#{dm.strainStatus}" 
+                                        rendered="#{adminStrainBean.rowIndex == tableRowIndex}" 
+                                        class="startHere">
+                        <f:selectItems value="#{adminStrainBean.selectItemWrapper.cvStrainStatusStringItemsOptional}"/>
+                    </h:selectOneMenu>
+                </rich:column>
+
+                <rich:column sortBy="#{dm.jrNum}" 
+                                sortOrder="#{adminStrainBean.sortBO.column4Order}"
+                                filterValue="#{adminStrainBean.filterBO.column4Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.jrNum, adminStrainBean.filterBO.column4Filter)}" 
+                                width="100px" >
+                    <h:outputText value="#{dm.jrNum}"
+                                    rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" />
+                    <h:inputText  value="#{dm.jrNum}"
+                                    rendered="#{adminStrainBean.rowIndex == tableRowIndex}" />
+                </rich:column>
+
+                <rich:column sortBy="#{dm.section_}" 
+                                sortOrder="#{adminStrainBean.sortBO.column13Order}"
+                                filterValue="#{adminStrainBean.filterBO.column13Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.section_, adminStrainBean.filterBO.column13Filter)}" 
+                                width="100px" >
+                    <h:outputText value="#{dm.section_}"
+                                    rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" />
+                    <h:inputText  value="#{dm.section_}"
+                                    rendered="#{adminStrainBean.rowIndex == tableRowIndex}" />
+                </rich:column>
+                <rich:column sortBy="#{dm.cardColor}" 
+                                sortOrder="#{adminStrainBean.sortBO.column14Order}"
+                                filterValue="#{adminStrainBean.filterBO.column14Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.cardColor, adminStrainBean.filterBO.column14Filter)}" 
+                                width="100px" >
+                    <h:outputText value="#{dm.cardColor}"
+                                    rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" />
+                    <h:inputText  value="#{dm.cardColor}"
+                                    rendered="#{adminStrainBean.rowIndex == tableRowIndex}" />
+                </rich:column>
+                <rich:column sortBy="#{dm.strainType}" 
+                                sortOrder="#{adminStrainBean.sortBO.column15Order}"
+                                filterValue="#{adminStrainBean.filterBO.column15Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.strainType, adminStrainBean.filterBO.column15Filter)}" 
+                                width="100px" >
+                    <h:outputText value="#{dm.strainType}"
+                                    rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" />
+                    <h:selectOneMenu value="#{dm.strainType}" 
+                                        rendered="#{adminStrainBean.rowIndex == tableRowIndex}" >
+                        <f:selectItems value="#{adminStrainBean.selectItemWrapper.cvStrainTypeStringItemsOptional}"/>
+                    </h:selectOneMenu>
+                </rich:column>
+                <rich:column sortBy="#{dm.comment}" 
+                                sortOrder="#{adminStrainBean.sortBO.column16Order}"
+                                filterValue="#{adminStrainBean.filterBO.column16Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.comment, adminStrainBean.filterBO.column16Filter)}" 
+                                width="200px" >
+                    <h:outputText value="#{dm.comment}"
+                                    rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" />
+                    <h:inputTextarea value="#{dm.comment}"
+                                        rows="3"
+                                        rendered="#{adminStrainBean.rowIndex == tableRowIndex}" />
+                </rich:column>
+
+                <rich:column sortBy="#{dm.lineViabilityYellowMinNumMales}" 
+                                sortOrder="#{adminStrainBean.sortBO.column5Order}"
+                                filterValue="#{adminStrainBean.filterBO.column5Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.lineViabilityYellowMinNumMales, adminStrainBean.filterBO.column5Filter)}" 
+                                width="100px" >
+                    <h:outputText value="#{dm.lineViabilityYellowMinNumMales}"
+                                    rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" />
+                    <h:inputText  value="#{dm.lineViabilityYellowMinNumMales}"
+                                    rendered="#{adminStrainBean.rowIndex == tableRowIndex}" />
+                </rich:column>
+                <rich:column sortBy="#{dm.lineViabilityYellowMinNumFemales}" 
+                                sortOrder="#{adminStrainBean.sortBO.column6Order}"
+                                filterValue="#{adminStrainBean.filterBO.column6Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.lineViabilityYellowMinNumFemales, adminStrainBean.filterBO.column6Filter)}" 
+                                width="100px" >
+                    <h:outputText value="#{dm.lineViabilityYellowMinNumFemales}"
+                                    rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" />
+                    <h:inputText  value="#{dm.lineViabilityYellowMinNumFemales}"
+                                    rendered="#{adminStrainBean.rowIndex == tableRowIndex}" />
+                </rich:column>
+                <rich:column sortBy="#{dm.lineViabilityYellowMaxAgeMales}" 
+                                sortOrder="#{adminStrainBean.sortBO.column7Order}"
+                                filterValue="#{adminStrainBean.filterBO.column7Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.lineViabilityYellowMaxAgeMales, adminStrainBean.filterBO.column7Filter)}" 
+                                width="150px" >
+                    <h:outputText value="#{dm.lineViabilityYellowMaxAgeMales}"
+                                    rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" />
+                    <h:inputText  value="#{dm.lineViabilityYellowMaxAgeMales}"
+                                    rendered="#{adminStrainBean.rowIndex == tableRowIndex}" />
+                </rich:column>
+                <rich:column sortBy="#{dm.lineViabilityYellowMaxAgeFemales}" 
+                                sortOrder="#{adminStrainBean.sortBO.column8Order}"
+                                filterValue="#{adminStrainBean.filterBO.column8Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.lineViabilityYellowMaxAgeFemales, adminStrainBean.filterBO.column8Filter)}" 
+                                width="150px" >
+                    <h:outputText value="#{dm.lineViabilityYellowMaxAgeFemales}"
+                                    rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" />
+                    <h:inputText  value="#{dm.lineViabilityYellowMaxAgeFemales}"
+                                    rendered="#{adminStrainBean.rowIndex == tableRowIndex}" />
+                </rich:column>
+                <rich:column sortBy="#{dm.lineViabilityRedMinNumMales}" 
+                                sortOrder="#{adminStrainBean.sortBO.column9Order}"
+                                filterValue="#{adminStrainBean.filterBO.column9Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.lineViabilityRedMinNumMales, adminStrainBean.filterBO.column9Filter)}" 
+                                width="100px" >
+                    <h:outputText value="#{dm.lineViabilityRedMinNumMales}"
+                                    rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" />
+                    <h:inputText  value="#{dm.lineViabilityRedMinNumMales}"
+                                    rendered="#{adminStrainBean.rowIndex == tableRowIndex}" />
+                </rich:column>
+                <rich:column sortBy="#{dm.lineViabilityRedMinNumFemales}" 
+                                sortOrder="#{adminStrainBean.sortBO.column10Order}"
+                                filterValue="#{adminStrainBean.filterBO.column10Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.lineViabilityRedMinNumFemales, adminStrainBean.filterBO.column10Filter)}" 
+                                width="100px" >
+                    <h:outputText value="#{dm.lineViabilityRedMinNumFemales}"
+                                    rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" />
+                    <h:inputText  value="#{dm.lineViabilityRedMinNumFemales}"
+                                    rendered="#{adminStrainBean.rowIndex == tableRowIndex}" />
+                </rich:column>
+                <rich:column sortBy="#{dm.lineViabilityRedMaxAgeMales}" 
+                                sortOrder="#{adminStrainBean.sortBO.column11Order}"
+                                filterValue="#{adminStrainBean.filterBO.column11Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.lineViabilityRedMaxAgeMales, adminStrainBean.filterBO.column11Filter)}" 
+                                width="150px" >
+                    <h:outputText value="#{dm.lineViabilityRedMaxAgeMales}"
+                                    rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" />
+                    <h:inputText  value="#{dm.lineViabilityRedMaxAgeMales}"
+                                    rendered="#{adminStrainBean.rowIndex == tableRowIndex}" />
+                </rich:column>
+                <rich:column sortBy="#{dm.lineViabilityRedMaxAgeFemales}" 
+                                sortOrder="#{adminStrainBean.sortBO.column12Order}"
+                                filterValue="#{adminStrainBean.filterBO.column12Filter}" 
+                                filterExpression="#{fn:containsIgnoreCase(dm.lineViabilityRedMaxAgeFemales, adminStrainBean.filterBO.column12Filter)}" 
+                                width="150px" >
+                    <h:outputText value="#{dm.lineViabilityRedMaxAgeFemales}"
+                                    rendered="#{!(adminStrainBean.rowIndex == tableRowIndex)}" />
+                    <h:inputText  value="#{dm.lineViabilityRedMaxAgeFemales}"
+                                    rendered="#{adminStrainBean.rowIndex == tableRowIndex}" />
+                </rich:column>
+            </rich:dataTable>
+            <hr /><br />
+        </h:panelGroup>
+    </h:panelGrid>
+</ui:composition>
+                

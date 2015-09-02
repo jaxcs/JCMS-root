@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+        <title>
+            <h:outputText value="Cage Summary Results"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <div style="margin-left:10px;margin-right:10px">
+
+                <!-- Messages -->
+                <rich:messages />
+
+                <br />
+
+                <h2>Cage Summary Report from&nbsp;<h:outputText value="#{CageSummary_Backing.sDate}"/>&nbsp;To&nbsp;<h:outputText value="#{CageSummary_Backing.eDate}"/></h2>
+                <br />
+
+                &nbsp;
+                <h:commandLink
+                        value="Download Result"
+                        styleClass="mediumButton"
+                        action="#{CageSummary_Backing.downloadSearchResultsAction}" />
+
+                <br />                    
+                <br />
+                <h3>Search criteria:</h3>
+                <h:panelGrid columns="2">
+                    <h:panelGroup>
+                        <h:outputText value="Status: "/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:outputText value="#{CageSummary_Backing.cStatus}"/>
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h:outputText value="Room: "/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:outputText value="#{CageSummary_Backing.rName}"/>
+                    </h:panelGroup>
+
+                    <h:panelGroup>                            
+                        <h:outputText value="Owners/Workgroups: "/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:outputText value="#{CageSummary_Backing.owners}"/>
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h3><h:outputText value="Group By: "/></h3>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:outputText value="#{CageSummary_Backing.report.groupBy}"/>
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h3><h:outputText value="Cage Billing: "/></h3>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:outputText value="#{CageSummary_Backing.report.penBilling}"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <br />
+
+                <!-- Number of active pens -->
+                <rich:dataTable width="700" border="0" var="record"
+                                value="#{CageSummary_Backing.datesLst}">
+
+                    <rich:column>
+                        <h3><h:outputText value="#{record.currentDate}" /></h3>
+                    </rich:column>
+                    <rich:column>
+                        &nbsp;
+                    </rich:column>
+                    <rich:column
+                        rendered="#{CageSummary_Backing.report.groupBy != 'None'}">
+                        &nbsp;
+                    </rich:column>
+
+                    <f:facet name="header">
+                        <rich:columnGroup>
+                        <rich:column >
+                            <h:outputLabel value="#{msgs['pbDate']}"/>
+                        </rich:column>
+                        <rich:column >
+                            <h:outputLabel value="# Cages"/>
+                        </rich:column>
+                        <rich:column
+                           rendered="#{CageSummary_Backing.report.groupBy == 'Status'}">
+                            <h:outputLabel value="Status"/>
+                        </rich:column>
+                        <rich:column
+                            rendered="#{CageSummary_Backing.report.groupBy == 'Room'}">
+                            <h:outputLabel value="Room"/>
+                        </rich:column>
+                        </rich:columnGroup>
+                    </f:facet>
+
+                    <rich:collapsibleSubTable
+                        var="row" value="#{CageSummary_Backing.activePensLst}">
+
+                        <rich:column
+                            rendered="#{row.currentDate == record.currentDate}">
+                            &nbsp;
+                        </rich:column>
+                        <rich:column
+                           rendered="#{row.currentDate == record.currentDate}"> 
+                           <h:outputText value="#{row.penCnt}"></h:outputText>
+                        </rich:column>
+                        <rich:column
+                            rendered="#{row.currentDate == record.currentDate and
+                            CageSummary_Backing.report.groupBy == 'Status'}">
+                            <h:outputText value="#{row.status}"></h:outputText>
+                        </rich:column>
+                        <rich:column
+                            rendered="#{row.currentDate == record.currentDate and
+                            CageSummary_Backing.report.groupBy == 'Room'}">
+                            <h:outputText value="#{row.room}"></h:outputText>
+                        </rich:column>
+                    </rich:collapsibleSubTable>
+                </rich:dataTable>
+                </div>
+                <br />                    
+                <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+            </h:form>
+    </h:body>
+</html>
+
+    

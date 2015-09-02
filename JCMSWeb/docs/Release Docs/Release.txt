@@ -1,0 +1,33 @@
+###################################################################
+#
+#
+#
+# JCMS Web Release Notes version 3.14.0
+#
+#
+# May 2015
+#
+###################################################################
+
+#New Feature
+
+# A mobile app for Android devices has been added.
+
+# See colonymanagement.jax.org to download.
+
+# It includes colony management reports and vivaria layout 
+
+#Bug Fixes
+
+# The cage histogram count has been changed. Retired and empty cages
+will not be counted. 
+
+#Please note a cage is counted more than once if the mice in it are of 
+multiple strains or have different owners. If you have a large 
+number of cages, updating the dashboard data to redisplay the cage
+and mouse histograms may take a long time.
+
+# The mouse use schedule list was not displaying any choices on the
+Kaplan Meier filter screen and the use schedule Manager search screen.
+This is now fixed.
+

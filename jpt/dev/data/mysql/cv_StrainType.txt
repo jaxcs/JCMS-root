@@ -1,0 +1,11 @@
+inbred
+wild-derived inbred
+F1 hybrid
+F2 hybrid
+recombinant inbred
+congenic
+recombinant congenic
+coisogenic
+conplastic
+consomic
+outbred

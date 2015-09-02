@@ -1,0 +1,11 @@
+<structure>
+    <context>
+        <path name=""/>
+        <metaDataPath>
+            <path name="META-INF"/>
+        </metaDataPath>
+        <classpath>
+            <path name="/jboss-jsf-deployer-impl.jar"/>
+        </classpath>
+    </context>
+</structure>

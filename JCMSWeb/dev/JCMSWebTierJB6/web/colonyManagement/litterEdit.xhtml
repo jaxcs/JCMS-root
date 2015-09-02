@@ -1,0 +1,1115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>                
+            <h:outputText value="#{msgs['colonyManagement.addLitterWithPups']}" rendered="#{Litter_Backing.litterKey == 0}"  />
+            <h:outputText value="#{msgs['colonyManagement.editLitter']}" rendered="#{Litter_Backing.litterKey != 0}"  />
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js" >
+        </script>
+    </h:head>
+    <h:body>
+        <h:form id="addLitterWithPupsFormId">
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+
+            <div style="margin-left:10px;margin-right:10px">
+                <h1>
+                    <h:outputText value="#{msgs['colonyManagement.header']}" style="h1"/>
+                    </h1><hr />
+
+                <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5" width="100%"
+                             columnClasses="colonyManagementSideBar,detailPane">
+
+                    <h:panelGroup>
+                        <f:subview id="adminSideBar"><ui:include src="/colonyManagement/colonyManagementSideBar.xhtml"/></f:subview>
+                    </h:panelGroup>
+
+                    <!-- RIGHT SIDE OF PAGE -->
+                    <h:panelGroup  styleClass="formTitle">
+                        <h:outputText value="#{msgs['colonyManagement.addLitterWithPups']}"
+                          rendered="#{Litter_Backing.litterKey == 0}"  />
+                        <h:outputText value="#{msgs['colonyManagement.editLitter']}"
+                              rendered="#{Litter_Backing.litterKey != 0}"  />
+
+                        <br />
+                        <img src="../images/bhi_ball_white.gif" />
+                        <!-- STATUS -->
+                        <a4j:status name="statusPage" >
+                            <f:facet name="start">
+                                <h:graphicImage  value="../images/bhi_ball.gif"/>
+                            </f:facet>
+                        </a4j:status>
+
+                        <div align="left">
+                            <a4j:commandButton
+                                value="#{msgs['common.save']}"
+                                styleClass="mediumButton"
+                                rendered="#{Litter_Backing.litterKey == 0}"
+                                action="#{Litter_Backing.insertLitterAction}" 
+                                status="statusPage"/>
+
+                            <a4j:commandButton
+                                value="#{msgs['common.save']}"
+                                styleClass="mediumButton"
+                                rendered="#{Litter_Backing.litterKey != 0}"
+                                action="#{Litter_Backing.updateLitterAction}" 
+                                status="statusPage"/>
+
+                            &nbsp;&nbsp;
+
+                            <a4j:commandButton
+                                value="Return to Search"
+                                styleClass="mediumButton"
+                                rendered="#{Litter_Backing.litterKey != 0 and !Litter_Backing.calendarEdit}"
+                                immediate="true"
+                                action="#{LitterList_Backing.returnToSearchAction}" 
+                                status="statusPage"/>
+
+                            </div><hr />
+
+                        <!-- Messages -->
+                        <rich:messages />
+                        <br />
+                        <h:panelGrid columns="2"
+                                     columnClasses="innerTableTD, innerTableTD"
+                                     styleClass="innerTable">
+
+                            <h:panelGroup>
+
+                                <h:panelGrid columns="2"
+                                             columnClasses="rowHeader, innerTableTD"
+                                             styleClass="innerTable">
+
+                                    <h:panelGroup>
+                                        <h:outputLabel value="#{msgs['litter.matingID']}" />
+                                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                    </h:panelGroup>
+
+                                    <h:panelGroup id="matingPanel">                            
+                                        <h:inputText required="true" 
+                                                     requiredMessage="Required value missing.  Please enter a mating ID."
+                                                     converterMessage="Mating ID requires a numeric value.  Please enter a numeric Mating ID."
+                                                     value="#{Litter_Backing.matingID}"
+                                                     maxlength="#{restrict['size.general.id']}"
+                                                     size="#{restrict['size.general.id']}" 
+                                                     valueChangeListener="#{Litter_Backing.setMatingIDValueChangeListener()}">
+                                             <a4j:ajax event="change" render="matingInfoId tagDate weanDate"/>
+                                        </h:inputText>
+                                        &nbsp;&nbsp;                            
+                                        <a4j:commandButton 
+                                            id="selectMating"
+                                            action="#{Litter_Backing.clearMatingPopupAction}"
+                                            oncomplete="#{rich:component('selectMatingPanel')}.show()"
+                                            render="searchTableID, ownersId2, matingSearchResultsGridId"
+                                            value="#{msgs['litter.selectMating']}"
+                                            styleClass="mediumButton" 
+                                            status="statusPage"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <h:outputLabel value="#{msgs['litter.totalBorn']}" />
+                                    </h:panelGroup>                                             
+
+                                    <h:inputText required="true"
+                                                 requiredMessage="#{customMessage['litter.totalBorn.missing']}"
+                                                 value="#{Litter_Backing.litterEntity.totalBorn}"
+                                                 maxlength="#{restrict['size.general.id']}"
+                                                 size="#{restrict['size.general.id']}" />
+                                    
+                                    <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideNumberBornDead}">
+                                        <h:outputLabel value="Number Born Dead " />
+                                        <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                            <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                        </a4j:commandLink>
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideNumberBornDead}">
+                                        <h:inputText value="#{Litter_Backing.numberBornDead}"
+                                                    maxlength="#{restrict['size.general.id']}"
+                                                    size="#{restrict['size.general.id']}" />
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <h:outputLabel value="# Males / # Females" />
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <h:inputText value="#{Litter_Backing.litterEntity.numMale}"
+                                                     maxlength="6"
+                                                     size="7" />
+                                        &nbsp;&nbsp;  
+                                        /
+                                        &nbsp;&nbsp;  
+
+                                        <h:inputText value="#{Litter_Backing.litterEntity.numFemale}"
+                                                     maxlength="6"
+                                                     size="7" />
+                                    </h:panelGroup>
+                                    
+                                    <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideNumberCulledAtWean}">
+                                        <h:outputLabel value="Number Culled at Wean " />
+                                        <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                            <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                        </a4j:commandLink>
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideNumberCulledAtWean}">
+                                        <h:inputText value="#{Litter_Backing.numberCulledAtWean}"
+                                                    maxlength="#{restrict['size.general.id']}"
+                                                    size="#{restrict['size.general.id']}" />
+                                    </h:panelGroup>
+                                    
+                                    <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideNumberMissingAtWean}">
+                                        <h:outputLabel value="Number Missing at Wean " />
+                                        <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                            <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                        </a4j:commandLink>
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideNumberMissingAtWean}">
+                                        <h:inputText value="#{Litter_Backing.numberMissingAtWean}"
+                                                    maxlength="#{restrict['size.general.id']}"
+                                                    size="#{restrict['size.general.id']}" />
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <h:outputLabel value="#{msgs['litter.litter#']}" />
+                                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                    </h:panelGroup>
+
+                                    <h:panelGroup id="litterIDPanel">      
+                                        <h:inputText value="#{Litter_Backing.litterEntity.litterID}"
+                                                     maxlength="#{restrict['size.general.id']}"
+                                                     size="#{restrict['size.general.id']}" />   
+                                        &nbsp;&nbsp;                            
+                                        <a4j:commandButton 
+                                            id="selectLitter"
+                                            action="#{Litter_Backing.generateNextLitterIDAction}"
+                                            value="#{msgs['litter.nextLitterNumber']}"
+                                            render="litterIDPanel"                              
+                                            styleClass="mediumButton" />
+                                    </h:panelGroup>              
+
+                                    <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideLitterType}">
+                                        <h:outputLabel value="Litter Type " />
+                                        <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                            <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                        </a4j:commandLink>
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideLitterType}">
+                                        <h:outputText value="#{Litter_Backing.litterEntity.litterTypekey.litterType}" />
+                                    </h:panelGroup>
+                                    
+                                    <h:panelGroup>
+                                        <h:outputLabel value="#{msgs['litter.birthDate']}" />
+                                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                                    </h:panelGroup>    
+                                    
+                                    <h:panelGroup>
+                                        <rich:calendar datePattern="#{Litter_Backing.date_format}"  
+                                                       id="birthDateFilter"
+                                                       required="true"
+                                                       requiredMessage="#{customMessage['litter.birthDate.missing']}"
+                                                       value="#{Litter_Backing.litterEntity.birthDate}"
+                                                       inputSize="#{msgs['common.minMaxSize']}"
+                                                       showInput="true"
+                                                       showWeeksBar="true"
+                                                       
+                                                       valueChangeListener="#{Litter_Backing.validateBirthDateFilterAction}" >
+                                            <a4j:ajax event="change"
+                                                      render="weanDate, tagDate" />
+                                        </rich:calendar>
+<!--enableManualInput="true" *REMOVED this from all 3 dates so the user has to use the calendar
+Otherwise, manual input was not recognized correctly as a change and the wean/tag dates were not updating
+correctly when the birth date changed-->                                        
+                                        <h:selectBooleanCheckbox
+                                            id="calculateWeanTagDates"
+                                            value="#{Litter_Backing.calculateWeanTagDates}">
+                                            <a4j:ajax event="change"
+                                                      render="calculateWeanTagDates" />
+                                        </h:selectBooleanCheckbox> 
+                                        <h:outputLabel value="Calculate Dates"></h:outputLabel>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <h:outputLabel value="#{msgs['litter.weanDate']}" />   
+                                    </h:panelGroup>    
+
+                                    <rich:calendar id="weanDate"
+                                                   value="#{Litter_Backing.litterEntity.weanDate}"
+                                                   inputSize="#{msgs['common.minMaxSize']}"
+                                                   showInput="true"
+                                                   showWeeksBar="true"
+                                                   datePattern="#{Litter_Backing.date_format}" 
+                                                    
+                                                   valueChangeListener="#{Litter_Backing.validateWeanAndTagDateAction}" >
+                                         <a4j:ajax event="change" render="weanDate"/>
+                                    </rich:calendar>
+
+                                    <h:panelGroup>
+                                        <h:outputLabel value="#{msgs['litter.tagDate']}" />    
+                                    </h:panelGroup>    
+
+                                    <rich:calendar id="tagDate"
+                                                   value="#{Litter_Backing.litterEntity.tagDate}"
+                                                   inputSize="#{msgs['common.minMaxSize']}"
+                                                   showInput="true"
+                                                   datePattern="#{Litter_Backing.date_format}" 
+                                                   showWeeksBar="true"
+                                                   
+                                                   valueChangeListener="#{Litter_Backing.validateWeanAndTagDateAction}">
+                                         <a4j:ajax event="change" render="tagDate"/>
+                                    </rich:calendar>
+
+                                    <h:panelGroup>
+                                        <h:outputLabel value="#{msgs['litter.status']}" />
+                                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" /> 
+                                    </h:panelGroup>
+
+                                    <h:panelGroup id="statusOut" >
+                                        <h:selectOneMenu value="#{Litter_Backing.litterEntity.status}"
+                                                         required="true"
+                                                         requiredMessage="#{customMessage['litter.status.missing']}">
+                                            <f:selectItems value="#{Litter_Backing.selectItemWrapper.litterStatusItems}"/>
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideLitterComments}">
+                                        <h:outputLabel value="#{msgs['litter.comments']}" />
+                                        <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                            <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                        </a4j:commandLink>
+                                    </h:panelGroup>
+                                    <h:panelGroup id="commentId" rendered="#{!Litter_Backing.pageBuilder.hideLitterComments}">
+                                        <h:inputTextarea cols="50" rows="3" value="#{Litter_Backing.litterEntity.comment}" />
+                                    </h:panelGroup>                                
+                                </h:panelGrid>
+                            </h:panelGroup>
+
+                            <h:panelGroup id="matingInfoId">
+                                <b><h:outputLabel value="#{msgs['matingId']}" /></b>:&nbsp;&nbsp;
+                                <h:outputText value="#{Litter_Backing.litterEntity.matingKey.matingID}" />
+                                <br />
+                                <b><h:outputLabel value="#{msgs['dam1']}" /></b>:&nbsp;&nbsp;
+                                <h:outputText value="#{Litter_Backing.dam1.id}" />
+                                <br />
+                                <b><h:outputLabel value="#{msgs['sireId']}" /></b>:&nbsp;&nbsp;
+                                <h:outputText value="#{Litter_Backing.litterEntity.matingKey.sireKey.id}" />
+                                <br />
+                                <b><h:outputLabel value="#{msgs['mating.strain']}" /></b>:&nbsp;&nbsp;
+                                <h:outputText value="#{Litter_Backing.litterEntity.matingKey.strainKey.strainName}" />
+                                <br />
+                                <b><h:outputLabel value="#{msgs['mating.jrNum']}" /></b>:&nbsp;&nbsp;
+                                <h:outputText value="#{Litter_Backing.litterEntity.matingKey.strainKey.jrNum}" />
+                                <br />
+                                <b><h:outputLabel value="#{msgs['owner']}" /></b>:&nbsp;&nbsp;
+                                <h:outputText value="#{Litter_Backing.litterEntity.matingKey.owner}" />
+                                <br />
+                                <b><h:outputLabel value="#{msgs['mating.matingStatus']}" /></b>:&nbsp;&nbsp;
+                                <h:outputText value="#{Litter_Backing.litterEntity.matingKey.crossStatuskey.crossStatus}" />
+                                <br />
+                                <b><h:outputLabel value="#{msgs['pen#']}" /></b>:&nbsp;&nbsp;
+                                <h:outputText value="#{Litter_Backing.dam1.penKey.containerID}" /> 
+                            </h:panelGroup>
+                        </h:panelGrid>
+
+                        <br />
+
+                        <h2><h:outputText value="Put pups into database"/></h2>
+                        <h:outputLabel value="Auto generate mouse records"/>
+                        <h:selectBooleanCheckbox
+                            value="#{Litter_Backing.autoGenerateMouseRecords}" >
+                            <a4j:ajax event="change" render="pupsId, leavePupsId, displayMouseIds"/>
+                        </h:selectBooleanCheckbox>
+
+                        <h:panelGrid columns="2"
+                                     columnClasses="innerTableTD, innerTableTD"
+                                     styleClass="innerTable">
+
+                            <h:panelGroup id="pupsId">
+
+                                <h:panelGroup>
+
+                                    <h:panelGrid columns="2"
+                                                 columnClasses="rowHeader, innerTableTD"
+                                                 styleClass="innerTable"
+                                                 rendered="#{Litter_Backing.autoGenerateMouseRecords}">
+
+                                        <h:outputLabel value="Females first" />
+                                        <h:selectBooleanCheckbox
+                                            value="#{Litter_Backing.femalesFirst}" />
+
+                                        <h:panelGroup>
+                                            <h:outputLabel value="Base mouse ID" />
+                                            <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                        </h:panelGroup>
+
+                                        <h:panelGroup>
+                                            <h:panelGroup>
+                                                <h:inputText id="mouseBaseNumberId"
+                                                             value="#{Litter_Backing.mouseBaseNum}"
+                                                             maxlength="#{restrict['size.general.id']}"
+                                                             size="#{restrict['size.general.id']}"/>
+                                            </h:panelGroup>
+                                            
+                                            &nbsp;&nbsp;
+                                            <a4j:commandButton 
+                                                id="populateMouseID"
+                                                action="#{Litter_Backing.populateIDs}"
+                                                value="Populate IDs"
+                                                render="mouseIdsTableId mouseBaseNumberId" 
+                                                styleClass="mediumButton" />
+
+                                            &nbsp;&nbsp;  
+                                            <a4j:commandButton 
+                                                id="selectMouseID"
+                                                action="#{Litter_Backing.setMiceSearchPanelAction}"
+                                                oncomplete="#{rich:component('selectMousePanel')}.show()"
+                                                render="mouseSearchResultsGridId"
+                                                value="Search IDs"
+                                                styleClass="smallButton" />
+                                        </h:panelGroup>
+                                        
+                                        <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideLitterProtocolID}">
+                                            <h:outputLabel value="#{msgs['litter.protocolID']}" />
+                                            <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                                <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                            </a4j:commandLink>
+                                        </h:panelGroup>
+                                        
+                                        <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideLitterProtocolID}">
+                                            <h:selectOneMenu value="#{Litter_Backing.mouseProtocolEntity}">
+                                                <f:selectItems value="#{Litter_Backing.selectItemWrapper.cvMouseProtocolItemsOptional}"/>
+                                                <f:converter converterId="mouseProtocolConverter" />
+                                            </h:selectOneMenu>
+                                        </h:panelGroup>
+
+                                        <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideLitterUseSchedules}">                         
+                                            <h:outputLabel value="Use Schedules " />
+                                            <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                                <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                            </a4j:commandLink>
+                                        </h:panelGroup>
+
+                                        <h:panelGroup id="useScheduleOut" rendered="#{!Litter_Backing.pageBuilder.hideLitterUseSchedules}">
+                                            <rich:collapsiblePanel header="Use Schedules">
+                                                <p:pickList id="useSchedulesPicklist" value="#{Litter_Backing.useSchedulesModel}" filterMatchMode="contains"
+                                                            showSourceFilter="true" showTargetFilter="true" var="ust"
+                                                            itemLabel="#{ust.useScheduleTermName}" itemValue="#{ust}" converter="useScheduleTermConverter">
+                                                    <f:facet name="sourceCaption"><h:outputText value="Use Schedules"/></f:facet>                                
+                                                    <f:facet name="targetCaption"><h:outputText value="Selected Schedules"/></f:facet>
+                                                </p:pickList>
+                                            </rich:collapsiblePanel>
+                                        </h:panelGroup> 
+
+                                        <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideLitterOrigin}">
+                                            <h:outputLabel value="#{msgs['origin']}" />
+                                            <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                            <h:outputLabel value=" "/>
+                                            <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                                <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                            </a4j:commandLink>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideLitterOrigin}">
+                                            <h:selectOneMenu 
+                                                value="#{Litter_Backing.mouseOriginEntity}" >
+                                                <f:selectItems value="#{Litter_Backing.selectItemWrapper.cvMouseOriginItemsOptional}"/>
+                                                <f:converter converterId="mouseOriginConverter" />
+                                            </h:selectOneMenu>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideLeavePupsInMatingPen}">
+                                            <h:outputLabel value="Leave pups in mating cage " />
+                                            <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                                <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                            </a4j:commandLink>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{!Litter_Backing.pageBuilder.hideLeavePupsInMatingPen}">
+                                            <h:selectBooleanCheckbox
+                                                value="#{Litter_Backing.leavePupsInMatingPen}" >
+                                                <a4j:ajax event="change" render="leavePupsId" />
+                                            </h:selectBooleanCheckbox>
+                                        </h:panelGroup>
+                                    </h:panelGrid>
+
+                                </h:panelGroup>
+                                <h:panelGroup id="leavePupsId">
+
+                                    <h:panelGrid columns="2"
+                                                 columnClasses="rowHeader, innerTableTD"
+                                                 styleClass="innerTable"
+                                                 rendered="#{!Litter_Backing.leavePupsInMatingPen and Litter_Backing.autoGenerateMouseRecords}" >
+
+                                        <h:panelGroup>
+                                            <h:outputLabel value="#{msgs['pen#']}" 
+                                                           rendered="#{!Litter_Backing.leavePupsInMatingPen}"/>
+                                        </h:panelGroup>
+
+                                        <h:panelGroup id="penIDPanel">                            
+                                            &nbsp;&nbsp;                          
+                                            <a4j:commandButton 
+                                                id="addNewPenID"
+                                                action="#{Litter_Backing.clearNewPenPopupAction}"
+                                                oncomplete="#{rich:component('addNewPenPanel')}.show()"
+                                                value="Cage Info"
+                                                render="addNewPenIdPanelGrid"                                
+                                                styleClass="smallButton" />
+                                            &nbsp;&nbsp;
+                                            <b><h:outputLabel value="#{msgs['penStatus']}" /></b>:&nbsp;&nbsp;
+                                            <h:outputText value="#{Litter_Backing.newPen.status.containerStatus}" />
+                                            &nbsp;&nbsp;
+                                            <b><h:outputLabel value="#{msgs['room']}" /></b>:&nbsp;&nbsp;
+                                            <h:outputText value="#{Litter_Backing.newPen.room.roomName}" />
+                                        </h:panelGroup>
+
+                                        <h:panelGroup>
+                                            <h:outputLabel value="#{msgs['litter.numFemalesPerPen']}" />
+                                        </h:panelGroup>
+
+                                        <h:inputText value="#{Litter_Backing.numFemalesPerPen}"
+                                                     maxlength="#{restrict['size.general.id']}"
+                                                     size="#{restrict['size.general.id']}" />
+
+                                        <h:panelGroup>
+                                            <h:outputLabel value="#{msgs['litter.numMalesPerPen']}" />
+                                        </h:panelGroup>
+
+                                        <h:inputText value="#{Litter_Backing.numMalesPerPen}"
+                                                     maxlength="#{restrict['size.general.id']}"
+                                                     size="#{restrict['size.general.id']}" />
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                            <h:panelGroup id="displayMouseIds">
+
+                                <rich:dataTable
+                                    id="mouseIdsTableId"
+                                    value="#{Litter_Backing.miceList}"
+                                    var="dm"
+                                    styleClass="maxSizeDataTable"
+                                    rows="15"
+                                    rendered="#{Litter_Backing.autoGenerateMouseRecords}">
+
+                                    <rich:column id="id1">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['mouseId']}" />
+                                        </f:facet>
+                                        <h:inputText value="#{dm.value}" />
+                                    </rich:column>
+
+                                    <rich:column id="sexId1">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['sex']}" />
+                                        </f:facet>
+                                        <h:outputText value="#{dm.temp}" />
+                                    </rich:column>
+                                </rich:dataTable>
+                            </h:panelGroup>
+
+                        </h:panelGrid>
+                        <hr /><div align="left">
+                            <a4j:commandButton
+                                value="#{msgs['common.save']}"
+                                styleClass="mediumButton"
+                                rendered="#{Litter_Backing.litterKey == 0}"
+                                action="#{Litter_Backing.insertLitterAction}" 
+                                status="statusPage" />
+
+                            <a4j:commandButton
+                                value="#{msgs['common.save']}"
+                                styleClass="mediumButton"
+                                rendered="#{Litter_Backing.litterKey != 0}"
+                                action="#{Litter_Backing.updateLitterAction}" 
+                                status="statusPage"/>
+
+                        &nbsp;&nbsp;
+                        <a4j:commandButton
+                            value="Return to Search"
+                            styleClass="mediumButton"
+                            rendered="#{Litter_Backing.litterKey != 0 and !Litter_Backing.calendarEdit}"
+                            immediate="true"
+                            action="#{LitterList_Backing.returnToSearchAction}" 
+                            status="statusPage"/>
+                        </div>
+                    </h:panelGroup>
+                </h:panelGrid>
+
+                </div>
+            </h:form>
+
+        <rich:popupPanel id="addNewPenPanel" autosized="true" width="450"
+                         top="10">
+            <f:facet name="header">
+                <h:outputText value="New Cage" />
+            </f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="/images/delete.gif" id="hidelink4" title="Close" 
+                                    onclick="#{rich:component('addNewPenPanel')}.hide();"    
+                                    alt="Close Window" height="20" width="20"
+                                    styleClass="hidelink" />
+                </h:panelGroup>
+            </f:facet>
+
+            <h:form id="AddNewPenId">
+                <h:outputText value="#{msgs['pen.addPen']}"></h:outputText>
+                <hr />
+                <rich:messages />
+                <br />
+                <h:panelGrid id="addNewPenIdPanelGrid"
+                             columns="2"
+                             columnClasses="rowHeader, innerTableTD"
+                             styleClass="innerTable">
+
+                    <h:panelGroup>
+                        <h:outputLabel value="#{msgs['pen#']}" />
+                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h:selectBooleanCheckbox disabled="true"
+                            id="nextPen"
+                            value="#{Litter_Backing.newPen.nextPen}" >
+                        </h:selectBooleanCheckbox>
+                        <h:outputLabel value="Use next available ID" />
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h:outputLabel value="#{msgs['penName']}" />
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h:panelGroup>
+                            <h:inputText required="false" id="penNameId"
+                                        value="#{Litter_Backing.newPen.penEntity.containerName}"
+                                        maxlength="#{restrict['size.general.id']}"
+                                        size="25" >
+                            </h:inputText>
+                            &nbsp;&nbsp; 
+                        </h:panelGroup>
+
+                        <h:selectBooleanCheckbox
+                                id="penNameId1"
+                                value="#{Litter_Backing.newPen.nextPenName}" >
+                        </h:selectBooleanCheckbox>
+                        <h:outputLabel value="Increment Name" />
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h:outputLabel value="#{msgs['penStatus']}" />
+                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                    <h:selectOneMenu required="true" 
+                                     requiredMessage="#{customMessage['pen.status.missing']}"
+                                     value="#{Litter_Backing.newPen.status}" >
+                        <f:selectItems value="#{Litter_Backing.selectItemWrapper.cvContainerStatusItemsOptional}"/>
+                        <f:converter converterId="containerStatusConverter" />
+                    </h:selectOneMenu>
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h:outputLabel value="#{msgs['pen.actionDate']}" />
+                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                    </h:panelGroup>    
+
+                    <h:panelGroup>
+                    <rich:calendar id="actionDate"
+                                   required="true"
+                                   requiredMessage="#{customMessage['mouse.date.missing']}"
+                                   value="#{Litter_Backing.newPen.actionDate}"
+                                   inputSize="#{msgs['common.minMaxSize']}"
+                                   datePattern="#{Litter_Backing.date_format}" 
+                                   showInput="true"
+                                   showWeeksBar="true"
+                                   enableManualInput="true"
+                                   valueChangeListener="#{Litter_Backing.newPen.validateDateAction}">
+                        <a4j:ajax event="change" render="actionDate" />
+                    </rich:calendar>
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <h:outputLabel value="#{msgs['room']}" id="penRoomId" />
+                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                    <h:selectOneMenu value="#{Litter_Backing.newPen.room}" >
+                        <f:selectItems value="#{Litter_Backing.selectItemWrapper
+                                                .cvRoomItems}"/>
+                        <f:converter converterId="roomConverter" />
+                    </h:selectOneMenu>
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{Litter_Backing.newPen.penCommentsFlag}">
+                    <h:outputLabel value="#{msgs['pen.comments']}" />
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{Litter_Backing.newPen.penCommentsFlag}">
+                    <h:inputTextarea cols="50" rows="5" value="#{Litter_Backing.newPen.penEntity.comment}" />
+                    </h:panelGroup>
+                </h:panelGrid>
+
+                &nbsp;&nbsp;
+
+                <div align="center">
+                    <h:panelGrid id="okCancelGrid4" columns="1">
+                        <h:panelGroup id="okCancelGroupId1">
+                            <a4j:commandButton value="#{msgs['common.save']}"
+                                               oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('addNewPenPanel')}.hide();"
+                                               action="#{Litter_Backing.savePenAction}"
+                                               render="penIDPanel"
+                                               styleClass="mediumButton">
+                            </a4j:commandButton>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    </div>
+                </h:form>
+            </rich:popupPanel>
+
+        <rich:popupPanel id="selectMousePanel" width="930" height="750"
+                         onshow="document.getElementById('searchMouseFormId:mouseIDFilter').focus();"
+                         resizeable="true"
+                         top="10">
+            <f:facet name="header">
+                <h:outputText value="Select Mouse" />
+            </f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="/images/delete.gif" id="hidelink6" title="Close" 
+                                    onclick="#{rich:component('selectMousePanel')}.hide();"  
+                                    alt="Close Window" height="20" width="20"
+                                    styleClass="hidelink" />
+                </h:panelGroup>
+            </f:facet>
+
+            <h:form id="searchMouseFormId">
+                <rich:messages style="color:red;"></rich:messages>
+
+                    <h:outputLabel value="#{msgs['mouseId']}" id="lookForMouseId" />
+                    &nbsp;&nbsp;
+                    <h:selectOneMenu id="mouseIDFilter" value="#{Litter_Backing.mouseSearch.mouseFilter}" >
+                        <f:selectItems value="#{Litter_Backing.selectItemWrapper.mouseFilters}"/>
+                    </h:selectOneMenu>
+                    <h:inputText id="searchById1" value="#{Litter_Backing.mouseSearch.mouseID}" 
+                                 maxlength="#{restrict['size.general.id']}"
+                                 size="#{restrict['size.general.id']}" />
+                    &nbsp;&nbsp;                    
+
+                    <h:outputLabel value="#{msgs['lifeStatus']}" id="lifeStatusId" />
+                    &nbsp;&nbsp;
+                    <h:selectOneMenu value="#{Litter_Backing.mouseSearch.lifeStatus}" >
+                        <f:selectItems value="#{Litter_Backing.selectItemWrapper.cvLifeStatusItemsOptional}"/>
+                        <f:converter converterId="lifeStatusConverter" />
+                    </h:selectOneMenu>
+                    &nbsp;&nbsp;
+
+                    <h:outputLabel value="#{msgs['strain']}" id="lookForStrainId1" />
+                    &nbsp;&nbsp;
+                    <h:selectOneMenu id="searchByStrain1" value="#{Litter_Backing.mouseSearch.strain}" >
+                        <f:selectItems value="#{Litter_Backing.selectItemWrapper.allStrains}"/>
+                        <f:converter converterId="strainConverter" />
+                    </h:selectOneMenu>
+
+                    <br />
+                    <br />
+
+                    <rich:collapsiblePanel header="#{msgs['owner']} Filter" 
+                                           styleClass="collapsibleSearchPanel" 
+                                           expanded="true" >
+                        <h:panelGroup id="ownersId">   
+                            <rich:pickList value="#{Litter_Backing.mouseSearch.owners}" 
+                                           disabled="false"  >
+                                <f:selectItems value="#{Litter_Backing.selectItemWrapper.colonyManageOwnerItemsOptional}"/>
+                                <f:converter converterId="ownerConverter" />
+                            </rich:pickList>
+                        </h:panelGroup>
+                    </rich:collapsiblePanel>`
+
+                <br />
+
+                <a4j:commandButton
+                    id="searchId1"
+                    value="#{msgs['line.search']}"
+                    action="#{Litter_Backing.mouseSearchAction}"
+                    styleClass="mediumButton"
+                    type="submit"
+                    render="mouseSearchResultsGridId, mouseResultsId, ownersId" />
+
+                <hr />
+
+                <h:panelGrid columns="1" id="mouseSearchResultsGridId">
+                    <h:panelGroup id="mouseResultsId"
+                                  rendered="#{Litter_Backing.isMouseResultCountDisplayed}" >
+                        <h:outputText id="mouseResultsTextId1"
+                                      rendered="#{Litter_Backing.mouseDataModel.rowCount > 0}"
+                                      value="#{msgs['search.results']} #{Litter_Backing.mouseDataModel.rowCount}" />
+                        <h:outputText id="mouseResultsTextId2"
+                                      rendered="#{Litter_Backing.mouseDataModel.rowCount &lt;= 0}"
+                                      value="#{msgs['search.results']} 0" />
+                    </h:panelGroup>
+
+                    <h:panelGroup id="mouseResultsPanelId1"
+                                  rendered="#{Litter_Backing.mouseDataModel.rowCount > 0}">
+                        <hr />
+
+                        <rich:extendedDataTable
+                            id="mouseResultsTableId"
+                            value="#{Litter_Backing.mouseDataModel}"
+                            var="dm"
+                            rows="15"
+                            styleClass="largestSizeExtendedDataTable"
+                            sortMode="#{Litter_Backing.mouseSelectionETB.sortMode}"
+                            selectionMode="#{Litter_Backing.mouseSelectionETB.selectionMode}"
+                            selection="#{Litter_Backing.mouseSelectionETB.selection}">
+
+                            <f:facet name="footer" class="dataScroller">
+                                <rich:dataScroller id="userResultsDataScroller" maxPages="5" renderIfSinglePage="false" />
+                            </f:facet>                     
+                            
+                            <rich:column id="id1"
+                                         sortBy="#{dm.id}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['mouseId']}" />
+                                </f:facet>
+                                <h:outputText value="#{dm.id}"/>
+                            </rich:column>
+
+                            <rich:column id="birthDate"
+                                         sortBy="#{dm.birthDate}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['dateOfBirth']}" />
+                                </f:facet>
+                                <h:outputText value="#{dm.birthDate}"/>
+                            </rich:column>
+
+                            <rich:column id="generation"
+                                         sortBy="#{dm.generation}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['generation']}" />
+                                </f:facet>
+                                <h:outputText value="#{dm.generation}"/>
+                            </rich:column>
+
+                            <rich:column id="owner"
+                                         sortBy="#{dm.owner}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['owner']}" />
+                                </f:facet>
+                                <h:outputText value="#{dm.owner}"/>
+                            </rich:column>
+
+                            <rich:column id="lifeStatus"
+                                         sortBy="#{dm.lifeStatus}">
+                                <f:facet name="header">
+                                    <h:panelGroup>
+                                        <h:outputText value="#{msgs['lifeStatus']}" />
+                                    </h:panelGroup>
+                                </f:facet>
+                                <h:outputText value="#{dm.lifeStatus}"/>
+                            </rich:column>
+
+                            <rich:column id="breedingStatus"
+                                         sortBy="#{dm.breedingStatus}">
+                                <f:facet name="header">
+                                    <h:panelGroup>
+                                        <h:outputText value="#{msgs['breedingStatus']}" />
+                                    </h:panelGroup>
+                                </f:facet>
+                                <h:outputText value="#{dm.breedingStatus}" />
+                            </rich:column>
+
+                            <rich:column id="sex"
+                                         sortBy="#{dm.sex}">
+                                <f:facet name="header">
+                                    <h:panelGroup>
+                                        <h:outputText value="#{msgs['sex']}" />
+                                    </h:panelGroup>
+                                </f:facet>
+                                <h:outputText value="#{dm.sex}" />
+                            </rich:column>
+
+                            <rich:column id="strain2"
+                                         sortBy="#{dm.strainKey.strainName}">
+                                <f:facet name="header">
+                                    <h:panelGroup>
+                                        <h:outputText value="#{msgs['strain']}" />
+                                    </h:panelGroup>
+                                </f:facet>
+                                <h:outputText value="#{dm.strainKey.strainName}" />
+                            </rich:column>
+
+                            <rich:column id="penId"
+                                         sortBy="#{dm.penKey.containerID}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['pen#']}" />
+                                </f:facet>
+                                <h:outputText value="#{dm.penKey.containerID}" />
+                            </rich:column>    
+
+                        </rich:extendedDataTable>
+
+                        <hr /><div align="center">
+
+                            <h:panelGrid id="okCancelGrid1" columns="1"
+                                         rendered="#{Litter_Backing.mouseDataModel.rowCount > 0}">
+                                <h:panelGroup id="okCancelGroupId2">
+                                    <a4j:commandButton id="okPenId1"
+                                                       value="#{msgs['common.ok']}"
+                                                       oncomplete="#{rich:component('selectMousePanel')}.hide();"   
+                                                       action="#{Litter_Backing.selectMouseAction}"
+                                                       render="mouseBaseNumberId"
+                                                       styleClass="mediumButton">                                       
+                                    </a4j:commandButton>
+                                    &nbsp;&nbsp;
+                                    <a4j:commandButton id="cancelId1"
+                                                       value="#{msgs['common.cancel']}"
+                                                       oncomplete="#{rich:component('selectMousePanel')}.hide();"
+                                                       styleClass="mediumButton">
+                                    </a4j:commandButton>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </div>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </h:form>
+        </rich:popupPanel>
+        <!-- pop up mating panel to select mating. -->
+        <rich:popupPanel id="selectMatingPanel" width="900" height="500" 
+                         resizeable="true" 
+                         onshow="document.getElementById('searchMatingFormId:matingIDFilter').focus();"
+                         top="10">
+            <f:facet name="header">
+                <h:outputText value="Select Mating" />
+            </f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="/images/delete.gif" id="hidelink5" title="Close"  
+                                    onclick="#{rich:component('selectMatingPanel')}.hide();"
+                                    alt="Close Window" height="20" width="20"
+                                    styleClass="hidelink" />
+                </h:panelGroup>
+            </f:facet>
+
+            <h:form id="searchMatingFormId">
+                <rich:messages style="color:red;"></rich:messages>
+
+                <a4j:status name="statusSelectMating" >
+                    <f:facet name="start">
+                        <h:graphicImage value="../images/bhi_ball.gif"/>
+                    </f:facet>
+                    <f:facet name="stop">
+                        <h:graphicImage value="../images/bhi_ball_white.gif" />
+                    </f:facet>
+                </a4j:status>
+                
+                <rich:collapsiblePanel header="Search" 
+                                       styleClass="collapsibleSearchPanel" 
+                                       expanded="true" >
+                    
+                    <h:panelGrid id="searchTableID" columns="4" styleClass="searchTable">
+                        <h:outputLabel value="#{msgs['mating.matingID']}" id="lookForMatingId" />
+                        <h:panelGroup>
+                            &nbsp;&nbsp;
+                            <h:selectOneMenu id="matingIDFilter" value="#{Litter_Backing.matingSearch.matingFilter}" >
+                                <f:selectItems value="#{Litter_Backing.selectItemWrapper.integerFilters}"/>
+                            </h:selectOneMenu>
+                            <h:inputText id="searchById2" value="#{Litter_Backing.matingSearch.matingID}" 
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <h:outputLabel value="#{msgs['mating.matingStatus']}" id="matingStatusId" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            &nbsp;&nbsp;
+                            <h:selectOneMenu value="#{Litter_Backing.matingSearch.matingStatus}" >
+                                <f:selectItems value="#{Litter_Backing.selectItemWrapper.cvCrossStatusItemsOptional}"/>
+                                <f:converter converterId="crossStatusConverter" />
+                            </h:selectOneMenu>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <h:outputLabel value="#{msgs['strain']}" id="lookForStrainId2" />
+                            </h:panelGroup>
+                        <h:panelGroup>
+                            &nbsp;&nbsp;
+                            <h:selectOneMenu id="searchByStrain2" value="#{Litter_Backing.matingSearch.strain}" >
+                                <f:selectItems value="#{Litter_Backing.selectItemWrapper.allStrains}"/>
+                                <f:converter converterId="strainConverter" />
+                            </h:selectOneMenu>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <h:panelGrid id="ownersId2" styleClass="searchTable">
+                        <h:outputLabel value="#{msgs['owner']} Filter"/>
+                        <h:panelGroup id="ownersId1">   
+                            <rich:pickList value="#{Litter_Backing.matingSearch.owners}" 
+                                           disabled="false"  >
+                                <f:selectItems value="#{Litter_Backing.selectItemWrapper.colonyManageOwnerItemsOptional}"/>
+                                <f:converter converterId="ownerConverter" />
+                            </rich:pickList>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <h:panelGrid styleClass="searchTable">
+                        <br />
+                        <h:panelGroup layout="block">
+                            <a4j:commandButton
+                                id="searchId2"
+                                value="#{msgs['line.search']}"
+                                action="#{Litter_Backing.matingSearchAction}"
+                                styleClass="mediumButton"
+                                type="submit"
+                                render="matingSearchResultsGridId" 
+                                status="statusSelectMating"/>
+                            &nbsp;&nbsp;
+                            <a4j:commandButton
+                                id="clearId"
+                                value="#{msgs['filter.clear']}"
+                                action="#{Litter_Backing.clearMatingPopupAction}"
+                                styleClass="mediumButton"
+                                render="matingSearchResultsGridId, searchTableID, ownersId2" 
+                                status="statusSelectMating" />                
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </rich:collapsiblePanel>
+                <br />
+                <h:panelGrid columns="1" id="matingSearchResultsGridId">
+                    <h:panelGroup id="matingResultsId">
+<!--                                  rendered="#{Litter_Backing.isMatingResultCountDisplayed}" -->
+                        <h:outputText id="matingResultsTextId1"
+                                      rendered="#{Litter_Backing.matingDataModel.rowCount > 0}"
+                                      value="#{msgs['search.results']} #{Litter_Backing.matingDataModel.rowCount}" />
+                        <h:outputText id="matingResultsTextId2"
+                                      rendered="#{Litter_Backing.matingDataModel.rowCount &lt;= 0}"
+                                      value="#{msgs['search.results']} 0" />
+                    </h:panelGroup>
+
+                    <h:panelGroup id="matingResultsPanelId"
+                                  rendered="#{Litter_Backing.matingDataModel.rowCount > 0}">
+                        <hr />
+
+                        <rich:extendedDataTable
+                            id="matingResultsTableId"
+                            value="#{Litter_Backing.matingDataModel}"
+                            var="dm"
+                            rows="15"
+                            styleClass="largestSizeExtendedDataTable"
+                            sortMode="#{Litter_Backing.matingSelectionETB.sortMode}"
+                            selectionMode="#{Litter_Backing.matingSelectionETB.selectionMode}"
+                            selection="#{Litter_Backing.matingSelectionETB.selection}">
+
+                            <f:facet name="footer" class="dataScroller">
+                                <rich:dataScroller for="matingResultsTableId" maxPages="5" renderIfSinglePage="false" />
+                            </f:facet>                     
+                            
+                            <rich:column id="matingID"
+                                         sortBy="#{dm.matingID}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['matingId']}" />
+                                </f:facet>
+                                <h:outputText value="#{dm.matingID}"/>
+                            </rich:column>
+
+                            <rich:column id="dam1Id"
+                                         sortBy="#{dm.dam1ID}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['dam1']}" />
+                                </f:facet>
+                                <h:outputText value="#{dm.dam1ID}" />
+                            </rich:column>
+
+                            <rich:column id="sireId"
+                                         sortBy="#{dm.sireKey.id}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['sireId']}" />
+                                </f:facet>
+                                <h:outputText value="#{dm.sireKey.id}" />
+                            </rich:column>
+
+                            <rich:column id="strain3"
+                                         sortBy="#{dm.strainKey.strainName}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['mating.strain']}" />
+                                </f:facet>
+                                <h:outputText value="#{dm.strainKey.strainName}"/>
+                            </rich:column>    
+
+                            <rich:column id="owner"
+                                         sortBy="#{dm.owner}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['owner']}" />
+                                </f:facet>
+                                <h:outputText value="#{dm.owner}"/>
+                            </rich:column>
+
+                            <rich:column id="crossStatus"
+                                         sortBy="#{dm.crossStatuskey.crossStatus}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['mating.matingStatus']}" />
+                                </f:facet>
+                                <h:outputText value="#{dm.crossStatuskey.crossStatus}"/>
+                            </rich:column>
+                            <rich:column id="penId"
+                                         sortBy="#{dm.suggestedPenID}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['pen#']}" />
+                                </f:facet>
+                                <h:outputText value="#{dm.suggestedPenID}" />
+                            </rich:column>  
+
+                        </rich:extendedDataTable>
+
+                        <br /><div align="center">
+
+                            <h:panelGrid id="okCancelGrid2" columns="1"
+                                         rendered="#{Litter_Backing.matingDataModel.rowCount > 0}">
+                                <h:panelGroup id="okCancelGroupId3">
+                                    <a4j:commandButton id="okPenId2"
+                                                       value="#{msgs['common.ok']}"
+                                                       oncomplete="#{rich:component('selectMatingPanel')}.hide();"   
+                                                       action="#{Litter_Backing.selectMatingAction}"
+                                                       render="matingPanel, matingInfoId, weanDate, tagDate"
+                                                       styleClass="mediumButton">                                       
+                                    </a4j:commandButton>
+                                    &nbsp;&nbsp;
+                                    <a4j:commandButton id="cancelId2"
+                                                       value="#{msgs['common.cancel']}"
+                                                       oncomplete="#{rich:component('selectMatingPanel')}.hide();"
+                                                       styleClass="mediumButton">
+                                    </a4j:commandButton>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </div>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </h:form>
+        </rich:popupPanel>
+
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+    </h:body>
+</html>

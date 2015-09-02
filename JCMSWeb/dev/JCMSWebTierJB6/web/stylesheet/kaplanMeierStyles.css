@@ -1,0 +1,95 @@
+/****
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+****/
+/* 
+    Document   : kaplanMeierStyles
+    Created on : Apr 22, 2014, 5:00:04 PM
+    Author     : mkamato
+    Description: styles for kaplan meier plots
+*/
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+.x.axis path {
+   /* display: none; */
+}
+.schedule1 {
+    fill: none;
+    stroke-width: 1.5px;
+/*    stroke: blue;*/
+}
+rect.schedule1 {
+/*    fill: blue;*/
+    stroke: steelblue;
+}
+.schedule2 path{
+    fill: none;
+    stroke-width: 1.5px;
+/*    stroke: red;*/
+}
+rect.schedule2 {
+/*    fill: red;*/
+    stroke: steelblue;
+}
+.schedule3 path {
+    fill: none;
+    stroke-width: 1.5px;
+/*    stroke: green;*/
+}
+rect.schedule3 {
+/*    fill: green;*/
+    stroke: steelblue;
+}
+.schedule4 path {
+    fill: none;
+    stroke-width: 1.5px;
+/*    stroke: purple;*/
+}
+rect.schedule4 {
+/*    fill: purple;*/
+    stroke: steelblue;
+}
+.schedule5 path {
+    fill: none;
+    stroke-width: 1.5px;
+/*    stroke: orange;*/
+}
+rect.schedule5 {
+/*    fill: orange;*/
+    stroke: steelblue;
+}
+.schedule6 path {
+    fill: none;
+    stroke-width: 1.5px;
+/*    stroke: yellow;*/
+}
+rect.schedule6 {
+    fill: yellow;
+    stroke: steelblue;
+}
+.schedule7 path {
+    fill: none;
+    stroke-width: 1.5px;
+/*    stroke: black;*/
+}
+rect.schedule7 {
+/*    fill: black;*/
+    stroke: steelblue;
+}

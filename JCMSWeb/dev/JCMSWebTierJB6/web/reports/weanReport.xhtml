@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+        <title>
+            <h:outputText value="Wean Report"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript">
+            function openNewWindow(fname) {
+                win = window.open("", "navigation window", "", true);
+                //alert("called again");
+                if (win.open) {
+                    win.close();
+                }
+
+                win = window.open(fname, "navigation window", "", true);
+                win.focus();
+
+                return false;
+            }
+        </script>
+    </h:head>
+    <body>
+        <h:form id="weanReportId">
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <div style="margin-left:10px;margin-right:10px">
+       
+                <!-- Messages -->
+                <rich:messages />
+                
+                <h:panelGrid columns="1" border="0" cellpadding="5" cellspacing="5"
+                             columnClasses="detailPane, detailPane">
+
+                    <h:panelGroup styleClass="formTitle">
+
+                        <h3><h:outputText value="Filter Options"></h:outputText></h3>
+
+                        <h:panelGrid columns="2"
+                                     columnClasses="rowHeader, innerTableTD"
+                                     styleClass="innerTable">
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Matings to Wean Through" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <rich:calendar id="pbStartDate"
+                                               value="#{WeanReport_Backing.report.pbStartDate}"
+                                               inputSize="#{msgs['common.minMaxSize']}"
+                                               datePattern="#{WeanReport_Backing.date_format}"
+                                               showInput="true"
+                                               showWeeksBar="true"
+                                               enableManualInput="true">
+                                    <a4j:ajax event="change" render="pbStartDate" />
+                                </rich:calendar>
+                                &nbsp;&nbsp;
+                                
+                            </h:panelGroup>   
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['owner']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup id="ownersId">   
+                                <rich:collapsiblePanel header="Select Filter" expanded="false" >
+                                    <h:outputLabel value="Owner" styleClass="collapsiblePanelLabel" />
+                                    <rich:pickList value="#{WeanReport_Backing.report.owners}" 
+                                                   disabled="false"  >
+                                        <f:selectItems value="#{WeanReport_Backing.selectItemWrapper.guestOwnerItems}"/>
+                                        <f:converter converterId="ownerConverter" />
+                                    </rich:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+
+                        </h:panelGrid>
+                    </h:panelGroup>
+                    
+                    <h:panelGroup>
+                        <div align="left">
+                            <a4j:commandButton
+                                value="#{msgs['common.run']}"
+                                styleClass="mediumButton"
+                                action="#{WeanReport_Backing.runReportAction}"
+                                id="run"
+                                onclick='this.form.target="_blank"'
+                                />
+                            &nbsp;&nbsp;
+                        </div>
+                    </h:panelGroup>  
+           </h:panelGrid>
+           </div> 
+            <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+        </h:form>
+    </body>
+</html>

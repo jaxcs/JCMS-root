@@ -1,0 +1,260 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui">
+    <style type="text/css" media="screen">
+        textarea[disabled], input[type="text"][disabled], input[type="password"][disabled], select[disabled] {
+            color: #707070;
+            cursor: default;
+        }
+    </style>
+    <h:panelGrid columns="1">
+        <p:ajaxStatus id="ajaxStatusPanel">  
+            <f:facet name="start">  
+                <h:graphicImage value="../images/bhi_ball.gif"/>  
+            </f:facet>  
+            <f:facet name="complete">  
+                <h:graphicImage value="../images/bhi_ball_white.gif" />  
+            </f:facet>
+        </p:ajaxStatus>
+        <p:commandButton value="Create Use Schedule" id="addUseScheduleButton"
+                         actionListener="#{AdminUseSchedule_Backing.addUseScheduleTerm}"
+                         update="useScheduleTerms"/>
+        &nbsp;
+        &nbsp;
+        <h:panelGroup id="useScheduleTerms">
+            <rich:dataTable id="useSchedulesTable" 
+                            value="#{AdminUseSchedule_Backing.useScheduleTerms}"
+                            rendered="#{!empty AdminUseSchedule_Backing.useScheduleTerms}"
+                            var="ust"
+                            sortMode="single"
+                            rowKeyVar="tableRowIndex"
+                            rows="10"
+                            styleClass="maxSizeDataTable" 
+                            style="vertical-align: top;"
+                            headerClass="tableSortHeader">
+                <f:facet name="footer" class="dataScroller" >
+                    <rich:dataScroller id="useSchedulesDS" for="useSchedulesTable" renderIfSinglePage="false"/>
+                </f:facet>   
+                <rich:column id="standardActions" rendered="#{tableRowIndex ne AdminUseSchedule_Backing.editRow}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs['common.actions']}" />
+                    </f:facet>
+                    <a4j:commandButton title="Add"
+                                        image="/images/insert.gif"
+                                        action="#{AdminUseSchedule_Backing.addUse}"
+                                        render="useScheduleTerms">
+                        <f:param name="paramUseSchedule" value="#{ust.useScheduleTermKey}" />
+                        <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                    </a4j:commandButton>
+                    &nbsp;&nbsp;         
+                    <a4j:commandButton title="#{msgs['common.edit']}"
+                                        image="/images/edit.gif"
+                                        action="#{AdminUseSchedule_Backing.editAction}"
+                                        render="useScheduleTerms">
+                        <f:param name="paramUseSchedule" value="#{ust.useScheduleTermKey}" />
+                        <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                    </a4j:commandButton>
+                </rich:column>
+                <rich:column id="editingActions" rendered="#{tableRowIndex eq AdminUseSchedule_Backing.editRow}">
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs['common.actions']}" />
+                    </f:facet>
+                    <a4j:commandButton title="#{msgs['common.save']}"
+                                        image="/images/icon-save.gif"
+                                        action="#{AdminUseSchedule_Backing.saveAction}"
+                                        render="useScheduleTerms">
+                        <f:param name="paramPrimaryKey" value="#{ust.useScheduleTermKey}" />
+                        <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                    </a4j:commandButton>
+                    &nbsp;&nbsp;                                            
+                    <a4j:commandButton title="Cancel"
+                                        image="/images/cancel.png"
+                                        action="#{AdminUseSchedule_Backing.cancelAction}"
+                                        style="width:16px; height:16px;"
+                                        render="useScheduleTerms">
+                    </a4j:commandButton>
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">
+                        <h:outputText value="Active" />
+                    </f:facet>
+                    <h:selectBooleanCheckbox value="#{ust.isActive}" disabled="#{tableRowIndex ne AdminUseSchedule_Backing.editRow}"/>
+                </rich:column>
+                <rich:column sortBy="#{ust.useScheduleTermName}"
+                            sortOrder="#{adminGeneralBean.sortBO.column1Order}"
+                            filterValue="#{adminGeneralBean.filterBO.column1Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(ust.useScheduleTermName, adminGeneralBean.filterBO.column1Filter)}" >
+                    <f:facet name="header">
+                        <h:panelGroup>
+                            <h:outputText value="Use Schedule Name" />
+                            <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />  
+                        </h:panelGroup>
+                        <br/>
+                        <h:inputText value="#{adminGeneralBean.filterBO.column1Filter}" styleClass="w100">
+                            <a4j:ajax event="blur" render="useScheduleTerms"/>
+                        </h:inputText>
+                    </f:facet>
+                    <h:inputText value="#{ust.useScheduleTermName}" disabled="#{tableRowIndex ne AdminUseSchedule_Backing.editRow}"/>
+                </rich:column>
+                <rich:column sortBy="#{ust.useScheduleTermDetail}"
+                            sortOrder="#{adminGeneralBean.sortBO.column2Order}"
+                            filterValue="#{adminGeneralBean.filterBO.column2Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(ust.useScheduleTermDetail, adminGeneralBean.filterBO.column2Filter)}">
+                    <f:facet name="header">
+                        <h:outputText value="Use Schedule Term Detail" />
+                        <br/>
+                        <h:inputText value="#{adminGeneralBean.filterBO.column2Filter}" styleClass="w100">
+                            <a4j:ajax event="blur" render="useScheduleTerms"/>
+                        </h:inputText>
+                    </f:facet>
+                    <h:inputTextarea value="#{ust.useScheduleTermDetail}" disabled="#{tableRowIndex ne AdminUseSchedule_Backing.editRow}"/>
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">
+                        <h:panelGroup>
+                            <h:outputText value="Workgroup" />
+                            <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />   
+                        </h:panelGroup>
+                    </f:facet>
+                    <h:selectOneMenu value="#{ust.workgroup}" 
+                                    disabled="#{tableRowIndex ne AdminUseSchedule_Backing.editRow}">
+                        <f:selectItems value="#{AdminUseSchedule_Backing.selectItemWrapper.colonyManageWorkgroups}"/>
+                        <f:converter converterId="workgroupConverter"/>
+                    </h:selectOneMenu>
+                </rich:column>
+                <rich:column sortBy="#{ust.versionNum}"
+                            sortOrder="#{adminGeneralBean.sortBO.column4Order}"
+                            filterValue="#{adminGeneralBean.filterBO.column4Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(ust.versionNum, adminGeneralBean.filterBO.column4Filter)}">
+                    <f:facet name="header">
+                        <h:outputText value="Version Number" />
+                        <br/>
+                        <h:inputText value="#{adminGeneralBean.filterBO.column4Filter}" styleClass="w100">
+                            <a4j:ajax event="blur" render="useScheduleTerms"/>
+                        </h:inputText>
+                    </f:facet>
+                    <h:inputText value="#{ust.versionNum}" disabled="#{tableRowIndex ne AdminUseSchedule_Backing.editRow}"/>
+                </rich:column>
+                <rich:column >
+                    <f:facet name="header">
+                        <h:outputText value="Start Event" />
+                    </f:facet>
+                    <h:selectOneMenu value="#{ust.useScheduleStartEventKey}" disabled="#{tableRowIndex ne AdminUseSchedule_Backing.editRow}">
+                        <f:selectItems value="#{AdminUseSchedule_Backing.selectItemWrapper.useScheduleStartEvents}"/>
+                    </h:selectOneMenu>
+                </rich:column>
+                <rich:column style="background-color: &#35;#{ust.color}">
+                    <f:facet name="header">
+                        <h:outputText value="Color" />
+                    </f:facet>
+                    <p:colorPicker id="popupCP" value="#{ust.color}" rendered="#{tableRowIndex eq AdminUseSchedule_Backing.editRow}"/>  
+                </rich:column>
+                <rich:collapsibleSubTable id="useSubTable" 
+                                        var="use" 
+                                        rowKeyVar="useRow"                                      
+                                        value="#{ust.uses}"
+                                        rendered="#{!empty ust.uses}"
+                                        sortMode="single">                
+                    <rich:column/>
+                    <rich:column rendered="#{use.useScheduleListKey ne AdminUseSchedule_Backing.useLinkKey}">
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['common.actions']}" />
+                        </f:facet>
+                        <a4j:commandButton title="#{msgs['common.edit']}"
+                                            image="/images/edit.gif"
+                                            action="#{AdminUseSchedule_Backing.editUseAction}"
+                                            render="useScheduleTerms">
+                            <f:param name="paramUseSchedule" value="#{ust.useScheduleTermKey}" />
+                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                            <f:param name="paramUseLinkKey" value="#{use.useScheduleListKey}" />
+                            <f:param name="paramUseRowIndex" value="#{useRow}" />
+                        </a4j:commandButton>
+                        &nbsp;&nbsp;         
+                        <a4j:commandButton title="#{msgs['common.delete']}"
+                                            image="/images/delete.gif"
+                                            action="#{AdminUseSchedule_Backing.deleteUseAction}"
+                                            render="useScheduleTerms">
+                            <f:param name="paramUseSchedule" value="#{ust.useScheduleTermKey}" />
+                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                            <f:param name="paramUseLinkKey" value="#{use.useScheduleListKey}" />
+                            <f:param name="paramUseRowIndex" value="#{useRow}" />
+                        </a4j:commandButton>
+                    </rich:column>
+                    <rich:column rendered="#{use.useScheduleListKey eq AdminUseSchedule_Backing.useLinkKey}">
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['common.actions']}" />
+                        </f:facet>
+                        <a4j:commandButton title="#{msgs['common.save']}"
+                                            image="/images/icon-save.gif"
+                                            action="#{AdminUseSchedule_Backing.saveUseAction}"
+                                            render="useScheduleTerms">
+                            <f:param name="paramUseSchedule" value="#{ust.useScheduleTermKey}" />
+                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                            <f:param name="paramUseLinkKey" value="#{use.useScheduleListKey}" />
+                            <f:param name="paramUseRowIndex" value="#{useRow}" />
+                        </a4j:commandButton>
+                        &nbsp;&nbsp;         
+                        <a4j:commandButton title="Cancel"
+                                            image="/images/cancel.png"
+                                            action="#{AdminUseSchedule_Backing.cancelUseAction}"
+                                            style="width:16px; height:16px;"
+                                            render="useScheduleTerms">
+                            <f:param name="paramUseSchedule" value="#{ust.useScheduleTermKey}" />
+                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                            <f:param name="paramUseLinkKey" value="#{use.useScheduleListKey}" />
+                            <f:param name="paramUseRowIndex" value="#{useRow}" />
+                        </a4j:commandButton>
+                    </rich:column>
+                    <rich:column colspan="3" id="useColumn" >
+                        <f:facet name="header">
+                            <h:panelGroup>
+                                <h:outputText value="Use" />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />   
+                            </h:panelGroup>
+                        </f:facet>
+                        <h:selectOneMenu value="#{use.use}"
+                                        converter="cvMouseUseConverter"
+                                        disabled="#{use.useScheduleListKey ne AdminUseSchedule_Backing.useLinkKey}">
+                            <f:selectItems value="#{AdminUseSchedule_Backing.selectItemWrapper.cvMouseUseActiveItems}"/>
+                        </h:selectOneMenu>
+                    </rich:column>
+                    <rich:column sortOrder="ascending" sortBy="#{use.daysAfterStart}" colspan="3" id="daysAfterEventColumn">
+                        <f:facet name="header">
+                            <h:panelGroup>
+                                <h:outputText value="Days After Event" />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />   
+                            </h:panelGroup>
+                        </f:facet>
+                        <h:inputText value="#{use.daysAfterStart}" 
+                                    disabled="#{use.useScheduleListKey ne AdminUseSchedule_Backing.useLinkKey}"/>
+                    </rich:column>
+                </rich:collapsibleSubTable>
+            </rich:dataTable>
+        </h:panelGroup>
+    </h:panelGrid>
+</ui:composition>

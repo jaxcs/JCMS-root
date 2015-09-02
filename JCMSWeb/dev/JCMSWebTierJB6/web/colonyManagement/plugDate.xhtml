@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>                
+            <h:outputText value="Add/Edit Plug Date"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js" >
+        </script>
+        <style type="text/css" media="screen">
+            .rf-cal-inp {
+                color:#000000 !important;
+                font:10px arial,sans-serif;
+            }
+        </style>
+        <script type="text/javascript">
+            function deleteDam1PlugDateWarning(){
+                var r = false;
+                var r=confirm("Are you sure you wish to delete this Plug Date? Once completed this cannot be undone");
+                if(r){
+                    deleteDam1PlugDate();
+                }
+            }
+        </script>
+        <script type="text/javascript">
+            function deleteDam2PlugDateWarning(){
+                var r = false;
+                var r=confirm("Are you sure you wish to delete this Plug Date? Once completed this cannot be undone");
+                if(r){
+                    deleteDam2PlugDate();
+                }
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <h:form>
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+        </h:form>
+        <div style="margin-left:10px;margin-right:10px">
+            <h:form>
+                <h1>
+                    <h:outputText value="#{msgs['colonyManagement.header']}" style="h1"/>
+                </h1>
+                <hr />
+            </h:form>
+            <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5" width="100%"
+                         columnClasses="colonyManagementSideBar,detailPane">
+                <h:panelGroup>
+                    <h:form>
+                        <f:subview id="adminSideBar"><ui:include src="/colonyManagement/colonyManagementSideBar.xhtml"/></f:subview>
+                    </h:form>
+                </h:panelGroup>
+
+                <h:panelGroup>
+                    <!-- form contains top save buttons -->
+                    <h:form >
+                        <h:panelGroup id="title">
+                            <h2>
+                                <h:outputText value="Add Plug Date" rendered="#{!PlugDate_Backing.editing}"/>
+                            </h2>
+                            <h2>
+                                <h:outputText value="Edit Plug Date" rendered="#{PlugDate_Backing.editing}"/>
+                            </h2>
+                        </h:panelGroup>
+                    </h:form>
+                    <img src="../images/bhi_ball_white.gif" />
+                    <a4j:status>
+                        <f:facet name="start">
+                            <h:graphicImage  value="../images/bhi_ball.gif"/>
+                        </f:facet>
+                    </a4j:status>
+                    <hr/>                    
+
+                    <h:form>
+                        <rich:messages />
+                        <h:panelGrid columns="4" id="everything" columnClasses="listColumnEven, listColumnEven, listColumnEven, listColumnEven" style="white-space: nowrap;">
+                            <h:panelGrid columns="1">    
+                                <h:panelGrid columns="2"
+                                             width="500"
+                                             columnClasses="rowHeader, innerTableTD"
+                                             styleClass="innerTable, blackTextStyle, border-collapse:collapse"
+                                             border="0"
+                                             id="plugDate">
+                                    <h:panelGroup>
+                                        <h:outputText value="Mating ID"/>
+                                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                                    </h:panelGroup>  
+                                    <h:inputText value="#{PlugDate_Backing.matingID}" disabled="#{PlugDate_Backing.editing}" id="matingID">
+                                        <a4j:ajax event="change" listener="#{PlugDate_Backing.changeMatingListener}" render="everything, mouseUsesPanel, saveAndClose, useSchedulePanel"/>
+                                    </h:inputText>
+                                    <h:outputText value="Mating Owner"/>
+                                    <h:outputText value="#{PlugDate_Backing.matingEntity.owner}" styleClass="blackTextStyle"/>
+                                    <h:panelGroup>
+                                        <h:outputText value="Plug Date"/>
+                                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                                    </h:panelGroup>  
+                                    <rich:calendar value="#{PlugDate_Backing.plugDate}" datePattern="#{PlugDate_Backing.date_format}">
+                                        <a4j:ajax event="change" listener="#{PlugDate_Backing.plugDateValueChangeListener}" render="usesDataTableGrid"/>
+                                    </rich:calendar>
+                                    <h:panelGroup>
+                                        <h:outputText value="Apply to"/>
+                                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                                    </h:panelGroup>  
+                                    <h:panelGroup>
+                                        <h:outputText value="Dam 1" styleClass="blackTextStyle"/>
+                                        <h:selectBooleanCheckbox value="#{PlugDate_Backing.dam1Selected}" disabled="#{PlugDate_Backing.editing or PlugDate_Backing.dam1 eq null}"/>
+                                        <h:outputText value="Dam 2" styleClass="blackTextStyle"/>
+                                        <h:selectBooleanCheckbox value="#{PlugDate_Backing.dam2Selected}" disabled="#{PlugDate_Backing.editing or PlugDate_Backing.dam2 eq null}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:outputText value="Obsolete"/>  
+                                    </h:panelGroup>  
+                                    <h:selectBooleanCheckbox value="#{PlugDate_Backing.obsolete}">
+                                        <a4j:ajax event="valueChange" 
+                                                execute="@this"/>
+                                    </h:selectBooleanCheckbox>
+                                    <h:outputText value="Comments"/>
+                                    <h:inputTextarea value="#{PlugDate_Backing.comments}">
+                                        <a4j:ajax event="valueChange" 
+                                                execute="@this"/>
+                                    </h:inputTextarea>
+                                </h:panelGrid>
+                                <h:panelGroup id="mouseUsesPanel">
+                                    <h:panelGrid columns="1" rendered="#{PlugDate_Backing.dam1 ne null and !PlugDate_Backing.editing}" width="500">
+                                        <f:facet name="header">
+                                            <h2><h:outputText value="Add Mouse Uses"/></h2>
+                                        </f:facet>
+                                        <rich:collapsiblePanel header="Mouse Uses" expanded="false">
+                                            <h:panelGrid columns="2" columnClasses="listColumnEven, listColumnEven">
+                                                <h:panelGrid id="useFieldsGrid" columns="1">
+                                                    <h:selectOneMenu value="#{PlugDate_Backing.mouseUse}" converter="mouseUseConverter">
+                                                        <f:selectItems value="#{PlugDate_Backing.wrapper.cvMouseUseItems}"/>
+                                                    </h:selectOneMenu>                                            
+                                                    <h:panelGroup>
+                                                        <h:outputText value="DPC" styleClass="blackTextStyle"/>
+                                                        &nbsp; &nbsp;
+                                                        <h:selectOneMenu value="#{PlugDate_Backing.DPC}">
+                                                            <f:selectItems value="#{PlugDate_Backing.daysPostConception}"/>
+                                                        </h:selectOneMenu>
+                                                    </h:panelGroup>
+                                                    <a4j:commandButton value="Add"
+                                                                    action="#{PlugDate_Backing.addMouseUse}" 
+                                                                    render="usesDataTableGrid"
+                                                                    styleClass="smallButton"/>
+                                                </h:panelGrid>
+                                                <h:panelGrid id="usesDataTableGrid" columns="1">
+                                                    <rich:dataTable value="#{PlugDate_Backing.mouseUses}" var="pdhDTO" 
+                                                                    rowKeyVar="tableRowIndex">
+                                                        <h:column>
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Actions"/>
+                                                            </f:facet>
+                                                            &nbsp;
+                                                            <a4j:commandLink action="#{PlugDate_Backing.deleteMouseUsageListener}" render="usesDataTableGrid">
+                                                                <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                                                <f:param name="paramUsageKey" value="#{pdhDTO.dto.usageKey}" />
+                                                                <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                                            </a4j:commandLink>
+                                                        </h:column>                                        
+                                                        <h:column >
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Mouse Use"/>
+                                                            </f:facet>
+                                                            <h:outputText value="#{pdhDTO.dto.use}"/>
+                                                        </h:column>
+                                                        <h:column >
+                                                            <f:facet name="header">
+                                                                <h:outputText value="DPC"/>
+                                                            </f:facet>
+                                                            <h:outputText value="#{pdhDTO.DPC}"/>
+                                                        </h:column>
+                                                        <h:column >
+                                                            <f:facet name="header">
+                                                                <h:outputText value="Projected Date"/>
+                                                            </f:facet>
+                                                            <rich:calendar value="#{pdhDTO.projectedDate}"  datePattern="#{PlugDate_Backing.date_format}" disabled="true"/>
+                                                        </h:column>
+                                                    </rich:dataTable>
+                                                </h:panelGrid>
+                                            </h:panelGrid>
+                                        </rich:collapsiblePanel>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup id="useSchedulePanel">
+                                    <h:panelGrid columns="1" rendered="#{PlugDate_Backing.dam1 ne null}" width="500">
+                                        <f:facet name="header"><h2><h:outputText value="Add to Use Schedule"/></h2></f:facet>
+                                        <rich:collapsiblePanel header="Use Schedules" expanded="false">
+                                            <p:pickList id="useSchedulesPicklist" value="#{PlugDate_Backing.useSchedulesModel}" filterMatchMode="contains"
+                                                        showSourceFilter="true" showTargetFilter="true" var="ust"
+                                                        itemLabel="#{ust.useScheduleTermName}" itemValue="#{ust}" converter="useScheduleTermConverter">
+                                                <f:facet name="sourceCaption"><h:outputText value="Select Use Schedule(s)"/></f:facet>                                
+                                                <f:facet name="targetCaption"><h:outputText value="Use Schedule(s)"/></f:facet>
+                                            </p:pickList>
+                                        </rich:collapsiblePanel> 
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1"
+                                         id="dam1" rendered="#{PlugDate_Backing.dam1 ne null}">
+                                <h:panelGrid columns="2"
+                                             columnClasses="customCardColumn"
+                                             styleClass="border-collapse:collapse, blackTextStyle"
+                                             border="0"
+                                             style="vertical-align: top;">
+                                    <f:facet name="header">
+                                        <h2><h:outputText value="Dam 1" /></h2>
+                                    </f:facet>
+                                    <h:outputText value="ID "/>
+                                    <h:outputText value="#{PlugDate_Backing.dam1.id}"/>
+                                    <h:outputText value="Strain "/>
+                                    <h:outputText value="#{PlugDate_Backing.dam1.strainKey.strainName}"/>
+                                    <h:outputText value="Generation "/>
+                                    <h:outputText value="#{PlugDate_Backing.dam1.generation}"/>
+                                    <h:outputText value="Birthdate "/>
+                                    <rich:calendar value="#{PlugDate_Backing.dam1.birthDate}" 
+                                                   disabled="true" 
+                                                   datePattern="#{PlugDate_Backing.date_format}"/>
+                                    <h:outputText value="Life Status "/>
+                                    <h:outputText value="#{PlugDate_Backing.dam1.lifeStatus}"/>
+                                    <h:outputText value="Sex "/>
+                                    <h:outputText value="#{PlugDate_Backing.dam1.sex}"/>
+                                    <h:outputText value="Cage ID "/>
+                                    <h:outputText value="#{PlugDate_Backing.dam1.penKey.containerID}"/>
+                                    <h:outputText value="Genotype "/>
+                                    <h:outputText value="#{PlugDate_Backing.dam1Genotype}"/>
+                                </h:panelGrid>
+                                <rich:dataTable value="#{PlugDate_Backing.dam1PlugDates}" var="pd" rowKeyVar="tableRowIndex"
+                                                id="dam1PlugDateDataTable">
+                                    <f:facet name="header">
+                                        <h:outputText value="Previous plug dates"/>
+                                    </f:facet>
+                                    <h:column rendered="#{PlugDate_Backing.editingPlugDateRowKey ne tableRowIndex}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Actions"/>
+                                        </f:facet>
+                                        <a4j:commandLink action="#{PlugDate_Backing.editPlugDateListener}" render="title, dam1PlugDateDataTable, everything, mouseUsesPanel, useSchedulePanel, saveAndClose"
+                                                         rendered="#{!PlugDate_Backing.editing}" >
+                                            <h:graphicImage value="/images/edit.gif" style="border:0" />
+                                            <f:param name="paramUsageKey" value="#{pd.plugDateKey}" />
+                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        </a4j:commandLink>
+                                        <h:graphicImage value="/images/edit-disable.gif" style="border:0"
+                                                        rendered="#{PlugDate_Backing.editing}"/>
+                                        &nbsp;
+                                        <a4j:commandLink action="#{PlugDate_Backing.deletePlugDateSetupListener}" oncomplete="deleteDam1PlugDateWarning()" 
+                                                         rendered="#{!PlugDate_Backing.editing}" render="dam1PlugDateDataTable">
+                                            <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                            <f:param name="paramUsageKey" value="#{pd.plugDateKey}" />
+                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        </a4j:commandLink>
+                                        <h:graphicImage value="/images/delete-disable.gif" style="border:0"
+                                                        rendered="#{PlugDate_Backing.editing}"/>
+                                    </h:column>
+                                    <h:column rendered="#{PlugDate_Backing.editingPlugDateRowKey eq tableRowIndex}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Actions"/>
+                                        </f:facet>
+                                        <a4j:commandLink action="#{PlugDate_Backing.cancelPlugDateEditListener}" render="title, dam1PlugDateDataTable, everything, mouseUsesPanel, useSchedulePanel, saveAndClose">
+                                            <h:graphicImage value="/images/cancel.png" style="border:0; width:16px; height:16px;" />
+                                            <f:param name="paramUsageKey" value="#{pd.plugDateKey}" />
+                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        </a4j:commandLink>
+                                        &nbsp;
+                                        <a4j:commandLink action="#{PlugDate_Backing.savePlugDateEditListener}" render="title, dam1PlugDateDataTable, everything, mouseUsesPanel, useSchedulePanel, saveAndClose">
+                                            <h:graphicImage value="/images/icon-save.gif" style="border:0" />
+                                            <f:param name="paramUsageKey" value="#{use.usageKey}" />
+                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        </a4j:commandLink>
+                                    </h:column>
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Date"/>
+                                        </f:facet>
+                                        <rich:calendar value="#{pd.plugDate}" disabled="true"  datePattern="#{PlugDate_Backing.date_format}"/>
+                                    </h:column>
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Obsolete"/>
+                                        </f:facet>
+                                        <h:outputText value="#{pd.obsolete}"/>
+                                    </h:column>
+                                </rich:dataTable>
+                                <rich:dataTable value="#{PlugDate_Backing.dam1Uses}" var="use" id="dam1Uses" rows="5">
+                                    <f:facet name="footer">
+                                        <rich:dataScroller for="dam1Uses" renderIfSinglePage="false" render="dam1Uses"/>
+                                    </f:facet>
+                                    <f:facet name="header">
+                                        <h:outputText value="Uses"/>
+                                    </f:facet>
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Projected Date"/>
+                                        </f:facet>
+                                        <rich:calendar value="#{use.projectedDate}"  datePattern="#{PlugDate_Backing.date_format}" disabled="true"/>
+                                    </h:column>
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Use"/>
+                                        </f:facet>
+                                        <h:outputText value="#{use.use}"/>
+                                    </h:column>
+                                </rich:dataTable>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1"
+                                         id="dam2" rendered="#{PlugDate_Backing.dam2 ne null}">
+                                <h:panelGrid columns="2"
+                                             columnClasses="customCardColumn"
+                                             styleClass="border-collapse:collapse, blackTextStyle"
+                                             style="vertical-align: top;"
+                                             border="0">
+                                    <f:facet name="header">
+                                        <h2><h:outputText value="Dam 2"/></h2>
+                                    </f:facet>
+                                    <h:outputText value="ID "/>
+                                    <h:outputText value="#{PlugDate_Backing.dam2.id}"/>
+                                    <h:outputText value="Strain "/>
+                                    <h:outputText value="#{PlugDate_Backing.dam2.strainKey.strainName}"/>
+                                    <h:outputText value="Generation "/>
+                                    <h:outputText value="#{PlugDate_Backing.dam2.generation}"/>
+                                    <h:outputText value="Birthdate "/>
+                                    <rich:calendar value="#{PlugDate_Backing.dam2.birthDate}" 
+                                                   disabled="true" 
+                                                   datePattern="#{PlugDate_Backing.date_format}"/>
+                                    <h:outputText value="Life Status "/>
+                                    <h:outputText value="#{PlugDate_Backing.dam2.lifeStatus}"/>
+                                    <h:outputText value="Sex "/>
+                                    <h:outputText value="#{PlugDate_Backing.dam2.sex}"/>
+                                    <h:outputText value="Cage ID "/>
+                                    <h:outputText value="#{PlugDate_Backing.dam2.penKey.containerID}"/>
+                                    <h:outputText value="Genotype "/>
+                                    <h:outputText value="#{PlugDate_Backing.dam2Genotype}"/>
+                                </h:panelGrid>
+                                <rich:dataTable value="#{PlugDate_Backing.dam2PlugDates}" var="pd" id="dam2PlugDateDataTable"
+                                                rowKeyVar="tableRowIndex">
+                                    <h:column rendered="#{PlugDate_Backing.editingDam2PlugDateRowKey ne tableRowIndex}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Actions"/>
+                                        </f:facet>
+                                        <a4j:commandLink action="#{PlugDate_Backing.editDam2PlugDateListener}" render="title, dam2PlugDateDataTable, everything, mouseUsesPanel, useSchedulePanel, saveAndClose"
+                                                         rendered="#{!PlugDate_Backing.editing}">
+                                            <h:graphicImage value="/images/edit.gif" style="border:0" />
+                                            <f:param name="paramUsageKey" value="#{pd.plugDateKey}" />
+                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        </a4j:commandLink>
+                                        <h:graphicImage value="/images/edit-disable.gif" style="border:0"
+                                                        rendered="#{PlugDate_Backing.editing}"/>
+                                        &nbsp;
+                                        <a4j:commandLink action="#{PlugDate_Backing.deletePlugDateSetupListener}" oncomplete="deleteDam2PlugDateWarning();" 
+                                                         rendered="#{!PlugDate_Backing.editing}" render="dam2PlugDateDataTable">
+                                            <h:graphicImage value="/images/delete.gif" style="border:0" />
+                                            <f:param name="paramUsageKey" value="#{pd.plugDateKey}" />
+                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        </a4j:commandLink>
+                                        <h:graphicImage value="/images/delete-disable.gif" style="border:0"
+                                                        rendered="#{PlugDate_Backing.editing}"/>
+                                    </h:column>
+                                    <h:column rendered="#{PlugDate_Backing.editingDam2PlugDateRowKey eq tableRowIndex}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Actions"/>
+                                        </f:facet>
+                                        <a4j:commandLink action="#{PlugDate_Backing.cancelDam2PlugDateEditListener}" render="title, dam2PlugDateDataTable, everything, mouseUsesPanel, useSchedulePanel, saveAndClose">
+                                            <h:graphicImage value="/images/cancel.png" style="border:0; width:16px; height:16px;" />
+                                            <f:param name="paramUsageKey" value="#{pd.plugDateKey}" />
+                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        </a4j:commandLink>
+                                        &nbsp;
+                                        <a4j:commandLink action="#{PlugDate_Backing.saveDam2PlugDateEditListener}" render="title, dam2PlugDateDataTable, everything, mouseUsesPanel, useSchedulePanel, saveAndClose">
+                                            <h:graphicImage value="/images/icon-save.gif" style="border:0" />
+                                            <f:param name="paramUsageKey" value="#{pd.plugDateKey}" />
+                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        </a4j:commandLink>
+                                    </h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Previous plug dates"/>
+                                    </f:facet>
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Date"/>
+                                        </f:facet>
+                                        <rich:calendar value="#{pd.plugDate}" disabled="true"  datePattern="#{PlugDate_Backing.date_format}"/>                                        
+                                    </h:column>
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Obsolete"/>
+                                        </f:facet>
+                                        <h:outputText value="#{pd.obsolete}"/>
+                                    </h:column>
+                                </rich:dataTable>
+                                <rich:dataTable value="#{PlugDate_Backing.dam2Uses}" id="dam2Uses" var="use" rows="5">
+                                    <f:facet name="footer">
+                                        <rich:dataScroller for="dam2Uses" renderIfSinglePage="false" render="dam2Uses"/>
+                                    </f:facet>
+                                    <f:facet name="header">
+                                        <h:outputText value="Uses"/>
+                                    </f:facet>
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Projected Date"/>
+                                        </f:facet>
+                                        <rich:calendar value="#{use.dateProjectedDate}"  datePattern="#{PlugDate_Backing.date_format}" disabled="true"/>
+                                    </h:column>
+                                    <h:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Use"/>
+                                        </f:facet>
+                                        <h:outputText value="#{use.use}"/>
+                                    </h:column>
+                                </rich:dataTable>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" id="sire" rendered="#{PlugDate_Backing.sire ne null}">
+                                <h:panelGrid columns="2"
+                                             columnClasses="customCardColumn"
+                                             styleClass="border-collapse:collapse, blackTextStyle"
+                                             border="0"
+                                             style="vertical-align: top;">
+                                    <f:facet name="header">
+                                        <h2><h:outputText value="Sire"/></h2>
+                                    </f:facet>
+                                    <h:outputText value="ID "/>
+                                    <h:outputText value="#{PlugDate_Backing.sire.id}"/>
+                                    <h:outputText value="Strain "/>
+                                    <h:outputText value="#{PlugDate_Backing.sire.strainKey.strainName}"/>
+                                    <h:outputText value="Generation "/>
+                                    <h:outputText value="#{PlugDate_Backing.sire.generation}"/>
+                                    <h:outputText value="Birthdate "/>
+                                    <rich:calendar value="#{PlugDate_Backing.sire.birthDate}"
+                                                   disabled="true" 
+                                                   datePattern="#{PlugDate_Backing.date_format}"/>
+                                    <h:outputText value="Life Status "/>
+                                    <h:outputText value="#{PlugDate_Backing.sire.lifeStatus}"/>
+                                    <h:outputText value="Sex "/>
+                                    <h:outputText value="#{PlugDate_Backing.sire.sex}"/>
+                                    <h:outputText value="Cage ID "/>
+                                    <h:outputText value="#{PlugDate_Backing.sire.penKey.containerID}"/>
+                                    <h:outputText value="Genotype "/>
+                                    <h:outputText value="#{PlugDate_Backing.sireGenotype}"/>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </h:panelGrid>                        
+                        <h:panelGroup>
+                            <hr/>
+                        </h:panelGroup>
+                        <h:panelGrid id="saveAndClose" columns="1">
+                            <h:panelGroup rendered="#{PlugDate_Backing.dam1 ne null and !PlugDate_Backing.editing}">
+                                <a4j:commandButton value="Save"  styleClass="smallButton" action="#{PlugDate_Backing.addPlugDate}"
+                                                   render="everything"/>
+                                &nbsp;&nbsp;
+                                <a4j:commandButton value="Clear" styleClass="smallButton" action="#{PlugDate_Backing.clearPlugDate}" 
+                                                   render="everything, useSchedulePanel, mouseUsesPanel"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <a4j:jsFunction name="deleteDam1PlugDate" render="dam1PlugDateDataTable"
+                                        action="#{PlugDate_Backing.deletePlugDateListener}"/>
+                        <a4j:jsFunction name="deleteDam2PlugDate" render="dam2PlugDateDataTable"
+                                        action="#{PlugDate_Backing.deleteDam2PlugDateListener}"/>
+                    </h:form>  
+                </h:panelGroup>
+            </h:panelGrid>
+        </div>
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+    </h:body>
+</html>

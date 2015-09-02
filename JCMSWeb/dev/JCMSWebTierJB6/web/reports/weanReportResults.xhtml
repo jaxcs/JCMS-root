@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+    <html xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:ui="http://java.sun.com/jsf/facelets"
+          xmlns:rich="http://richfaces.org/rich">
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+            <title>
+                <h:outputText value="Wean Report Results"/>
+            </title>
+            <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+            <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        </h:head>
+        <h:body>
+            <h:form>
+                <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+                <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+                <div style="margin-left:10px;margin-right:10px">
+
+                    <!-- Messages -->
+                    <rich:messages />
+                    <h2>Wean Report Lists Matings to Check for Weaning. Looks back 60 days. Ends on&nbsp;<h:outputText value="#{WeanReport_Backing.startDate}"/>&nbsp;</h2>
+
+                    <br />
+                    &nbsp;
+                    <h:commandLink
+                            value="Download Result"
+                            styleClass="mediumButton"
+                            action="#{WeanReport_Backing.downloadResultsAction}"/>
+                    &nbsp;
+                    <br />
+                    &nbsp;
+                    <rich:dataTable var="record"
+                                    value="#{WeanReport_Backing.toWeanLst2}">
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Owner"/>
+                            </f:facet>
+                            <h:outputText value="#{record.owner}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Strain"/>
+                            </f:facet>
+                            <h:outputText value="#{record.strainName}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Stock #"/>
+                            </f:facet>
+                            <h:outputText value="#{record.jrNum}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Room"/>
+                            </f:facet>
+                            <h:outputText value="#{record.room}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Rack"/>
+                            </f:facet>
+                            <h:outputText value="#{record.rack}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Rack Column"/>
+                            </f:facet>
+                            <h:outputText value="#{record.rackColumn}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Rack Row"/>
+                            </f:facet>
+                            <h:outputText value="#{record.rackRow}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Cage ID"/>
+                            </f:facet>
+                            <h:outputText value="#{record.cageID}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Cage Name"/>
+                            </f:facet>
+                            <h:outputText value="#{record.cageName}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Mating ID"/>
+                            </f:facet>
+                            <h:outputText value="#{record.matingID}"/>     
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Mating Date"/>
+                            </f:facet>
+                            <h:outputText value="#{record.matingDate}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Generation"/>
+                            </f:facet>
+                            <h:outputText value="#{record.generation}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Needs Typing?"/>
+                            </f:facet>
+                            <h:outputText value="#{record.needsTyping}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Wean Note"/>
+                            </f:facet>
+                            <h:outputText value="#{record.weanNote}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Litter ID"/>
+                            </f:facet>
+                            <h:outputText value="#{record.litterID}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Birth Date"/>
+                            </f:facet>
+                            <h:outputText value="#{record.birthDate}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Projected Date to Wean"/>
+                            </f:facet>
+                                <h:outputText value="#{record.dateToWean}"/>                              
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Wean Date Recorded"/>
+                            </f:facet>
+                            <h:outputText value="#{record.weanRecorded}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Tag Date"/>
+                            </f:facet>
+                            <h:outputText value="#{record.tagDate}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Total Born"/>
+                            </f:facet>
+                            <h:outputText value="#{record.totalBorn}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="# Female"/>
+                            </f:facet>
+                            <h:outputText value="#{record.numFemale}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="# Male"/>
+                            </f:facet>
+                            <h:outputText value="#{record.numMale}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Litter Status"/>
+                            </f:facet>
+                            <h:outputText value="#{record.litterStatus}"/>
+                        </rich:column>                        
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Comment"/>
+                            </f:facet>
+                            <h:outputText value="#{record.comment}"/>
+                        </rich:column>
+                    </rich:dataTable>
+                    </div>
+                    <br />                    
+                    <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+                </h:form>
+        </h:body>
+    </html>

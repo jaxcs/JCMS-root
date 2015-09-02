@@ -1,0 +1,251 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+    <h:panelGroup>
+        <a4j:commandButton
+            value="Add"
+            title="Add"
+            styleClass="mediumButton"
+            action="#{adminApprovedStrainBean.addAction}"
+            render="approvedStrainTable"
+            onclick="#{rich:component('approvedStrainDS')}.first()"
+            oncomplete="setNumberOfFilteredRows(); moveFocusToInput();">
+        </a4j:commandButton>
+        <div align="right">
+            <h:outputText value="Results " /><h:outputText id="approvedStrainFilterCount"/>&nbsp;
+            <h:outputText value="of #{adminApprovedStrainBean.vocabularyDataModel.rowCount}" />
+        </div>
+    </h:panelGroup>
+    <h:panelGroup styleClass="left" style="column-span: 1;white-space: nowrap;">
+        <rich:dataTable
+            id="approvedStrainTable"
+            value="#{adminApprovedStrainBean.vocabularyDataModel}"
+            sortMode="single"
+            var="dm"
+            rowKeyVar="tableRowIndex"
+            rows="10"
+            styleClass="maxSizeDataTable" 
+            style="vertical-align: top;"
+            headerClass="tableSortHeader">
+
+            <f:facet name="footer" class="dataScroller" >
+                <rich:dataScroller id="approvedStrainDS" for="approvedStrainTable" renderIfSinglePage="false" status="statusTable" />
+            </f:facet>                     
+
+            <rich:column rendered="#{adminApprovedStrainBean.rowIndex == tableRowIndex}">
+                <f:facet name="header">
+                    <h:outputText value="#{msgs['common.actions']}" />
+                </f:facet>
+                <a4j:commandButton title="#{msgs['common.save']}"
+                                    image="/images/icon-save.gif"
+                                    action="#{adminApprovedStrainBean.saveAction}"
+                                    oncomplete="setNumberOfFilteredRows();"
+                                    render="adminApprovedStrainPanel">
+                    <f:param name="paramPrimaryKey" value="#{dm.approvedStrainKey}" />
+                    <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                </a4j:commandButton>
+                &nbsp;&nbsp;                                            
+                <a4j:commandButton title="Cancel"
+                                    image="/images/cancel.png"
+                                    action="#{adminApprovedStrainBean.cancelAction}"
+                                    style="width:16px; height:16px;"
+                                    oncomplete="setNumberOfFilteredRows();"
+                                    render="adminApprovedStrainPanel">
+                </a4j:commandButton>
+            </rich:column>
+            <rich:column rendered="#{!(adminApprovedStrainBean.rowIndex == tableRowIndex)}">
+                <f:facet name="header">
+                    <h:outputText value="#{msgs['common.actions']}" />
+                </f:facet>
+                <a4j:commandButton title="#{msgs['common.edit']}"
+                                    image="/images/edit.gif"
+                                    action="#{adminApprovedStrainBean.editAction}"
+                                    render="adminApprovedStrainPanel"
+                                    oncomplete="setNumberOfFilteredRows(); moveFocusToInput();">
+                    <f:param name="paramPrimaryKey" value="#{dm.approvedStrainKey}" />
+                    <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                </a4j:commandButton>
+                &nbsp;&nbsp;                                            
+                <a4j:commandButton title="#{msgs['common.delete']}"
+                                    image="/images/delete.gif"
+                                    action="#{adminApprovedStrainBean.deleteAction}"
+                                    oncomplete="setNumberOfFilteredRows();"
+                                    render="adminApprovedStrainPanel"
+                                    rendered="#{!(dm.disableDelete)}">
+                    <f:param name="paramPrimaryKey" value="#{dm.approvedStrainKey}" />
+                    <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                </a4j:commandButton>
+                <a4j:commandButton title="#{msgs['common.delete']} Disabled"
+                                    image="/images/delete-disable.gif"
+                                    disabled="true"
+                                    rendered="#{dm.disableDelete}">
+                    <f:param name="paramPrimaryKey" value="#{dm.approvedStrainKey}" />
+                    <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                </a4j:commandButton>
+            </rich:column>
+
+            <rich:column sortBy="#{dm.isActive}"
+                            sortOrder="#{adminApprovedStrainBean.sortBO.column1Order}"
+                            filterValue="#{adminApprovedStrainBean.filterBO.columnBln1Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.isActive, adminApprovedStrainBean.filterBO.columnBln1Filter)}" 
+                            style="text-align: center;"
+                            width="25px">
+                <f:facet name="header">
+                    <h:outputText value="Active" />
+                    <br />
+                    <br />
+                    <h:selectBooleanCheckbox value="#{adminApprovedStrainBean.filterBO.columnBln1Filter}" 
+                                                rendered="#{adminApprovedStrainBean.vocabularyDataModel.rowCount gt 0}" >
+                        <a4j:ajax event="click" 
+                                    render="approvedStrainTable" 
+                                    status="statusTable" oncomplete="setNumberOfFilteredRows();" />
+                    </h:selectBooleanCheckbox>
+                </f:facet>
+                <h:selectBooleanCheckbox value="#{dm.isActive}"
+                                            disabled="true"
+                                            title="Active Disabled"
+                                            rendered="#{!(adminApprovedStrainBean.rowIndex == tableRowIndex)}" />
+                <h:selectBooleanCheckbox value="#{dm.isActive}"
+                                            rendered="#{adminApprovedStrainBean.rowIndex == tableRowIndex}" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.damStrain}"
+                            sortOrder="#{adminApprovedStrainBean.sortBO.column2Order}"
+                            filterValue="#{adminApprovedStrainBean.filterBO.column2Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.damStrain, adminApprovedStrainBean.filterBO.column2Filter)}"
+                            styleClass="strainColumn" >
+                <f:facet name="header">
+                    <h:outputText value="Dam Strain" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminApprovedStrainBean.sortBO.column2Image}" 
+                                        render="approvedStrainTable" 
+                                        rendered="#{adminApprovedStrainBean.vocabularyDataModel.rowCount gt 0}"   
+                                        action="#{adminApprovedStrainBean.sortBO.sortByColumn2}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminApprovedStrainBean.filterBO.column2Filter}"  
+                                    rendered="#{adminApprovedStrainBean.vocabularyDataModel.rowCount gt 0}"  
+                                    styleClass="strainFilter" >
+                        <a4j:ajax event="blur" render="approvedStrainTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <a4j:commandButton title="Select Dam Strain"
+                                    image="/images/edit.gif"
+                                    action="#{adminApprovedStrainBean.showSelectStrainClickAction()}"
+                                    oncomplete="#{rich:component('selectStrainPanel')}.show()" 
+                                    rendered="#{adminApprovedStrainBean.rowIndex == tableRowIndex}" >
+                    <f:param name="paramPrimaryKey" value="#{dm.approvedStrainKey}" />
+                    <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                    <f:param name="paramStrainType" value="Dam" />
+                </a4j:commandButton>
+                &nbsp;
+                <h:inputTextarea id="damStrainKeyId#{dm.damStrainKey}"
+                                    value="#{dm.damStrain}"
+                                    styleClass="strainInput"
+                                    rows="2" 
+                                    readonly="true" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.sireStrain}"
+                            sortOrder="#{adminApprovedStrainBean.sortBO.column3Order}"
+                            filterValue="#{adminApprovedStrainBean.filterBO.column3Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.sireStrain, adminApprovedStrainBean.filterBO.column3Filter)}" 
+                            styleClass="strainColumn" >
+                <f:facet name="header">
+                    <h:outputText value="Sire Strain" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminApprovedStrainBean.sortBO.column3Image}" 
+                                        render="approvedStrainTable"  
+                                        rendered="#{adminApprovedStrainBean.vocabularyDataModel.rowCount gt 0}"  
+                                        action="#{adminApprovedStrainBean.sortBO.sortByColumn3}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminApprovedStrainBean.filterBO.column3Filter}"  
+                                    rendered="#{adminApprovedStrainBean.vocabularyDataModel.rowCount gt 0}"  
+                                    styleClass="strainFilter" >
+                        <a4j:ajax event="blur" render="approvedStrainTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <a4j:commandButton title="Select Sire Strain"
+                                    image="/images/edit.gif"
+                                    action="#{adminApprovedStrainBean.showSelectStrainClickAction()}"
+                                    oncomplete="#{rich:component('selectStrainPanel')}.show()" 
+                                    rendered="#{adminApprovedStrainBean.rowIndex == tableRowIndex}" >
+                    <f:param name="paramPrimaryKey" value="#{dm.approvedStrainKey}" />
+                    <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                    <f:param name="paramStrainType" value="Sire" />
+                </a4j:commandButton>
+                &nbsp;
+                <h:inputTextarea id="sireStrainKeyId"
+                                    value="#{dm.sireStrain}"
+                                    styleClass="strainInput"
+                                    rows="2" 
+                                    readonly="true" />
+            </rich:column>
+
+            <rich:column sortBy="#{dm.litterStrain}"
+                            sortOrder="#{adminApprovedStrainBean.sortBO.column4Order}"
+                            filterValue="#{adminApprovedStrainBean.filterBO.column4Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.litterStrain, adminApprovedStrainBean.filterBO.column4Filter)}" 
+                            styleClass="strainColumn" >
+                <f:facet name="header">
+                    <h:outputText value="Litter Strain" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminApprovedStrainBean.sortBO.column4Image}" 
+                                        render="approvedStrainTable" 
+                                        rendered="#{adminApprovedStrainBean.vocabularyDataModel.rowCount gt 0}"   
+                                        action="#{adminApprovedStrainBean.sortBO.sortByColumn4}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminApprovedStrainBean.filterBO.column4Filter}"  
+                                    rendered="#{adminApprovedStrainBean.vocabularyDataModel.rowCount gt 0}"  
+                                    styleClass="strainFilter" >
+                        <a4j:ajax event="blur" render="approvedStrainTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+                <a4j:commandButton title="Select Litter Strain"
+                                    image="/images/edit.gif"
+                                    action="#{adminApprovedStrainBean.showSelectStrainClickAction()}"
+                                    oncomplete="#{rich:component('selectStrainPanel')}.show()" 
+                                    rendered="#{adminApprovedStrainBean.rowIndex == tableRowIndex}" >
+                    <f:param name="paramPrimaryKey" value="#{dm.approvedStrainKey}" />
+                    <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                    <f:param name="paramStrainType" value="Litter" />
+                </a4j:commandButton>
+                &nbsp;
+                <h:inputTextarea id="litterStrainKeyId"
+                                    value="#{dm.litterStrain}"
+                                    styleClass="strainInput"
+                                    rows="2" 
+                                    readonly="true" />
+            </rich:column>
+
+        </rich:dataTable>
+    </h:panelGroup>
+</ui:composition>

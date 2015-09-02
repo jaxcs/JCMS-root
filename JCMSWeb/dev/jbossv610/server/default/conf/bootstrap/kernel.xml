@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+   The Executor used by the controller to do asynchronous deployments
+-->
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+   <classloader><inject bean="asynch-classloader:0.0.0"/></classloader>
+
+   <classloader name="asynch-classloader" xmlns="urn:jboss:classloader:1.0" export-all="NON_EMPTY" import-all="true">
+      <root>${jboss.common.lib.url}jboss.jar</root>
+   </classloader>
+
+   <bean name="KernelInstaller" class="org.jboss.kernel.KernelInstaller">
+     <constructor>
+       <parameter><inject bean="jboss.kernel:service=Kernel"/></parameter>       
+     </constructor>
+   </bean>
+
+   <bean name="BootstrapExecutorFactory" class="org.jboss.executor.ThreadPoolExecutorFactory">
+      <property name="corePoolSizeBase">1</property>
+      <property name="corePoolSizePerCpu">0</property>
+      <property name="maxPoolSizeBase">10</property>
+      <property name="maxPoolSizePerCpu">3</property>
+   </bean>
+
+  <!-- Add executor to controller -->
+   <bean name="ControllerExecutorInstaller" class="org.jboss.executor.ControllerExecutorInstaller">
+      <property name="context"><inject fromContext="context"/></property>
+      <property name="bootstrapExecutor"><inject bean="BootstrapExecutorFactory" property="executor"/></property>
+      <property name="mainExecutor"><inject bean="ThreadPool" option="Callback"/></property>
+   </bean>
+
+   <bean name="BeanAnnotationAdapterFactory" class="org.jboss.kernel.plugins.annotations.BeanAnnotationAdapterFactory">
+      <classloader><null/></classloader>
+      <constructor factoryMethod="getInstance"/>
+   </bean>
+
+   <!-- Intercept all annotation plugings -->
+   <bean name="BeanAnnotationAdapter">
+      <classloader><null/></classloader>
+      <constructor factoryMethod="getBeanAnnotationAdapter">
+         <factory bean="BeanAnnotationAdapterFactory"/>
+      </constructor>
+      <incallback method="addAnnotationPlugin"/>
+      <uncallback method="removeAnnotationPlugin"/>
+   </bean>
+
+   <bean name="TmpDirCleanupService" class="org.jboss.as.temp.TmpDirCleanupService">
+     <constructor>
+       <parameter><inject/></parameter>
+     </constructor>
+   </bean>
+
+</deployment>

@@ -1,0 +1,613 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title><ui:insert name="title">Calendar</ui:insert></title>
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-type" />
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" type="text/css"  />
+        <script type="text/javascript" src="/jcms/javascript/jquery-1.9.1.js" />
+        <script type="text/javascript" src="/jcms/javascript/calendarJQuery.js" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <style type="text/css" media="screen">
+            .fc-event-skin {
+                background-color: inherit;
+                color: inherit;
+            }
+        </style>
+        <style type="text/css" media="screen">
+            .ui-icon.image {
+                background-image: url('../images/insert.gif');
+                background-position: 0 0;
+            }
+        </style>
+        <style type="text/css" media="screen">
+            textarea[disabled], input[type="text"][disabled], input[type="password"][disabled], select[disabled] {
+                color: black;
+                cursor: default;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form id="headerPagesForm">
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+        </h:form>
+        <div style="margin-left:10px;margin-right:10px">
+            <h:form>
+                <br />
+                <h2><h:outputText value="Mouse Scheduling Calendar"/></h2>
+                <hr />
+            </h:form>
+            <p:ajaxStatus id="ajaxStatusPanel">  
+                <f:facet name="start">  
+                    <h:graphicImage value="../images/bhi_ball.gif"/>  
+                </f:facet>  
+                <f:facet name="complete">  
+                        <h:graphicImage value="../images/bhi_ball_white.gif" />  
+                </f:facet>
+            </p:ajaxStatus>
+            <h:form id="calendarForm">
+                <p:growl id="messages" showDetail="true" />  
+                <p:panel id="calendarSearchPanel" header="Calendar Search Details" toggleable="true" toggleSpeed="500"
+                         collapsed="#{Calendar_Backing.collapse}">
+                    <h:panelGrid columns="5">
+                        <h:selectBooleanCheckbox value="#{Calendar_Backing.displayWeanDates}"/>
+                        <h:outputText value="Display Projected Wean Dates From "/>
+                        <p:calendar value="#{Calendar_Backing.afterWeanDateFilter}"
+                                    pattern="#{Calendar_Backing.date_format}"/>
+                        <h:outputText value=" To "/>
+                        <p:calendar value="#{Calendar_Backing.beforeWeanDateFilter}"
+                                    pattern="#{Calendar_Backing.date_format}"/>
+                        <h:outputText value=""/>
+                        <h:outputText value="Display Mouse Uses From "/>
+                        <p:calendar value="#{Calendar_Backing.useAfterDate}"
+                                    pattern="#{Calendar_Backing.date_format}"/>
+                        <h:outputText value=" To "/>
+                        <p:calendar value="#{Calendar_Backing.useBeforeDate}"
+                                    pattern="#{Calendar_Backing.date_format}"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3" border="0">
+                        <p:pickList value="#{Calendar_Backing.usesModel}" filterMatchMode="contains"
+                                    showSourceFilter="true" showTargetFilter="true"
+                                    var="use" itemLabel="#{use}" itemValue="#{use}">
+                            <f:facet name="sourceCaption">Select Mouse Use(s)</f:facet>
+                            <f:facet name="targetCaption">Selected Mouse Use(s)</f:facet>  
+                        </p:pickList>
+                        <h:panelGrid columns="1" border="0">
+                            <h:outputText value="Use Status"/>
+                            <h:selectOneRadio layout="pageDirection" value="#{Calendar_Backing.status}">
+                                <f:selectItem itemValue="any" itemLabel="Any"/>
+                                <f:selectItem itemValue="done" itemLabel="Done"/>
+                                <f:selectItem itemValue="notDone" itemLabel="Not Done"/>
+                            </h:selectOneRadio>
+                        </h:panelGrid>
+                        <p:pickList value="#{Calendar_Backing.ownersModel}" filterMatchMode="contains"
+                                    showSourceFilter="true" showTargetFilter="true"
+                                    var="owner" itemLabel="#{owner}" itemValue="#{owner}">
+                            <f:facet name="sourceCaption">Select Owner(s)</f:facet>  
+                            <f:facet name="targetCaption">Selected Owner(s)</f:facet>  
+                        </p:pickList>
+                        <p:pickList value="#{Calendar_Backing.strainsModel}" filterMatchMode="contains"
+                                    showTargetFilter="true" showSourceFilter="true"
+                                    var="strain" itemLabel="#{strain}" itemValue="#{strain}">
+                            <f:facet name="sourceCaption">Select Strain(s)</f:facet>  
+                            <f:facet name="targetCaption">Selected Strain(s)</f:facet>  
+                        </p:pickList>
+                        &nbsp;
+                        <p:pickList id="useSchedulesPicklist" value="#{Calendar_Backing.useSchedulesModel}" filterMatchMode="contains"
+                                            showSourceFilter="true" showTargetFilter="true" var="ust"
+                                            itemLabel="#{ust.useScheduleTermName}" itemValue="#{ust}" converter="useScheduleTermConverter">
+                            <f:facet name="sourceCaption"><h:outputText value="Use Schedule"/></f:facet>                                
+                            <f:facet name="targetCaption"><h:outputText value="Selected Schedules"/></f:facet>
+                        </p:pickList>
+                        <h:commandButton value="Display Calendar" 
+                                         action="#{Calendar_Backing.populateCalendarInfo}" 
+                                         styleClass="mediumButton"/>
+                    </h:panelGrid>
+                </p:panel>
+                <br/>
+                <hr/>
+                <br/>
+                <p:ajaxStatus id="ajaxStatusPanel2">  
+                    <f:facet name="start">  
+                        <h:graphicImage value="../images/bhi_ball.gif"/>  
+                    </f:facet>  
+                    <f:facet name="complete">  
+                        <h:graphicImage value="../images/bhi_ball_white.gif" />  
+                    </f:facet>  
+                </p:ajaxStatus>
+                <h:panelGroup id="schedulePanel">
+                    <h2><h:outputText id="useCount" value="#{Calendar_Backing.useCount} uses returned."
+                                    rendered="#{Calendar_Backing.showCalendar}"/></h2>
+                    <h2><h:outputText id="weanCount" value="#{Calendar_Backing.weanCount} weans returned."
+                                    rendered="#{Calendar_Backing.showCalendar and Calendar_Backing.displayWeanDates}"/></h2>
+                    <p:schedule id="schedule" value="#{Calendar_Backing.eventModel}" widgetVar="myschedule"
+                                initialDate="#{Calendar_Backing.initialDate}" 
+                                rendered="#{Calendar_Backing.showCalendar}" resizable="false" 
+                                rightHeaderTemplate="month, basicWeek, basicDay">
+                        <p:ajax event="eventSelect" listener="#{Calendar_Backing.onEventSelect}" update="selectedEventInfo"
+                                oncomplete="PF('eventDialog').show()"/>  
+                        <p:ajax event="eventMove" listener="#{Calendar_Backing.onEventMove}" update="messages" oncomplete="PF('myschedule').update();"/>  
+                        <p:ajax event="dateSelect" listener="#{Calendar_Backing.onDateSelect}" update="newProjectedDate, newActualDate, newUsePanel"
+                                oncomplete="PF('addNewEventDialog').show()" />
+                    </p:schedule>
+                </h:panelGroup>
+                <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip" modal="true">
+                    <h:panelGrid id="selectedEventInfo" columns ="1">
+                        <h:panelGrid columns="4" id="usePanel" rendered="#{Calendar_Backing.useSelected}">
+                            <h:outputLabel value="Mouse ID: " for="mouseID"/>
+                            <h:outputText value="#{Calendar_Backing.selectedEvent.data.mouseID}" id="mouseID"/>
+                            <h:outputLabel value="Mouse Birthdate: " for="mouseBD"/>
+                            <h:outputText value="#{Calendar_Backing.selectedEvent.data.mouseBirthDate}" id="mouseBD"/>
+                            <h:outputLabel value="Cage ID: " for="mouseCageID"/>
+                            <h:outputText value="#{Calendar_Backing.selectedEvent.data.cageID}" id="mouseCageID"/>
+                            <h:outputLabel value="Cage Name: " for="mouseCageName"/>
+                            <h:outputText value="#{Calendar_Backing.selectedEvent.data.cageName}" id="mouseCageName"/>
+                            <h:outputLabel value="Strain: " for="mouseStrain"/>
+                            <h:outputText value="#{Calendar_Backing.selectedEvent.data.strainName}" id="mouseStrain"/>
+                            <h:outputLabel value="Genotype: " for="mouseGenotype"/>
+                            <h:outputText value="#{Calendar_Backing.selectedEvent.data.genotype}" id="mouseGenotype"/>
+                            <h:outputLabel value="Use Schedule: " for="useScheduleLabel"/>
+                            <h:outputText value="#{Calendar_Backing.selectedEvent.data.useScheduleTerm.useScheduleTermName}" id="useScheduleLabel"/>
+                            <h:outputLabel value="Use Schedule Detail: " for="useScheduleDetailLabel"/>
+                            <h:outputText value="#{Calendar_Backing.selectedEvent.data.useScheduleTerm.useScheduleTermDetail}" id="useScheduleDetailLabel"/>
+                            <h:outputLabel value="Mouse Use: " for="mouseUse"/>
+                            <h:selectOneMenu value="#{Calendar_Backing.selectedEvent.data.use.use}" id="mouseUse">
+                                <p:ajax event="change" update="usePanel" listener="#{Calendar_Backing.onUseChange}"/>
+                                <f:selectItems value="#{Calendar_Backing.useDropDown}"/>
+                            </h:selectOneMenu>
+                            <h:outputLabel value="Done: " for="useDone"/>
+                            <h:selectBooleanCheckbox value="#{Calendar_Backing.selectedEvent.data.use.done}" id="useDone"/>
+                            <h:outputLabel value="Projected Date: " for="projectedDate"/>
+                            <p:calendar value="#{Calendar_Backing.projectedDate}" id="projectedDate" 
+                                        pattern="#{Calendar_Backing.date_format}"
+                                        disabled="#{Calendar_Backing.selectedEvent.styleClass eq 'actualStyle'}">             
+                                <p:ajax event="dateSelect" listener="#{Calendar_Backing.projectedDateChangeListener}" update="useAge"/>
+                            </p:calendar>
+                            <h:outputLabel value="Use Age: " for="useAge"/>
+                            <h:outputText value="#{Calendar_Backing.selectedEvent.data.use.useAge}" id="useAge"/>
+                            <h:outputLabel value="Actual Date: " for="actualDate"/>
+                            <p:calendar value="#{Calendar_Backing.actualDate}" id="actualDate"
+                                        pattern="#{Calendar_Backing.date_format}"
+                                        disabled="#{Calendar_Backing.selectedEvent.data.use.actualDate ne null 
+                                                    and Calendar_Backing.selectedEvent.styleClass eq 'projectedStyle'}"/>
+                            <h:outputLabel value="Comments: " for="comment"/>
+                            <p:inputTextarea value="#{Calendar_Backing.selectedEvent.data.use.comment}" id="comment"/>
+                            <h:outputLabel value="#{Calendar_Backing.selectedEvent.data.cvMouseUse.d1Caption}: " for="D1"/>
+                            <p:inputTextarea value="#{Calendar_Backing.selectedEvent.data.use.d1}" id="D1"/>
+                            <h:outputLabel value="#{Calendar_Backing.selectedEvent.data.cvMouseUse.d6Caption}: " for="D6"/>
+                            <p:inputTextarea value="#{Calendar_Backing.selectedEvent.data.use.d6}" id="D6"/>
+                            <h:outputLabel value="#{Calendar_Backing.selectedEvent.data.cvMouseUse.d2Caption}: " for="D2"/>
+                            <p:inputTextarea value="#{Calendar_Backing.selectedEvent.data.use.d2}" id="D2"/>
+                            <h:outputLabel value="#{Calendar_Backing.selectedEvent.data.cvMouseUse.d7Caption}: " for="D7"/>
+                            <p:inputTextarea value="#{Calendar_Backing.selectedEvent.data.use.d7}" id="D7"/>
+                            <h:outputLabel value="#{Calendar_Backing.selectedEvent.data.cvMouseUse.d3Caption}: " for="D3"/>
+                            <p:inputTextarea value="#{Calendar_Backing.selectedEvent.data.use.d3}" id="D3"/>
+                            <h:outputLabel value="#{Calendar_Backing.selectedEvent.data.cvMouseUse.d8Caption}: " for="D8"/>
+                            <p:inputTextarea value="#{Calendar_Backing.selectedEvent.data.use.d8}" id="D8"/>
+                            <h:outputLabel value="#{Calendar_Backing.selectedEvent.data.cvMouseUse.d4Caption}: " for="D4"/>
+                            <p:inputTextarea value="#{Calendar_Backing.selectedEvent.data.use.d4}" id="D4"/>
+                            <h:outputLabel value="#{Calendar_Backing.selectedEvent.data.cvMouseUse.d9Caption}: " for="D9"/>
+                            <p:inputTextarea value="#{Calendar_Backing.selectedEvent.data.use.d9}" id="D9"/>
+                            <h:outputLabel value="#{Calendar_Backing.selectedEvent.data.cvMouseUse.d5Caption}: " for="D5"/>
+                            <p:inputTextarea value="#{Calendar_Backing.selectedEvent.data.use.d5}" id="D5"/>
+                            <h:outputLabel value="#{Calendar_Backing.selectedEvent.data.cvMouseUse.d10Caption}: " for="D10"/>
+                            <p:inputTextarea value="#{Calendar_Backing.selectedEvent.data.use.d10}" id="D10"/>
+                        </h:panelGrid>
+                        <h:panelGrid columnClasses="center" style="width: 100%;" id="buttons" columns="1" rendered="#{Calendar_Backing.useSelected}">
+                            <h:panelGroup>
+                                <p:commandButton value="Save" 
+                                                style="whitespace: no-wrap;"
+                                                actionListener="#{Calendar_Backing.saveEditAction}"
+                                                update="messages"
+                                                oncomplete="PF('myschedule').update();"/>
+                                &nbsp;&nbsp;
+                                <p:commandButton value="Cancel" 
+                                                style="whitespace: no-wrap;"
+                                                onclick="PF('eventDialog').hide()"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" rendered="#{!Calendar_Backing.useSelected}">
+                            <h:outputText value="#{Calendar_Backing.selectedWeanDTO.weanInfo}" style="text-style: bold;"/>
+                            <h:panelGrid columns="4">
+                                <h:outputLabel value="Mating ID: " for="matingID"/>
+                                <h:outputText value="#{Calendar_Backing.selectedWeanDTO.mating.matingID}" id="matingID"/>
+                                <h:outputLabel value="Litter ID: " for="litterID"/>
+                                <h:outputText value="#{Calendar_Backing.selectedWeanDTO.litter.litterID}" id="litterID"/>
+                                <h:outputLabel value="Total Born: " for="totalBorn"/>
+                                <h:outputText value="#{Calendar_Backing.selectedWeanDTO.litter.totalBorn}" id="totalBorn"/>
+                                <h:outputLabel value="Sire ID: " for="sireID"/>
+                                <h:outputText value="#{Calendar_Backing.selectedWeanDTO.mating.sireKey.id}" id="sireID"/>
+                                <h:outputLabel value="Dam 1 ID: " for="dam1ID"/>
+                                <h:outputText value="#{Calendar_Backing.selectedWeanDTO.mating.dam1ID}" id="dam1ID"/>
+                                <h:outputLabel value="Dam 2 ID: " for="dam2ID"/>
+                                <h:outputText value="#{Calendar_Backing.selectedWeanDTO.mating.dam2ID}" id="dam2ID"/>
+                                <h:outputLabel value="Cage ID: " for="cageID"/>
+                                <h:outputText value="#{Calendar_Backing.selectedWeanDTO.container.containerID}" id="cageID"/>
+                                <h:outputLabel value="Cage Name: " for="cageName"/>
+                                <h:outputText value="#{Calendar_Backing.selectedWeanDTO.container.containerName}" id="cageName"/>
+                                <h:outputLabel value="Litter Strain: " for="litterStrain"/>
+                                <h:outputText value="#{Calendar_Backing.selectedWeanDTO.mating.strainKey.strainName}" id="litterStrain"/>
+                                <h:outputLabel value="Mating Date: " for="matingDate"/>
+                                <p:calendar value="#{Calendar_Backing.selectedWeanDTO.mating.matingDate}"
+                                            pattern="#{Calendar_Backing.date_format}"
+                                            id="matingDate"
+                                            disabled="true" style="color: rgb(0,0,0) !important;"/>
+                            </h:panelGrid>
+                            <!-- If litter is there w/ wean date and no pups simply need to add Pups -->
+                            <h:panelGrid style="width: 100%;" columns="2" columnClasses="left, right" 
+                                         rendered="#{Calendar_Backing.selectedWeanDTO.weanType eq 'litterNoPups'}">
+                                <h:panelGroup>
+                                    <h:commandLink value="Add Pups" 
+                                                     action="#{Mouse_Backing.calendarAddMouseAction}"
+                                                     style="whitespace: no-wrap;"
+                                                     target="_blank">
+                                        <f:param name="paramLitterKey" value="#{Calendar_Backing.selectedWeanDTO.litter.litterKey}" />
+                                    </h:commandLink>
+                                    &nbsp;&nbsp;
+                                    <h:commandLink value="Edit Litter"
+                                                     style="whitespace: no-wrap;"
+                                                     target="_blank"
+                                                     action="#{Litter_Backing.calendarEditAction}">
+                                        <f:param name="paramLitterKey" value="#{Calendar_Backing.selectedWeanDTO.litter.litterKey}" />
+                                    </h:commandLink>
+                                </h:panelGroup>
+                                <p:commandButton value="Cull Litter"
+                                                style="whitespace: no-wrap;"
+                                                action="#{Calendar_Backing.cullLitterAction}"
+                                                update="schedulePanel messages"
+                                                oncomplete="PF('eventDialog').hide();">
+                                    <f:param name="paramLitterKey" value="#{Calendar_Backing.selectedWeanDTO.litter.litterKey}" />
+                                </p:commandButton>
+                            </h:panelGrid>
+                            <!-- If litter is there w/ no wean date litter needs to be given wean date AND pups added to the litter -->
+                            <h:panelGrid style="width: 100%;" columns="2" columnClasses="left, right"
+                                         rendered="#{Calendar_Backing.selectedWeanDTO.weanType eq 'litterNoWeanDate'}">
+                                <h:panelGroup>
+                                    <p:commandLink value="Add Pups" 
+                                                     style="whitespace: no-wrap;"
+                                                     oncomplete="PF('editLitterInfo').show()"
+                                                     actionListener="#{Calendar_Backing.updateLitterDetails}"
+                                                     update="editLitterInfoPanel">
+                                        <f:param name="paramLitterKey" value="#{Calendar_Backing.selectedWeanDTO.litter.litterKey}" />
+                                    </p:commandLink>
+                                    &nbsp;&nbsp;
+                                    <h:commandLink value="Edit Litter" 
+                                                     style="whitespace: no-wrap;" 
+                                                     target="_blank"
+                                                     action="#{Litter_Backing.calendarEditAction}">
+                                        <f:param name="paramLitterKey" value="#{Calendar_Backing.selectedWeanDTO.litter.litterKey}" />
+                                    </h:commandLink>
+                                </h:panelGroup>
+                                <p:commandButton value="Cull Litter"
+                                                style="whitespace: no-wrap;"
+                                                action="#{Calendar_Backing.cullLitterAction}"
+                                                update="schedulePanel"
+                                                oncomplete="PF('eventDialog').hide();">
+                                    <f:param name="paramLitterKey" value="#{Calendar_Backing.selectedWeanDTO.litter.litterKey}" />
+                                </p:commandButton>
+                            </h:panelGrid>
+                            <!-- If mating is there but no litter, either mating needs to be retired or litter needs to be added -->
+                            <h:panelGrid style="width: 100%;" columns="2" columnClasses="left, right"
+                                         rendered="#{Calendar_Backing.selectedWeanDTO.weanType eq 'unweanedMating'}">
+                                <h:panelGroup>
+                                    <h:commandLink value="Add Litter"
+                                                    style="whitespace: no-wrap;" 
+                                                    action="#{Litter_Backing.calendarAddLitterAction}"
+                                                    target="_blank">
+                                        <f:param name="paramMatingID" value="#{Calendar_Backing.selectedWeanDTO.mating.matingID}" />
+                                    </h:commandLink>
+                                    &nbsp;&nbsp;
+                                    <h:commandLink value="Edit Mating"
+                                                    target="_blank"
+                                                    action="#{Mating_Backing.editAction}"
+                                                    style="whitespace: no-wrap;">
+                                        <f:param name="paramMatingKey" value="#{Calendar_Backing.selectedWeanDTO.mating.matingKey}" />  
+                                    </h:commandLink>
+                                </h:panelGroup>
+                                <p:commandButton value="Retire Mating"
+                                                 style="whitespace: no-wrap;"
+                                                 update="schedulePanel messages"
+                                                 actionListener="#{Calendar_Backing.retireMatingAction}"
+                                                 oncomplete="PF('eventDialog').hide();">
+                                    <f:param name="paramMatingKey" value="#{Calendar_Backing.selectedWeanDTO.mating.matingKey}" />
+                                </p:commandButton>                                 
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid id="weanButtons" columns="1" 
+                                        rendered="#{!Calendar_Backing.useSelected}">
+                            <p:commandButton value="Close" 
+                                             style="whitespace: no-wrap;"
+                                             onclick="PF('eventDialog').hide()"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:dialog>
+                <p:dialog widgetVar="editLitterInfo" header="Update Litter" modal="true" showEffect="clip" hideEffect="clip">
+                    <p:messages id="litterInfoMessages" showDetail="false" autoUpdate="false" />
+                    <h:panelGrid columns="2" id="editLitterInfoPanel">
+                        <h:outputText value="# Females/Males"/>
+                        <h:panelGrid columns="3">
+                            <h:inputText value="#{Calendar_Backing.numFemale}"/>
+                            <h:outputText value="/"/>
+                            <h:inputText value="#{Calendar_Backing.numMale}"/>
+                        </h:panelGrid>
+                        <h:outputText value="Wean Date"/>
+                        <p:calendar id="weanCalendar" 
+                                    pattern="#{Calendar_Backing.date_format}"
+                                    value="#{Calendar_Backing.weanDate}"/>
+                        <h:outputText value="Tag Date"/>
+                        <p:calendar id="tagCalendar"
+                                    pattern="#{Calendar_Backing.date_format}"
+                                    value="#{Calendar_Backing.tagDate}"/>
+                        <h:outputText value="Total Born"/>
+                        <h:outputText value="#{Calendar_Backing.selectedWeanDTO.litter.totalBorn}"/>
+                        <p:commandButton value="Save and Add Pups"
+                                         oncomplete="openMousePage();PF('editLitterInfo').hide();PF('eventDialog').hide();"
+                                         style="whitespace: no-wrap;"   
+                                         update="litterInfoMessages"
+                                         actionListener="#{Calendar_Backing.updateLitter}">
+                            <f:param name="paramLitterKey" value="#{Calendar_Backing.selectedWeanDTO.litter.litterKey}" />
+                        </p:commandButton> 
+                        <p:commandButton value="Cancel"
+                                         oncomplete="PF('editLitterInfo').hide();"/>
+                        <h:commandButton id="hiddenNavButton"
+                                        style="visibility:hidden"
+                                        action="#{Mouse_Backing.calendarAddMouseAction}">
+                            <f:param name="paramLitterKey" value="#{Calendar_Backing.selectedLitterKey}" />
+                        </h:commandButton> 
+                    </h:panelGrid>
+                </p:dialog>
+                <p:dialog widgetVar="addNewEventDialog" header="New Use Details" modal="true" showEffect="clip" hideEffect="clip">
+                    <h:panelGrid columns="4" id="newUsePanel">
+                        <h:outputLabel value="Mouse ID: " for="newMouseID"/>
+                        <h:panelGroup>
+                            <h:inputText value="#{Calendar_Backing.newMouseID}" id="newMouseID">
+                                <p:ajax event="change" listener="#{Calendar_Backing.mouseChangeListener}" update="newMouseBD, newMouseStrain, newMouseGenotype, messages"/>
+                            </h:inputText>
+                            &nbsp;&nbsp;
+                            <p:commandButton value="Find Mouse" oncomplete="PF('findMouseDialog').show()" update="findMouseOwners"/>
+                            &nbsp;&nbsp;
+                        </h:panelGroup>
+                        <h:outputLabel value="Mouse Birthdate: " for="newMouseBD"/>
+                        <h:outputText value="#{Calendar_Backing.newEvent.data.mouseBirthDate}" id="newMouseBD"/>
+                        <h:outputLabel value="Strain: " for="newMouseStrain"/>
+                        <h:outputText value="#{Calendar_Backing.newEvent.data.strainName}" id="newMouseStrain"/>
+                        <h:outputLabel value="Genotype: " for="newMouseGenotype"/>
+                        <h:outputText value="#{Calendar_Backing.newEvent.data.genotype}" id="newMouseGenotype"/>
+                        <h:outputLabel value="Mouse Use: " for="newMouseUse"/>
+                        <h:selectOneMenu value="#{Calendar_Backing.newEvent.data.use.use}" id="newMouseUse">
+                            <p:ajax event="change" update="newD1Label" listener="#{Calendar_Backing.onNewUseChange}"/>
+                            <f:selectItems value="#{Calendar_Backing.useDropDown2}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Done: " for="newUseDone"/>
+                        <h:selectBooleanCheckbox value="#{Calendar_Backing.newEvent.data.use.done}" id="newUseDone"/>
+                        <h:outputLabel value="Projected Date: " for="newProjectedDate"/>
+                        <p:calendar value="#{Calendar_Backing.newProjectedDate}" id="newProjectedDate"
+                                    pattern="#{Calendar_Backing.date_format}"
+                                    disabled="#{Calendar_Backing.newEvent.styleClass eq 'actualStyle'}">      
+                            <p:ajax event="dateSelect" listener="#{Calendar_Backing.newProjectedDateChangeListener}" update="newUseAge"/>
+                        </p:calendar>
+                        <h:outputLabel value="Use Age: " for="newUseAge"/>
+                        <h:outputText value="#{Calendar_Backing.newEvent.data.use.useAge}" id="newUseAge"/>
+                        <h:outputLabel value="Actual Date: " for="newActualDate"/>
+                        <h:panelGroup>
+                            <p:calendar value="#{Calendar_Backing.newActualDate}" 
+                                        id="newActualDate" 
+                                        pattern="#{Calendar_Backing.date_format}"
+                                        disabled="#{Calendar_Backing.newEvent.styleClass eq 'projectedStyle'}">                       
+                            </p:calendar>
+                            &nbsp;
+                            <p:commandLink action="#{Calendar_Backing.selectNewActualDateAction}" update="newActualDate">
+                                <h:graphicImage name="../images/insert.gif" style="vertical-align: middle;" width="18" height="18"/>
+                            </p:commandLink>
+                        </h:panelGroup>
+                        <h:outputLabel value="Comments: " for="newComment"/>
+                        <h:inputTextarea value="#{Calendar_Backing.newEvent.data.use.comment}" id="newComment"/>
+                        <h:outputLabel value="#{Calendar_Backing.newEvent.data.cvMouseUse.d1Caption}: " for="newD1" id="newD1Label"/>
+                        <h:inputTextarea value="#{Calendar_Backing.newEvent.data.use.d1}" id="newD1"/>
+                        <h:outputLabel value="#{Calendar_Backing.newEvent.data.cvMouseUse.d6Caption}: " for="newD6"/>
+                        <h:inputTextarea value="#{Calendar_Backing.newEvent.data.use.d6}" id="newD6"/>
+                        <h:outputLabel value="#{Calendar_Backing.newEvent.data.cvMouseUse.d2Caption}: " for="newD2"/>
+                        <h:inputTextarea value="#{Calendar_Backing.newEvent.data.use.d2}" id="newD2"/>
+                        <h:outputLabel value="#{Calendar_Backing.newEvent.data.cvMouseUse.d7Caption}: " for="newD7"/>
+                        <h:inputTextarea value="#{Calendar_Backing.newEvent.data.use.d7}" id="newD7"/>
+                        <h:outputLabel value="#{Calendar_Backing.newEvent.data.cvMouseUse.d3Caption}: " for="newD3"/>
+                        <h:inputTextarea value="#{Calendar_Backing.newEvent.data.use.d3}" id="newD3"/>
+                        <h:outputLabel value="#{Calendar_Backing.newEvent.data.cvMouseUse.d8Caption}: " for="newD8"/>
+                        <h:inputTextarea value="#{Calendar_Backing.newEvent.data.use.d8}" id="newD8"/>
+                        <h:outputLabel value="#{Calendar_Backing.newEvent.data.cvMouseUse.d4Caption}: " for="newD4"/>
+                        <h:inputTextarea value="#{Calendar_Backing.newEvent.data.use.d4}" id="newD4"/>
+                        <h:outputLabel value="#{Calendar_Backing.newEvent.data.cvMouseUse.d9Caption}: " for="newD9"/>
+                        <h:inputTextarea value="#{Calendar_Backing.newEvent.data.use.d9}" id="newD9"/>
+                        <h:outputLabel value="#{Calendar_Backing.newEvent.data.cvMouseUse.d5Caption}: " for="newD5"/>
+                        <h:inputTextarea value="#{Calendar_Backing.newEvent.data.use.d5}" id="newD5"/>
+                        <h:outputLabel value="#{Calendar_Backing.newEvent.data.cvMouseUse.d10Caption}: " for="newD10"/>
+                        <h:inputTextarea value="#{Calendar_Backing.newEvent.data.use.d10}" id="newD10"/>
+                    </h:panelGrid>
+                    <h:panelGrid id="newButtons" columns="1" columnClasses="center" style="width: 100%;">
+                        <h:panelGroup>
+                            <p:commandButton value="Save" 
+                                            style="whitespace: no-wrap;"
+                                            update="messages"
+                                            action="#{Calendar_Backing.insertMouseUsage}"
+                                            oncomplete="PF('myschedule').update();"/>
+                            &nbsp;&nbsp;
+                            <p:commandButton value="Clear" 
+                                                style="whitespace: no-wrap;"
+                                                update="newUsePanel" action="#{Calendar_Backing.clearNewUsePanel}"/>
+                            &nbsp;&nbsp;
+                            <p:commandButton value="Cancel" 
+                                                style="whitespace: no-wrap;"
+                                                onclick="PF('addNewEventDialog').hide()"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:dialog>
+                <p:dialog widgetVar="findMouseDialog" header="Find Mouse" modal="true" showEffect="clip" hideEffect="clip"
+                          width="794" height="575">
+                    <p:messages/>
+                    <p:ajaxStatus id="ajaxStatusPanel3">  
+                        <f:facet name="start">  
+                            <h:graphicImage value="../images/bhi_ball.gif"/>  
+                        </f:facet>  
+                        <f:facet name="complete">  
+                            <h:graphicImage value="../images/bhi_ball_white.gif" />  
+                        </f:facet>  
+                    </p:ajaxStatus>
+                        <h:panelGrid columns="4" id="findMousePanel" style="white-space: nowrap;">
+                            <h:outputText value="Mouse ID"/>
+                            <h:panelGroup>
+                                <h:selectOneMenu value="#{Calendar_Backing.mouseSearch.mouseFilter}">
+                                    <f:selectItems value="#{Calendar_Backing.wrapper.mouseFilters}"/>
+                                </h:selectOneMenu>
+                                <h:inputText value="#{Calendar_Backing.mouseSearch.mouseID}"/>
+                            </h:panelGroup>
+                            <h:outputText value="Strain"/>
+                            <h:selectOneMenu value="#{Calendar_Backing.mouseSearch.strain}">
+                                <f:selectItems value="#{Calendar_Backing.wrapper.allStrains}"/>
+                                <f:converter converterId="strainConverter" />
+                            </h:selectOneMenu>
+                            <h:outputText value="Generation"/>
+                            <h:selectOneMenu value="#{Calendar_Backing.mouseSearch.generation}">
+                                <f:selectItems value="#{Calendar_Backing.wrapper.cvGenerationItemsOptional}"/>
+                                <f:converter converterId="generationConverter" />
+                            </h:selectOneMenu>
+                            <h:outputText value="Gene"/>
+                            <h:panelGroup>
+                                <h:selectOneMenu valueChangeListener="#{Calendar_Backing.geneFilterChanged}" 
+                                                 value="#{Calendar_Backing.genotypeSearchDTO.gene}">
+                                    <f:selectItems value="#{Calendar_Backing.wrapper.genesItemsOptional}"/>
+                                    <f:converter converterId="genesConverter" />
+                                    <p:ajax event="change" update="allele1ID, allele2ID"/>
+                                </h:selectOneMenu>
+                                <h:inputText id="searchByPartialGene" title="Contains this gene" 
+                                            value="#{Calendar_Backing.genotypeSearchDTO.partialGene}" 
+                                            maxlength="#{restrict['size.general.id']}"
+                                            size="#{restrict['size.general.id']}" />
+                            </h:panelGroup>
+                            <h:outputText value="Date of Birth"/>
+                            <h:panelGroup id="birthDatePanel">
+                                <p:calendar id="birthDate1"
+                                            pattern="#{Calendar_Backing.date_format}"
+                                            value="#{Calendar_Backing.mouseSearch.DOBStartDate}"/>
+                                &nbsp;
+                                <h:outputText value="To"/>
+                                &nbsp;
+                                <p:calendar id="birthDate2"
+                                            pattern="#{Calendar_Backing.date_format}"
+                                            value="#{Calendar_Backing.mouseSearch.DOBEndDate}"/>
+                            </h:panelGroup>
+                            <h:outputText value="First Allele"/>
+                            <h:selectOneMenu id="allele1ID" value="#{Calendar_Backing.genotypeSearchDTO.alleleName1}" >
+                                <f:selectItems value="#{Calendar_Backing.allele1FilterItems}"/>
+                            </h:selectOneMenu>
+                            <h:outputText value="Cage ID"/>
+                            <h:panelGroup>
+                                <h:selectOneMenu id="penIDFilter" value="#{Calendar_Backing.mouseSearch.penFilter}">
+                                    <f:selectItems value="#{Calendar_Backing.wrapper.integerFilters}"/>
+                                </h:selectOneMenu>
+                                <h:inputText id="searchByPenId" value="#{Calendar_Backing.mouseSearch.penID}" 
+                                            maxlength="#{restrict['size.general.id']}"
+                                            size="#{restrict['size.general.id']}"/>
+                            </h:panelGroup>
+                            <h:outputText value="Second Allele"/>
+                            <h:selectOneMenu id="allele2ID" 
+                                            value="#{Calendar_Backing.genotypeSearchDTO.alleleName2}" >
+                                <f:selectItems value="#{Calendar_Backing.allele2FilterItems}"/>
+                            </h:selectOneMenu>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" id="findMouseOwners">
+                            <h:outputText value="Owner/Workgroup"/>
+                            <p:pickList value="#{Calendar_Backing.ownersModel2}" filterMatchMode="contains"
+                                        showSourceFilter="true" showTargetFilter="true"
+                                        var="owner" itemLabel="#{owner}" itemValue="#{owner}">
+                                <f:facet name="sourceCaption">Select Owner(s)</f:facet>  
+                                <f:facet name="targetCaption">Selected Owner(s)</f:facet>  
+                            </p:pickList>
+                        </h:panelGrid>
+                        <p:commandButton id="search"
+                                        value="#{msgs['line.search']}"
+                                        action="#{Calendar_Backing.executeMouseSearch}"
+                                        type="submit"
+                                        update="mouseDataHolder"/>
+                    <br />
+                    <h:panelGrid columns="1" id="mouseDataHolder">
+                        <h:outputText id="mouseResultsTextId1"
+                                    rendered="#{Calendar_Backing.isMouseResultCountDisplayed}"
+                                    value="#{msgs['search.results']} #{Calendar_Backing.mouseDataModel.rowCount}" />
+                        <h:panelGroup>
+                            <p:dataTable
+                                rendered="#{Calendar_Backing.isMouseResultCountDisplayed}"
+                                id="mouseSearchResultsTable"
+                                value="#{Calendar_Backing.mouseDataModel}"
+                                styleClass="mediumSizeExtendedDataTable"
+                                selectionMode="single"
+                                var="dm" 
+                                paginator="true"
+                                paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" 
+                                rows="10"
+                                rowKey="#{dm.mouseKey}"
+                                selection="#{Calendar_Backing.selectedMouse}">
+                                <p:column headerText="Mouse ID" filterBy="#{dm.id}">
+                                    <h:outputText value="#{dm.id}"/>
+                                </p:column>
+                                <p:column headerText="Date of Birth" filterBy="#{dm.birthDate}"
+                                        filterMatchMode="contains">
+                                    <h:outputText value="#{dm.birthDate}"/>
+                                </p:column>
+                                <p:column headerText="Generation" filterBy="#{dm.generation}"
+                                        filterMatchMode="contains">
+                                    <h:outputText value="#{dm.generation}"/>
+                                </p:column>
+                                <p:column headerText="Owner/Workgroup" filterBy="#{dm.owner}"
+                                        filterMatchMode="contains">
+                                    <h:outputText value="#{dm.owner}"/>
+                                </p:column>
+                                <p:column headerText="Life Status" filterBy="#{dm.lifeStatus}"
+                                        filterMatchMode="contains">
+                                    <h:outputText value="#{dm.lifeStatus}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGroup>
+                        <br />
+                        <br />
+                        <h:panelGroup>
+                            <h:panelGrid columns = "2">
+                                <p:commandButton id="selectMouseButton"
+                                                value="#{msgs['common.ok']}"   
+                                                action="#{Calendar_Backing.selectMouseAction}"
+                                                update="newUsePanel"
+                                                rendered="#{Calendar_Backing.isMouseResultCountDisplayed}"/>
+                                <p:commandButton id="cancel"
+                                                value="Cancel"
+                                                rendered="#{Calendar_Backing.isMouseResultCountDisplayed}"
+                                                immediate="true"
+                                                oncomplete="PF('findMouseDialog').hide();"/>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+        </div>
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+    </h:body>
+</html>

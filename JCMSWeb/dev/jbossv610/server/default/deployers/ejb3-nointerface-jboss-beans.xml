@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+   <!-- No-interface view deployer - works on JBossMetadata and creates a NoInterfaceMCBean -->
+  <bean name="Ejb3NoInterfaceViewDeployer" class="org.jboss.ejb3.nointerface.impl.deployers.EJB3NoInterfaceDeployer"/>
+  
+  <!--  A metadata processor factory responsible for creating a processor to apply implicit
+    nointerface bean rules (as defined by spec) on merged metadata. This processor factory
+    will be picked up by the Ejb3MetadataProcessingDeployer and added to a chain of processor factories -->
+  <bean name="ImplicitNoInterfaceViewMetadataProcessorFactory" 
+  class="org.jboss.ejb3.nointerface.impl.metadata.processor.ImplicitNoInterfaceViewMetadataProcessorFactory"/>
+
+</deployment>

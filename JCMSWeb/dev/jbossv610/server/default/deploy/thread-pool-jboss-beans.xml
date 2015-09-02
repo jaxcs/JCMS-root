@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ JBoss, Home of Professional Open Source.
+  ~ Copyright 2009, Red Hat Middleware LLC, and individual contributors
+  ~ as indicated by the @author tags. See the copyright.txt file in the
+  ~ distribution for a full listing of individual contributors.
+  ~
+  ~ This is free software; you can redistribute it and/or modify it
+  ~ under the terms of the GNU Lesser General Public License as
+  ~ published by the Free Software Foundation; either version 2.1 of
+  ~ the License, or (at your option) any later version.
+  ~
+  ~ This software is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+  ~ Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public
+  ~ License along with this software; if not, write to the Free
+  ~ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+  ~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+  -->
+
+<!-- Basic system thread pool deployment -->
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+   <threads xmlns="urn:jboss:threads:2.0">
+
+      <!-- The system thread group for all JBoss threads. -->
+      <thread-group name="SystemThreadGroup" group-name="System Threads" daemon="true"/>
+
+      <!-- A simple direct executor which is always available for use. -->
+      <direct-executor name="DirectExecutor"/>
+
+      <!--
+        ~ This thread pool is for SHORT-RUNNING tasks that block very little or not at all.  Long-running
+        ~ tasks submitted to this pool may cause starvation and extended blocking.
+        -->
+      <thread-group name="ShortTasksThreadGroup" group-name="Short Tasks Threads">
+         <parent-thread-group name="SystemThreadGroup"/>
+      </thread-group>
+
+      <thread-factory name="ShortTasksThreadFactory">
+         <thread-group name="ShortTasksThreadGroup"/>
+      </thread-factory>
+
+      <bounded-queue-thread-pool-executor name="ThreadPool" blocking="true">
+         <thread-factory name="ShortTasksThreadFactory"/>
+         <queue-length count="500" per-cpu="200"/>
+         <core-threads count="5" per-cpu="2"/>
+         <max-threads count="10" per-cpu="3"/>
+         <keepalive-time time="30" unit="seconds"/>
+         <task-filter>
+            <clear-context-classloader/>
+            <clear-tls/>
+         </task-filter>
+      </bounded-queue-thread-pool-executor>
+
+      <!--
+        ~ This thread pool is for LONG-RUNNING tasks that may block for extended periods, such as
+        ~ blocking I/O network connection threads.  Short-running tasks submitted to this pool may
+        ~ cause excessive lock contention and performance degradation.
+        -->
+      <thread-group name="LongTasksThreadGroup" group-name="Long Tasks Threads">
+         <parent-thread-group name="SystemThreadGroup"/>
+      </thread-group>
+
+      <thread-factory name="LongTasksThreadFactory">
+         <thread-group name="LongTasksThreadGroup"/>
+      </thread-factory>
+
+      <queueless-thread-pool-executor name="LongRunningTasksThreadPool" blocking="true">
+         <max-threads count="200" per-cpu="500"/>
+         <thread-factory name="LongTasksThreadFactory"/>
+         <task-filter>
+            <clear-context-classloader/>
+            <clear-tls/>
+         </task-filter>
+      </queueless-thread-pool-executor>
+   </threads>
+
+</deployment>

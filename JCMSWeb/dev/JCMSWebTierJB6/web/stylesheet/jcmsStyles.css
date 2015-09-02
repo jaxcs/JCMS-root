@@ -1,0 +1,827 @@
+/****
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+****/
+/* Global Styles */
+body {
+    margin:0px;
+    font-family: arial,sans-serif;
+    color: #666666;
+    font-size:11px;
+}
+
+a   {
+    color: #003352;
+}
+
+a:hover {
+    color: #0090FF;
+}
+
+a:visited {
+    color: #003352;
+}
+
+textarea {
+    font:12px "Trebuchet MS", Verdana;
+}
+h1  {
+    font:24px "Trebuchet MS", Verdana;
+    color: #003352;
+    letter-spacing:.2em;
+    margin-bottom:2px;
+    padding-bottom:2px;
+    margin-top:0px;
+    padding-top:0px;
+    vertical-align: top;
+}
+
+h2  {
+    font:15px "Trebuchet MS", Verdana;
+    color: #003352;
+    letter-spacing:.2em;
+    font-weight:bold;
+    margin-bottom:2px;
+    padding-bottom:2px;
+    margin-top:0px;
+    padding-top:0px;
+}
+
+h3  {
+    font:11px "Trebuchet MS", Verdana;
+    color:#003352;
+    letter-spacing:.2em;
+    font-weight:bold;
+    margin-bottom:2px;
+    padding-bottom:2px;
+    margin-top:0px;
+    padding-top:0px;
+}
+h4  {
+    font:11px "Trebuchet MS", Verdana;
+    color: #003352;
+    letter-spacing:.2em;
+    line-height:20px;
+}
+h5  {
+    font:11px "Trebuchet MS", Verdana;
+    color: #0078D0;
+    letter-spacing:.2em;
+    line-height:20px;
+}
+hr
+{
+    color: #CCCCCC;
+    background-color: #CCCCCC;
+    height: 1px;
+    border:0px;
+}
+
+/* ID Styles */
+#logo {
+    font:24px "Trebuchet MS", Verdana;
+    color: #003352;
+    letter-spacing:.2em;
+    line-height:30px;
+    margin-top:30px;
+}
+
+/* Class Styles */
+/* General */
+.bodyText {
+    font:11px "Trebuchet MS", Verdana;
+    color:#000000;
+    line-height:20px;
+    margin-top:0px;
+}
+
+.sideBarText {
+    font:13px "Trebuchet MS", Verdana;
+    background-image: url('../images/navPanel.jpg');
+    background-repeat: no-repeat;
+    letter-spacing:.1em;
+    font-weight:bold;
+    height: 376px;
+    width: 140px;
+    padding: 10px;
+    vertical-align: top;
+    }
+
+.sideBarText td {
+    vertical-align: top;
+    }
+
+.smallText {
+    font: 10px "Trebuchet MS", Verdana;
+    color: #666666;
+    line-height: 22px;
+    font-style: italic;
+}
+
+.instructionText {
+    font: 16px "Trebuchet MS", Verdana;
+    color: #666666;
+    line-height:16px;
+    letter-spacing:.1em;
+    text-decoration: none;
+}
+
+.buttonBar {
+    width: 500;
+}
+.sideBar {
+    width: 150px;
+    text-align: left;
+    vertical-align:top;
+}
+
+.colonyManagementSideBar {
+    width: 250px;
+    text-align: left;
+    vertical-align:top;
+}
+
+.detailPane {
+    text-align: left;
+    vertical-align:top;
+}
+
+.smallImage {
+    width: 15px;
+    height: 15px;
+    color: #003352;
+    background-color:#D6E6FB;
+    border-top: 1px solid #8DB7F3;
+    border-right: 1px solid #8DB7F3;
+    border-bottom: 1px solid #0078D0;
+    border-left: 1px solid #0078D0;
+}
+.smallImageSize {
+    width: 15px;
+    height: 15px;
+}
+/* Buttons */
+.tinyButton
+{
+    font-weight: bold;
+    font-size: 11px;
+    width: 10pt;
+    color: #003352;
+    background-color:#D6E6FB;
+    border-top: 1px solid #0078D0;
+    border-right: 1px solid #0078D0;
+    border-bottom: 1px solid #8DB7F3;
+    border-left: 1px solid #8DB7F3;
+    padding: 2px;
+    text-align: center;
+}
+
+.smallButton
+{
+    font-weight: bold;
+    font-size: 11px;
+    width: 50pt;
+    color: #003352;
+    background-color:#D6E6FB;
+    border-top: 1px solid #0078D0;
+    border-right: 1px solid #0078D0;
+    border-bottom: 1px solid #8DB7F3;
+    border-left: 1px solid #8DB7F3;
+    padding: 2px;
+    text-align: center;
+}
+
+.mediumButton
+{
+    font-weight: bold;
+    font-size: 11px;
+    width: 75pt;
+    color: #003352;
+    background-color:#D6E6FB;
+    border-top: 1px solid #0078D0;
+    border-right: 1px solid #0078D0;
+    border-bottom: 1px solid #8DB7F3;
+    border-left: 1px solid #8DB7F3;
+    padding: 2px;
+    text-align: center;
+}
+
+.largeButton
+{
+    font-weight: bold;
+    font-size: 11px;
+    width: 150pt;
+    color: #003352;
+    background-color:#D6E6FB;
+    border-top: 1px solid #0078D0;
+    border-right: 1px solid #0078D0;
+    border-bottom: 1px solid #8DB7F3;
+    border-left: 1px solid #8DB7F3;
+    padding: 2px;
+    text-align: center;
+}
+
+/* Drop downs */
+.smallSelect
+{
+    width: 75pt;
+}
+
+.mediumSelect
+{
+    width: 125pt;
+}
+
+.largeSelect
+{
+    width: 230pt;
+}
+
+/* menu bar */
+.barBackground
+{
+    background-color: #ECF4FE;
+}
+
+/* Table background */
+.subTableHeaderBackground
+{
+    background-color:#D8D8D8;  /*#F2F2F2;*/
+}
+
+/* Sub Table background */
+.subTableBackground
+{
+    background-color:#F2F2F2;  /* #DCDCDC;, #E6E6E6;*/
+}
+
+/* Bad row background */
+.badRowBackground
+{
+    background-color:#FF3333
+}
+
+/* menu bar */
+.blankRowBackground
+{
+    background-color:#FFFFFF;
+}
+
+.menu
+{
+    font:11px "Trebuchet MS", Verdana;
+    color: #003352;           
+    letter-spacing:.2em;
+    margin-right:200px;
+}
+
+.menu a
+{
+    font:11px "Trebuchet MS", Verdana;
+    color: #003352;
+    font-weight:bold;
+    letter-spacing:.1em;
+    text-decoration:none;
+    margin-right:20px;
+}
+
+.menu a:hover
+{
+    color: #0090FF;          /* #0090FF */
+    letter-spacing:.1em;
+    cursor: pointer;
+}
+
+.tableNoBorder{
+    color:#000000;
+    border: 0px;
+    border-collapse:collapse;
+    padding: 2px 5px 2px 5px;
+    vertical-align: middle;
+}
+.tableNoBorder th
+{
+    font:11px arial,sans-serif;
+    font-weight:bold;
+    vertical-align:middle;
+    background-color: #ECF4FE;
+    border: 0px;
+    padding: 2px 5px 2px 5px;
+}
+
+.tableNoBorder td{
+    border: 0px;
+    padding: 2px 5px 2px 5px;
+    vertical-align:middle;
+}
+
+.tableNoBorder tr{
+    border: 0px;
+    padding: 2px 5px 2px 5px;
+    vertical-align:middle;
+}
+
+/* tables */
+.innerTableNoBorder{
+    color:#000000;
+    border: 0px;
+    border-collapse:collapse;
+    padding: 2px 5px 2px 5px;
+    vertical-align: middle;
+}
+
+.innerTableNoBorder th
+{
+    font:11px arial,sans-serif;
+    font-weight:bold;
+    vertical-align:top;
+    background-color: #ECF4FE;
+    border: 0px;
+    padding: 2px 5px 2px 5px;
+}
+
+.innerTableNoBorder td{
+    border: 0px;
+    padding: 2px 5px 2px 5px;
+}
+
+.innerTableNoBorder tr{
+    border: 0px;
+    padding: 2px 5px 2px 5px;
+}
+
+.innerTable{
+    color:#000000;
+    border: 1px solid #CCCCCC;
+    border-collapse:collapse;
+    padding: 2px 5px 2px 5px;
+}
+
+.columnHeader {
+    font:12px arial,sans-serif;
+    color:#000000;
+    background-color: #D6E6FB;
+    font-weight:bold;
+    text-align: center;
+    padding: 2px 5px 2px 5px;
+    border: 1px solid #CCCCCC;
+    white-space: nowrap;
+}
+
+.rowHeader {
+    font:12px arial,sans-serif;
+    color:#000000;
+    background-color: #D6E6FB;    
+    font-weight:bold;
+    text-align: left;
+    padding: 2px 5px 2px 5px;
+    border: 1px solid #CCCCCC;
+    vertical-align:top;
+    width: 120px;
+}
+
+.adminHeader {
+    font:11px arial,sans-serif;
+    color:#000000;
+    background-color: #D6E6FB;    
+    font-weight:bold;
+    text-align: left;
+    padding: 2px 5px 2px 5px;
+    border: 1px solid #CCCCCC;
+    vertical-align:top;
+    width: 120px;
+}
+
+.constraintHeader {
+    font:12px arial,sans-serif;
+    color:#000000;
+    background-color: #D6E6FB;    
+    font-weight:bold;
+    text-align: left;
+    padding: 2px 5px 2px 5px;
+    border: 1px solid #CCCCCC;
+    vertical-align:top;
+    width: 200px;
+}
+
+.blackTextStyle{
+    color:#000000;
+    font:10px arial,sans-serif;
+}
+
+.yellowHeader {
+    font:12px arial,sans-serif;
+    color: black;
+    background-color: yellow;    
+    font-weight:bold;
+    text-align: center;
+    padding: 2px 5px 2px 5px;
+    vertical-align: center;
+    width: 300px;
+}
+
+.redHeader {
+    font:12px arial,sans-serif;
+    color: black;
+    background-color: red;    
+    font-weight:bold;
+    text-align: center;
+    padding: 2px 5px 2px 5px;
+    vertical-align: center;
+    width:300px;
+}
+
+.columnFooter {
+    font:12px arial,sans-serif;
+    color:#000000;
+    background-color: #CCCCCC;
+    border: 1px solid #CCCCCC;
+    font-weight:normal;
+    text-align: center;
+    padding: 2px 5px 2px 5px;
+}
+
+.innerTableTD
+{
+    font:10px arial,sans-serif;
+    border: 1px solid #CCCCCC;
+    vertical-align:top;
+    padding: 2px 5px 2px 5px;
+}
+
+.innerTableNoBorderTD
+{
+    font:10px arial,sans-serif;
+    border: 0px;
+    padding: 2px 5px 2px 5px;
+    border-collapse:collapse;
+    vertical-align: middle;
+}
+
+.innerTableRight
+{
+    font:10px arial,sans-serif;
+    border: 1px solid #CCCCCC;
+    vertical-align:top;
+    padding: 2px 5px 2px 5px;
+    text-align: right;
+}
+
+.innerTable th
+{
+    font:11px arial,sans-serif;
+    font-weight:bold;
+    vertical-align:top;
+    background-color: #ECF4FE;
+    border: 1px solid #CCCCCC;
+    padding: 2px 5px 2px 5px;
+    
+}
+
+.innerTable td{
+    border: 1px solid #CCCCCC;
+    padding: 2px 5px 2px 5px;
+}
+
+.loginHeader {
+    font:12px arial,sans-serif;
+    color:#003352;
+    background-color: #D6E6FB;
+    font-weight:bold;
+    padding: 3px;
+    text-align: left;
+    vertical-align:top;
+    width: 75px;
+}
+
+.required:after { 
+    content:"  *"; 
+    color: red;
+}
+
+.borderlessTable
+{
+    border:0px;
+}
+
+.borderlessTable td
+{
+    border:0px;
+}
+
+.listColumnOdd
+{
+    vertical-align:top;
+    text-align: left;
+}
+
+.listColumnEven
+{
+    vertical-align: top;
+    text-align: left;
+}
+
+.customCardColumn td{
+    vertical-align: top;
+}
+
+.useTable>tbody>tr>td {
+    vertical-align: top;
+}
+
+.location td
+{
+    height: 25px;
+}
+.largestSizeExtendedDataTable 
+{
+    width: 850px;
+}
+.largeSizeExtendedDataTable 
+{
+    width: 750px;
+}
+.mediumSizeExtendedDataTable 
+{
+    width: 650px;
+}
+.maxSizeDataTable 
+{
+    width: 100%;
+    padding: 10px;
+    border-spacing: 1px; 
+    white-space: nowrap;
+}
+.collapsiblePanelSmall
+{
+    width:750px;
+}
+.collapsibleSearchPanel 
+{
+    width:850px;
+}
+.collapsiblePanelLabel
+{
+    text-align: left;
+    vertical-align: top;
+}
+
+.formTitle
+{
+    font:16px "Trebuchet MS", Verdana;
+    color: #003352;
+    margin-bottom:2px;
+    padding-bottom:2px;
+    margin-top:0px;
+    padding-top:0px;
+}
+
+.currentPage
+{
+    background-color: #ffff33;
+    color: #336600;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.formDetail
+{
+    background-attachment: scroll;
+}
+
+.errorMessageLabel {
+    color: red;
+    font-family: "Trebuchet MS", Verdana;
+    font-size: 20px;
+    font-style: normal;
+    margin-left: 10px;
+    font-weight: 600;
+}
+
+.errorMessageBody {
+    color: red;
+    font-family: "Trebuchet MS", Verdana;
+    font-size: 16px;
+    font-style: normal;
+    margin-left: 20px;
+    font-weight: 600;
+}
+
+.errorMessage {
+    color: red;
+    font-family: "Trebuchet MS", Verdana;
+    font-size: 12px;
+    font-style: normal;
+    margin-left: 5px;
+    font-weight: 600;
+}
+
+.warnMessage {
+    color: #FCC917;
+    font-family: "Trebuchet MS", Verdana;
+    font-size: 12px;
+    font-style: normal;
+    margin-left: 5px;
+    font-weight: 600;
+}
+
+.infoMessage {
+    color: #0078D0;
+    font-family: "Trebuchet MS", Verdana;
+    font-size: 12px;
+    font-style: normal;
+    margin-left: 5px;
+    font-weight: 600;
+}
+.emphasis {
+    font-size: 1.3em;
+}
+
+.top {
+    vertical-align:top;
+}
+.top td {
+    vertical-align: top;
+}
+
+.topLeft {
+    vertical-align: top;
+    left: 0px;
+}
+
+.topLeft td {
+    vertical-align: top;
+    left: 0px;
+}
+
+.center {
+    text-align: center;
+}
+
+.center td {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.right td {
+    text-align: right;
+}
+
+.left {
+    text-align: left;
+}
+
+.left td {
+    text-align: left;
+}
+
+.reqColor {
+    color:red;
+}
+.searchTable {
+    padding-left: 5px;
+}
+.searchTable td {
+    white-space: nowrap;
+}
+
+.rich-pmenu-hovered-element{
+    background-color: white;
+} 
+.nowrap {
+    white-space: nowrap;
+}
+.actions {
+    display: inline-block;
+    vertical-align: middle;  
+    white-space: nowrap;
+}
+.dataScroller
+{
+    text-align: center;
+    background-color: gray;
+}
+.dataScrollerLeft
+{
+    text-align: left;
+    background-color: gray;
+}
+.w50 
+{
+    width: 50px;
+}
+.w70 
+{
+    width: 70px;
+}
+.w100 
+{
+    width: 100px;
+}
+.w150 
+{
+    width: 150px;
+}
+.w200 
+{
+    width: 200px;
+}
+.w250 
+{
+    width: 250px;
+}
+.w300 
+{
+    width: 300px;
+}
+.tableSortHeader {
+    white-space: nowrap;
+    vertical-align: top;
+}
+.panel {
+    border-width: 0px; 
+    border-style: none; 
+    border: 0px;
+    padding: 0px; 
+}
+.rf-au {
+    vertical-align: top; 
+}
+.viabilityYellow {
+    background-color: yellow;
+    background-image: none;
+}
+.viabilityRed {
+    background-color: red;
+    background-image: none;
+}
+.strainColumn {
+    width: 250px;
+    vertical-align: top;
+}
+.strainFilter {
+    width: 230px;
+}
+.strainInput {
+    width: 230px;
+}
+.tabPanel {
+    width: 600px;
+}
+.tabTable {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+.selected-dt-row { 
+    background-color: gold !important; 
+}
+.actualStyle {
+    background-color: #0000FF !important; 
+    color: #FFFFFF !important;
+}
+.projectedStyle {
+    background-color: #ffff33 !important;
+    color: black !important;
+}
+.weanStyle {
+    background-color: #FFC0CB !important;
+}
+.preTable {
+    padding-left: 120px;
+}
+
+.cancelIconStyle{
+    background-image: url(images/cancel.png);
+}
+
+.saveIconStyle{
+    background-image: url(images/cancel.png);
+}
+
+.deleteIconStyle{
+    background-image: url(images/cancel.png);
+}
+
+.panelColumns td {
+    vertical-align: top; 
+} 
+
+.expDataPanelStyle {
+    border: 0px !important;
+}
+

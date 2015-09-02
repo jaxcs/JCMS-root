@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+  <bean name="JAXRPCAppClientClassPathDeployer" class="org.jboss.webservices.integration.deployers.JAXRPCAppClientClassPathDeployer">  
+    <property name="wsServerConfig"><inject bean="WSServerConfig"/></property>
+    <property name="libs">
+       <set class="java.util.HashSet" elementClass="java.lang.String">
+         <value>deployers/jbossws-jaxrpc.deployer/jbossws-native-factories.jar</value>
+         <value>deployers/jbossws-jaxrpc.deployer/jbossws-native-services.jar</value>
+       </set>
+    </property>
+  </bean>
+
+  <bean name="JAXRPCEjbClientClassPathDeployer" class="org.jboss.webservices.integration.deployers.JAXRPCEjbClientClassPathDeployer">  
+    <property name="wsServerConfig"><inject bean="WSServerConfig"/></property>
+    <property name="libs">
+       <set class="java.util.HashSet" elementClass="java.lang.String">
+         <value>deployers/jbossws-jaxrpc.deployer/jbossws-native-factories.jar</value>
+         <value>deployers/jbossws-jaxrpc.deployer/jbossws-native-services.jar</value>
+       </set>
+    </property>
+  </bean>
+
+  <bean name="JAXRPCServletClientClassPathDeployer" class="org.jboss.webservices.integration.deployers.JAXRPCServletClientClassPathDeployer">  
+    <property name="wsServerConfig"><inject bean="WSServerConfig"/></property>
+    <property name="libs">
+       <set class="java.util.HashSet" elementClass="java.lang.String">
+         <value>deployers/jbossws-jaxrpc.deployer/jbossws-native-factories.jar</value>
+         <value>deployers/jbossws-jaxrpc.deployer/jbossws-native-services.jar</value>
+       </set>
+    </property>
+  </bean>
+
+  <bean name="JAXRPCServerClassPathDeployer" class="org.jboss.webservices.integration.deployers.JAXRPCServerClassPathDeployer">  
+    <property name="wsServerConfig"><inject bean="WSServerConfig"/></property>
+    <property name="libs">
+       <set class="java.util.HashSet" elementClass="java.lang.String">
+         <value>deployers/jbossws-jaxrpc.deployer/jbossws-native-factories.jar</value>
+         <value>deployers/jbossws-jaxrpc.deployer/jbossws-native-services.jar</value>
+       </set>
+    </property>
+  </bean>
+
+</deployment>

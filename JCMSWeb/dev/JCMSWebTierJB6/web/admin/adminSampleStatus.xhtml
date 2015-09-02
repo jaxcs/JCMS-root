@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui">
+    <h:panelGrid columns="1">
+        <!-- STATUS -->
+        <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">  
+            <f:facet name="start">  
+                <h:graphicImage  value="../images/bhi_ball.gif"/>
+            </f:facet>  
+
+            <f:facet name="complete">  
+                <h:graphicImage value="../images/bhi_ball_white.gif" />  
+            </f:facet>  
+        </p:ajaxStatus> 
+        <br />
+        <a4j:commandButton value="Add"
+                           styleClass="smallButton"
+                           action="#{AdminSample_Backing.addSampleStatusAction}"
+                           render="sampleStatusTable"/>
+        <rich:dataTable value="#{AdminSample_Backing.sampleStatuses}" 
+                        var="status" 
+                        id="sampleStatusTable"
+                        rowKeyVar="generalRowIndex"
+                        rows="20"
+                        styleClass="maxSizeDataTable" 
+                        headerClass="tableSortHeader">
+            <f:facet name="footer" class="dataScroller">
+                <rich:dataScroller for="sampleStatusTable" 
+                                    id="resultsDataScroller"
+                                    maxPages="5"                                    
+                                    renderIfSinglePage="false" />
+            </f:facet>
+            <!-- save mode actions --> 
+            <rich:column rendered="#{status.sampleStatus_key eq ''}">
+                <f:facet name="header">
+                    <h:outputText value="Actions"/>
+                </f:facet>     
+                <a4j:commandLink render="sampleStatusTable" action="#{AdminSample_Backing.saveSampleStatusAction}">
+                    <h:graphicImage value="/images/icon-save.gif" style="border:0; height:16px; width:16px;" />
+                    <f:param name="paramPrimaryKey" value="#{status.sampleStatus_key}" />
+                    <f:param name="paramRowIndex" value="#{generalRowIndex}" />
+                </a4j:commandLink>
+                <a4j:commandLink render="sampleStatusTable" action="#{AdminSample_Backing.cancelSampleStatusAction}">
+                    <h:graphicImage value="/images/cancel.png" style="border:0; height:16px; width:16px;" />
+                    <f:param name="paramPrimaryKey" value="#{status.sampleStatus_key}" />
+                    <f:param name="paramRowIndex" value="#{generalRowIndex}" />
+                </a4j:commandLink>
+            </rich:column>
+            <!-- edit mode actions-->
+            <rich:column rendered="#{status.sampleStatus_key eq AdminSample_Backing.editSampleStatusKey}">
+                <f:facet name="header">
+                    <h:outputText value="Actions"/>
+                </f:facet>     
+                <a4j:commandLink render="sampleStatusTable" action="#{AdminSample_Backing.updateSampleStatusAction}">
+                    <h:graphicImage value="/images/icon-save.gif" style="border:0; height:16px; width:16px;" />
+                    <f:param name="paramPrimaryKey" value="#{status.sampleStatus_key}" />
+                    <f:param name="paramRowIndex" value="#{generalRowIndex}" />
+                </a4j:commandLink>
+                <a4j:commandLink render="sampleStatusTable" action="#{AdminSample_Backing.cancelUpdateSampleStatusAction}">
+                    <h:graphicImage value="/images/cancel.png" style="border:0; height:16px; width:16px;" />
+                    <f:param name="paramPrimaryKey" value="#{status.sampleStatus_key}" />
+                    <f:param name="paramRowIndex" value="#{generalRowIndex}" />
+                </a4j:commandLink>
+            </rich:column>
+            <!-- standard actions -->
+            <rich:column rendered="#{status.sampleStatus_key ne '' and AdminSample_Backing.editSampleStatusKey ne status.sampleStatus_key}">
+                <f:facet name="header">
+                    <h:outputText value="Actions"/>
+                </f:facet>     
+                <a4j:commandLink render="sampleStatusTable" action="#{AdminSample_Backing.editSampleStatusAction}">
+                    <h:graphicImage value="/images/edit.gif" style="border:0; height:16px; width:16px;" />
+                    <f:param name="paramPrimaryKey" value="#{status.sampleStatus_key}" />
+                    <f:param name="paramRowIndex" value="#{generalRowIndex}" />
+                </a4j:commandLink>
+                <a4j:commandLink render="sampleStatusTable" action="#{AdminSample_Backing.deleteSampleStatus}">
+                    <h:graphicImage value="/images/delete.gif" style="border:0; height:16px; width:16px;" />
+                    <f:param name="paramPrimaryKey" value="#{status.sampleStatus_key}" />
+                    <f:param name="paramRowIndex" value="#{generalRowIndex}" />
+                </a4j:commandLink>
+            </rich:column>
+            <rich:column rendered="#{status.sampleStatus_key eq ''}">
+                <f:facet name="header">
+                    <h:outputText value="Sample Status"/>                    
+                </f:facet>     
+                <h:inputText value="#{status.sampleStatus}"/>
+            </rich:column>
+            <rich:column sortBy="#{status.sampleStatus}"
+                         sortOrder="#{sortingBean.column2Order}"
+                         filterValue="#{filterBean.column2Filter}" 
+                         filterExpression="#{fn:containsIgnoreCase(status.sampleStatus, filterBean.column2Filter)}"
+                         rendered="#{status.sampleStatus_key ne ''}">
+                <f:facet name="header">
+                    <h:outputText value="Sample Status"/>
+                    <br />
+                    <a4j:commandButton  image="#{sortingBean.column2Image}" 
+                                        render="sampleStatusTable" 
+                                        action="#{sortingBean.sortByColumn2}"/>
+                    <br />
+                    <h:inputText value="#{filterBean.column2Filter}" styleClass="w100">
+                        <a4j:ajax event="blur" render="sampleStatusTable"/>
+                    </h:inputText>
+                </f:facet>     
+                <h:outputText value="#{status.sampleStatus}"/>
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">
+                    <h:outputText value="Is In Storage"/>
+                </f:facet>
+                <h:selectBooleanCheckbox value="#{status.isInStorage}" disabled="#{status.sampleStatus_key ne '' and status.sampleStatus_key ne AdminSample_Backing.editSampleStatusKey}"/>
+            </rich:column>
+        </rich:dataTable>
+    </h:panelGrid>
+</ui:composition>

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>
+            <h:outputText value="Experiments"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js" >
+        </script>
+        <script type="text/javascript" src="/jcms/javascript/experimental_data.js" >
+        </script>
+        <script type="text/javascript">
+            /**
+             * As a user changes the format of a field show min and max for 
+             * integer and decimal types only.  Each time a format is changed
+             * reset the min and max values.
+             */
+            function dataFormatChange(component) {
+                minField = $(component).parent().parent().parent().parent().find('input.fieldMinValue').first();
+                maxField = $(component).parent().parent().parent().parent().find('input.fieldMaxValue').first();
+                minField.val(null);
+                maxField.val(null);
+                if ($(component).val() == "int" || $(component).val() == "dec") {
+                    minField.show();
+                    maxField.show();
+                } else {
+                    minField.hide();
+                    maxField.hide();
+                }
+            }
+            /**
+             * Scan all min max fields after a user adds a new field or copies
+             * a test type to hide all min max fields that are not an int or 
+             * decimal.
+             */
+            function dataFormatScan() {
+                // 
+                $('[id$="testTypeFields"]').find('select > option:selected').each(function() { 
+                    minField = $(this).parent().parent().parent().parent().parent().find('input.fieldMinValue').first();
+                    maxField = $(this).parent().parent().parent().parent().parent().find('input.fieldMaxValue').first();
+                    if ($(this).val() == "int" || $(this).val() == "dec") {
+                        // do nothing
+                    } else {
+                        minField.val(null);
+                        maxField.val(null);
+                        minField.hide();
+                        maxField.hide();
+                    }
+                });
+            }
+        </script>
+    </h:head>
+    
+    <h:body style="margin-left:10px;margin-right:10px;">
+        <h:form id="experimentTestTypeFormId">
+          <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+          <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+        </h:form>
+
+        <h:panelGrid columns="2" border="0">
+            <h:panelGroup>
+                <h1><h:outputText value="Experimental Data" /></h1>
+            </h:panelGroup>
+        </h:panelGrid>
+        <hr />
+        <h:panelGrid columns="2" cellpadding="5" cellspacing="5" styleClass="panelColumns" >
+            
+            <!-- Left side -->
+            <h:panelGroup>
+                <f:subview id="colonyManagementSideBar"><ui:include src="/experiments/experimentSideBar.xhtml"/></f:subview>
+            </h:panelGroup>
+            
+            <!-- Right side -->
+            <h:panelGroup>
+                <h:form id="expDataFormId">
+                    <h:outputText value="Test Type" styleClass="formTitle" />
+
+                    <p:ajaxStatus id="statusPage" style="width:16px;height:16px;" >  
+                        <f:facet name="start">  
+                            <h:graphicImage  value="../images/bhi_ball.gif"/>
+                        </f:facet>
+                        <f:facet name="complete">  
+                            <h:graphicImage value="../images/bhi_ball_white.gif" />  
+                        </f:facet>  
+                    </p:ajaxStatus>
+
+                    <h:panelGrid id="btnGroup1" columns="1">    
+                        <h:column>
+                            <p:commandButton value="Add" action="#{experimentTestTypeBean.addTestTypeAction}" status="statusPage" 
+                                             update=":expDataFormId:editTestTypePanel :expDataFormId:btnGroup1 :expDataFormId:btnGroup2 :expDataFormId:testTypeFSId"
+                                             disabled="#{experimentTestTypeBean.showTestType}" />
+                            <p:spacer width="10" />
+                            <p:commandButton value="Save" action="#{experimentTestTypeBean.saveTestTypeAction}" status="statusPage" 
+                                             update=":expDataFormId:editTestTypePanel :expDataFormId:btnGroup1 :expDataFormId:btnGroup2 :expDataFormId:testTypeFSId"
+                                             disabled="#{!experimentTestTypeBean.showTestType}"
+                                             oncomplete="dataFormatScan()" />
+                            <p:spacer width="5" />
+                            <p:commandButton value="Cancel" action="#{experimentTestTypeBean.cancelTestTypeAction}" status="statusPage"
+                                             update=":expDataFormId:editTestTypePanel :expDataFormId:btnGroup1 :expDataFormId:btnGroup2 :expDataFormId:testTypeFSId"
+                                             disabled="#{!experimentTestTypeBean.showTestType}"/>
+                        </h:column>
+                   </h:panelGrid>
+                   <p:messages id="expDataTestTypeMessagesId" for="expDataTestTypeMessages" autoUpdate="true" />
+                   <hr /><br />
+                   
+                   <p:outputPanel id="editTestTypePanel">
+                        <p:panel styleClass="expDataPanelStyle" rendered="#{experimentTestTypeBean.showTestType}">
+                             <h:panelGrid columns="2"
+                                          columnClasses="rowHeader, innerTableTD"
+                                          styleClass="innerTable">
+
+                                 <h:panelGroup>
+                                     <h:outputLabel value="Test Type" styleClass="required" />
+                                 </h:panelGroup>
+                                 <h:panelGroup>
+                                     <h:inputText value="#{experimentTestTypeBean.testType.testType}" style="width:200px;"/>
+                                 </h:panelGroup>
+
+                                 <h:panelGroup>
+                                     <h:outputLabel value="Notes " />
+                                 </h:panelGroup>
+                                 <h:panelGroup>
+                                     <p:inputTextarea value="#{experimentTestTypeBean.testType.testTypeNotes}" rows="4" style="width:300px;" ></p:inputTextarea>
+                                 </h:panelGroup>
+
+                             </h:panelGrid>
+                         </p:panel>
+                         <p:panel styleClass="expDataPanelStyle" rendered="#{experimentTestTypeBean.showTestType}">
+                             <br />
+                             <p:commandButton id="addFieldId" value="Add Field"
+                                            action="#{experimentTestTypeBean.addFieldAction}" 
+                                            disabled="#{experimentTestTypeBean.testType.numberOfFields() > 30}"
+                                            update=":expDataFormId:testTypeFields :expDataFormId:addFieldId" 
+                                            oncomplete="dataFormatScan()"
+                                            style="margin-bottom:10px;"/>
+                             <p:dataTable id="testTypeFields" 
+                                          value="#{experimentTestTypeBean.testType.fields}"
+                                          style="width:1100px; "
+                                          draggableRows="true"
+                                          var="fieldRow"
+                                          rowIndexVar="fieldRowIndex"
+                                          widgetVar="testTypeFieldsWV"
+                                          scrollable="true"
+                                          emptyMessage="No fields defined for this test type.  Press 'Add Field' button to add a field.">
+                                 <p:ajax event="rowReorder" listener="#{experimentTestTypeBean.onRowReorder}" update=":expDataFormId:testTypeFields" />
+
+                                 <f:facet name="header">
+                                     <h:outputText value="Test Type Fields"/>
+                                 </f:facet>
+                                 <p:column id="actions" style="width: 50px; text-align: center; background-color: #{fieldRow.backgroundColor}" >
+                                     <f:facet name="header">
+                                         <h:outputText value="#{msgs['common.actions']}"/>
+                                     </f:facet>
+                                     <p:commandLink title="Delete " styleClass="smallText"
+                                                    actionListener="#{experimentTestTypeBean.deleteFieldAction()}" 
+                                                    update=":expDataFormId:testTypeFields :expDataFormId:addFieldId">
+                                         <h:graphicImage value="/images/delete.gif" style="border:0"/>
+                                         <f:param name="paramFieldRowIndex" value="#{fieldRowIndex}" />
+                                     </p:commandLink>
+                                 </p:column>
+                                 <p:column headerText="Caption" style="width:170px;" styleClass="required">
+                                     <h:inputText value="#{fieldRow.caption}" />
+                                 </p:column>
+                                 <p:column headerText="Description" style="width:200px;">
+                                     <h:inputText value="#{fieldRow.fieldDescription}"  style="width:180px;"/>
+                                 </p:column>
+                                 <p:column styleClass="required" headerText="Format" style="width:110px; white-space: nowrap;" >
+                                     <p:selectOneMenu value="#{fieldRow.dataFormat}" style="width:100px;" 
+                                                      onchange="dataFormatChange(this)" >
+                                         <f:selectItem itemLabel="" itemValue="" />
+                                         <f:selectItems value="#{experimentTestTypeBean.selectItemWrapper.testTypeFieldFormats}" />
+                                     </p:selectOneMenu>
+                                 </p:column>
+                                 <p:column headerText="Required" style="text-align: center; width: 70px;">
+                                     <p:selectBooleanCheckbox value="#{fieldRow.required}" />
+                                 </p:column>
+                                 <p:column headerText="Minimum Value" style="width:150px;">
+                                     <h:inputText value="#{fieldRow.minValue}" class="fieldMinValue" />
+                                 </p:column>
+                                 <p:column headerText="Maximum Value" style="width:150px;">
+                                     <h:inputText value="#{fieldRow.maxValue}" class="fieldMaxValue" />
+                                 </p:column>
+                             </p:dataTable>
+                         </p:panel>
+                   </p:outputPanel>
+                   <br />
+                    <p:fieldset id="testTypeFSId" legend="Test Types" toggleable="true" toggleSpeed="500">
+                        <p:dataTable id="testTypes" 
+                                     value="#{experimentTestTypeBean.testTypes}"
+                                     style="width:100%; "
+                                     var="testType"
+                                     rowIndexVar="testTypeRowIndex"
+                                     scrollable="false"
+                                     emptyMessage="No test types to display.  Please add a new test type and save.">
+                            <p:column id="actions" style="width:50px; text-align:center;" >
+                                <f:facet name="header">
+                                     <h:outputText value="#{msgs['common.actions']}"/>
+                                </f:facet>
+                                <p:commandLink title="Copy" 
+                                               disabled="#{experimentTestTypeBean.showTestType}" 
+                                               actionListener="#{experimentTestTypeBean.copyTestTypeAction}" 
+                                               update=":expDataFormId:editTestTypePanel :expDataFormId:btnGroup1 :expDataFormId:btnGroup2 :expDataFormId:testTypeFSId"
+                                               oncomplete="dataFormatScan()" >
+                                    <h:graphicImage value="/images/edit.gif" style="border:0" rendered="#{!experimentTestTypeBean.showTestType}" />
+                                    <h:graphicImage value="/images/edit-disable.gif" style="border:0" rendered="#{experimentTestTypeBean.showTestType}" />
+                                    <f:param name="paramTestTypeRowIndex" value="#{testTypeRowIndex}" />
+                                </p:commandLink>
+                                <p:spacer width="10" />
+                                <p:commandLink title="Delete" 
+                                               disabled="#{testType.expTestCount gt 0 or testType.expDataCount gt 0}"
+                                               actionListener="#{experimentTestTypeBean.deleteTestTypeAction()}" 
+                                               update=":expDataFormId:testTypeFSId">
+                                    <h:graphicImage value="/images/delete.gif" style="border:0" rendered="#{testType.expTestCount eq 0 and testType.expDataCount eq 0 }" />
+                                    <h:graphicImage value="/images/delete-disable.gif" style="border:0" rendered="#{testType.expTestCount gt 0 or testType.expDataCount gt 0}" />
+                                    <f:param name="paramTestTypeRowIndex" value="#{testTypeRowIndex}" />
+                                </p:commandLink>
+<!--                                     <h:outputText value="#{testType.expTestCount} #{testType.expDataCount}" style="margin-left: 10px;" />-->
+                            </p:column>
+                            <p:column headerText="Test Type" style="width:25%; ">
+                                <h:outputText value="#{testType.testType}" />
+                            </p:column>
+                            <p:column headerText="Fields" style="width:70%; ">
+<!--                                    <h:outputText value="#{testType.delimitedFields}" />-->
+                                <p:fieldset legend="Detail" toggleable="true" toggleSpeed="500" collapsed="true" style="border: 0;">
+                                    <p:dataList var="fields" value="#{testType.fields}">
+                                        <h:outputText value="#{fields.caption}, #{fields.dataFormat}, #{fields.minValue} (min), #{fields.maxValue} (max)" />
+                                    </p:dataList>
+                                </p:fieldset>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+                    
+                    <br /><hr />
+                    <h:panelGrid id="btnGroup2" columns="1">    
+                        <h:column>
+                            <p:commandButton value="Add" action="#{experimentTestTypeBean.addTestTypeAction}" status="statusPage" 
+                                             update=":expDataFormId:editTestTypePanel :expDataFormId:btnGroup1 :expDataFormId:btnGroup2"
+                                             disabled="#{experimentTestTypeBean.showTestType}" />
+                            <p:spacer width="10" />
+                            <p:commandButton value="Save" action="#{experimentTestTypeBean.saveTestTypeAction}" status="statusPage" 
+                                             update=":expDataFormId:editTestTypePanel :expDataFormId:btnGroup1 :expDataFormId:btnGroup2 :expDataFormId:testTypeFSId"
+                                             disabled="#{!experimentTestTypeBean.showTestType}" 
+                                             oncomplete="dataFormatScan()"/>
+                            <p:spacer width="5" />
+                            <p:commandButton value="Cancel" action="#{experimentTestTypeBean.cancelTestTypeAction}" status="statusPage"
+                                             update=":expDataFormId:editTestTypePanel :expDataFormId:btnGroup1 :expDataFormId:btnGroup2"
+                                             disabled="#{!experimentTestTypeBean.showTestType}"/>
+                        </h:column>
+                   </h:panelGrid>
+
+                </h:form>  
+            </h:panelGroup>
+            
+        </h:panelGrid>
+
+        
+        <p:confirmDialog >   
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+        </p:confirmDialog>  
+        
+    </h:body>
+</html>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+    
+    <!-- ==================================================================== -->
+    <!-- Remote interface to JNDI, JNDI util and legacy beans: $Id:$          -->
+    <!-- ==================================================================== -->
+    
+    <bean name="LookupPool">
+        <constructor factoryMethod="newFixedThreadPool"
+            factoryClass="java.util.concurrent.Executors">
+            <!-- At least 2 threads are required -->
+            <parameter>2</parameter>
+        </constructor>
+    </bean>
+
+    <bean name="RemoteNamingBean" class="org.jnp.server.Main">
+        <annotation>@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="jboss:service=Naming", exposedInterface=org.jnp.server.MainMBean, registerDirectly=true)</annotation>
+        
+        <property name="namingInfo"><inject bean="LocalNamingBean" /></property>
+        
+        <!-- The call by value mode. true if all lookups are unmarshalled using
+            the caller's TCL, false if in VM lookups return the value by reference. -->
+        <property name="callByValue">false</property>
+        
+        <!-- The listening port for the bootstrap JNP service. Set this to -1
+            to run the NamingService without the JNP invoker listening port. -->
+        <property name="port">
+            <value-factory bean="ServiceBindingManager"
+                method="getIntBinding">
+                <parameter>jboss:service=Naming</parameter>
+                <parameter>Port</parameter>
+            </value-factory>
+        </property>
+        
+        <!-- The bootstrap JNP server bind address. This also sets the default
+            RMI service bind address. Empty == all addresses -->
+        <property name="bindAddress">${jboss.bind.address:localhost}</property>
+        
+        <!-- The port of the RMI naming service, 0 == anonymous -->
+        <property name="rmiPort">
+            <value-factory bean="ServiceBindingManager" method="getIntBinding">
+                <parameter>jboss:service=Naming</parameter>
+                <parameter>RmiPort</parameter>
+            </value-factory>
+        </property>
+        
+        <!-- The RMI service bind address. Empty == all addresses  -->
+        <property name="rmiBindAddress">${jboss.bind.address:localhost}</property>
+        
+        <!-- Set the java.rmi.server.hostname system property to rmiBindAddress -->
+        <property name="enableRmiServerHostname">true</property>
+        
+        <!-- The thread pool service used to control the bootstrap lookups -->
+        <property name="lookupExector"><inject bean="LookupPool"/></property>
+    </bean>
+    
+    <bean name="JndiViewBean" class="org.jboss.naming.JNDIView">
+        <annotation>@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="jboss:service=JNDIView", exposedInterface=org.jboss.naming.JNDIViewMBean, registerDirectly=true)</annotation>
+        
+        <!-- The HANamingService service name -->
+        <property name="HANamingService">jboss:service=HAJNDI</property>
+    </bean>
+    
+    <!-- An obsolete bean only needed if using legacy detached invoker access,
+        or the createAlias/removeAlias operations
+    -->
+    <bean name="NamingService" class="org.jboss.naming.NamingService">
+        <annotation>@org.jboss.aop.microcontainer.aspects.jmx.JMX(name="jboss:service=NamingBeanImpl", exposedInterface=org.jboss.naming.NamingServiceMBean, registerDirectly=true)</annotation>
+        
+        <!--  An example of using the unifed invoker as the transport.
+            <depends optional-attribute-name="InvokerProxyFactory"
+            proxy-type="attribute">jboss:service=proxyFactory,type=unified,target=Naming</depends>
+        -->
+        <property name="namingInfo"><inject bean="RemoteNamingBean"/></property>
+        <!-- Do not start the injected naming bean -->
+        <property name="startNamingBean">false</property>
+    </bean>
+    
+    <bean name="NamingProviderURLWriter"
+      class="org.jboss.naming.NamingProviderURLWriter">
+      
+        <property name="server"><inject bean="JBossServer"/></property>
+        <property name="bootstrapAddress"><inject bean="RemoteNamingBean" property="bindAddress"/></property>
+        <property name="bootstrapPort"><inject bean="RemoteNamingBean" property="port"/></property>
+    </bean>
+    
+</deployment>

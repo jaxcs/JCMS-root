@@ -1,0 +1,1385 @@
+11:31:22,583 INFO  [AbstractJBossASServerBase] Server Configuration:
+
+	JBOSS_HOME URL: file:/C:/temp/test/jbossv610/
+	Bootstrap: $JBOSS_HOME\server/default/conf/bootstrap.xml
+	Common Base: $JBOSS_HOME\common/
+	Common Library: $JBOSS_HOME\common/lib/
+	Server Name: default
+	Server Base: $JBOSS_HOME\server/
+	Server Library: $JBOSS_HOME\server/default/lib/
+	Server Config: $JBOSS_HOME\server/default/conf/
+	Server Home: $JBOSS_HOME\server/default/
+	Server Data: $JBOSS_HOME\server/default/data/
+	Server Log: $JBOSS_HOME\server/default/log/
+	Server Temp: $JBOSS_HOME\server/default/tmp/
+
+11:31:22,583 INFO  [AbstractServer] Starting: JBossAS [6.1.0.Final "Neo"]
+11:31:24,183 INFO  [ServerInfo] Java version: 1.6.0_35,Sun Microsystems Inc.
+11:31:24,183 INFO  [ServerInfo] Java Runtime: Java(TM) SE Runtime Environment (build 1.6.0_35-b10)
+11:31:24,183 INFO  [ServerInfo] Java VM: Java HotSpot(TM) 64-Bit Server VM 20.10-b01,Sun Microsystems Inc.
+11:31:24,183 INFO  [ServerInfo] OS-System: Windows 7 6.1,amd64
+11:31:24,183 INFO  [ServerInfo] VM arguments: -Dprogram.name=run.bat -Dlogging.configuration=file:C:\temp\test\jbossv610\bin\logging.properties -Xms512M -Xmx512M -XX:MaxPermSize=256M -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -Dorg.jboss.resolver.warning=true -Djava.endorsed.dirs=C:\temp\test\jbossv610\lib\endorsed 
+11:31:24,183 DEBUG [ServerInfo] Full System Properties Dump
+11:31:24,183 DEBUG [ServerInfo]     awt.toolkit: sun.awt.windows.WToolkit
+11:31:24,183 DEBUG [ServerInfo]     bind.address: WLI-CUSCO
+11:31:24,183 DEBUG [ServerInfo]     file.encoding: Cp1252
+11:31:24,183 DEBUG [ServerInfo]     file.encoding.pkg: sun.io
+11:31:24,183 DEBUG [ServerInfo]     file.separator: \
+11:31:24,183 DEBUG [ServerInfo]     java.awt.graphicsenv: sun.awt.Win32GraphicsEnvironment
+11:31:24,183 DEBUG [ServerInfo]     java.awt.printerjob: sun.awt.windows.WPrinterJob
+11:31:24,183 DEBUG [ServerInfo]     java.class.path: C:\Program Files\Java\jdk1.6.0_35\lib\tools.jar;C:\temp\test\jbossv610\bin\run.jar
+11:31:24,183 DEBUG [ServerInfo]     java.class.version: 50.0
+11:31:24,183 DEBUG [ServerInfo]     java.endorsed.dirs: C:\temp\test\jbossv610\lib\endorsed
+11:31:24,183 DEBUG [ServerInfo]     java.ext.dirs: C:\Program Files\Java\jdk1.6.0_35\jre\lib\ext;C:\Windows\Sun\Java\lib\ext
+11:31:24,183 DEBUG [ServerInfo]     java.home: C:\Program Files\Java\jdk1.6.0_35\jre
+11:31:24,183 DEBUG [ServerInfo]     java.io.tmpdir: C:\Users\cnh\AppData\Local\Temp\
+11:31:24,183 DEBUG [ServerInfo]     java.library.path: C:\Program Files\Java\jdk1.6.0_35\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;c:\Program Files\WIDCOMM\Bluetooth Software\;c:\Program Files\WIDCOMM\Bluetooth Software\syswow64;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\MySQL\MySQL Server 5.5\bin;C:\cygwin\bin;C:\Program Files\MySQL\MySQL Server 5.5\bin;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Apache Software Foundation\ant\bin;C:\Program Files (x86)\Common Files\Tom Sawyer Software\8.0.0;%JBOSS_HOME%\bin;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files\Java\jdk1.6.0_35\bin;.
+11:31:24,188 DEBUG [ServerInfo]     java.protocol.handler.pkgs: org.jboss.net.protocol|org.jboss.vfs.protocol
+11:31:24,188 DEBUG [ServerInfo]     java.rmi.server.RMIClassLoaderSpi: org.jboss.system.JBossRMIClassLoader
+11:31:24,188 DEBUG [ServerInfo]     java.rmi.server.hostname: WLI-CUSCO
+11:31:24,188 DEBUG [ServerInfo]     java.runtime.name: Java(TM) SE Runtime Environment
+11:31:24,188 DEBUG [ServerInfo]     java.runtime.version: 1.6.0_35-b10
+11:31:24,188 DEBUG [ServerInfo]     java.specification.name: Java Platform API Specification
+11:31:24,188 DEBUG [ServerInfo]     java.specification.vendor: Sun Microsystems Inc.
+11:31:24,188 DEBUG [ServerInfo]     java.specification.version: 1.6
+11:31:24,188 DEBUG [ServerInfo]     java.util.logging.manager: org.jboss.logmanager.LogManager
+11:31:24,188 DEBUG [ServerInfo]     java.vendor: Sun Microsystems Inc.
+11:31:24,188 DEBUG [ServerInfo]     java.vendor.url: http://java.sun.com/
+11:31:24,188 DEBUG [ServerInfo]     java.vendor.url.bug: http://java.sun.com/cgi-bin/bugreport.cgi
+11:31:24,188 DEBUG [ServerInfo]     java.version: 1.6.0_35
+11:31:24,188 DEBUG [ServerInfo]     java.vm.info: mixed mode
+11:31:24,188 DEBUG [ServerInfo]     java.vm.name: Java HotSpot(TM) 64-Bit Server VM
+11:31:24,188 DEBUG [ServerInfo]     java.vm.specification.name: Java Virtual Machine Specification
+11:31:24,188 DEBUG [ServerInfo]     java.vm.specification.vendor: Sun Microsystems Inc.
+11:31:24,188 DEBUG [ServerInfo]     java.vm.specification.version: 1.0
+11:31:24,188 DEBUG [ServerInfo]     java.vm.vendor: Sun Microsystems Inc.
+11:31:24,188 DEBUG [ServerInfo]     java.vm.version: 20.10-b01
+11:31:24,188 DEBUG [ServerInfo]     javax.management.builder.initial: org.jboss.mx.server.MBeanServerBuilderImpl
+11:31:24,188 DEBUG [ServerInfo]     jboss.bind.address: 0.0.0.0
+11:31:24,188 DEBUG [ServerInfo]     jboss.boot.server.log.dir: C:\temp\test\jbossv610\server\default\log
+11:31:24,188 DEBUG [ServerInfo]     jboss.bootstrap.home.url: file:/C:/temp/test/jbossv610/server/default/conf/
+11:31:24,188 DEBUG [ServerInfo]     jboss.bootstrap.name: bootstrap.xml
+11:31:24,188 DEBUG [ServerInfo]     jboss.bootstrap.url: file:/C:/temp/test/jbossv610/server/default/conf/bootstrap.xml
+11:31:24,188 DEBUG [ServerInfo]     jboss.common.base.url: file:/C:/temp/test/jbossv610/common/
+11:31:24,188 DEBUG [ServerInfo]     jboss.common.lib.url: file:/C:/temp/test/jbossv610/common/lib/
+11:31:24,188 DEBUG [ServerInfo]     jboss.home: C:\temp\test\jbossv610
+11:31:24,188 DEBUG [ServerInfo]     jboss.home.dir: C:\temp\test\jbossv610
+11:31:24,188 DEBUG [ServerInfo]     jboss.home.url: file:/C:/temp/test/jbossv610/
+11:31:24,188 DEBUG [ServerInfo]     jboss.host.name: wli-cusco
+11:31:24,188 DEBUG [ServerInfo]     jboss.lib.url: file:/C:/temp/test/jbossv610/lib/
+11:31:24,188 DEBUG [ServerInfo]     jboss.native.dir: C:\temp\test\jbossv610\server\default\tmp\native
+11:31:24,188 DEBUG [ServerInfo]     jboss.native.load: false
+11:31:24,188 DEBUG [ServerInfo]     jboss.node.name: wli-cusco
+11:31:24,188 DEBUG [ServerInfo]     jboss.partition.name: DefaultPartition
+11:31:24,188 DEBUG [ServerInfo]     jboss.platform.mbeanserver: true
+11:31:24,188 DEBUG [ServerInfo]     jboss.qualified.host.name: wli-cusco
+11:31:24,188 DEBUG [ServerInfo]     jboss.server.base.dir: C:\temp\test\jbossv610\server
+11:31:24,188 DEBUG [ServerInfo]     jboss.server.base.url: file:/C:/temp/test/jbossv610/server/
+11:31:24,188 DEBUG [ServerInfo]     jboss.server.config.url: file:/C:/temp/test/jbossv610/server/default/conf/
+11:31:24,188 DEBUG [ServerInfo]     jboss.server.data.dir: C:\temp\test\jbossv610\server\default\data
+11:31:24,188 DEBUG [ServerInfo]     jboss.server.home.dir: C:\temp\test\jbossv610\server\default
+11:31:24,188 DEBUG [ServerInfo]     jboss.server.home.url: file:/C:/temp/test/jbossv610/server/default/
+11:31:24,188 DEBUG [ServerInfo]     jboss.server.lib.url: file:/C:/temp/test/jbossv610/server/default/lib/
+11:31:24,188 DEBUG [ServerInfo]     jboss.server.log.dir: C:\temp\test\jbossv610\server\default\log
+11:31:24,193 DEBUG [ServerInfo]     jboss.server.name: default
+11:31:24,193 DEBUG [ServerInfo]     jboss.server.temp.dir: C:\temp\test\jbossv610\server\default\tmp
+11:31:24,193 DEBUG [ServerInfo]     jboss.vfs.forceCopy: true
+11:31:24,193 DEBUG [ServerInfo]     jbossmx.loader.repository.class: org.jboss.mx.loading.UnifiedLoaderRepository3
+11:31:24,193 DEBUG [ServerInfo]     jgroups.bind_addr: WLI-CUSCO
+11:31:24,193 DEBUG [ServerInfo]     line.separator: 
+
+11:31:24,193 DEBUG [ServerInfo]     log4j.defaultInitOverride: true
+11:31:24,193 DEBUG [ServerInfo]     logging.configuration: file:C:\temp\test\jbossv610\bin\logging.properties
+11:31:24,193 DEBUG [ServerInfo]     org.jboss.deployers.spi.deployer.matchers.NameIgnoreMechanism: org.jboss.deployers.spi.deployer.helpers.DummyNameIgnoreMechanism
+11:31:24,193 DEBUG [ServerInfo]     org.jboss.logging.Logger.pluginClass: org.jboss.logging.logmanager.LoggerPluginImpl
+11:31:24,193 DEBUG [ServerInfo]     org.jboss.reflect.spi.TypeInfoFactory: org.jboss.reflect.plugins.introspection.IntrospectionTypeInfoFactory
+11:31:24,193 DEBUG [ServerInfo]     org.jboss.resolver.warning: true
+11:31:24,193 DEBUG [ServerInfo]     os.arch: amd64
+11:31:24,193 DEBUG [ServerInfo]     os.name: Windows 7
+11:31:24,193 DEBUG [ServerInfo]     os.version: 6.1
+11:31:24,193 DEBUG [ServerInfo]     path.separator: ;
+11:31:24,193 DEBUG [ServerInfo]     program.name: run.bat
+11:31:24,193 DEBUG [ServerInfo]     sun.arch.data.model: 64
+11:31:24,193 DEBUG [ServerInfo]     sun.boot.class.path: C:\temp\test\jbossv610\lib\endorsed\activation.jar;C:\temp\test\jbossv610\lib\endorsed\jboss-annotations-api_1.1_spec.jar;C:\temp\test\jbossv610\lib\endorsed\jboss-jaxb-api_2.2_spec.jar;C:\temp\test\jbossv610\lib\endorsed\jboss-jaxws-api_2.2_spec.jar;C:\temp\test\jbossv610\lib\endorsed\jbossws-cxf-factories.jar;C:\temp\test\jbossv610\lib\endorsed\stax-api.jar;C:\Program Files\Java\jdk1.6.0_35\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0_35\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0_35\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0_35\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0_35\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0_35\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0_35\jre\lib\modules\jdk.boot.jar;C:\Program Files\Java\jdk1.6.0_35\jre\classes
+11:31:24,193 DEBUG [ServerInfo]     sun.boot.library.path: C:\Program Files\Java\jdk1.6.0_35\jre\bin
+11:31:24,193 DEBUG [ServerInfo]     sun.cpu.endian: little
+11:31:24,193 DEBUG [ServerInfo]     sun.cpu.isalist: amd64
+11:31:24,193 DEBUG [ServerInfo]     sun.desktop: windows
+11:31:24,193 DEBUG [ServerInfo]     sun.io.unicode.encoding: UnicodeLittle
+11:31:24,193 DEBUG [ServerInfo]     sun.java.command: org.jboss.Main -b 0.0.0.0
+11:31:24,193 DEBUG [ServerInfo]     sun.java.launcher: SUN_STANDARD
+11:31:24,193 DEBUG [ServerInfo]     sun.jnu.encoding: Cp1252
+11:31:24,193 DEBUG [ServerInfo]     sun.management.compiler: HotSpot 64-Bit Tiered Compilers
+11:31:24,193 DEBUG [ServerInfo]     sun.os.patch.level: Service Pack 1
+11:31:24,193 DEBUG [ServerInfo]     sun.rmi.dgc.client.gcInterval: 3600000
+11:31:24,193 DEBUG [ServerInfo]     sun.rmi.dgc.server.gcInterval: 3600000
+11:31:24,193 DEBUG [ServerInfo]     user.country: US
+11:31:24,193 DEBUG [ServerInfo]     user.dir: C:\temp\test\jbossv610\bin
+11:31:24,193 DEBUG [ServerInfo]     user.home: C:\Users\cnh
+11:31:24,193 DEBUG [ServerInfo]     user.language: en
+11:31:24,193 DEBUG [ServerInfo]     user.name: cnh
+11:31:24,193 DEBUG [ServerInfo]     user.timezone: America/New_York
+11:31:24,193 DEBUG [ServerInfo]     user.variant: 
+11:31:24,193 DEBUG [ServerInfo]     xb.builder.repeatableParticleHandlers: false
+11:31:24,193 DEBUG [ServerInfo]     xb.builder.useUnorderedSequence: true
+11:31:24,218 INFO  [JMXKernel] Legacy JMX core initialized
+11:31:30,797 INFO  [AbstractServerConfig] JBoss Web Services - Stack CXF Server 3.4.1.GA
+11:31:31,322 INFO  [JSFImplManagementDeployer] Initialized 3 JSF configurations: [Mojarra-1.2, MyFaces-2.0, Mojarra-2.0]
+11:31:37,206 INFO  [PersistenceUnitValueMetaData] iDependOn persistence.unit:unitName=jboss-ejb3-timerservice-mk2.jar#timerdb
+11:31:44,566 INFO  [JMXConnector] starting JMXConnector on host 0.0.0.0:1090
+11:31:45,335 INFO  [WebService] Using RMI server codebase: http://WLI-CUSCO:8083/
+11:31:45,520 INFO  [jbossatx] ARJUNA-32010 JBossTS Recovery Service (tag: JBOSSTS_4_14_0_Final) - JBoss Inc.
+11:31:45,525 INFO  [arjuna] ARJUNA-12324 Start RecoveryActivators
+11:31:45,545 INFO  [arjuna] ARJUNA-12296 ExpiredEntryMonitor running at Thu, 26 Sep 2013 11:31:45
+11:31:45,625 INFO  [arjuna] ARJUNA-12310 Recovery manager listening on endpoint 0.0.0.0:4712
+11:31:45,630 INFO  [arjuna] ARJUNA-12344 RecoveryManagerImple is ready on port 4712
+11:31:45,630 INFO  [jbossatx] ARJUNA-32013 Starting transaction recovery manager
+11:31:45,640 INFO  [arjuna] ARJUNA-12163 Starting service com.arjuna.ats.arjuna.recovery.ActionStatusService on port 4713
+11:31:45,640 INFO  [arjuna] ARJUNA-12337 TransactionStatusManagerItem host: 0.0.0.0 port: 4713
+11:31:45,945 INFO  [arjuna] ARJUNA-12170 TransactionStatusManager started on port 4713 and host 0.0.0.0 with service com.arjuna.ats.arjuna.recovery.ActionStatusService
+11:31:45,990 INFO  [jbossatx] ARJUNA-32017 JBossTS Transaction Service (JTA version - tag: JBOSSTS_4_14_0_Final) - JBoss Inc.
+11:31:46,050 INFO  [arjuna] ARJUNA-12202 registering bean jboss.jta:type=ObjectStore.
+11:31:46,255 INFO  [AprLifecycleListener] The Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: C:\Program Files\Java\jdk1.6.0_35\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;c:\Program Files\WIDCOMM\Bluetooth Software\;c:\Program Files\WIDCOMM\Bluetooth Software\syswow64;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\MySQL\MySQL Server 5.5\bin;C:\cygwin\bin;C:\Program Files\MySQL\MySQL Server 5.5\bin;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Apache Software Foundation\ant\bin;C:\Program Files (x86)\Common Files\Tom Sawyer Software\8.0.0;%JBOSS_HOME%\bin;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files\Java\jdk1.6.0_35\bin;.
+11:31:46,610 INFO  [ModClusterService] Initializing mod_cluster 1.1.0.Final
+11:31:46,625 INFO  [TomcatDeployment] deploy, ctxPath=/invoker
+11:31:46,895 INFO  [RARDeployment] Required license terms exist, view vfs:/C:/temp/test/jbossv610/server/default/deploy/jboss-local-jdbc.rar/META-INF/ra.xml
+11:31:46,905 INFO  [RARDeployment] Required license terms exist, view vfs:/C:/temp/test/jbossv610/server/default/deploy/jboss-xa-jdbc.rar/META-INF/ra.xml
+11:31:46,990 INFO  [ConnectionFactoryBindingService] Bound ConnectionManager 'jboss.jca:service=DataSourceBinding,name=JCMSWebDS' to JNDI name 'java:JCMSWebDS'
+11:31:47,015 INFO  [ConnectionFactoryBindingService] Bound ConnectionManager 'jboss.jca:service=DataSourceBinding,name=JCMSWebDBDS' to JNDI name 'java:JCMSWebDBDS'
+11:31:47,030 INFO  [ConnectionFactoryBindingService] Bound ConnectionManager 'jboss.jca:service=DataSourceBinding,name=RSLIMSDS' to JNDI name 'java:RSLIMSDS'
+11:31:47,050 INFO  [ConnectionFactoryBindingService] Bound ConnectionManager 'jboss.jca:service=DataSourceBinding,name=DefaultDS' to JNDI name 'java:DefaultDS'
+11:31:47,050 INFO  [PersistenceUnitDeployment] Starting persistence unit persistence.unit:unitName=jboss-ejb3-timerservice-mk2.jar#timerdb
+11:31:47,265 INFO  [Version] Hibernate Commons Annotations 3.2.0.Final
+11:31:47,275 INFO  [Environment] Hibernate 3.6.6.Final
+11:31:47,275 INFO  [Environment] hibernate.properties not found
+11:31:47,280 INFO  [Environment] Bytecode provider name : javassist
+11:31:47,285 INFO  [Environment] using JDK 1.4 java.sql.Timestamp handling
+11:31:47,370 INFO  [Version] Hibernate EntityManager 3.6.6.Final
+11:31:47,395 INFO  [Ejb3Configuration] Processing PersistenceUnitInfo [
+	name: timerdb
+	...]
+11:31:47,415 WARN  [Ejb3Configuration] Persistence provider caller does not implement the EJB3 spec correctly.PersistenceUnitInfo.getNewTempClassLoader() is null.
+11:31:47,470 INFO  [AnnotationBinder] Binding entity from annotated class: org.jboss.ejb3.timerservice.mk2.persistence.TimerEntity
+11:31:47,515 INFO  [EntityBinder] Bind entity org.jboss.ejb3.timerservice.mk2.persistence.TimerEntity on table timer
+11:31:47,575 INFO  [AnnotationBinder] Binding entity from annotated class: org.jboss.ejb3.timerservice.mk2.persistence.CalendarTimerEntity
+11:31:47,575 INFO  [EntityBinder] Bind entity org.jboss.ejb3.timerservice.mk2.persistence.CalendarTimerEntity on table calendar_timer
+11:31:47,595 INFO  [AnnotationBinder] Binding entity from annotated class: org.jboss.ejb3.timerservice.mk2.persistence.TimeoutMethod
+11:31:47,600 INFO  [EntityBinder] Bind entity org.jboss.ejb3.timerservice.mk2.persistence.TimeoutMethod on table timeout_method
+11:31:47,650 INFO  [Version] Hibernate Validator 3.1.0.GA
+11:31:47,685 INFO  [Version] Hibernate Validator 4.1.0.Final
+11:31:47,700 INFO  [DefaultTraversableResolver] Instantiated an instance of org.hibernate.validator.engine.resolver.JPATraversableResolver.
+11:31:47,800 INFO  [DefaultTraversableResolver] Instantiated an instance of org.hibernate.validator.engine.resolver.JPATraversableResolver.
+11:31:47,805 INFO  [DefaultTraversableResolver] Instantiated an instance of org.hibernate.validator.engine.resolver.JPATraversableResolver.
+11:31:47,815 INFO  [HibernateSearchEventListenerRegister] Unable to find org.hibernate.search.event.FullTextIndexEventListener on the classpath. Hibernate Search is not enabled.
+11:31:47,825 INFO  [ConnectionProviderFactory] Initializing connection provider: org.hibernate.ejb.connection.InjectedDataSourceConnectionProvider
+11:31:47,835 INFO  [InjectedDataSourceConnectionProvider] Using provided datasource
+11:31:48,075 INFO  [Dialect] Using dialect: org.hibernate.dialect.MySQLDialect
+11:31:48,090 INFO  [JdbcSupportLoader] Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+11:31:48,090 INFO  [SettingsFactory] Database ->
+       name : MySQL
+    version : 5.5.33
+      major : 5
+      minor : 5
+11:31:48,095 INFO  [SettingsFactory] Driver ->
+       name : MySQL-AB JDBC Driver
+    version : mysql-connector-java-5.1.6 ( Revision: ${svn.Revision} )
+      major : 5
+      minor : 1
+11:31:48,095 INFO  [TransactionFactoryFactory] Transaction strategy: org.hibernate.ejb.transaction.JoinableCMTTransactionFactory
+11:31:48,100 INFO  [TransactionManagerLookupFactory] instantiating TransactionManagerLookup: org.hibernate.transaction.JBossTransactionManagerLookup
+11:31:48,105 INFO  [TransactionManagerLookupFactory] instantiated TransactionManagerLookup
+11:31:48,105 INFO  [SettingsFactory] Automatic flush during beforeCompletion(): disabled
+11:31:48,105 INFO  [SettingsFactory] Automatic session close at end of transaction: disabled
+11:31:48,105 INFO  [SettingsFactory] JDBC batch size: 15
+11:31:48,110 INFO  [SettingsFactory] JDBC batch updates for versioned data: disabled
+11:31:48,110 INFO  [SettingsFactory] Scrollable result sets: enabled
+11:31:48,110 INFO  [SettingsFactory] JDBC3 getGeneratedKeys(): enabled
+11:31:48,110 INFO  [SettingsFactory] Connection release mode: auto
+11:31:48,115 INFO  [SettingsFactory] Maximum outer join fetch depth: 2
+11:31:48,115 INFO  [SettingsFactory] Default batch fetch size: 1
+11:31:48,115 INFO  [SettingsFactory] Generate SQL with comments: disabled
+11:31:48,115 INFO  [SettingsFactory] Order SQL updates by primary key: disabled
+11:31:48,115 INFO  [SettingsFactory] Order SQL inserts for batching: disabled
+11:31:48,120 INFO  [SettingsFactory] Query translator: org.hibernate.hql.ast.ASTQueryTranslatorFactory
+11:31:48,125 INFO  [ASTQueryTranslatorFactory] Using ASTQueryTranslatorFactory
+11:31:48,125 INFO  [SettingsFactory] Query language substitutions: {}
+11:31:48,125 INFO  [SettingsFactory] JPA-QL strict compliance: enabled
+11:31:48,125 INFO  [SettingsFactory] Second-level cache: enabled
+11:31:48,125 INFO  [SettingsFactory] Query cache: disabled
+11:31:48,130 INFO  [SettingsFactory] Cache region factory : org.hibernate.cache.impl.bridge.RegionFactoryCacheProviderBridge
+11:31:48,135 INFO  [RegionFactoryCacheProviderBridge] Cache provider: org.hibernate.cache.HashtableCacheProvider
+11:31:48,140 INFO  [SettingsFactory] Optimize cache for minimal puts: disabled
+11:31:48,140 INFO  [SettingsFactory] Cache region prefix: persistence.unit:unitName=jboss-ejb3-timerservice-mk2.jar#timerdb
+11:31:48,140 INFO  [SettingsFactory] Structured second-level cache entries: disabled
+11:31:48,150 INFO  [SettingsFactory] Statistics: disabled
+11:31:48,150 INFO  [SettingsFactory] Deleted entity synthetic identifier rollback: disabled
+11:31:48,150 INFO  [SettingsFactory] Default entity-mode: pojo
+11:31:48,150 INFO  [SettingsFactory] Named query checking : enabled
+11:31:48,150 INFO  [SettingsFactory] Check Nullability in Core (should be disabled when Bean Validation is on): disabled
+11:31:48,175 INFO  [SessionFactoryImpl] building session factory
+11:31:48,185 INFO  [BasicTypeRegistry] Type registration [wrapper_materialized_blob] overrides previous : org.hibernate.type.WrappedMaterializedBlobType@69683ca4
+11:31:48,185 INFO  [BasicTypeRegistry] Type registration [clob] overrides previous : org.hibernate.type.ClobType@3a65690c
+11:31:48,185 INFO  [BasicTypeRegistry] Type registration [java.sql.Clob] overrides previous : org.hibernate.type.ClobType@3a65690c
+11:31:48,185 INFO  [BasicTypeRegistry] Type registration [wrapper_characters_clob] overrides previous : org.hibernate.type.CharacterArrayClobType@57d3b0c7
+11:31:48,190 INFO  [BasicTypeRegistry] Type registration [materialized_blob] overrides previous : org.hibernate.type.MaterializedBlobType@afb05dd
+11:31:48,190 INFO  [BasicTypeRegistry] Type registration [characters_clob] overrides previous : org.hibernate.type.PrimitiveCharacterArrayClobType@663df5cc
+11:31:48,190 INFO  [BasicTypeRegistry] Type registration [materialized_clob] overrides previous : org.hibernate.type.MaterializedClobType@6dd45884
+11:31:48,190 INFO  [BasicTypeRegistry] Type registration [blob] overrides previous : org.hibernate.type.BlobType@fff7a71
+11:31:48,190 INFO  [BasicTypeRegistry] Type registration [java.sql.Blob] overrides previous : org.hibernate.type.BlobType@fff7a71
+11:31:48,395 INFO  [SessionFactoryObjectFactory] Factory name: persistence.unit:unitName=jboss-ejb3-timerservice-mk2.jar#timerdb
+11:31:48,400 INFO  [NamingHelper] JNDI InitialContext properties:{java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory, java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces}
+11:31:48,400 INFO  [SessionFactoryObjectFactory] Bound factory to JNDI name: persistence.unit:unitName=jboss-ejb3-timerservice-mk2.jar#timerdb
+11:31:48,410 INFO  [SchemaUpdate] Running hbm2ddl schema update
+11:31:48,410 INFO  [SchemaUpdate] fetching database metadata
+11:31:48,415 INFO  [SchemaUpdate] updating schema
+11:31:48,420 INFO  [DefaultTraversableResolver] Instantiated an instance of org.hibernate.validator.engine.resolver.JPATraversableResolver.
+11:31:48,445 INFO  [TableMetadata] table found: jcms_db.TimeoutMethod_methodParams
+11:31:48,445 INFO  [TableMetadata] columns: [methodparams, timeoutmethod_id]
+11:31:48,445 INFO  [TableMetadata] foreign keys: [fkf294c964b7de2d8a]
+11:31:48,445 INFO  [TableMetadata] indexes: [fkf294c964b7de2d8a]
+11:31:48,460 INFO  [TableMetadata] table found: jcms_db.calendar_timer
+11:31:48,460 INFO  [TableMetadata] columns: [scheduleexprtimezone, scheduleexprsecond, autotimer, scheduleexprstartdate, scheduleexprminute, scheduleexprhour, timeoutmethod_id, id, scheduleexprdayofmonth, scheduleexprenddate, scheduleexprmonth, scheduleexprdayofweek, scheduleexpryear]
+11:31:48,460 INFO  [TableMetadata] foreign keys: [fk2b697f04b7de2d8a, fk2b697f04e6e6ef93]
+11:31:48,460 INFO  [TableMetadata] indexes: [primary, fk2b697f04b7de2d8a, fk2b697f04e6e6ef93]
+11:31:48,470 INFO  [TableMetadata] table found: jcms_db.timeout_method
+11:31:48,470 INFO  [TableMetadata] columns: [id, methodname, declaringclass]
+11:31:48,470 INFO  [TableMetadata] foreign keys: []
+11:31:48,470 INFO  [TableMetadata] indexes: [primary]
+11:31:48,480 INFO  [TableMetadata] table found: jcms_db.timer
+11:31:48,480 INFO  [TableMetadata] columns: [id, previousrun, initialdate, repeatinterval, timedobjectid, timerstate, nextdate, info]
+11:31:48,480 INFO  [TableMetadata] foreign keys: []
+11:31:48,480 INFO  [TableMetadata] indexes: [primary]
+11:31:48,485 INFO  [SchemaUpdate] schema update complete
+11:31:48,490 INFO  [NamingHelper] JNDI InitialContext properties:{java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory, java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces}
+11:31:48,610 WARN  [InterceptorInfoRepository] EJBTHREE-1852: InterceptorInfoRepository is deprecated
+11:31:49,110 INFO  [JBossASKernel] Created KernelDeployment for: JCMSIntegrationTier.jar
+11:31:49,115 INFO  [JBossASKernel] installing bean: jboss.j2ee:jar=JCMSIntegrationTier.jar,name=jcms/integrationtier/ejb/base/JCMSWebSystemFacade,service=EJB3
+11:31:49,115 INFO  [JBossASKernel]   with dependencies:
+11:31:49,115 INFO  [JBossASKernel]   and demands:
+11:31:49,125 INFO  [JBossASKernel] 	persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSWebIntegrationTierPU; Required: Described
+11:31:49,125 INFO  [JBossASKernel] 	jboss.ejb:service=EJBTimerService; Required: Described
+11:31:49,125 INFO  [JBossASKernel] 	jboss-switchboard:appName=JCMSIntegrationTier,module=JCMSIntegrationTier,name=jcms/integrationtier/ejb/base/JCMSWebSystemFacade; Required: Create
+11:31:49,130 INFO  [JBossASKernel] 	jboss-injector:topLevelUnit=JCMSIntegrationTier.jar,unit=JCMSIntegrationTier.jar,bean=jcms/integrationtier/ejb/base/JCMSWebSystemFacade; Required: Described
+11:31:49,130 INFO  [JBossASKernel]   and supplies:
+11:31:49,130 INFO  [JBossASKernel] 	jndi:jcms/integrationtier/ejb/base/JCMSWebSystemFacade/local-jcms.integrationtier.base.JCMSWebSystemFacadeLocal
+11:31:49,130 INFO  [JBossASKernel] 	Class:jcms.integrationtier.base.ITJCMSWebBaseFacadeLocal
+11:31:49,135 INFO  [JBossASKernel] 	jndi:jcms/integrationtier/ejb/base/JCMSWebSystemFacade/local-jcms.integrationtier.base.ITJCMSWebBaseFacadeLocal
+11:31:49,135 INFO  [JBossASKernel] 	jndi:jcms/integrationtier/ejb/base/JCMSWebSystemFacade
+11:31:49,135 INFO  [JBossASKernel] 	jndi:jcms/integrationtier/ejb/base/JCMSWebSystemFacade/remote
+11:31:49,135 INFO  [JBossASKernel] 	jndi:jcms/integrationtier/ejb/base/JCMSWebSystemFacade/local
+11:31:49,140 INFO  [JBossASKernel] 	Class:jcms.integrationtier.base.JCMSWebSystemFacadeLocal
+11:31:49,140 INFO  [JBossASKernel] 	jndi:jcms/integrationtier/ejb/base/JCMSWebSystemFacade/remote-jcms.integrationtier.base.JCMSWebSystemFacadeRemote
+11:31:49,140 INFO  [JBossASKernel] 	Class:jcms.integrationtier.base.JCMSWebSystemFacadeRemote
+11:31:49,150 INFO  [JBossASKernel] Added bean(jboss.j2ee:jar=JCMSIntegrationTier.jar,name=jcms/integrationtier/ejb/base/JCMSWebSystemFacade,service=EJB3) to KernelDeployment of: JCMSIntegrationTier.jar
+11:31:49,150 INFO  [JBossASKernel] installing bean: jboss.j2ee:jar=JCMSIntegrationTier.jar,name=jcms/integrationtier/ejb/base/SystemFacade,service=EJB3
+11:31:49,155 INFO  [JBossASKernel]   with dependencies:
+11:31:49,155 INFO  [JBossASKernel]   and demands:
+11:31:49,155 INFO  [JBossASKernel] 	jboss.ejb:service=EJBTimerService; Required: Described
+11:31:49,160 INFO  [JBossASKernel] 	jboss-injector:topLevelUnit=JCMSIntegrationTier.jar,unit=JCMSIntegrationTier.jar,bean=jcms/integrationtier/ejb/base/SystemFacade; Required: Described
+11:31:49,160 INFO  [JBossASKernel] 	jboss-switchboard:appName=JCMSIntegrationTier,module=JCMSIntegrationTier,name=jcms/integrationtier/ejb/base/SystemFacade; Required: Create
+11:31:49,160 INFO  [JBossASKernel] 	persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSIntegrationTierPU; Required: Described
+11:31:49,160 INFO  [JBossASKernel]   and supplies:
+11:31:49,165 INFO  [JBossASKernel] 	jndi:jcms/integrationtier/ejb/base/SystemFacade/remote-jcms.integrationtier.base.SystemFacadeRemote
+11:31:49,165 INFO  [JBossASKernel] 	Class:jcms.integrationtier.base.SystemFacadeLocal
+11:31:49,165 INFO  [JBossASKernel] 	jndi:jcms/integrationtier/ejb/base/SystemFacade/remote
+11:31:49,165 INFO  [JBossASKernel] 	Class:jcms.integrationtier.base.SystemFacadeRemote
+11:31:49,170 INFO  [JBossASKernel] 	jndi:jcms/integrationtier/ejb/base/SystemFacade/local
+11:31:49,170 INFO  [JBossASKernel] 	jndi:jcms/integrationtier/ejb/base/SystemFacade/local-jcms.integrationtier.base.ITBaseFacadeLocal
+11:31:49,170 INFO  [JBossASKernel] 	jndi:jcms/integrationtier/ejb/base/SystemFacade
+11:31:49,170 INFO  [JBossASKernel] 	jndi:jcms/integrationtier/ejb/base/SystemFacade/local-jcms.integrationtier.base.SystemFacadeLocal
+11:31:49,175 INFO  [JBossASKernel] 	Class:jcms.integrationtier.base.ITBaseFacadeLocal
+11:31:49,175 INFO  [JBossASKernel] Added bean(jboss.j2ee:jar=JCMSIntegrationTier.jar,name=jcms/integrationtier/ejb/base/SystemFacade,service=EJB3) to KernelDeployment of: JCMSIntegrationTier.jar
+11:31:49,245 INFO  [PersistenceUnitDeployment] Starting persistence unit persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSIntegrationTierPU
+11:31:49,250 INFO  [Ejb3Configuration] Processing PersistenceUnitInfo [
+	name: JCMSIntegrationTierPU
+	...]
+11:31:49,250 WARN  [Ejb3Configuration] Persistence provider caller does not implement the EJB3 spec correctly.PersistenceUnitInfo.getNewTempClassLoader() is null.
+11:31:49,260 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvLitterTypeEntity
+11:31:49,265 INFO  [QueryBinder] Binding Named query: CvLitterTypeEntity.findAll => SELECT c FROM CvLitterTypeEntity c ORDER BY c.litterType
+11:31:49,265 INFO  [QueryBinder] Binding Named query: CvLitterTypeEntity.findBykey => SELECT c FROM CvLitterTypeEntity c WHERE c.litterTypekey = :key
+11:31:49,265 INFO  [QueryBinder] Binding Named query: CvLitterTypeEntity.findByLitterTypekey => SELECT c FROM CvLitterTypeEntity c WHERE c.litterTypekey = :litterTypekey
+11:31:49,265 INFO  [QueryBinder] Binding Named query: CvLitterTypeEntity.findByLitterType => SELECT c FROM CvLitterTypeEntity c WHERE c.litterType = :litterType
+11:31:49,270 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvLitterTypeEntity on table cv_LitterType
+11:31:49,275 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvExpSampleLocationEntity
+11:31:49,275 INFO  [QueryBinder] Binding Named query: CvExpSampleLocationEntity.findAll => SELECT c FROM CvExpSampleLocationEntity c ORDER BY c.location
+11:31:49,275 INFO  [QueryBinder] Binding Named query: CvExpSampleLocationEntity.findBykey => SELECT c FROM CvExpSampleLocationEntity c WHERE c.expSampleLocationkey = :key
+11:31:49,275 INFO  [QueryBinder] Binding Named query: CvExpSampleLocationEntity.findByExpSampleLocationkey => SELECT c FROM CvExpSampleLocationEntity c WHERE c.expSampleLocationkey = :expSampleLocationkey
+11:31:49,280 INFO  [QueryBinder] Binding Named query: CvExpSampleLocationEntity.findByLocation => SELECT c FROM CvExpSampleLocationEntity c WHERE c.location = :location
+11:31:49,280 INFO  [QueryBinder] Binding Named query: CvExpSampleLocationEntity.findByVersion => SELECT c FROM CvExpSampleLocationEntity c WHERE c.version = :version
+11:31:49,280 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvExpSampleLocationEntity on table cv_ExpSampleLocation
+11:31:49,285 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.PenGroupEntity
+11:31:49,285 INFO  [QueryBinder] Binding Named query: PenGroupEntity.findAll => SELECT p FROM PenGroupEntity p
+11:31:49,285 INFO  [QueryBinder] Binding Named query: PenGroupEntity.findBykey => SELECT p FROM PenGroupEntity p WHERE p.penKey = :key
+11:31:49,290 INFO  [QueryBinder] Binding Named query: PenGroupEntity.findByPenKey => SELECT p FROM PenGroupEntity p WHERE p.penKey = :penKey
+11:31:49,290 INFO  [QueryBinder] Binding Named query: PenGroupEntity.findByPenID => SELECT p FROM PenGroupEntity p WHERE p.penID = :penID
+11:31:49,290 INFO  [QueryBinder] Binding Named query: PenGroupEntity.findByRoom => SELECT p FROM PenGroupEntity p WHERE p.room = :room
+11:31:49,290 INFO  [QueryBinder] Binding Named query: PenGroupEntity.findByPenStatus => SELECT p FROM PenGroupEntity p WHERE p.penStatus = :penStatus
+11:31:49,290 INFO  [QueryBinder] Binding Named query: PenGroupEntity.findByBeginDate => SELECT p FROM PenGroupEntity p WHERE p.beginDate = :beginDate
+11:31:49,295 INFO  [QueryBinder] Binding Named query: PenGroupEntity.findByHealthLevel => SELECT p FROM PenGroupEntity p WHERE p.healthLevel = :healthLevel
+11:31:49,295 INFO  [QueryBinder] Binding Named query: PenGroupEntity.findByVersion => SELECT p FROM PenGroupEntity p WHERE p.version = :version
+11:31:49,295 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.PenGroupEntity on table PenGroup
+11:31:49,300 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.MatingEntity
+11:31:49,300 INFO  [QueryBinder] Binding Named query: MatingEntity.findAll => SELECT m FROM MatingEntity m ORDER BY m.matingID 
+11:31:49,300 INFO  [QueryBinder] Binding Named query: MatingEntity.findAllByOwner => SELECT m FROM MatingEntity m WHERE m.owner = :fOwner ORDER BY m.matingID 
+11:31:49,300 INFO  [QueryBinder] Binding Named query: MatingEntity.findAllByOwners => SELECT m FROM MatingEntity m WHERE m.owner IN (:lOwner) ORDER BY m.matingID 
+11:31:49,305 INFO  [QueryBinder] Binding Named query: MatingEntity.findBykey => SELECT m FROM MatingEntity m WHERE m.matingKey = :key
+11:31:49,305 INFO  [QueryBinder] Binding Named query: MatingEntity.findMaxPrimaryKey => SELECT max(c.matingKey) FROM MatingEntity c 
+11:31:49,305 INFO  [QueryBinder] Binding Named query: MatingEntity.findMaxMatingID => SELECT max(c.matingID) FROM MatingEntity c 
+11:31:49,305 INFO  [QueryBinder] Binding Named query: MatingEntity.findByMatingKey => SELECT m FROM MatingEntity m WHERE m.matingKey = :matingKey
+11:31:49,305 INFO  [QueryBinder] Binding Named query: MatingEntity.findByDam1Key => SELECT m FROM MatingEntity m WHERE m.dam1Key = :dam1Key
+11:31:49,305 INFO  [QueryBinder] Binding Named query: MatingEntity.findByDam2Key => SELECT m FROM MatingEntity m WHERE m.dam2Key = :dam2Key
+11:31:49,310 INFO  [QueryBinder] Binding Named query: MatingEntity.findByMatingID => SELECT m FROM MatingEntity m WHERE m.matingID = :matingID
+11:31:49,310 INFO  [QueryBinder] Binding Named query: MatingEntity.findBySuggestedPenID => SELECT m FROM MatingEntity m WHERE m.suggestedPenID = :suggestedPenID
+11:31:49,310 INFO  [QueryBinder] Binding Named query: MatingEntity.findByWeanTime => SELECT m FROM MatingEntity m WHERE m.weanTime = :weanTime
+11:31:49,310 INFO  [QueryBinder] Binding Named query: MatingEntity.findByMatingDate => SELECT m FROM MatingEntity m WHERE m.matingDate = :matingDate
+11:31:49,310 INFO  [QueryBinder] Binding Named query: MatingEntity.findByRetiredDate => SELECT m FROM MatingEntity m WHERE m.retiredDate = :retiredDate
+11:31:49,315 INFO  [QueryBinder] Binding Named query: MatingEntity.findByGeneration => SELECT m FROM MatingEntity m WHERE m.generation = :generation
+11:31:49,315 INFO  [QueryBinder] Binding Named query: MatingEntity.findByOwner => SELECT m FROM MatingEntity m WHERE m.owner = :owner
+11:31:49,315 INFO  [QueryBinder] Binding Named query: MatingEntity.findByWeanNote => SELECT m FROM MatingEntity m WHERE m.weanNote = :weanNote
+11:31:49,315 INFO  [QueryBinder] Binding Named query: MatingEntity.findByNeedsTyping => SELECT m FROM MatingEntity m WHERE m.needsTyping = :needsTyping
+11:31:49,315 INFO  [QueryBinder] Binding Named query: MatingEntity.findByComment => SELECT m FROM MatingEntity m WHERE m.comment = :comment
+11:31:49,315 INFO  [QueryBinder] Binding Named query: MatingEntity.findByProposedDiet => SELECT m FROM MatingEntity m WHERE m.proposedDiet = :proposedDiet
+11:31:49,320 INFO  [QueryBinder] Binding Named query: MatingEntity.findByProposedRetireDate => SELECT m FROM MatingEntity m WHERE m.proposedRetireDate = :proposedRetireDate
+11:31:49,320 INFO  [QueryBinder] Binding Named query: MatingEntity.findByProposedRetireD1Diet => SELECT m FROM MatingEntity m WHERE m.proposedRetireD1Diet = :proposedRetireD1Diet
+11:31:49,320 INFO  [QueryBinder] Binding Named query: MatingEntity.findByProposedRetireD2Diet => SELECT m FROM MatingEntity m WHERE m.proposedRetireD2Diet = :proposedRetireD2Diet
+11:31:49,320 INFO  [QueryBinder] Binding Named query: MatingEntity.findByProposedRetireSDiet => SELECT m FROM MatingEntity m WHERE m.proposedRetireSDiet = :proposedRetireSDiet
+11:31:49,320 INFO  [QueryBinder] Binding Named query: MatingEntity.findByProposedRetireD1BrStatus => SELECT m FROM MatingEntity m WHERE m.proposedRetireD1BrStatus = :proposedRetireD1BrStatus
+11:31:49,320 INFO  [QueryBinder] Binding Named query: MatingEntity.findByProposedRetireD2BrStatus => SELECT m FROM MatingEntity m WHERE m.proposedRetireD2BrStatus = :proposedRetireD2BrStatus
+11:31:49,325 INFO  [QueryBinder] Binding Named query: MatingEntity.findByProposedRetireSBrStatus => SELECT m FROM MatingEntity m WHERE m.proposedRetireSBrStatus = :proposedRetireSBrStatus
+11:31:49,325 INFO  [QueryBinder] Binding Named query: MatingEntity.findByProposedRetireD1LfStatus => SELECT m FROM MatingEntity m WHERE m.proposedRetireD1LfStatus = :proposedRetireD1LfStatus
+11:31:49,325 INFO  [QueryBinder] Binding Named query: MatingEntity.findByProposedRetireD2LfStatus => SELECT m FROM MatingEntity m WHERE m.proposedRetireD2LfStatus = :proposedRetireD2LfStatus
+11:31:49,325 INFO  [QueryBinder] Binding Named query: MatingEntity.findByProposedRetireSLfStatus => SELECT m FROM MatingEntity m WHERE m.proposedRetireSLfStatus = :proposedRetireSLfStatus
+11:31:49,325 INFO  [QueryBinder] Binding Named query: MatingEntity.findByProposedRetirePenStatus => SELECT m FROM MatingEntity m WHERE m.proposedRetirePenStatus = :proposedRetirePenStatus
+11:31:49,330 INFO  [QueryBinder] Binding Named query: MatingEntity.findBySuggestedFirstLitterNum => SELECT m FROM MatingEntity m WHERE m.suggestedFirstLitterNum = :suggestedFirstLitterNum
+11:31:49,330 INFO  [QueryBinder] Binding Named query: MatingEntity.findByVersion => SELECT m FROM MatingEntity m WHERE m.version = :version
+11:31:49,330 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.MatingEntity on table Mating
+11:31:49,335 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.ContainerHistoryEntity
+11:31:49,340 INFO  [QueryBinder] Binding Named query: ContainerHistoryEntity.findAll => SELECT c FROM ContainerHistoryEntity c ORDER BY c.actionDate 
+11:31:49,340 INFO  [QueryBinder] Binding Named query: ContainerHistoryEntity.findBykey => SELECT c FROM ContainerHistoryEntity c WHERE c.containerHistorykey = :key
+11:31:49,340 INFO  [QueryBinder] Binding Named query: ContainerHistoryEntity.findMaxPrimaryKey => SELECT max(c.containerHistorykey) FROM ContainerHistoryEntity c 
+11:31:49,340 INFO  [QueryBinder] Binding Named query: ContainerHistoryEntity.findByContainerHistorykey => SELECT c FROM ContainerHistoryEntity c WHERE c.containerHistorykey = :containerHistorykey
+11:31:49,340 INFO  [QueryBinder] Binding Named query: ContainerHistoryEntity.findByActionDate => SELECT c FROM ContainerHistoryEntity c WHERE c.actionDate = :actionDate
+11:31:49,345 INFO  [QueryBinder] Binding Named query: ContainerHistoryEntity.findByVersion => SELECT c FROM ContainerHistoryEntity c WHERE c.version = :version
+11:31:49,345 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.ContainerHistoryEntity on table ContainerHistory
+11:31:49,345 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvSampleDateTypeEntity
+11:31:49,345 INFO  [QueryBinder] Binding Named query: CvSampleDateTypeEntity.findAll => SELECT c FROM CvSampleDateTypeEntity c ORDER BY c.sampleDateType
+11:31:49,350 INFO  [QueryBinder] Binding Named query: CvSampleDateTypeEntity.findBykey => SELECT c FROM CvSampleDateTypeEntity c WHERE c.sampleDateTypekey = :key
+11:31:49,350 INFO  [QueryBinder] Binding Named query: CvSampleDateTypeEntity.findBySampleDateTypekey => SELECT c FROM CvSampleDateTypeEntity c WHERE c.sampleDateTypekey = :sampleDateTypekey
+11:31:49,350 INFO  [QueryBinder] Binding Named query: CvSampleDateTypeEntity.findBySampleDateType => SELECT c FROM CvSampleDateTypeEntity c WHERE c.sampleDateType = :sampleDateType
+11:31:49,350 INFO  [QueryBinder] Binding Named query: CvSampleDateTypeEntity.findByVersion => SELECT c FROM CvSampleDateTypeEntity c WHERE c.version = :version
+11:31:49,350 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvSampleDateTypeEntity on table cv_SampleDateType
+11:31:49,355 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.OwnerEntity
+11:31:49,355 INFO  [QueryBinder] Binding Named query: OwnerEntity.findAll => SELECT o FROM OwnerEntity o ORDER BY o.owner 
+11:31:49,355 INFO  [QueryBinder] Binding Named query: OwnerEntity.findAllByOwner => SELECT o FROM OwnerEntity o WHERE o.owner = :fOwner ORDER BY o.owner 
+11:31:49,355 INFO  [QueryBinder] Binding Named query: OwnerEntity.findAllByOwners => SELECT o FROM OwnerEntity o WHERE o.owner IN (:lOwner) ORDER BY o.owner 
+11:31:49,360 INFO  [QueryBinder] Binding Named query: OwnerEntity.findBykey => SELECT o FROM OwnerEntity o WHERE o.ownerKey = :key
+11:31:49,360 INFO  [QueryBinder] Binding Named query: OwnerEntity.findByOwnerKey => SELECT o FROM OwnerEntity o WHERE o.ownerKey = :ownerKey
+11:31:49,360 INFO  [QueryBinder] Binding Named query: OwnerEntity.findByOwner => SELECT o FROM OwnerEntity o WHERE o.owner = :owner
+11:31:49,360 INFO  [QueryBinder] Binding Named query: OwnerEntity.findByVersion => SELECT o FROM OwnerEntity o WHERE o.version = :version
+11:31:49,360 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.OwnerEntity on table Owner
+11:31:49,365 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvMouseOriginEntity
+11:31:49,365 INFO  [QueryBinder] Binding Named query: CvMouseOriginEntity.findAll => SELECT c FROM CvMouseOriginEntity c ORDER BY c.mouseOrigin
+11:31:49,365 INFO  [QueryBinder] Binding Named query: CvMouseOriginEntity.findBykey => SELECT c FROM CvMouseOriginEntity c WHERE c.mouseOriginkey = :key
+11:31:49,365 INFO  [QueryBinder] Binding Named query: CvMouseOriginEntity.findByMouseOriginkey => SELECT c FROM CvMouseOriginEntity c WHERE c.mouseOriginkey = :mouseOriginkey
+11:31:49,365 INFO  [QueryBinder] Binding Named query: CvMouseOriginEntity.findByMouseOrigin => SELECT c FROM CvMouseOriginEntity c WHERE c.mouseOrigin = :mouseOrigin
+11:31:49,370 INFO  [QueryBinder] Binding Named query: CvMouseOriginEntity.findByVersion => SELECT c FROM CvMouseOriginEntity c WHERE c.version = :version
+11:31:49,370 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvMouseOriginEntity on table cv_MouseOrigin
+11:31:49,370 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvLocationTypeEntity
+11:31:49,370 INFO  [QueryBinder] Binding Named query: CvLocationTypeEntity.findAll => SELECT c FROM CvLocationTypeEntity c ORDER BY c.locationType
+11:31:49,375 INFO  [QueryBinder] Binding Named query: CvLocationTypeEntity.findBykey => SELECT c FROM CvLocationTypeEntity c WHERE c.locationTypekey = :key
+11:31:49,375 INFO  [QueryBinder] Binding Named query: CvLocationTypeEntity.findByLocationTypekey => SELECT c FROM CvLocationTypeEntity c WHERE c.locationTypekey = :locationTypekey
+11:31:49,375 INFO  [QueryBinder] Binding Named query: CvLocationTypeEntity.findByLocationType => SELECT c FROM CvLocationTypeEntity c WHERE c.locationType = :locationType
+11:31:49,375 INFO  [QueryBinder] Binding Named query: CvLocationTypeEntity.findByLocationTypeRef => SELECT c FROM CvLocationTypeEntity c WHERE c.locationTypeRef = :locationTypeRef
+11:31:49,375 INFO  [QueryBinder] Binding Named query: CvLocationTypeEntity.findByVersion => SELECT c FROM CvLocationTypeEntity c WHERE c.version = :version
+11:31:49,380 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvLocationTypeEntity on table cv_LocationType
+11:31:49,380 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvGenotypeSpecimenLocationEntity
+11:31:49,380 INFO  [QueryBinder] Binding Named query: CvGenotypeSpecimenLocationEntity.findAll => SELECT c FROM CvGenotypeSpecimenLocationEntity c ORDER BY c.genotypeSpecimenLocation
+11:31:49,380 INFO  [QueryBinder] Binding Named query: CvGenotypeSpecimenLocationEntity.findBykey => SELECT c FROM CvGenotypeSpecimenLocationEntity c WHERE c.genotypeSpecimenLocationkey = :key
+11:31:49,380 INFO  [QueryBinder] Binding Named query: CvGenotypeSpecimenLocationEntity.findByGenotypeSpecimenLocationkey => SELECT c FROM CvGenotypeSpecimenLocationEntity c WHERE c.genotypeSpecimenLocationkey = :genotypeSpecimenLocationkey
+11:31:49,385 INFO  [QueryBinder] Binding Named query: CvGenotypeSpecimenLocationEntity.findByGenotypeSpecimenLocation => SELECT c FROM CvGenotypeSpecimenLocationEntity c WHERE c.genotypeSpecimenLocation = :genotypeSpecimenLocation
+11:31:49,385 INFO  [QueryBinder] Binding Named query: CvGenotypeSpecimenLocationEntity.findByVersion => SELECT c FROM CvGenotypeSpecimenLocationEntity c WHERE c.version = :version
+11:31:49,385 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvGenotypeSpecimenLocationEntity on table cv_GenotypeSpecimenLocation
+11:31:49,390 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvBirthEventStatusEntity
+11:31:49,390 INFO  [QueryBinder] Binding Named query: CvBirthEventStatusEntity.findAll => SELECT c FROM CvBirthEventStatusEntity c ORDER BY c.birthEventStatus 
+11:31:49,390 INFO  [QueryBinder] Binding Named query: CvBirthEventStatusEntity.findBykey => SELECT c FROM CvBirthEventStatusEntity c WHERE c.birthEventStatuskey = :key
+11:31:49,390 INFO  [QueryBinder] Binding Named query: CvBirthEventStatusEntity.findByBirthEventStatuskey => SELECT c FROM CvBirthEventStatusEntity c WHERE c.birthEventStatuskey = :birthEventStatuskey
+11:31:49,395 INFO  [QueryBinder] Binding Named query: CvBirthEventStatusEntity.findByBirthEventStatus => SELECT c FROM CvBirthEventStatusEntity c WHERE c.birthEventStatus = :birthEventStatus
+11:31:49,395 INFO  [QueryBinder] Binding Named query: CvBirthEventStatusEntity.findByAbbreviation => SELECT c FROM CvBirthEventStatusEntity c WHERE c.abbreviation = :abbreviation
+11:31:49,395 INFO  [QueryBinder] Binding Named query: CvBirthEventStatusEntity.findByIsActive => SELECT c FROM CvBirthEventStatusEntity c WHERE c.isActive = :isActive
+11:31:49,395 INFO  [QueryBinder] Binding Named query: CvBirthEventStatusEntity.findByIsDefault => SELECT c FROM CvBirthEventStatusEntity c WHERE c.isDefault = :isDefault
+11:31:49,395 INFO  [QueryBinder] Binding Named query: CvBirthEventStatusEntity.findBySortOrder => SELECT c FROM CvBirthEventStatusEntity c WHERE c.sortOrder = :sortOrder
+11:31:49,395 INFO  [QueryBinder] Binding Named query: CvBirthEventStatusEntity.findByVocabularySourcekey => SELECT c FROM CvBirthEventStatusEntity c WHERE c.vocabularySourcekey = :vocabularySourcekey
+11:31:49,400 INFO  [QueryBinder] Binding Named query: CvBirthEventStatusEntity.findByElementID => SELECT c FROM CvBirthEventStatusEntity c WHERE c.elementID = :elementID
+11:31:49,400 INFO  [QueryBinder] Binding Named query: CvBirthEventStatusEntity.findByIsDeprecated => SELECT c FROM CvBirthEventStatusEntity c WHERE c.isDeprecated = :isDeprecated
+11:31:49,400 INFO  [QueryBinder] Binding Named query: CvBirthEventStatusEntity.findByVersion => SELECT c FROM CvBirthEventStatusEntity c WHERE c.version = :version
+11:31:49,400 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvBirthEventStatusEntity on table cv_BirthEventStatus
+11:31:49,405 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvTestStatusEntity
+11:31:49,405 INFO  [QueryBinder] Binding Named query: CvTestStatusEntity.findAll => SELECT c FROM CvTestStatusEntity c ORDER BY c.testStatus
+11:31:49,405 INFO  [QueryBinder] Binding Named query: CvTestStatusEntity.findBykey => SELECT c FROM CvTestStatusEntity c WHERE c.testStatuskey = :key
+11:31:49,405 INFO  [QueryBinder] Binding Named query: CvTestStatusEntity.findByTestStatuskey => SELECT c FROM CvTestStatusEntity c WHERE c.testStatuskey = :testStatuskey
+11:31:49,410 INFO  [QueryBinder] Binding Named query: CvTestStatusEntity.findByTestStatus => SELECT c FROM CvTestStatusEntity c WHERE c.testStatus = :testStatus
+11:31:49,410 INFO  [QueryBinder] Binding Named query: CvTestStatusEntity.findByVersion => SELECT c FROM CvTestStatusEntity c WHERE c.version = :version
+11:31:49,410 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvTestStatusEntity on table cv_TestStatus
+11:31:49,410 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvSampleClassEntity
+11:31:49,410 INFO  [QueryBinder] Binding Named query: CvSampleClassEntity.findAll => SELECT c FROM CvSampleClassEntity c ORDER BY c.sampleClass
+11:31:49,415 INFO  [QueryBinder] Binding Named query: CvSampleClassEntity.findBykey => SELECT c FROM CvSampleClassEntity c WHERE c.sampleClasskey = :key
+11:31:49,415 INFO  [QueryBinder] Binding Named query: CvSampleClassEntity.findBySampleClasskey => SELECT c FROM CvSampleClassEntity c WHERE c.sampleClasskey = :sampleClasskey
+11:31:49,415 INFO  [QueryBinder] Binding Named query: CvSampleClassEntity.findBySampleClass => SELECT c FROM CvSampleClassEntity c WHERE c.sampleClass = :sampleClass
+11:31:49,415 INFO  [QueryBinder] Binding Named query: CvSampleClassEntity.findByVersion => SELECT c FROM CvSampleClassEntity c WHERE c.version = :version
+11:31:49,415 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvSampleClassEntity on table cv_SampleClass
+11:31:49,420 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.LitterEntity
+11:31:49,420 INFO  [QueryBinder] Binding Named query: LitterEntity.findAll => SELECT l FROM LitterEntity l ORDER BY l.litterID 
+11:31:49,420 INFO  [QueryBinder] Binding Named query: LitterEntity.findAllByOwner => SELECT DISTINCT l FROM LitterEntity l, MatingEntity ma, MouseEntity m WHERE (l.matingKey = ma.matingKey OR l.litterKey = m.litterKey) AND (m.owner = :fOwner OR ma.owner = :fOwner) ORDER BY l.litterID 
+11:31:49,425 INFO  [QueryBinder] Binding Named query: LitterEntity.findAllByOwners => SELECT l FROM LitterEntity l WHERE EXISTS ( SELECT 1 FROM MouseEntity m WHERE m.owner in (:lOwner) AND l.litterKey = m.litterKey) ORDER BY l.litterID 
+11:31:49,425 INFO  [QueryBinder] Binding Named query: LitterEntity.findMaxLitterKeyByMating => SELECT MAX(l.litterKey) FROM LitterEntity l WHERE l.matingKey = :lmatingKey
+11:31:49,425 INFO  [QueryBinder] Binding Named query: LitterEntity.findMaxLitterIDByMating => SELECT MAX(l.litterID) FROM LitterEntity l WHERE l.matingKey = :lmatingKey
+11:31:49,430 INFO  [QueryBinder] Binding Named query: LitterEntity.findBykey => SELECT l FROM LitterEntity l WHERE l.litterKey = :key
+11:31:49,430 INFO  [QueryBinder] Binding Named query: LitterEntity.findMaxPrimaryKey => SELECT max(l.litterKey) FROM LitterEntity l 
+11:31:49,430 INFO  [QueryBinder] Binding Named query: LitterEntity.findLittersByMatingkey => SELECT l FROM LitterEntity l WHERE l.matingKey = :mKey
+11:31:49,430 INFO  [QueryBinder] Binding Named query: LitterEntity.findByLitterKey => SELECT l FROM LitterEntity l WHERE l.litterKey = :litterKey
+11:31:49,430 INFO  [QueryBinder] Binding Named query: LitterEntity.findByLitterID => SELECT l FROM LitterEntity l WHERE l.litterID = :litterID
+11:31:49,430 INFO  [QueryBinder] Binding Named query: LitterEntity.findByTotalBorn => SELECT l FROM LitterEntity l WHERE l.totalBorn = :totalBorn
+11:31:49,435 INFO  [QueryBinder] Binding Named query: LitterEntity.findByBirthDate => SELECT l FROM LitterEntity l WHERE l.birthDate = :birthDate
+11:31:49,435 INFO  [QueryBinder] Binding Named query: LitterEntity.findByNumFemale => SELECT l FROM LitterEntity l WHERE l.numFemale = :numFemale
+11:31:49,435 INFO  [QueryBinder] Binding Named query: LitterEntity.findByNumMale => SELECT l FROM LitterEntity l WHERE l.numMale = :numMale
+11:31:49,435 INFO  [QueryBinder] Binding Named query: LitterEntity.findByWeanDate => SELECT l FROM LitterEntity l WHERE l.weanDate = :weanDate
+11:31:49,435 INFO  [QueryBinder] Binding Named query: LitterEntity.findByTagDate => SELECT l FROM LitterEntity l WHERE l.tagDate = :tagDate
+11:31:49,435 INFO  [QueryBinder] Binding Named query: LitterEntity.findByStatus => SELECT l FROM LitterEntity l WHERE l.status = :status
+11:31:49,440 INFO  [QueryBinder] Binding Named query: LitterEntity.findByVersion => SELECT l FROM LitterEntity l WHERE l.version = :version
+11:31:49,440 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.LitterEntity on table Litter
+11:31:49,445 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.ContainerEntity
+11:31:49,445 INFO  [QueryBinder] Binding Named query: ContainerEntity.findAll => SELECT c FROM ContainerEntity c ORDER BY c.containerID 
+11:31:49,445 INFO  [QueryBinder] Binding Named query: ContainerEntity.findAllByOwner => SELECT c FROM ContainerEntity c WHERE EXISTS( SELECT 1 FROM MouseEntity m WHERE c.containerKey = m.penKey AND m.owner = :fOwner) ORDER BY c.containerID 
+11:31:49,445 INFO  [QueryBinder] Binding Named query: ContainerEntity.findAllByOwners => SELECT c FROM ContainerEntity c WHERE EXISTS( SELECT 1 FROM MouseEntity m WHERE c.containerKey = m.penKey AND m.owner IN (:lOwner)) ORDER BY c.containerID 
+11:31:49,445 INFO  [QueryBinder] Binding Named query: ContainerEntity.findBykey => SELECT c FROM ContainerEntity c WHERE c.containerKey = :key
+11:31:49,450 INFO  [QueryBinder] Binding Named query: ContainerEntity.findMaxPrimaryKey => SELECT max(c.containerKey) FROM ContainerEntity c 
+11:31:49,450 INFO  [QueryBinder] Binding Named query: ContainerEntity.findMaxContainerID => SELECT max(c.containerID) FROM ContainerEntity c 
+11:31:49,450 INFO  [QueryBinder] Binding Named query: ContainerEntity.findByContainerKey => SELECT c FROM ContainerEntity c WHERE c.containerKey = :containerKey
+11:31:49,450 INFO  [QueryBinder] Binding Named query: ContainerEntity.findByContainerID => SELECT c FROM ContainerEntity c WHERE c.containerID = :containerID
+11:31:49,455 INFO  [QueryBinder] Binding Named query: ContainerEntity.findByContainerName => SELECT c FROM ContainerEntity c WHERE c.containerName = :containerName
+11:31:49,455 INFO  [QueryBinder] Binding Named query: ContainerEntity.findByComment => SELECT c FROM ContainerEntity c WHERE c.comment = :comment
+11:31:49,455 INFO  [QueryBinder] Binding Named query: ContainerEntity.findByContainerHistorykey => SELECT c FROM ContainerEntity c WHERE c.containerHistorykey = :containerHistorykey
+11:31:49,455 INFO  [QueryBinder] Binding Named query: ContainerEntity.findByVersion => SELECT c FROM ContainerEntity c WHERE c.version = :version
+11:31:49,455 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.ContainerEntity on table Container
+11:31:49,460 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.DbsetupEntity
+11:31:49,460 INFO  [QueryBinder] Binding Named query: DbsetupEntity.findAll => SELECT d FROM DbsetupEntity d
+11:31:49,460 INFO  [QueryBinder] Binding Named query: DbsetupEntity.findBykey => SELECT d FROM DbsetupEntity d WHERE d.dbSetupkey = :key
+11:31:49,460 INFO  [QueryBinder] Binding Named query: DbsetupEntity.findByDbSetupkey => SELECT d FROM DbsetupEntity d WHERE d.dbSetupkey = :dbSetupkey
+11:31:49,465 INFO  [QueryBinder] Binding Named query: DbsetupEntity.findByMTSVar => SELECT d FROM DbsetupEntity d WHERE d.mTSVar = :mTSVar
+11:31:49,465 INFO  [QueryBinder] Binding Named query: DbsetupEntity.findByMTSValue => SELECT d FROM DbsetupEntity d WHERE d.mTSValue = :mTSValue
+11:31:49,465 INFO  [QueryBinder] Binding Named query: DbsetupEntity.findByMTSVarDescription => SELECT d FROM DbsetupEntity d WHERE d.mTSVarDescription = :mTSVarDescription
+11:31:49,465 INFO  [QueryBinder] Binding Named query: DbsetupEntity.findByVersion => SELECT d FROM DbsetupEntity d WHERE d.version = :version
+11:31:49,465 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.DbsetupEntity on table DbSetup
+11:31:49,470 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.RoomEntity
+11:31:49,470 INFO  [QueryBinder] Binding Named query: RoomEntity.findAll => SELECT r FROM RoomEntity r ORDER BY r.roomName 
+11:31:49,470 INFO  [QueryBinder] Binding Named query: RoomEntity.findBykey => SELECT r FROM RoomEntity r WHERE r.roomKey = :key
+11:31:49,470 INFO  [QueryBinder] Binding Named query: RoomEntity.findByRoomKey => SELECT r FROM RoomEntity r WHERE r.roomKey = :roomKey
+11:31:49,470 INFO  [QueryBinder] Binding Named query: RoomEntity.findByRoomName => SELECT r FROM RoomEntity r WHERE r.roomName = :roomName
+11:31:49,470 INFO  [QueryBinder] Binding Named query: RoomEntity.findByHealthLevelHistorykey => SELECT r FROM RoomEntity r WHERE r.healthLevelHistorykey = :healthLevelHistorykey
+11:31:49,475 INFO  [QueryBinder] Binding Named query: RoomEntity.findByVersion => SELECT r FROM RoomEntity r WHERE r.version = :version
+11:31:49,475 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.RoomEntity on table Room
+11:31:49,475 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.JCMSDbInfoEntity
+11:31:49,475 INFO  [QueryBinder] Binding Named query: JCMSDbInfoEntity.findAll => SELECT j FROM JCMSDbInfoEntity j
+11:31:49,480 INFO  [QueryBinder] Binding Named query: JCMSDbInfoEntity.findBykey => SELECT j FROM JCMSDbInfoEntity j WHERE j.dbinfoKey = :key
+11:31:49,480 INFO  [QueryBinder] Binding Named query: JCMSDbInfoEntity.findByDbVers => SELECT j FROM JCMSDbInfoEntity j WHERE j.dbVers = :dbVers
+11:31:49,480 INFO  [QueryBinder] Binding Named query: JCMSDbInfoEntity.findByVersDate => SELECT j FROM JCMSDbInfoEntity j WHERE j.versDate = :versDate
+11:31:49,480 INFO  [QueryBinder] Binding Named query: JCMSDbInfoEntity.findByMaxPenID => SELECT j FROM JCMSDbInfoEntity j WHERE j.maxPenID = :maxPenID
+11:31:49,480 INFO  [QueryBinder] Binding Named query: JCMSDbInfoEntity.findByReleaseNum => SELECT j FROM JCMSDbInfoEntity j WHERE j.releaseNum = :releaseNum
+11:31:49,485 INFO  [QueryBinder] Binding Named query: JCMSDbInfoEntity.findByReleaseDate => SELECT j FROM JCMSDbInfoEntity j WHERE j.releaseDate = :releaseDate
+11:31:49,485 INFO  [QueryBinder] Binding Named query: JCMSDbInfoEntity.findByMaxAutoLitterNum => SELECT j FROM JCMSDbInfoEntity j WHERE j.maxAutoLitterNum = :maxAutoLitterNum
+11:31:49,485 INFO  [QueryBinder] Binding Named query: JCMSDbInfoEntity.findByMaxAutoMouseID => SELECT j FROM JCMSDbInfoEntity j WHERE j.maxAutoMouseID = :maxAutoMouseID
+11:31:49,485 INFO  [QueryBinder] Binding Named query: JCMSDbInfoEntity.findByVersion => SELECT j FROM JCMSDbInfoEntity j WHERE j.version = :version
+11:31:49,485 INFO  [QueryBinder] Binding Named query: JCMSDbInfoEntity.findByDbinfoKey => SELECT j FROM JCMSDbInfoEntity j WHERE j.dbinfoKey = :dbinfoKey
+11:31:49,485 INFO  [QueryBinder] Binding Named query: JCMSDbInfoEntity.findByReleaseNotes => SELECT j FROM JCMSDbInfoEntity j WHERE j.releaseNotes = :releaseNotes
+11:31:49,490 INFO  [QueryBinder] Binding Named query: JCMSDbInfoEntity.findByReleaseType => SELECT j FROM JCMSDbInfoEntity j WHERE j.releaseType = :releaseType
+11:31:49,490 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.JCMSDbInfoEntity on table dbInfo
+11:31:49,490 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.LifeStatusEntity
+11:31:49,490 INFO  [QueryBinder] Binding Named query: LifeStatusEntity.findAll => SELECT l FROM LifeStatusEntity l ORDER BY l.lifeStatus 
+11:31:49,495 INFO  [QueryBinder] Binding Named query: LifeStatusEntity.findBykey => SELECT l FROM LifeStatusEntity l WHERE l.lifeStatuskey = :key
+11:31:49,495 INFO  [QueryBinder] Binding Named query: LifeStatusEntity.findByLifeStatuskey => SELECT l FROM LifeStatusEntity l WHERE l.lifeStatuskey = :lifeStatuskey
+11:31:49,495 INFO  [QueryBinder] Binding Named query: LifeStatusEntity.findByLifeStatus => SELECT l FROM LifeStatusEntity l WHERE l.lifeStatus = :lifeStatus
+11:31:49,495 INFO  [QueryBinder] Binding Named query: LifeStatusEntity.findByDescription => SELECT l FROM LifeStatusEntity l WHERE l.description = :description
+11:31:49,495 INFO  [QueryBinder] Binding Named query: LifeStatusEntity.findByExitStatus => SELECT l FROM LifeStatusEntity l WHERE l.exitStatus = :exitStatus
+11:31:49,495 INFO  [QueryBinder] Binding Named query: LifeStatusEntity.findByVersion => SELECT l FROM LifeStatusEntity l WHERE l.version = :version
+11:31:49,500 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.LifeStatusEntity on table LifeStatus
+11:31:49,500 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvStrainTypeEntity
+11:31:49,500 INFO  [QueryBinder] Binding Named query: CvStrainTypeEntity.findAll => SELECT c FROM CvStrainTypeEntity c ORDER BY c.strainType
+11:31:49,500 INFO  [QueryBinder] Binding Named query: CvStrainTypeEntity.findBykey => SELECT c FROM CvStrainTypeEntity c WHERE c.strainTypekey = :key
+11:31:49,500 INFO  [QueryBinder] Binding Named query: CvStrainTypeEntity.findByStrainTypekey => SELECT c FROM CvStrainTypeEntity c WHERE c.strainTypekey = :strainTypekey
+11:31:49,505 INFO  [QueryBinder] Binding Named query: CvStrainTypeEntity.findByStrainType => SELECT c FROM CvStrainTypeEntity c WHERE c.strainType = :strainType
+11:31:49,505 INFO  [QueryBinder] Binding Named query: CvStrainTypeEntity.findByVersiion => SELECT c FROM CvStrainTypeEntity c WHERE c.versiion = :versiion
+11:31:49,505 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvStrainTypeEntity on table cv_StrainType
+11:31:49,505 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvMouseProtocolEntity
+11:31:49,505 INFO  [QueryBinder] Binding Named query: CvMouseProtocolEntity.findAll => SELECT c FROM CvMouseProtocolEntity c ORDER BY c.id
+11:31:49,510 INFO  [QueryBinder] Binding Named query: CvMouseProtocolEntity.findAllByOwner => SELECT DISTINCT c FROM CvMouseProtocolEntity c, MouseEntity m WHERE m.protocol = c.id AND m.owner = :fOwner ORDER BY c.id
+11:31:49,510 INFO  [QueryBinder] Binding Named query: CvMouseProtocolEntity.findAllByOwners => SELECT c FROM CvMouseProtocolEntity c WHERE EXISTS( SELECT 1 FROM MouseEntity m WHERE m.protocol = c.id AND m .owner IN (:lOwner)) ORDER BY c.id 
+11:31:49,510 INFO  [QueryBinder] Binding Named query: CvMouseProtocolEntity.findBykey => SELECT c FROM CvMouseProtocolEntity c WHERE c.mouseProtocolkey = :key
+11:31:49,510 INFO  [QueryBinder] Binding Named query: CvMouseProtocolEntity.findByMouseProtocolkey => SELECT c FROM CvMouseProtocolEntity c WHERE c.mouseProtocolkey = :mouseProtocolkey
+11:31:49,515 INFO  [QueryBinder] Binding Named query: CvMouseProtocolEntity.findById => SELECT c FROM CvMouseProtocolEntity c WHERE c.id = :id
+11:31:49,515 INFO  [QueryBinder] Binding Named query: CvMouseProtocolEntity.findByDescription => SELECT c FROM CvMouseProtocolEntity c WHERE c.description = :description
+11:31:49,515 INFO  [QueryBinder] Binding Named query: CvMouseProtocolEntity.findByVersion => SELECT c FROM CvMouseProtocolEntity c WHERE c.version = :version
+11:31:49,515 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvMouseProtocolEntity on table cv_MouseProtocol
+11:31:49,520 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvContainerStatusEntity
+11:31:49,520 INFO  [QueryBinder] Binding Named query: CvContainerStatusEntity.findAll => SELECT c FROM CvContainerStatusEntity c ORDER BY c.containerStatus 
+11:31:49,520 INFO  [QueryBinder] Binding Named query: CvContainerStatusEntity.findBykey => SELECT c FROM CvContainerStatusEntity c WHERE c.containerStatuskey = :key
+11:31:49,520 INFO  [QueryBinder] Binding Named query: CvContainerStatusEntity.findByContainerStatuskey => SELECT c FROM CvContainerStatusEntity c WHERE c.containerStatuskey = :containerStatuskey
+11:31:49,520 INFO  [QueryBinder] Binding Named query: CvContainerStatusEntity.findByContainerStatus => SELECT c FROM CvContainerStatusEntity c WHERE c.containerStatus = :containerStatus
+11:31:49,520 INFO  [QueryBinder] Binding Named query: CvContainerStatusEntity.findByBillable => SELECT c FROM CvContainerStatusEntity c WHERE c.billable = :billable
+11:31:49,525 INFO  [QueryBinder] Binding Named query: CvContainerStatusEntity.findByVersion => SELECT c FROM CvContainerStatusEntity c WHERE c.version = :version
+11:31:49,525 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvContainerStatusEntity on table cv_ContainerStatus
+11:31:49,525 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvSampleStatusEntity
+11:31:49,525 INFO  [QueryBinder] Binding Named query: CvSampleStatusEntity.findAll => SELECT c FROM CvSampleStatusEntity c ORDER BY c.sampleStatus
+11:31:49,525 INFO  [QueryBinder] Binding Named query: CvSampleStatusEntity.findBykey => SELECT c FROM CvSampleStatusEntity c WHERE c.sampleStatuskey = :key
+11:31:49,530 INFO  [QueryBinder] Binding Named query: CvSampleStatusEntity.findBySampleStatuskey => SELECT c FROM CvSampleStatusEntity c WHERE c.sampleStatuskey = :sampleStatuskey
+11:31:49,530 INFO  [QueryBinder] Binding Named query: CvSampleStatusEntity.findBySampleStatus => SELECT c FROM CvSampleStatusEntity c WHERE c.sampleStatus = :sampleStatus
+11:31:49,530 INFO  [QueryBinder] Binding Named query: CvSampleStatusEntity.findByIsInStorage => SELECT c FROM CvSampleStatusEntity c WHERE c.isInStorage = :isInStorage
+11:31:49,530 INFO  [QueryBinder] Binding Named query: CvSampleStatusEntity.findByVersion => SELECT c FROM CvSampleStatusEntity c WHERE c.version = :version
+11:31:49,530 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvSampleStatusEntity on table cv_SampleStatus
+11:31:49,535 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvPreservationDetailEntity
+11:31:49,535 INFO  [QueryBinder] Binding Named query: CvPreservationDetailEntity.findAll => SELECT c FROM CvPreservationDetailEntity c ORDER BY c.preservationDetail
+11:31:49,535 INFO  [QueryBinder] Binding Named query: CvPreservationDetailEntity.findBykey => SELECT c FROM CvPreservationDetailEntity c WHERE c.preservationDetailkey = :key
+11:31:49,535 INFO  [QueryBinder] Binding Named query: CvPreservationDetailEntity.findByPreservationDetailkey => SELECT c FROM CvPreservationDetailEntity c WHERE c.preservationDetailkey = :preservationDetailkey
+11:31:49,535 INFO  [QueryBinder] Binding Named query: CvPreservationDetailEntity.findByPreservationDetail => SELECT c FROM CvPreservationDetailEntity c WHERE c.preservationDetail = :preservationDetail
+11:31:49,535 INFO  [QueryBinder] Binding Named query: CvPreservationDetailEntity.findByVersion => SELECT c FROM CvPreservationDetailEntity c WHERE c.version = :version
+11:31:49,540 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvPreservationDetailEntity on table cv_PreservationDetail
+11:31:49,540 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.StrainEntity
+11:31:49,540 INFO  [QueryBinder] Binding Named query: StrainEntity.findAll => SELECT s FROM StrainEntity s ORDER BY s.strainName 
+11:31:49,545 INFO  [QueryBinder] Binding Named query: StrainEntity.findAllByOwner => SELECT DISTINCT s FROM StrainEntity s, MouseEntity m, MatingEntity ma WHERE (s.strainKey = m.strainKey OR s.strainKey = ma.strainKey) AND (m.owner = :fOwner OR ma.owner = :fOwner) ORDER BY s.strainName 
+11:31:49,545 INFO  [QueryBinder] Binding Named query: StrainEntity.findAllMouseStrainsByOwners => SELECT s FROM StrainEntity s WHERE EXISTS( SELECT 1 FROM MouseEntity m WHERE m.owner in (:lOwner) AND m.strainKey = s.strainKey) ORDER BY s.strainName 
+11:31:49,545 INFO  [QueryBinder] Binding Named query: StrainEntity.findAllMatingStrainsByOwners => SELECT s FROM StrainEntity s WHERE EXISTS( SELECT 1 FROM MatingEntity m WHERE m.owner in (:lOwner) AND m.strainKey = s.strainKey) ORDER BY s.strainName 
+11:31:49,545 INFO  [QueryBinder] Binding Named query: StrainEntity.findBykey => SELECT s FROM StrainEntity s WHERE s.strainKey = :key
+11:31:49,550 INFO  [QueryBinder] Binding Named query: StrainEntity.findByStrainKey => SELECT s FROM StrainEntity s WHERE s.strainKey = :strainKey
+11:31:49,550 INFO  [QueryBinder] Binding Named query: StrainEntity.findByStrainName => SELECT s FROM StrainEntity s WHERE s.strainName = :strainName
+11:31:49,550 INFO  [QueryBinder] Binding Named query: StrainEntity.findByIsActive => SELECT s FROM StrainEntity s WHERE s.isActive = -1
+11:31:49,550 INFO  [QueryBinder] Binding Named query: StrainEntity.findByNickname => SELECT s FROM StrainEntity s WHERE s.nickname = :nickname
+11:31:49,555 INFO  [QueryBinder] Binding Named query: StrainEntity.findByFormalName => SELECT s FROM StrainEntity s WHERE s.formalName = :formalName
+11:31:49,555 INFO  [QueryBinder] Binding Named query: StrainEntity.findByStrainStatus => SELECT s FROM StrainEntity s WHERE s.strainStatus = :strainStatus
+11:31:49,555 INFO  [QueryBinder] Binding Named query: StrainEntity.findByTagMin => SELECT s FROM StrainEntity s WHERE s.tagMin = :tagMin
+11:31:49,555 INFO  [QueryBinder] Binding Named query: StrainEntity.findByTagMax => SELECT s FROM StrainEntity s WHERE s.tagMax = :tagMax
+11:31:49,555 INFO  [QueryBinder] Binding Named query: StrainEntity.findByLastTag => SELECT s FROM StrainEntity s WHERE s.lastTag = :lastTag
+11:31:49,560 INFO  [QueryBinder] Binding Named query: StrainEntity.findByJrNum => SELECT s FROM StrainEntity s WHERE s.jrNum = :jrNum
+11:31:49,560 INFO  [QueryBinder] Binding Named query: StrainEntity.findByFeNumEmbryos => SELECT s FROM StrainEntity s WHERE s.feNumEmbryos = :feNumEmbryos
+11:31:49,560 INFO  [QueryBinder] Binding Named query: StrainEntity.findByFeMaxGen => SELECT s FROM StrainEntity s WHERE s.feMaxGen = :feMaxGen
+11:31:49,560 INFO  [QueryBinder] Binding Named query: StrainEntity.findByFsNumMales => SELECT s FROM StrainEntity s WHERE s.fsNumMales = :fsNumMales
+11:31:49,560 INFO  [QueryBinder] Binding Named query: StrainEntity.findByFsMaxGen => SELECT s FROM StrainEntity s WHERE s.fsMaxGen = :fsMaxGen
+11:31:49,560 INFO  [QueryBinder] Binding Named query: StrainEntity.findByFoNumFemales => SELECT s FROM StrainEntity s WHERE s.foNumFemales = :foNumFemales
+11:31:49,565 INFO  [QueryBinder] Binding Named query: StrainEntity.findByFoMaxGen => SELECT s FROM StrainEntity s WHERE s.foMaxGen = :foMaxGen
+11:31:49,565 INFO  [QueryBinder] Binding Named query: StrainEntity.findBySection => SELECT s FROM StrainEntity s WHERE s.section = :section
+11:31:49,565 INFO  [QueryBinder] Binding Named query: StrainEntity.findByCardColor => SELECT s FROM StrainEntity s WHERE s.cardColor = :cardColor
+11:31:49,565 INFO  [QueryBinder] Binding Named query: StrainEntity.findByStrainType => SELECT s FROM StrainEntity s WHERE s.strainType = :strainType
+11:31:49,565 INFO  [QueryBinder] Binding Named query: StrainEntity.findByLineViabilityYellowMinNumMales => SELECT s FROM StrainEntity s WHERE s.lineViabilityYellowMinNumMales = :lineViabilityYellowMinNumMales
+11:31:49,570 INFO  [QueryBinder] Binding Named query: StrainEntity.findByLineViabilityYellowMinNumFemales => SELECT s FROM StrainEntity s WHERE s.lineViabilityYellowMinNumFemales = :lineViabilityYellowMinNumFemales
+11:31:49,570 INFO  [QueryBinder] Binding Named query: StrainEntity.findByLineViabilityYellowMaxAgeMales => SELECT s FROM StrainEntity s WHERE s.lineViabilityYellowMaxAgeMales = :lineViabilityYellowMaxAgeMales
+11:31:49,570 INFO  [QueryBinder] Binding Named query: StrainEntity.findByLineViabilityYellowMaxAgeFemales => SELECT s FROM StrainEntity s WHERE s.lineViabilityYellowMaxAgeFemales = :lineViabilityYellowMaxAgeFemales
+11:31:49,570 INFO  [QueryBinder] Binding Named query: StrainEntity.findByLineViabilityRedMinNumMales => SELECT s FROM StrainEntity s WHERE s.lineViabilityRedMinNumMales = :lineViabilityRedMinNumMales
+11:31:49,575 INFO  [QueryBinder] Binding Named query: StrainEntity.findByLineViabilityRedMinNumFemales => SELECT s FROM StrainEntity s WHERE s.lineViabilityRedMinNumFemales = :lineViabilityRedMinNumFemales
+11:31:49,575 INFO  [QueryBinder] Binding Named query: StrainEntity.findByLineViabilityRedMaxAgeMales => SELECT s FROM StrainEntity s WHERE s.lineViabilityRedMaxAgeMales = :lineViabilityRedMaxAgeMales
+11:31:49,575 INFO  [QueryBinder] Binding Named query: StrainEntity.findByLineViabilityRedMaxAgeFemales => SELECT s FROM StrainEntity s WHERE s.lineViabilityRedMaxAgeFemales = :lineViabilityRedMaxAgeFemales
+11:31:49,580 INFO  [QueryBinder] Binding Named query: StrainEntity.findByVersion => SELECT s FROM StrainEntity s WHERE s.version = :version
+11:31:49,580 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.StrainEntity on table Strain
+11:31:49,590 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvCauseOfDeathEntity
+11:31:49,590 INFO  [QueryBinder] Binding Named query: CvCauseOfDeathEntity.findAll => SELECT c FROM CvCauseOfDeathEntity c ORDER BY c.cod 
+11:31:49,590 INFO  [QueryBinder] Binding Named query: CvCauseOfDeathEntity.findBykey => SELECT c FROM CvCauseOfDeathEntity c WHERE c.causeOfDeathkey = :key
+11:31:49,590 INFO  [QueryBinder] Binding Named query: CvCauseOfDeathEntity.findByCauseOfDeathkey => SELECT c FROM CvCauseOfDeathEntity c WHERE c.causeOfDeathkey = :causeOfDeathkey
+11:31:49,590 INFO  [QueryBinder] Binding Named query: CvCauseOfDeathEntity.findByCod => SELECT c FROM CvCauseOfDeathEntity c WHERE c.cod = :cod
+11:31:49,595 INFO  [QueryBinder] Binding Named query: CvCauseOfDeathEntity.findByDescription => SELECT c FROM CvCauseOfDeathEntity c WHERE c.description = :description
+11:31:49,595 INFO  [QueryBinder] Binding Named query: CvCauseOfDeathEntity.findByVersion => SELECT c FROM CvCauseOfDeathEntity c WHERE c.version = :version
+11:31:49,595 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvCauseOfDeathEntity on table cv_CauseOfDeath
+11:31:49,595 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvHealthLevelEntity
+11:31:49,595 INFO  [QueryBinder] Binding Named query: CvHealthLevelEntity.findAll => SELECT c FROM CvHealthLevelEntity c ORDER BY c.healthLevel
+11:31:49,595 INFO  [QueryBinder] Binding Named query: CvHealthLevelEntity.findBykey => SELECT c FROM CvHealthLevelEntity c WHERE c.healthLevelkey = :key
+11:31:49,600 INFO  [QueryBinder] Binding Named query: CvHealthLevelEntity.findByHealthLevelkey => SELECT c FROM CvHealthLevelEntity c WHERE c.healthLevelkey = :healthLevelkey
+11:31:49,600 INFO  [QueryBinder] Binding Named query: CvHealthLevelEntity.findByHealthLevel => SELECT c FROM CvHealthLevelEntity c WHERE c.healthLevel = :healthLevel
+11:31:49,600 INFO  [QueryBinder] Binding Named query: CvHealthLevelEntity.findByDescription => SELECT c FROM CvHealthLevelEntity c WHERE c.description = :description
+11:31:49,600 INFO  [QueryBinder] Binding Named query: CvHealthLevelEntity.findByVersion => SELECT c FROM CvHealthLevelEntity c WHERE c.version = :version
+11:31:49,600 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvHealthLevelEntity on table cv_HealthLevel
+11:31:49,605 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvFieldOfStudyEntity
+11:31:49,605 INFO  [QueryBinder] Binding Named query: CvFieldOfStudyEntity.findAll => SELECT c FROM CvFieldOfStudyEntity c ORDER BY c.fieldOfStudyName
+11:31:49,605 INFO  [QueryBinder] Binding Named query: CvFieldOfStudyEntity.findBykey => SELECT c FROM CvFieldOfStudyEntity c WHERE c.fieldOfStudykey = :key
+11:31:49,605 INFO  [QueryBinder] Binding Named query: CvFieldOfStudyEntity.findByFieldOfStudykey => SELECT c FROM CvFieldOfStudyEntity c WHERE c.fieldOfStudykey = :fieldOfStudykey
+11:31:49,605 INFO  [QueryBinder] Binding Named query: CvFieldOfStudyEntity.findByFieldOfStudyName => SELECT c FROM CvFieldOfStudyEntity c WHERE c.fieldOfStudyName = :fieldOfStudyName
+11:31:49,605 INFO  [QueryBinder] Binding Named query: CvFieldOfStudyEntity.findByVersion => SELECT c FROM CvFieldOfStudyEntity c WHERE c.version = :version
+11:31:49,605 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvFieldOfStudyEntity on table cv_FieldOfStudy
+11:31:49,610 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvDietEntity
+11:31:49,610 INFO  [QueryBinder] Binding Named query: CvDietEntity.findAll => SELECT c FROM CvDietEntity c ORDER BY c.diet
+11:31:49,610 INFO  [QueryBinder] Binding Named query: CvDietEntity.findByKey => SELECT c FROM CvDietEntity c WHERE c.dietKey = :key
+11:31:49,610 INFO  [QueryBinder] Binding Named query: CvDietEntity.findByDietKey => SELECT c FROM CvDietEntity c WHERE c.dietKey = :dietKey
+11:31:49,610 INFO  [QueryBinder] Binding Named query: CvDietEntity.findByDiet => SELECT c FROM CvDietEntity c WHERE c.diet = :diet
+11:31:49,610 INFO  [QueryBinder] Binding Named query: CvDietEntity.findByDietDescription => SELECT c FROM CvDietEntity c WHERE c.dietDescription = :dietDescription
+11:31:49,615 INFO  [QueryBinder] Binding Named query: CvDietEntity.findByVersion => SELECT c FROM CvDietEntity c WHERE c.version = :version
+11:31:49,615 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvDietEntity on table cv_Diet
+11:31:49,615 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvWeightUnitEntity
+11:31:49,615 INFO  [QueryBinder] Binding Named query: CvWeightUnitEntity.findAll => SELECT c FROM CvWeightUnitEntity c ORDER BY c.weightUnit
+11:31:49,615 INFO  [QueryBinder] Binding Named query: CvWeightUnitEntity.findBykey => SELECT c FROM CvWeightUnitEntity c WHERE c.weightUnitkey = :key
+11:31:49,615 INFO  [QueryBinder] Binding Named query: CvWeightUnitEntity.findByWeightUnitkey => SELECT c FROM CvWeightUnitEntity c WHERE c.weightUnitkey = :weightUnitkey
+11:31:49,620 INFO  [QueryBinder] Binding Named query: CvWeightUnitEntity.findByWeightUnit => SELECT c FROM CvWeightUnitEntity c WHERE c.weightUnit = :weightUnit
+11:31:49,620 INFO  [QueryBinder] Binding Named query: CvWeightUnitEntity.findByVersion => SELECT c FROM CvWeightUnitEntity c WHERE c.version = :version
+11:31:49,620 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvWeightUnitEntity on table cv_WeightUnit
+11:31:49,620 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvGenerationEntity
+11:31:49,620 INFO  [QueryBinder] Binding Named query: CvGenerationEntity.findAll => SELECT c FROM CvGenerationEntity c ORDER BY c.generation
+11:31:49,625 INFO  [QueryBinder] Binding Named query: CvGenerationEntity.findBykey => SELECT c FROM CvGenerationEntity c WHERE c.generationKey = :key
+11:31:49,625 INFO  [QueryBinder] Binding Named query: CvGenerationEntity.findByGenerationKey => SELECT c FROM CvGenerationEntity c WHERE c.generationKey = :generationKey
+11:31:49,625 INFO  [QueryBinder] Binding Named query: CvGenerationEntity.findByGeneration => SELECT c FROM CvGenerationEntity c WHERE c.generation = :generation
+11:31:49,625 INFO  [QueryBinder] Binding Named query: CvGenerationEntity.findByVersion => SELECT c FROM CvGenerationEntity c WHERE c.version = :version
+11:31:49,625 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvGenerationEntity on table cv_Generation
+11:31:49,630 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.MouseEntity
+11:31:49,630 INFO  [QueryBinder] Binding Named query: MouseEntity.findAll => SELECT m FROM MouseEntity m ORDER BY m.id 
+11:31:49,630 INFO  [QueryBinder] Binding Named query: MouseEntity.findAllByOwner => SELECT m FROM MouseEntity m WHERE m.owner = :fOwner ORDER BY m.id 
+11:31:49,630 INFO  [QueryBinder] Binding Named query: MouseEntity.findAllByOwners => SELECT m FROM MouseEntity m WHERE m.owner IN (:lOwner) ORDER BY m.id 
+11:31:49,630 INFO  [QueryBinder] Binding Named query: MouseEntity.findBykey => SELECT m FROM MouseEntity m WHERE m.mouseKey = :key
+11:31:49,630 INFO  [QueryBinder] Binding Named query: MouseEntity.findMaxPrimaryKey => SELECT max(u.mouseKey) FROM MouseEntity u 
+11:31:49,630 INFO  [QueryBinder] Binding Named query: MouseEntity.findByMouseKey => SELECT m FROM MouseEntity m WHERE m.mouseKey = :mouseKey
+11:31:49,630 INFO  [QueryBinder] Binding Named query: MouseEntity.findById => SELECT m FROM MouseEntity m WHERE m.id = :id
+11:31:49,635 INFO  [QueryBinder] Binding Named query: MouseEntity.findByNewTag => SELECT m FROM MouseEntity m WHERE m.newTag = :newTag
+11:31:49,635 INFO  [QueryBinder] Binding Named query: MouseEntity.findByBirthDate => SELECT m FROM MouseEntity m WHERE m.birthDate = :birthDate
+11:31:49,635 INFO  [QueryBinder] Binding Named query: MouseEntity.findByExitDate => SELECT m FROM MouseEntity m WHERE m.exitDate = :exitDate
+11:31:49,635 INFO  [QueryBinder] Binding Named query: MouseEntity.findByCod => SELECT m FROM MouseEntity m WHERE m.cod = :cod
+11:31:49,635 INFO  [QueryBinder] Binding Named query: MouseEntity.findByCodNotes => SELECT m FROM MouseEntity m WHERE m.codNotes = :codNotes
+11:31:49,635 INFO  [QueryBinder] Binding Named query: MouseEntity.findByGeneration => SELECT m FROM MouseEntity m WHERE m.generation = :generation
+11:31:49,640 INFO  [QueryBinder] Binding Named query: MouseEntity.findBySex => SELECT m FROM MouseEntity m WHERE m.sex = :sex
+11:31:49,640 INFO  [QueryBinder] Binding Named query: MouseEntity.findByLifeStatus => SELECT m FROM MouseEntity m WHERE m.lifeStatus = :lifeStatus
+11:31:49,640 INFO  [QueryBinder] Binding Named query: MouseEntity.findByBreedingStatus => SELECT m FROM MouseEntity m WHERE m.breedingStatus = :breedingStatus
+11:31:49,640 INFO  [QueryBinder] Binding Named query: MouseEntity.findByCoatColor => SELECT m FROM MouseEntity m WHERE m.coatColor = :coatColor
+11:31:49,640 INFO  [QueryBinder] Binding Named query: MouseEntity.findByDiet => SELECT m FROM MouseEntity m WHERE m.diet = :diet
+11:31:49,640 INFO  [QueryBinder] Binding Named query: MouseEntity.findByOwner => SELECT m FROM MouseEntity m WHERE m.owner = :owner
+11:31:49,645 INFO  [QueryBinder] Binding Named query: MouseEntity.findByOrigin => SELECT m FROM MouseEntity m WHERE m.origin = :origin
+11:31:49,645 INFO  [QueryBinder] Binding Named query: MouseEntity.findByProtocol => SELECT m FROM MouseEntity m WHERE m.protocol = :protocol
+11:31:49,645 INFO  [QueryBinder] Binding Named query: MouseEntity.findByComment => SELECT m FROM MouseEntity m WHERE m.comment = :comment
+11:31:49,645 INFO  [QueryBinder] Binding Named query: MouseEntity.findBySampleVialID => SELECT m FROM MouseEntity m WHERE m.sampleVialID = :sampleVialID
+11:31:49,645 INFO  [QueryBinder] Binding Named query: MouseEntity.findBySampleVialTagPosition => SELECT m FROM MouseEntity m WHERE m.sampleVialTagPosition = :sampleVialTagPosition
+11:31:49,645 INFO  [QueryBinder] Binding Named query: MouseEntity.findByVersion => SELECT m FROM MouseEntity m WHERE m.version = :version
+11:31:49,650 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.MouseEntity on table Mouse
+11:31:49,650 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvKeywordsEntity
+11:31:49,655 INFO  [QueryBinder] Binding Named query: CvKeywordsEntity.findAll => SELECT c FROM CvKeywordsEntity c ORDER BY c.keyword
+11:31:49,655 INFO  [QueryBinder] Binding Named query: CvKeywordsEntity.findBykey => SELECT c FROM CvKeywordsEntity c WHERE c.keywordKey = :key
+11:31:49,655 INFO  [QueryBinder] Binding Named query: CvKeywordsEntity.findByKeywordKey => SELECT c FROM CvKeywordsEntity c WHERE c.keywordKey = :keywordKey
+11:31:49,655 INFO  [QueryBinder] Binding Named query: CvKeywordsEntity.findByKeyword => SELECT c FROM CvKeywordsEntity c WHERE c.keyword = :keyword
+11:31:49,655 INFO  [QueryBinder] Binding Named query: CvKeywordsEntity.findByVersion => SELECT c FROM CvKeywordsEntity c WHERE c.version = :version
+11:31:49,655 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvKeywordsEntity on table cv_Keywords
+11:31:49,660 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvExpStatusEntity
+11:31:49,660 INFO  [QueryBinder] Binding Named query: CvExpStatusEntity.findAll => SELECT c FROM CvExpStatusEntity c ORDER BY c.status
+11:31:49,660 INFO  [QueryBinder] Binding Named query: CvExpStatusEntity.findBykey => SELECT c FROM CvExpStatusEntity c WHERE c.expStatuskey = :key
+11:31:49,660 INFO  [QueryBinder] Binding Named query: CvExpStatusEntity.findByExpStatuskey => SELECT c FROM CvExpStatusEntity c WHERE c.expStatuskey = :expStatuskey
+11:31:49,660 INFO  [QueryBinder] Binding Named query: CvExpStatusEntity.findByStatus => SELECT c FROM CvExpStatusEntity c WHERE c.status = :status
+11:31:49,660 INFO  [QueryBinder] Binding Named query: CvExpStatusEntity.findByVersion => SELECT c FROM CvExpStatusEntity c WHERE c.version = :version
+11:31:49,665 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvExpStatusEntity on table cv_ExpStatus
+11:31:49,665 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvHarvestMethodEntity
+11:31:49,665 INFO  [QueryBinder] Binding Named query: CvHarvestMethodEntity.findAll => SELECT c FROM CvHarvestMethodEntity c ORDER BY c.harvestMethod
+11:31:49,665 INFO  [QueryBinder] Binding Named query: CvHarvestMethodEntity.findBykey => SELECT c FROM CvHarvestMethodEntity c WHERE c.harvestMethodkey = :key
+11:31:49,665 INFO  [QueryBinder] Binding Named query: CvHarvestMethodEntity.findByHarvestMethodkey => SELECT c FROM CvHarvestMethodEntity c WHERE c.harvestMethodkey = :harvestMethodkey
+11:31:49,665 INFO  [QueryBinder] Binding Named query: CvHarvestMethodEntity.findByHarvestMethod => SELECT c FROM CvHarvestMethodEntity c WHERE c.harvestMethod = :harvestMethod
+11:31:49,670 INFO  [QueryBinder] Binding Named query: CvHarvestMethodEntity.findByVersion => SELECT c FROM CvHarvestMethodEntity c WHERE c.version = :version
+11:31:49,670 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvHarvestMethodEntity on table cv_HarvestMethod
+11:31:49,670 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvSexEntity
+11:31:49,670 INFO  [QueryBinder] Binding Named query: CvSexEntity.findAll => SELECT c FROM CvSexEntity c ORDER BY c.sex 
+11:31:49,670 INFO  [QueryBinder] Binding Named query: CvSexEntity.findBykey => SELECT c FROM CvSexEntity c WHERE c.sexKey = :key
+11:31:49,675 INFO  [QueryBinder] Binding Named query: CvSexEntity.findBySexKey => SELECT c FROM CvSexEntity c WHERE c.sexKey = :sexKey
+11:31:49,675 INFO  [QueryBinder] Binding Named query: CvSexEntity.findBySex => SELECT c FROM CvSexEntity c WHERE c.sex = :sex
+11:31:49,675 INFO  [QueryBinder] Binding Named query: CvSexEntity.findByAbbreviation => SELECT c FROM CvSexEntity c WHERE c.abbreviation = :abbreviation
+11:31:49,675 INFO  [QueryBinder] Binding Named query: CvSexEntity.findByIsActive => SELECT c FROM CvSexEntity c WHERE c.isActive = :isActive
+11:31:49,675 INFO  [QueryBinder] Binding Named query: CvSexEntity.findByIsDefault => SELECT c FROM CvSexEntity c WHERE c.isDefault = :isDefault
+11:31:49,675 INFO  [QueryBinder] Binding Named query: CvSexEntity.findBySortOrder => SELECT c FROM CvSexEntity c WHERE c.sortOrder = :sortOrder
+11:31:49,675 INFO  [QueryBinder] Binding Named query: CvSexEntity.findByVocabularySourcekey => SELECT c FROM CvSexEntity c WHERE c.vocabularySourcekey = :vocabularySourcekey
+11:31:49,680 INFO  [QueryBinder] Binding Named query: CvSexEntity.findByElementID => SELECT c FROM CvSexEntity c WHERE c.elementID = :elementID
+11:31:49,680 INFO  [QueryBinder] Binding Named query: CvSexEntity.findByIsDeprecated => SELECT c FROM CvSexEntity c WHERE c.isDeprecated = :isDeprecated
+11:31:49,680 INFO  [QueryBinder] Binding Named query: CvSexEntity.findByVersion => SELECT c FROM CvSexEntity c WHERE c.version = :version
+11:31:49,680 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvSexEntity on table cv_Sex
+11:31:49,685 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvGeneclassEntity
+11:31:49,685 INFO  [QueryBinder] Binding Named query: CvGeneclassEntity.findAll => SELECT c FROM CvGeneclassEntity c ORDER BY c.geneClass
+11:31:49,685 INFO  [QueryBinder] Binding Named query: CvGeneclassEntity.findBykey => SELECT c FROM CvGeneclassEntity c WHERE c.geneClasskey = :key
+11:31:49,685 INFO  [QueryBinder] Binding Named query: CvGeneclassEntity.findByGeneClasskey => SELECT c FROM CvGeneclassEntity c WHERE c.geneClasskey = :geneClasskey
+11:31:49,685 INFO  [QueryBinder] Binding Named query: CvGeneclassEntity.findByGeneClass => SELECT c FROM CvGeneclassEntity c WHERE c.geneClass = :geneClass
+11:31:49,685 INFO  [QueryBinder] Binding Named query: CvGeneclassEntity.findByDescription => SELECT c FROM CvGeneclassEntity c WHERE c.description = :description
+11:31:49,685 INFO  [QueryBinder] Binding Named query: CvGeneclassEntity.findByVersion => SELECT c FROM CvGeneclassEntity c WHERE c.version = :version
+11:31:49,690 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvGeneclassEntity on table cv_GeneClass
+11:31:49,690 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvSampleTypeEntity
+11:31:49,690 INFO  [QueryBinder] Binding Named query: CvSampleTypeEntity.findAll => SELECT c FROM CvSampleTypeEntity c ORDER BY c.sampleType
+11:31:49,690 INFO  [QueryBinder] Binding Named query: CvSampleTypeEntity.findBykey => SELECT c FROM CvSampleTypeEntity c WHERE c.sampleTypekey = :key
+11:31:49,690 INFO  [QueryBinder] Binding Named query: CvSampleTypeEntity.findBySampleTypekey => SELECT c FROM CvSampleTypeEntity c WHERE c.sampleTypekey = :sampleTypekey
+11:31:49,695 INFO  [QueryBinder] Binding Named query: CvSampleTypeEntity.findBySampleType => SELECT c FROM CvSampleTypeEntity c WHERE c.sampleType = :sampleType
+11:31:49,695 INFO  [QueryBinder] Binding Named query: CvSampleTypeEntity.findByVersion => SELECT c FROM CvSampleTypeEntity c WHERE c.version = :version
+11:31:49,695 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvSampleTypeEntity on table cv_SampleType
+11:31:49,695 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvEpochEntity
+11:31:49,695 INFO  [QueryBinder] Binding Named query: CvEpochEntity.findAll => SELECT c FROM CvEpochEntity c ORDER BY c.epoch
+11:31:49,700 INFO  [QueryBinder] Binding Named query: CvEpochEntity.findBykey => SELECT c FROM CvEpochEntity c WHERE c.epochKey = :key
+11:31:49,700 INFO  [QueryBinder] Binding Named query: CvEpochEntity.findByEpochKey => SELECT c FROM CvEpochEntity c WHERE c.epochKey = :epochKey
+11:31:49,700 INFO  [QueryBinder] Binding Named query: CvEpochEntity.findByEpoch => SELECT c FROM CvEpochEntity c WHERE c.epoch = :epoch
+11:31:49,700 INFO  [QueryBinder] Binding Named query: CvEpochEntity.findByVersion => SELECT c FROM CvEpochEntity c WHERE c.version = :version
+11:31:49,700 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvEpochEntity on table cv_Epoch
+11:31:49,705 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvCrossstatusEntity
+11:31:49,705 INFO  [QueryBinder] Binding Named query: CvCrossstatusEntity.findAll => SELECT c FROM CvCrossstatusEntity c ORDER BY c.crossStatus
+11:31:49,705 INFO  [QueryBinder] Binding Named query: CvCrossstatusEntity.findBykey => SELECT c FROM CvCrossstatusEntity c WHERE c.crossStatuskey = :key
+11:31:49,705 INFO  [QueryBinder] Binding Named query: CvCrossstatusEntity.findByCrossStatuskey => SELECT c FROM CvCrossstatusEntity c WHERE c.crossStatuskey = :crossStatuskey
+11:31:49,705 INFO  [QueryBinder] Binding Named query: CvCrossstatusEntity.findByCrossStatus => SELECT c FROM CvCrossstatusEntity c WHERE c.crossStatus = :crossStatus
+11:31:49,705 INFO  [QueryBinder] Binding Named query: CvCrossstatusEntity.findByAbbreviation => SELECT c FROM CvCrossstatusEntity c WHERE c.abbreviation = :abbreviation
+11:31:49,705 INFO  [QueryBinder] Binding Named query: CvCrossstatusEntity.findByIsActive => SELECT c FROM CvCrossstatusEntity c WHERE c.isActive = :isActive
+11:31:49,710 INFO  [QueryBinder] Binding Named query: CvCrossstatusEntity.findByIsDefault => SELECT c FROM CvCrossstatusEntity c WHERE c.isDefault = :isDefault
+11:31:49,710 INFO  [QueryBinder] Binding Named query: CvCrossstatusEntity.findBySortOrder => SELECT c FROM CvCrossstatusEntity c WHERE c.sortOrder = :sortOrder
+11:31:49,710 INFO  [QueryBinder] Binding Named query: CvCrossstatusEntity.findByVocabularySourcekey => SELECT c FROM CvCrossstatusEntity c WHERE c.vocabularySourcekey = :vocabularySourcekey
+11:31:49,710 INFO  [QueryBinder] Binding Named query: CvCrossstatusEntity.findByElementID => SELECT c FROM CvCrossstatusEntity c WHERE c.elementID = :elementID
+11:31:49,710 INFO  [QueryBinder] Binding Named query: CvCrossstatusEntity.findByIsDeprecated => SELECT c FROM CvCrossstatusEntity c WHERE c.isDeprecated = :isDeprecated
+11:31:49,710 INFO  [QueryBinder] Binding Named query: CvCrossstatusEntity.findByVersion => SELECT c FROM CvCrossstatusEntity c WHERE c.version = :version
+11:31:49,715 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvCrossstatusEntity on table cv_CrossStatus
+11:31:49,715 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvPreservationMethodEntity
+11:31:49,715 INFO  [QueryBinder] Binding Named query: CvPreservationMethodEntity.findAll => SELECT c FROM CvPreservationMethodEntity c ORDER BY c.preservationMethod
+11:31:49,715 INFO  [QueryBinder] Binding Named query: CvPreservationMethodEntity.findBykey => SELECT c FROM CvPreservationMethodEntity c WHERE c.preservationMethodkey = :key
+11:31:49,720 INFO  [QueryBinder] Binding Named query: CvPreservationMethodEntity.findByPreservationMethodkey => SELECT c FROM CvPreservationMethodEntity c WHERE c.preservationMethodkey = :preservationMethodkey
+11:31:49,720 INFO  [QueryBinder] Binding Named query: CvPreservationMethodEntity.findByPreservationMethod => SELECT c FROM CvPreservationMethodEntity c WHERE c.preservationMethod = :preservationMethod
+11:31:49,720 INFO  [QueryBinder] Binding Named query: CvPreservationMethodEntity.findByVersion => SELECT c FROM CvPreservationMethodEntity c WHERE c.version = :version
+11:31:49,720 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvPreservationMethodEntity on table cv_PreservationMethod
+11:31:49,725 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvBreedingStatusEntity
+11:31:49,725 INFO  [QueryBinder] Binding Named query: CvBreedingStatusEntity.findAll => SELECT c FROM CvBreedingStatusEntity c ORDER BY c.breedingStatus 
+11:31:49,725 INFO  [QueryBinder] Binding Named query: CvBreedingStatusEntity.findBykey => SELECT c FROM CvBreedingStatusEntity c WHERE c.breedingStatuskey = :key
+11:31:49,725 INFO  [QueryBinder] Binding Named query: CvBreedingStatusEntity.findByBreedingStatuskey => SELECT c FROM CvBreedingStatusEntity c WHERE c.breedingStatuskey = :breedingStatuskey
+11:31:49,725 INFO  [QueryBinder] Binding Named query: CvBreedingStatusEntity.findByBreedingStatus => SELECT c FROM CvBreedingStatusEntity c WHERE c.breedingStatus = :breedingStatus
+11:31:49,725 INFO  [QueryBinder] Binding Named query: CvBreedingStatusEntity.findByAbbreviation => SELECT c FROM CvBreedingStatusEntity c WHERE c.abbreviation = :abbreviation
+11:31:49,730 INFO  [QueryBinder] Binding Named query: CvBreedingStatusEntity.findByIsActive => SELECT c FROM CvBreedingStatusEntity c WHERE c.isActive = :isActive
+11:31:49,730 INFO  [QueryBinder] Binding Named query: CvBreedingStatusEntity.findByIsDefault => SELECT c FROM CvBreedingStatusEntity c WHERE c.isDefault = :isDefault
+11:31:49,730 INFO  [QueryBinder] Binding Named query: CvBreedingStatusEntity.findBySortOrder => SELECT c FROM CvBreedingStatusEntity c WHERE c.sortOrder = :sortOrder
+11:31:49,730 INFO  [QueryBinder] Binding Named query: CvBreedingStatusEntity.findByVocabularySourcekey => SELECT c FROM CvBreedingStatusEntity c WHERE c.vocabularySourcekey = :vocabularySourcekey
+11:31:49,730 INFO  [QueryBinder] Binding Named query: CvBreedingStatusEntity.findByElementID => SELECT c FROM CvBreedingStatusEntity c WHERE c.elementID = :elementID
+11:31:49,730 INFO  [QueryBinder] Binding Named query: CvBreedingStatusEntity.findByIsDeprecated => SELECT c FROM CvBreedingStatusEntity c WHERE c.isDeprecated = :isDeprecated
+11:31:49,735 INFO  [QueryBinder] Binding Named query: CvBreedingStatusEntity.findByVersion => SELECT c FROM CvBreedingStatusEntity c WHERE c.version = :version
+11:31:49,735 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvBreedingStatusEntity on table cv_BreedingStatus
+11:31:49,735 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.GeneEntity
+11:31:49,735 INFO  [QueryBinder] Binding Named query: GeneEntity.findAll => SELECT g FROM GeneEntity g ORDER BY g.labSymbol 
+11:31:49,735 INFO  [QueryBinder] Binding Named query: GeneEntity.findAllByOwner => SELECT DISTINCT g FROM GeneEntity g, GenotypeEntity gt, MouseEntity m WHERE g.geneKey = gt.geneKey AND gt.mouseKey = m.mouseKey AND m.owner = :fOwner ORDER BY g.labSymbol 
+11:31:49,740 INFO  [QueryBinder] Binding Named query: GeneEntity.findAllByOwners => SELECT DISTINCT g FROM GeneEntity g, GenotypeEntity gt, MouseEntity m WHERE g.geneKey = gt.geneKey AND gt.mouseKey = m.mouseKey AND m.owner IN (:lOwner) ORDER BY g.labSymbol 
+11:31:49,740 INFO  [QueryBinder] Binding Named query: GeneEntity.findBykey => SELECT g FROM GeneEntity g WHERE g.geneKey = :key
+11:31:49,740 INFO  [QueryBinder] Binding Named query: GeneEntity.findByGeneKey => SELECT g FROM GeneEntity g WHERE g.geneKey = :geneKey
+11:31:49,740 INFO  [QueryBinder] Binding Named query: GeneEntity.findByGeneSymbol => SELECT g FROM GeneEntity g WHERE g.geneSymbol = :geneSymbol
+11:31:49,745 INFO  [QueryBinder] Binding Named query: GeneEntity.findByLabSymbol => SELECT g FROM GeneEntity g WHERE g.labSymbol = :labSymbol
+11:31:49,745 INFO  [QueryBinder] Binding Named query: GeneEntity.findByGeneClass => SELECT g FROM GeneEntity g WHERE g.geneClass = :geneClass
+11:31:49,745 INFO  [QueryBinder] Binding Named query: GeneEntity.findByChromosome => SELECT g FROM GeneEntity g WHERE g.chromosome = :chromosome
+11:31:49,745 INFO  [QueryBinder] Binding Named query: GeneEntity.findByCM => SELECT g FROM GeneEntity g WHERE g.cM = :cM
+11:31:49,745 INFO  [QueryBinder] Binding Named query: GeneEntity.findByMegabase => SELECT g FROM GeneEntity g WHERE g.megabase = :megabase
+11:31:49,745 INFO  [QueryBinder] Binding Named query: GeneEntity.findByVersion => SELECT g FROM GeneEntity g WHERE g.version = :version
+11:31:49,745 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.GeneEntity on table Gene
+11:31:49,750 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvStorageFacilityEntity
+11:31:49,750 INFO  [QueryBinder] Binding Named query: CvStorageFacilityEntity.findAll => SELECT c FROM CvStorageFacilityEntity c ORDER BY c.storageFacility
+11:31:49,750 INFO  [QueryBinder] Binding Named query: CvStorageFacilityEntity.findBykey => SELECT c FROM CvStorageFacilityEntity c WHERE c.storageFacilitykey = :key
+11:31:49,750 INFO  [QueryBinder] Binding Named query: CvStorageFacilityEntity.findByStorageFacilitykey => SELECT c FROM CvStorageFacilityEntity c WHERE c.storageFacilitykey = :storageFacilitykey
+11:31:49,750 INFO  [QueryBinder] Binding Named query: CvStorageFacilityEntity.findByStorageFacility => SELECT c FROM CvStorageFacilityEntity c WHERE c.storageFacility = :storageFacility
+11:31:49,755 INFO  [QueryBinder] Binding Named query: CvStorageFacilityEntity.findByVersion => SELECT c FROM CvStorageFacilityEntity c WHERE c.version = :version
+11:31:49,755 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvStorageFacilityEntity on table cv_StorageFacility
+11:31:49,755 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvTimeUnitEntity
+11:31:49,755 INFO  [QueryBinder] Binding Named query: CvTimeUnitEntity.findAll => SELECT c FROM CvTimeUnitEntity c ORDER BY c.timeUnit
+11:31:49,755 INFO  [QueryBinder] Binding Named query: CvTimeUnitEntity.findBykey => SELECT c FROM CvTimeUnitEntity c WHERE c.timeUnitkey = :key
+11:31:49,755 INFO  [QueryBinder] Binding Named query: CvTimeUnitEntity.findByTimeUnitkey => SELECT c FROM CvTimeUnitEntity c WHERE c.timeUnitkey = :timeUnitkey
+11:31:49,760 INFO  [QueryBinder] Binding Named query: CvTimeUnitEntity.findByTimeUnit => SELECT c FROM CvTimeUnitEntity c WHERE c.timeUnit = :timeUnit
+11:31:49,760 INFO  [QueryBinder] Binding Named query: CvTimeUnitEntity.findByAbbreviation => SELECT c FROM CvTimeUnitEntity c WHERE c.abbreviation = :abbreviation
+11:31:49,760 INFO  [QueryBinder] Binding Named query: CvTimeUnitEntity.findByMinutesPerUnit => SELECT c FROM CvTimeUnitEntity c WHERE c.minutesPerUnit = :minutesPerUnit
+11:31:49,760 INFO  [QueryBinder] Binding Named query: CvTimeUnitEntity.findByVersion => SELECT c FROM CvTimeUnitEntity c WHERE c.version = :version
+11:31:49,760 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvTimeUnitEntity on table cv_TimeUnit
+11:31:49,760 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.MouseUsageEntity
+11:31:49,765 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findAll => SELECT m FROM MouseUsageEntity m ORDER BY m.use
+11:31:49,765 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findBykey => SELECT m FROM MouseUsageEntity m WHERE m.usageKey = :key
+11:31:49,765 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByUsageKey => SELECT m FROM MouseUsageEntity m WHERE m.usageKey = :usageKey
+11:31:49,765 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByUse => SELECT m FROM MouseUsageEntity m WHERE m.use = :use
+11:31:49,765 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByUseAge => SELECT m FROM MouseUsageEntity m WHERE m.useAge = :useAge
+11:31:49,765 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByProjectedDate => SELECT m FROM MouseUsageEntity m WHERE m.projectedDate = :projectedDate
+11:31:49,765 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByActualDate => SELECT m FROM MouseUsageEntity m WHERE m.actualDate = :actualDate
+11:31:49,765 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByDone => SELECT m FROM MouseUsageEntity m WHERE m.done = :done
+11:31:49,770 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByComment => SELECT m FROM MouseUsageEntity m WHERE m.comment = :comment
+11:31:49,770 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByD1 => SELECT m FROM MouseUsageEntity m WHERE m.d1 = :d1
+11:31:49,770 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByD2 => SELECT m FROM MouseUsageEntity m WHERE m.d2 = :d2
+11:31:49,770 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByD3 => SELECT m FROM MouseUsageEntity m WHERE m.d3 = :d3
+11:31:49,770 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByD4 => SELECT m FROM MouseUsageEntity m WHERE m.d4 = :d4
+11:31:49,770 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByD5 => SELECT m FROM MouseUsageEntity m WHERE m.d5 = :d5
+11:31:49,770 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByD6 => SELECT m FROM MouseUsageEntity m WHERE m.d6 = :d6
+11:31:49,775 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByD7 => SELECT m FROM MouseUsageEntity m WHERE m.d7 = :d7
+11:31:49,775 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByD8 => SELECT m FROM MouseUsageEntity m WHERE m.d8 = :d8
+11:31:49,775 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByD9 => SELECT m FROM MouseUsageEntity m WHERE m.d9 = :d9
+11:31:49,775 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByD10 => SELECT m FROM MouseUsageEntity m WHERE m.d10 = :d10
+11:31:49,775 INFO  [QueryBinder] Binding Named query: MouseUsageEntity.findByVersion => SELECT m FROM MouseUsageEntity m WHERE m.version = :version
+11:31:49,775 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.MouseUsageEntity on table MouseUsage
+11:31:49,780 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.AlleleEntity
+11:31:49,780 INFO  [QueryBinder] Binding Named query: AlleleEntity.findAll => SELECT a FROM AlleleEntity a ORDER BY a.allele
+11:31:49,780 INFO  [QueryBinder] Binding Named query: AlleleEntity.findAllByOwner => SELECT DISTINCT a FROM AlleleEntity a, GeneEntity g, GenotypeEntity gt, MouseEntity m WHERE a.alleleKey = a.geneKey AND g.geneKey = gt.geneKey AND gt.mouseKey = m.mouseKey AND m.owner = :fOwner ORDER BY a.allele
+11:31:49,780 INFO  [QueryBinder] Binding Named query: AlleleEntity.findAllByOwners => SELECT DISTINCT a FROM AlleleEntity a, GeneEntity g, GenotypeEntity gt, MouseEntity m WHERE a.alleleKey = a.geneKey AND g.geneKey = gt.geneKey AND gt.mouseKey = m.mouseKey AND m.owner IN (:lOwner) ORDER BY a.allele
+11:31:49,785 INFO  [QueryBinder] Binding Named query: AlleleEntity.findBykey => SELECT a FROM AlleleEntity a WHERE a.alleleKey = :key
+11:31:49,785 INFO  [QueryBinder] Binding Named query: AlleleEntity.findByGeneKey => SELECT a FROM AlleleEntity a WHERE a.geneKey = :geneKey
+11:31:49,785 INFO  [QueryBinder] Binding Named query: AlleleEntity.findByAllele => SELECT a FROM AlleleEntity a WHERE a.allele = :allele
+11:31:49,785 INFO  [QueryBinder] Binding Named query: AlleleEntity.findByGenericAlleleGeneClass => SELECT a FROM AlleleEntity a WHERE a.genericAlleleGeneClass = :genericAlleleGeneClass
+11:31:49,785 INFO  [QueryBinder] Binding Named query: AlleleEntity.findByAlleleKey => SELECT a FROM AlleleEntity a WHERE a.alleleKey = :alleleKey
+11:31:49,790 INFO  [QueryBinder] Binding Named query: AlleleEntity.findByVersion => SELECT a FROM AlleleEntity a WHERE a.version = :version
+11:31:49,790 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.AlleleEntity on table Allele
+11:31:49,790 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvCoatColorEntity
+11:31:49,790 INFO  [QueryBinder] Binding Named query: CvCoatColorEntity.findAll => SELECT c FROM CvCoatColorEntity c ORDER BY c.coatColor 
+11:31:49,790 INFO  [QueryBinder] Binding Named query: CvCoatColorEntity.findBykey => SELECT c FROM CvCoatColorEntity c WHERE c.coatColorkey = :key
+11:31:49,790 INFO  [QueryBinder] Binding Named query: CvCoatColorEntity.findByCoatColorkey => SELECT c FROM CvCoatColorEntity c WHERE c.coatColorkey = :coatColorkey
+11:31:49,795 INFO  [QueryBinder] Binding Named query: CvCoatColorEntity.findByCoatColor => SELECT c FROM CvCoatColorEntity c WHERE c.coatColor = :coatColor
+11:31:49,795 INFO  [QueryBinder] Binding Named query: CvCoatColorEntity.findByDescription => SELECT c FROM CvCoatColorEntity c WHERE c.description = :description
+11:31:49,795 INFO  [QueryBinder] Binding Named query: CvCoatColorEntity.findByVersion => SELECT c FROM CvCoatColorEntity c WHERE c.version = :version
+11:31:49,795 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvCoatColorEntity on table cv_CoatColor
+11:31:49,795 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvTheilerStageEntity
+11:31:49,800 INFO  [QueryBinder] Binding Named query: CvTheilerStageEntity.findAll => SELECT c FROM CvTheilerStageEntity c ORDER BY c.theilerStage
+11:31:49,800 INFO  [QueryBinder] Binding Named query: CvTheilerStageEntity.findBykey => SELECT c FROM CvTheilerStageEntity c WHERE c.theilerStagekey = :key
+11:31:49,800 INFO  [QueryBinder] Binding Named query: CvTheilerStageEntity.findByTheilerStage => SELECT c FROM CvTheilerStageEntity c WHERE c.theilerStage = :theilerStage
+11:31:49,800 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvTheilerStageEntity on table cv_TheilerStage
+11:31:49,805 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvPreservationTypeEntity
+11:31:49,805 INFO  [QueryBinder] Binding Named query: CvPreservationTypeEntity.findAll => SELECT c FROM CvPreservationTypeEntity c ORDER BY c.preservationType
+11:31:49,805 INFO  [QueryBinder] Binding Named query: CvPreservationTypeEntity.findBykey => SELECT c FROM CvPreservationTypeEntity c WHERE c.preservationTypekey = :key
+11:31:49,805 INFO  [QueryBinder] Binding Named query: CvPreservationTypeEntity.findByPreservationTypekey => SELECT c FROM CvPreservationTypeEntity c WHERE c.preservationTypekey = :preservationTypekey
+11:31:49,805 INFO  [QueryBinder] Binding Named query: CvPreservationTypeEntity.findByPreservationType => SELECT c FROM CvPreservationTypeEntity c WHERE c.preservationType = :preservationType
+11:31:49,805 INFO  [QueryBinder] Binding Named query: CvPreservationTypeEntity.findByVersion => SELECT c FROM CvPreservationTypeEntity c WHERE c.version = :version
+11:31:49,805 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvPreservationTypeEntity on table cv_PreservationType
+11:31:49,810 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvMouseUseEntity
+11:31:49,810 INFO  [QueryBinder] Binding Named query: CvMouseUseEntity.findAll => SELECT c FROM CvMouseUseEntity c ORDER BY c.mouseUse
+11:31:49,810 INFO  [QueryBinder] Binding Named query: CvMouseUseEntity.findAllByOwner => SELECT DISTINCT c FROM CvMouseUseEntity c, MouseUsageEntity mu, MouseEntity m WHERE (mu.mouseKey = m.mouseKey AND c.mouseUse = mu.use) AND m.owner = :fOwner ORDER BY c.mouseUse
+11:31:49,810 INFO  [QueryBinder] Binding Named query: CvMouseUseEntity.findAllByOwners => SELECT c FROM CvMouseUseEntity c WHERE EXISTS( SELECT 1 FROM MouseUsageEntity mu, MouseEntity m WHERE (mu.mouseKey = m.mouseKey AND c.mouseUse = mu.use) AND m.owner IN (:lOwner)) ORDER BY c.mouseUse 
+11:31:49,810 INFO  [QueryBinder] Binding Named query: CvMouseUseEntity.findBykey => SELECT c FROM CvMouseUseEntity c WHERE c.mouseUsekey = :key
+11:31:49,815 INFO  [QueryBinder] Binding Named query: CvMouseUseEntity.findByMouseUsekey => SELECT c FROM CvMouseUseEntity c WHERE c.mouseUsekey = :mouseUsekey
+11:31:49,815 INFO  [QueryBinder] Binding Named query: CvMouseUseEntity.findByMouseUse => SELECT c FROM CvMouseUseEntity c WHERE c.mouseUse = :mouseUse
+11:31:49,815 INFO  [QueryBinder] Binding Named query: CvMouseUseEntity.findByUseDescription => SELECT c FROM CvMouseUseEntity c WHERE c.useDescription = :useDescription
+11:31:49,815 INFO  [QueryBinder] Binding Named query: CvMouseUseEntity.findByVersion => SELECT c FROM CvMouseUseEntity c WHERE c.version = :version
+11:31:49,815 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvMouseUseEntity on table cv_MouseUse
+11:31:49,820 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.colonyManagement.GenotypeEntity
+11:31:49,820 INFO  [QueryBinder] Binding Named query: GenotypeEntity.findAll => SELECT g FROM GenotypeEntity g ORDER BY g.allele1
+11:31:49,820 INFO  [QueryBinder] Binding Named query: GenotypeEntity.findBykey => SELECT g FROM GenotypeEntity g WHERE g.genotypeKey = :key
+11:31:49,820 INFO  [QueryBinder] Binding Named query: GenotypeEntity.findMaxPrimaryKey => SELECT max(g.genotypeKey) FROM GenotypeEntity g 
+11:31:49,820 INFO  [QueryBinder] Binding Named query: GenotypeEntity.findGenotypesByMouse => SELECT g FROM GenotypeEntity g WHERE g.mouseKey = :mKey
+11:31:49,820 INFO  [QueryBinder] Binding Named query: GenotypeEntity.findByGenotypeKey => SELECT g FROM GenotypeEntity g WHERE g.genotypeKey = :genotypeKey
+11:31:49,825 INFO  [QueryBinder] Binding Named query: GenotypeEntity.findByAllele1 => SELECT g FROM GenotypeEntity g WHERE g.allele1 = :allele1
+11:31:49,825 INFO  [QueryBinder] Binding Named query: GenotypeEntity.findByAll1Conf => SELECT g FROM GenotypeEntity g WHERE g.all1Conf = :all1Conf
+11:31:49,825 INFO  [QueryBinder] Binding Named query: GenotypeEntity.findByAllele2 => SELECT g FROM GenotypeEntity g WHERE g.allele2 = :allele2
+11:31:49,825 INFO  [QueryBinder] Binding Named query: GenotypeEntity.findByAll2Conf => SELECT g FROM GenotypeEntity g WHERE g.all2Conf = :all2Conf
+11:31:49,825 INFO  [QueryBinder] Binding Named query: GenotypeEntity.findByGenoPage => SELECT g FROM GenotypeEntity g WHERE g.genoPage = :genoPage
+11:31:49,825 INFO  [QueryBinder] Binding Named query: GenotypeEntity.findBySampleLocation => SELECT g FROM GenotypeEntity g WHERE g.sampleLocation = :sampleLocation
+11:31:49,825 INFO  [QueryBinder] Binding Named query: GenotypeEntity.findByGtDate => SELECT g FROM GenotypeEntity g WHERE g.gtDate = :gtDate
+11:31:49,830 INFO  [QueryBinder] Binding Named query: GenotypeEntity.findByVersion => SELECT g FROM GenotypeEntity g WHERE g.version = :version
+11:31:49,830 INFO  [EntityBinder] Bind entity jcms.integrationtier.colonyManagement.GenotypeEntity on table Genotype
+11:31:49,830 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.cv.CvMatingCardNotesEntity
+11:31:49,830 INFO  [QueryBinder] Binding Named query: CvMatingCardNotesEntity.findAll => SELECT c FROM CvMatingCardNotesEntity c ORDER BY c.matingNotes
+11:31:49,830 INFO  [QueryBinder] Binding Named query: CvMatingCardNotesEntity.findBykey => SELECT c FROM CvMatingCardNotesEntity c WHERE c.matingCardNoteskey = :key
+11:31:49,835 INFO  [QueryBinder] Binding Named query: CvMatingCardNotesEntity.findByMatingCardNoteskey => SELECT c FROM CvMatingCardNotesEntity c WHERE c.matingCardNoteskey = :matingCardNoteskey
+11:31:49,835 INFO  [QueryBinder] Binding Named query: CvMatingCardNotesEntity.findByMatingNotes => SELECT c FROM CvMatingCardNotesEntity c WHERE c.matingNotes = :matingNotes
+11:31:49,835 INFO  [QueryBinder] Binding Named query: CvMatingCardNotesEntity.findByVersion => SELECT c FROM CvMatingCardNotesEntity c WHERE c.version = :version
+11:31:49,835 INFO  [EntityBinder] Bind entity jcms.integrationtier.cv.CvMatingCardNotesEntity on table cv_MatingCardNotes
+11:31:49,840 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.colonyManagement.MatingEntity.litterEntityCollection -> Litter
+11:31:49,840 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.cv.CvSampleClassEntity.cvPreservationTypeEntityCollection -> cv_PreservationType
+11:31:49,840 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.cv.CvSampleClassEntity.cvSampleTypeEntityCollection -> cv_SampleType
+11:31:49,840 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.colonyManagement.LitterEntity.mouseEntityCollection -> Mouse
+11:31:49,840 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.colonyManagement.ContainerEntity.containerHistoryEntityCollection -> ContainerHistory
+11:31:49,845 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.colonyManagement.ContainerEntity.mouseEntityCollection -> Mouse
+11:31:49,845 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.colonyManagement.RoomEntity.containerHistoryEntityCollection -> ContainerHistory
+11:31:49,845 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.colonyManagement.StrainEntity.matingEntityCollection -> Mating
+11:31:49,845 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.colonyManagement.StrainEntity.mouseEntityCollection -> Mouse
+11:31:49,845 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.colonyManagement.MouseEntity.matingEntityCollection -> Mating
+11:31:49,845 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.cv.CvCrossstatusEntity.matingEntityCollection -> Mating
+11:31:49,845 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.cv.CvPreservationMethodEntity.cvPreservationDetailEntityCollection -> cv_PreservationDetail
+11:31:49,850 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.cv.CvStorageFacilityEntity.cvLocationTypeEntityCollection -> cv_LocationType
+11:31:49,850 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.cv.CvPreservationTypeEntity.cvPreservationMethodEntityCollection -> cv_PreservationMethod
+11:31:49,900 INFO  [DefaultTraversableResolver] Instantiated an instance of org.hibernate.validator.engine.resolver.JPATraversableResolver.
+11:31:50,015 INFO  [DefaultTraversableResolver] Instantiated an instance of org.hibernate.validator.engine.resolver.JPATraversableResolver.
+11:31:50,060 INFO  [DefaultTraversableResolver] Instantiated an instance of org.hibernate.validator.engine.resolver.JPATraversableResolver.
+11:31:50,065 INFO  [HibernateSearchEventListenerRegister] Unable to find org.hibernate.search.event.FullTextIndexEventListener on the classpath. Hibernate Search is not enabled.
+11:31:50,065 INFO  [ConnectionProviderFactory] Initializing connection provider: org.hibernate.ejb.connection.InjectedDataSourceConnectionProvider
+11:31:50,065 INFO  [InjectedDataSourceConnectionProvider] Using provided datasource
+11:31:50,080 INFO  [Dialect] Using dialect: org.hibernate.dialect.MySQLDialect
+11:31:50,080 INFO  [JdbcSupportLoader] Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+11:31:50,080 INFO  [SettingsFactory] Database ->
+       name : MySQL
+    version : 5.5.33
+      major : 5
+      minor : 5
+11:31:50,080 INFO  [SettingsFactory] Driver ->
+       name : MySQL-AB JDBC Driver
+    version : mysql-connector-java-5.1.6 ( Revision: ${svn.Revision} )
+      major : 5
+      minor : 1
+11:31:50,080 INFO  [TransactionFactoryFactory] Transaction strategy: org.hibernate.ejb.transaction.JoinableCMTTransactionFactory
+11:31:50,085 INFO  [TransactionManagerLookupFactory] instantiating TransactionManagerLookup: org.hibernate.transaction.JBossTransactionManagerLookup
+11:31:50,090 INFO  [TransactionManagerLookupFactory] instantiated TransactionManagerLookup
+11:31:50,090 INFO  [SettingsFactory] Automatic flush during beforeCompletion(): disabled
+11:31:50,090 INFO  [SettingsFactory] Automatic session close at end of transaction: disabled
+11:31:50,090 INFO  [SettingsFactory] JDBC batch size: 15
+11:31:50,090 INFO  [SettingsFactory] JDBC batch updates for versioned data: disabled
+11:31:50,090 INFO  [SettingsFactory] Scrollable result sets: enabled
+11:31:50,095 INFO  [SettingsFactory] JDBC3 getGeneratedKeys(): enabled
+11:31:50,095 INFO  [SettingsFactory] Connection release mode: auto
+11:31:50,095 INFO  [SettingsFactory] Maximum outer join fetch depth: 2
+11:31:50,095 INFO  [SettingsFactory] Default batch fetch size: 1
+11:31:50,095 INFO  [SettingsFactory] Generate SQL with comments: disabled
+11:31:50,095 INFO  [SettingsFactory] Order SQL updates by primary key: disabled
+11:31:50,095 INFO  [SettingsFactory] Order SQL inserts for batching: disabled
+11:31:50,100 INFO  [SettingsFactory] Query translator: org.hibernate.hql.ast.ASTQueryTranslatorFactory
+11:31:50,100 INFO  [ASTQueryTranslatorFactory] Using ASTQueryTranslatorFactory
+11:31:50,100 INFO  [SettingsFactory] Query language substitutions: {}
+11:31:50,100 INFO  [SettingsFactory] JPA-QL strict compliance: enabled
+11:31:50,100 INFO  [SettingsFactory] Second-level cache: enabled
+11:31:50,100 INFO  [SettingsFactory] Query cache: disabled
+11:31:50,100 INFO  [SettingsFactory] Cache region factory : org.hibernate.cache.impl.bridge.RegionFactoryCacheProviderBridge
+11:31:50,105 INFO  [RegionFactoryCacheProviderBridge] Cache provider: org.hibernate.cache.HashtableCacheProvider
+11:31:50,105 INFO  [SettingsFactory] Optimize cache for minimal puts: disabled
+11:31:50,105 INFO  [SettingsFactory] Cache region prefix: persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSIntegrationTierPU
+11:31:50,105 INFO  [SettingsFactory] Structured second-level cache entries: disabled
+11:31:50,105 INFO  [SettingsFactory] Statistics: disabled
+11:31:50,105 INFO  [SettingsFactory] Deleted entity synthetic identifier rollback: disabled
+11:31:50,105 INFO  [SettingsFactory] Default entity-mode: pojo
+11:31:50,110 INFO  [SettingsFactory] Named query checking : enabled
+11:31:50,110 INFO  [SettingsFactory] Check Nullability in Core (should be disabled when Bean Validation is on): disabled
+11:31:50,150 INFO  [SessionFactoryImpl] building session factory
+11:31:50,150 INFO  [BasicTypeRegistry] Type registration [wrapper_materialized_blob] overrides previous : org.hibernate.type.WrappedMaterializedBlobType@69683ca4
+11:31:50,150 INFO  [BasicTypeRegistry] Type registration [clob] overrides previous : org.hibernate.type.ClobType@3a65690c
+11:31:50,155 INFO  [BasicTypeRegistry] Type registration [java.sql.Clob] overrides previous : org.hibernate.type.ClobType@3a65690c
+11:31:50,155 INFO  [BasicTypeRegistry] Type registration [wrapper_characters_clob] overrides previous : org.hibernate.type.CharacterArrayClobType@57d3b0c7
+11:31:50,155 INFO  [BasicTypeRegistry] Type registration [materialized_blob] overrides previous : org.hibernate.type.MaterializedBlobType@afb05dd
+11:31:50,155 INFO  [BasicTypeRegistry] Type registration [characters_clob] overrides previous : org.hibernate.type.PrimitiveCharacterArrayClobType@663df5cc
+11:31:50,155 INFO  [BasicTypeRegistry] Type registration [materialized_clob] overrides previous : org.hibernate.type.MaterializedClobType@6dd45884
+11:31:50,160 INFO  [BasicTypeRegistry] Type registration [blob] overrides previous : org.hibernate.type.BlobType@fff7a71
+11:31:50,160 INFO  [BasicTypeRegistry] Type registration [java.sql.Blob] overrides previous : org.hibernate.type.BlobType@fff7a71
+11:31:50,545 INFO  [SessionFactoryObjectFactory] Factory name: persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSIntegrationTierPU
+11:31:50,550 INFO  [NamingHelper] JNDI InitialContext properties:{java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory, java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces}
+11:31:50,555 INFO  [SessionFactoryObjectFactory] Bound factory to JNDI name: persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSIntegrationTierPU
+11:31:50,555 INFO  [NamingHelper] JNDI InitialContext properties:{java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory, java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces}
+11:31:51,580 INFO  [PersistenceUnitDeployment] Starting persistence unit persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSWebIntegrationTierPU
+11:31:51,580 INFO  [Ejb3Configuration] Processing PersistenceUnitInfo [
+	name: JCMSWebIntegrationTierPU
+	...]
+11:31:51,580 WARN  [Ejb3Configuration] Persistence provider caller does not implement the EJB3 spec correctly.PersistenceUnitInfo.getNewTempClassLoader() is null.
+11:31:51,580 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.jcmsWeb.WorkgroupUserEntity
+11:31:51,585 INFO  [QueryBinder] Binding Named query: WorkgroupUserEntity.findAll => SELECT w FROM WorkgroupUserEntity w
+11:31:51,585 INFO  [QueryBinder] Binding Named query: WorkgroupUserEntity.findBykey => SELECT w FROM WorkgroupUserEntity w WHERE w.workgroupUserkey = :key
+11:31:51,585 INFO  [QueryBinder] Binding Named query: WorkgroupUserEntity.findByWorkgroupUserkey => SELECT w FROM WorkgroupUserEntity w WHERE w.workgroupUserkey = :workgroupUserkey
+11:31:51,585 INFO  [QueryBinder] Binding Named query: WorkgroupUserEntity.findByCreatedBy => SELECT w FROM WorkgroupUserEntity w WHERE w.createdBy = :createdBy
+11:31:51,585 INFO  [QueryBinder] Binding Named query: WorkgroupUserEntity.findByDateCreated => SELECT w FROM WorkgroupUserEntity w WHERE w.dateCreated = :dateCreated
+11:31:51,585 INFO  [QueryBinder] Binding Named query: WorkgroupUserEntity.findByModifiedBy => SELECT w FROM WorkgroupUserEntity w WHERE w.modifiedBy = :modifiedBy
+11:31:51,585 INFO  [QueryBinder] Binding Named query: WorkgroupUserEntity.findByDateModified => SELECT w FROM WorkgroupUserEntity w WHERE w.dateModified = :dateModified
+11:31:51,590 INFO  [QueryBinder] Binding Named query: WorkgroupUserEntity.findByVersion => SELECT w FROM WorkgroupUserEntity w WHERE w.version = :version
+11:31:51,590 INFO  [EntityBinder] Bind entity jcms.integrationtier.jcmsWeb.WorkgroupUserEntity on table WorkgroupUser
+11:31:51,590 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.jcmsWeb.WorkgroupUserFunctionalAreaEntity
+11:31:51,595 INFO  [QueryBinder] Binding Named query: WorkgroupUserFunctionalAreaEntity.findAll => SELECT w FROM WorkgroupUserFunctionalAreaEntity w
+11:31:51,595 INFO  [QueryBinder] Binding Named query: WorkgroupUserFunctionalAreaEntity.findBykey => SELECT w FROM WorkgroupUserFunctionalAreaEntity w WHERE w.workgroupUserFunctionalAreakey = :key
+11:31:51,595 INFO  [QueryBinder] Binding Named query: WorkgroupUserFunctionalAreaEntity.findByWorkgroupUserFunctionalAreakey => SELECT w FROM WorkgroupUserFunctionalAreaEntity w WHERE w.workgroupUserFunctionalAreakey = :workgroupUserFunctionalAreakey
+11:31:51,595 INFO  [QueryBinder] Binding Named query: WorkgroupUserFunctionalAreaEntity.findByPrivilegekey => SELECT w FROM WorkgroupUserFunctionalAreaEntity w WHERE w.privilegekey = :privilegekey
+11:31:51,595 INFO  [QueryBinder] Binding Named query: WorkgroupUserFunctionalAreaEntity.findByCreatedBy => SELECT w FROM WorkgroupUserFunctionalAreaEntity w WHERE w.createdBy = :createdBy
+11:31:51,600 INFO  [QueryBinder] Binding Named query: WorkgroupUserFunctionalAreaEntity.findByDateCreated => SELECT w FROM WorkgroupUserFunctionalAreaEntity w WHERE w.dateCreated = :dateCreated
+11:31:51,600 INFO  [QueryBinder] Binding Named query: WorkgroupUserFunctionalAreaEntity.findByModifiedBy => SELECT w FROM WorkgroupUserFunctionalAreaEntity w WHERE w.modifiedBy = :modifiedBy
+11:31:51,600 INFO  [QueryBinder] Binding Named query: WorkgroupUserFunctionalAreaEntity.findByDateModified => SELECT w FROM WorkgroupUserFunctionalAreaEntity w WHERE w.dateModified = :dateModified
+11:31:51,600 INFO  [QueryBinder] Binding Named query: WorkgroupUserFunctionalAreaEntity.findByVersion => SELECT w FROM WorkgroupUserFunctionalAreaEntity w WHERE w.version = :version
+11:31:51,600 INFO  [EntityBinder] Bind entity jcms.integrationtier.jcmsWeb.WorkgroupUserFunctionalAreaEntity on table WorkgroupUserFunctionalArea
+11:31:51,605 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.jcmsWeb.CvQueryTypeEntity
+11:31:51,605 INFO  [QueryBinder] Binding Named query: CvQueryTypeEntity.findAll => SELECT c FROM CvQueryTypeEntity c
+11:31:51,605 INFO  [QueryBinder] Binding Named query: CvQueryTypeEntity.findBykey => SELECT c FROM CvQueryTypeEntity c WHERE c.queryTypekey = :key
+11:31:51,605 INFO  [QueryBinder] Binding Named query: CvQueryTypeEntity.findByQueryTypekey => SELECT c FROM CvQueryTypeEntity c WHERE c.queryTypekey = :queryTypekey
+11:31:51,610 INFO  [QueryBinder] Binding Named query: CvQueryTypeEntity.findByQueryType => SELECT c FROM CvQueryTypeEntity c WHERE c.queryType = :queryType
+11:31:51,610 INFO  [QueryBinder] Binding Named query: CvQueryTypeEntity.findByIsActive => SELECT c FROM CvQueryTypeEntity c WHERE c.isActive = :isActive
+11:31:51,610 INFO  [QueryBinder] Binding Named query: CvQueryTypeEntity.findBySortOrder => SELECT c FROM CvQueryTypeEntity c WHERE c.sortOrder = :sortOrder
+11:31:51,610 INFO  [QueryBinder] Binding Named query: CvQueryTypeEntity.findByIsDefault => SELECT c FROM CvQueryTypeEntity c WHERE c.isDefault = :isDefault
+11:31:51,610 INFO  [QueryBinder] Binding Named query: CvQueryTypeEntity.findByCreatedBy => SELECT c FROM CvQueryTypeEntity c WHERE c.createdBy = :createdBy
+11:31:51,610 INFO  [QueryBinder] Binding Named query: CvQueryTypeEntity.findByDateCreated => SELECT c FROM CvQueryTypeEntity c WHERE c.dateCreated = :dateCreated
+11:31:51,615 INFO  [QueryBinder] Binding Named query: CvQueryTypeEntity.findByModifiedBy => SELECT c FROM CvQueryTypeEntity c WHERE c.modifiedBy = :modifiedBy
+11:31:51,615 INFO  [QueryBinder] Binding Named query: CvQueryTypeEntity.findByDateModified => SELECT c FROM CvQueryTypeEntity c WHERE c.dateModified = :dateModified
+11:31:51,615 INFO  [QueryBinder] Binding Named query: CvQueryTypeEntity.findByIsDeprecated => SELECT c FROM CvQueryTypeEntity c WHERE c.isDeprecated = :isDeprecated
+11:31:51,615 INFO  [QueryBinder] Binding Named query: CvQueryTypeEntity.findByElementID => SELECT c FROM CvQueryTypeEntity c WHERE c.elementID = :elementID
+11:31:51,615 INFO  [QueryBinder] Binding Named query: CvQueryTypeEntity.findByVersion => SELECT c FROM CvQueryTypeEntity c WHERE c.version = :version
+11:31:51,615 INFO  [EntityBinder] Bind entity jcms.integrationtier.jcmsWeb.CvQueryTypeEntity on table cv_QueryType
+11:31:51,620 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.jcmsWeb.WorkgroupEntity
+11:31:51,620 INFO  [QueryBinder] Binding Named query: WorkgroupEntity.findAll => SELECT w FROM WorkgroupEntity w ORDER BY w.workgroupName
+11:31:51,620 INFO  [QueryBinder] Binding Named query: WorkgroupEntity.findBykey => SELECT w FROM WorkgroupEntity w WHERE w.workgroupkey = :key
+11:31:51,625 INFO  [QueryBinder] Binding Named query: WorkgroupEntity.findByWorkgroupkey => SELECT w FROM WorkgroupEntity w WHERE w.workgroupkey = :workgroupkey
+11:31:51,625 INFO  [QueryBinder] Binding Named query: WorkgroupEntity.findByWorkgroupName => SELECT w FROM WorkgroupEntity w WHERE w.workgroupName = :workgroupName
+11:31:51,625 INFO  [QueryBinder] Binding Named query: WorkgroupEntity.findByIsActive => SELECT w FROM WorkgroupEntity w WHERE w.isActive = :isActive
+11:31:51,625 INFO  [QueryBinder] Binding Named query: WorkgroupEntity.findByCreatedBy => SELECT w FROM WorkgroupEntity w WHERE w.createdBy = :createdBy
+11:31:51,625 INFO  [QueryBinder] Binding Named query: WorkgroupEntity.findByDateCreated => SELECT w FROM WorkgroupEntity w WHERE w.dateCreated = :dateCreated
+11:31:51,625 INFO  [QueryBinder] Binding Named query: WorkgroupEntity.findByModifiedBy => SELECT w FROM WorkgroupEntity w WHERE w.modifiedBy = :modifiedBy
+11:31:51,630 INFO  [QueryBinder] Binding Named query: WorkgroupEntity.findByDateModified => SELECT w FROM WorkgroupEntity w WHERE w.dateModified = :dateModified
+11:31:51,630 INFO  [QueryBinder] Binding Named query: WorkgroupEntity.findByVersion => SELECT w FROM WorkgroupEntity w WHERE w.version = :version
+11:31:51,630 INFO  [EntityBinder] Bind entity jcms.integrationtier.jcmsWeb.WorkgroupEntity on table Workgroup
+11:31:51,635 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.jcmsWeb.QueryDefinitionEntity
+11:31:51,635 INFO  [QueryBinder] Binding Named query: QueryDefinitionEntity.findAll => SELECT q FROM QueryDefinitionEntity q
+11:31:51,635 INFO  [QueryBinder] Binding Named query: QueryDefinitionEntity.findBykey => SELECT u FROM QueryDefinitionEntity u WHERE u.queryDefinitionkey = :key
+11:31:51,635 INFO  [QueryBinder] Binding Named query: QueryDefinitionEntity.findByWorkgroupkey => SELECT  u FROM QueryDefinitionEntity u WHERE u.workgroupkey IN (:wgKey) ORDER BY u.queryName, u.workgroupkey.workgroupName
+11:31:51,635 INFO  [QueryBinder] Binding Named query: QueryDefinitionEntity.findMaxPrimaryKey => SELECT max(u.queryDefinitionkey) FROM QueryDefinitionEntity u 
+11:31:51,640 INFO  [QueryBinder] Binding Named query: QueryDefinitionEntity.findByQueryDefinitionkey => SELECT q FROM QueryDefinitionEntity q WHERE q.queryDefinitionkey = :queryDefinitionkey
+11:31:51,640 INFO  [QueryBinder] Binding Named query: QueryDefinitionEntity.findByUserkey => SELECT q FROM QueryDefinitionEntity q WHERE q.userkey = :userkey
+11:31:51,640 INFO  [QueryBinder] Binding Named query: QueryDefinitionEntity.findByQueryName => SELECT q FROM QueryDefinitionEntity q WHERE q.queryName = :queryName
+11:31:51,640 INFO  [QueryBinder] Binding Named query: QueryDefinitionEntity.findByIsActive => SELECT q FROM QueryDefinitionEntity q WHERE q.isActive = :isActive
+11:31:51,645 INFO  [QueryBinder] Binding Named query: QueryDefinitionEntity.findByCreatedBy => SELECT q FROM QueryDefinitionEntity q WHERE q.createdBy = :createdBy
+11:31:51,645 INFO  [QueryBinder] Binding Named query: QueryDefinitionEntity.findByDateCreated => SELECT q FROM QueryDefinitionEntity q WHERE q.dateCreated = :dateCreated
+11:31:51,645 INFO  [QueryBinder] Binding Named query: QueryDefinitionEntity.findByModifiedBy => SELECT q FROM QueryDefinitionEntity q WHERE q.modifiedBy = :modifiedBy
+11:31:51,645 INFO  [QueryBinder] Binding Named query: QueryDefinitionEntity.findByDateModified => SELECT q FROM QueryDefinitionEntity q WHERE q.dateModified = :dateModified
+11:31:51,645 INFO  [QueryBinder] Binding Named query: QueryDefinitionEntity.findByVersion => SELECT q FROM QueryDefinitionEntity q WHERE q.version = :version
+11:31:51,645 INFO  [EntityBinder] Bind entity jcms.integrationtier.jcmsWeb.QueryDefinitionEntity on table QueryDefinition
+11:31:51,650 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.jcmsWeb.UserEntity
+11:31:51,650 INFO  [QueryBinder] Binding Named query: UserEntity.findAll => SELECT u FROM UserEntity u ORDER BY u.userName
+11:31:51,650 INFO  [QueryBinder] Binding Named query: UserEntity.findBykey => SELECT u FROM UserEntity u WHERE u.userkey = :key
+11:31:51,650 INFO  [QueryBinder] Binding Named query: UserEntity.findByUserkey => SELECT u FROM UserEntity u WHERE u.userkey = :userkey
+11:31:51,655 INFO  [QueryBinder] Binding Named query: UserEntity.findByNetworkID => SELECT u FROM UserEntity u WHERE u.networkID = :networkID
+11:31:51,655 INFO  [QueryBinder] Binding Named query: UserEntity.findByFirstName => SELECT u FROM UserEntity u WHERE u.firstName = :firstName
+11:31:51,655 INFO  [QueryBinder] Binding Named query: UserEntity.findByLastName => SELECT u FROM UserEntity u WHERE u.lastName = :lastName
+11:31:51,655 INFO  [QueryBinder] Binding Named query: UserEntity.findByTitle => SELECT u FROM UserEntity u WHERE u.title = :title
+11:31:51,655 INFO  [QueryBinder] Binding Named query: UserEntity.findByEmailAddress => SELECT u FROM UserEntity u WHERE u.emailAddress = :emailAddress
+11:31:51,655 INFO  [QueryBinder] Binding Named query: UserEntity.findByInternalPhone => SELECT u FROM UserEntity u WHERE u.internalPhone = :internalPhone
+11:31:51,660 INFO  [QueryBinder] Binding Named query: UserEntity.findByExternalPhone => SELECT u FROM UserEntity u WHERE u.externalPhone = :externalPhone
+11:31:51,660 INFO  [QueryBinder] Binding Named query: UserEntity.findByHireDate => SELECT u FROM UserEntity u WHERE u.hireDate = :hireDate
+11:31:51,660 INFO  [QueryBinder] Binding Named query: UserEntity.findByIsActive => SELECT u FROM UserEntity u WHERE u.isActive = :isActive
+11:31:51,660 INFO  [QueryBinder] Binding Named query: UserEntity.findByCreatedBy => SELECT u FROM UserEntity u WHERE u.createdBy = :createdBy
+11:31:51,660 INFO  [QueryBinder] Binding Named query: UserEntity.findByDateCreated => SELECT u FROM UserEntity u WHERE u.dateCreated = :dateCreated
+11:31:51,660 INFO  [QueryBinder] Binding Named query: UserEntity.findByModifiedBy => SELECT u FROM UserEntity u WHERE u.modifiedBy = :modifiedBy
+11:31:51,665 INFO  [QueryBinder] Binding Named query: UserEntity.findByDateModified => SELECT u FROM UserEntity u WHERE u.dateModified = :dateModified
+11:31:51,665 INFO  [QueryBinder] Binding Named query: UserEntity.findByVersion => SELECT u FROM UserEntity u WHERE u.version = :version
+11:31:51,665 INFO  [QueryBinder] Binding Named query: UserEntity.findByIsMasterAdministrator => SELECT u FROM UserEntity u WHERE u.isMasterAdministrator = :isMasterAdministrator
+11:31:51,665 INFO  [QueryBinder] Binding Named query: UserEntity.findByUserName => SELECT u FROM UserEntity u WHERE u.userName = :userName
+11:31:51,665 INFO  [QueryBinder] Binding Named query: UserEntity.findByPassword => SELECT u FROM UserEntity u WHERE u.password = :password
+11:31:51,670 INFO  [EntityBinder] Bind entity jcms.integrationtier.jcmsWeb.UserEntity on table User
+11:31:51,670 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.jcmsWeb.DbInfoEntity
+11:31:51,670 INFO  [QueryBinder] Binding Named query: DbInfoEntity.findAll => SELECT d FROM DbInfoEntity d
+11:31:51,670 INFO  [QueryBinder] Binding Named query: DbInfoEntity.findBykey => SELECT d FROM DbInfoEntity d WHERE d.dbinfoKey = :key
+11:31:51,675 INFO  [QueryBinder] Binding Named query: DbInfoEntity.findAllActive => SELECT d FROM DbInfoEntity d
+11:31:51,675 INFO  [QueryBinder] Binding Named query: DbInfoEntity.findByDbinfoKey => SELECT d FROM DbInfoEntity d WHERE d.dbinfoKey = :dbinfoKey
+11:31:51,675 INFO  [QueryBinder] Binding Named query: DbInfoEntity.findByReleaseDate => SELECT d FROM DbInfoEntity d WHERE d.releaseDate = :releaseDate
+11:31:51,675 INFO  [QueryBinder] Binding Named query: DbInfoEntity.findByReleaseType => SELECT d FROM DbInfoEntity d WHERE d.releaseType = :releaseType
+11:31:51,675 INFO  [QueryBinder] Binding Named query: DbInfoEntity.findByReleaseNotes => SELECT d FROM DbInfoEntity d WHERE d.releaseNotes = :releaseNotes
+11:31:51,680 INFO  [EntityBinder] Bind entity jcms.integrationtier.jcmsWeb.DbInfoEntity on table dbInfo
+11:31:51,680 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.jcmsWeb.CenterEntity
+11:31:51,680 INFO  [QueryBinder] Binding Named query: CenterEntity.findAll => SELECT c FROM CenterEntity c
+11:31:51,680 INFO  [QueryBinder] Binding Named query: CenterEntity.findByCenterkey => SELECT c FROM CenterEntity c WHERE c.centerkey = :centerkey
+11:31:51,680 INFO  [QueryBinder] Binding Named query: CenterEntity.findByCenter => SELECT c FROM CenterEntity c WHERE c.center = :center
+11:31:51,685 INFO  [QueryBinder] Binding Named query: CenterEntity.findByCreatedBy => SELECT c FROM CenterEntity c WHERE c.createdBy = :createdBy
+11:31:51,685 INFO  [QueryBinder] Binding Named query: CenterEntity.findByDateCreated => SELECT c FROM CenterEntity c WHERE c.dateCreated = :dateCreated
+11:31:51,685 INFO  [QueryBinder] Binding Named query: CenterEntity.findByModifiedBy => SELECT c FROM CenterEntity c WHERE c.modifiedBy = :modifiedBy
+11:31:51,685 INFO  [QueryBinder] Binding Named query: CenterEntity.findByDateModified => SELECT c FROM CenterEntity c WHERE c.dateModified = :dateModified
+11:31:51,685 INFO  [QueryBinder] Binding Named query: CenterEntity.findByVersion => SELECT c FROM CenterEntity c WHERE c.version = :version
+11:31:51,690 INFO  [EntityBinder] Bind entity jcms.integrationtier.jcmsWeb.CenterEntity on table Center
+11:31:51,690 INFO  [AnnotationBinder] Binding entity from annotated class: jcms.integrationtier.jcmsWeb.FunctionalAreaEntity
+11:31:51,690 INFO  [QueryBinder] Binding Named query: FunctionalAreaEntity.findAll => SELECT f FROM FunctionalAreaEntity f ORDER BY f.functionalArea
+11:31:51,690 INFO  [QueryBinder] Binding Named query: FunctionalAreaEntity.findBykey => SELECT f FROM FunctionalAreaEntity f WHERE f.functionalAreakey = :key
+11:31:51,695 INFO  [QueryBinder] Binding Named query: FunctionalAreaEntity.findByFunctionalAreakey => SELECT f FROM FunctionalAreaEntity f WHERE f.functionalAreakey = :functionalAreakey
+11:31:51,695 INFO  [QueryBinder] Binding Named query: FunctionalAreaEntity.findByFunctionalArea => SELECT f FROM FunctionalAreaEntity f WHERE f.functionalArea = :functionalArea
+11:31:51,695 INFO  [QueryBinder] Binding Named query: FunctionalAreaEntity.findByDescription => SELECT f FROM FunctionalAreaEntity f WHERE f.description = :description
+11:31:51,695 INFO  [QueryBinder] Binding Named query: FunctionalAreaEntity.findByCreatedBy => SELECT f FROM FunctionalAreaEntity f WHERE f.createdBy = :createdBy
+11:31:51,695 INFO  [QueryBinder] Binding Named query: FunctionalAreaEntity.findByDateCreated => SELECT f FROM FunctionalAreaEntity f WHERE f.dateCreated = :dateCreated
+11:31:51,695 INFO  [QueryBinder] Binding Named query: FunctionalAreaEntity.findByModifiedBy => SELECT f FROM FunctionalAreaEntity f WHERE f.modifiedBy = :modifiedBy
+11:31:51,700 INFO  [QueryBinder] Binding Named query: FunctionalAreaEntity.findByDateModified => SELECT f FROM FunctionalAreaEntity f WHERE f.dateModified = :dateModified
+11:31:51,700 INFO  [QueryBinder] Binding Named query: FunctionalAreaEntity.findByVersion => SELECT f FROM FunctionalAreaEntity f WHERE f.version = :version
+11:31:51,700 INFO  [EntityBinder] Bind entity jcms.integrationtier.jcmsWeb.FunctionalAreaEntity on table FunctionalArea
+11:31:51,700 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.jcmsWeb.WorkgroupUserEntity.workgroupUserFunctionalAreaEntityCollection -> WorkgroupUserFunctionalArea
+11:31:51,705 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.jcmsWeb.CvQueryTypeEntity.queryDefinitionEntityCollection -> QueryDefinition
+11:31:51,705 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.jcmsWeb.WorkgroupEntity.QueryDefinitionEntityCollection -> QueryDefinition
+11:31:51,705 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.jcmsWeb.WorkgroupEntity.userEntityCollection -> User
+11:31:51,705 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.jcmsWeb.WorkgroupEntity.workgroupUserEntityCollection -> WorkgroupUser
+11:31:51,705 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.jcmsWeb.UserEntity.workgroupUserEntityCollection -> WorkgroupUser
+11:31:51,705 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.jcmsWeb.CenterEntity.workgroupEntityCollection -> Workgroup
+11:31:51,710 INFO  [CollectionBinder] Mapping collection: jcms.integrationtier.jcmsWeb.FunctionalAreaEntity.workgroupUserFunctionalAreaEntityCollection -> WorkgroupUserFunctionalArea
+11:31:51,715 INFO  [DefaultTraversableResolver] Instantiated an instance of org.hibernate.validator.engine.resolver.JPATraversableResolver.
+11:31:51,740 INFO  [DefaultTraversableResolver] Instantiated an instance of org.hibernate.validator.engine.resolver.JPATraversableResolver.
+11:31:51,755 INFO  [DefaultTraversableResolver] Instantiated an instance of org.hibernate.validator.engine.resolver.JPATraversableResolver.
+11:31:51,755 INFO  [HibernateSearchEventListenerRegister] Unable to find org.hibernate.search.event.FullTextIndexEventListener on the classpath. Hibernate Search is not enabled.
+11:31:51,755 INFO  [ConnectionProviderFactory] Initializing connection provider: org.hibernate.ejb.connection.InjectedDataSourceConnectionProvider
+11:31:51,755 INFO  [InjectedDataSourceConnectionProvider] Using provided datasource
+11:31:51,770 INFO  [Dialect] Using dialect: org.hibernate.dialect.MySQLDialect
+11:31:51,770 INFO  [JdbcSupportLoader] Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+11:31:51,770 INFO  [SettingsFactory] Database ->
+       name : MySQL
+    version : 5.5.33
+      major : 5
+      minor : 5
+11:31:51,775 INFO  [SettingsFactory] Driver ->
+       name : MySQL-AB JDBC Driver
+    version : mysql-connector-java-5.1.6 ( Revision: ${svn.Revision} )
+      major : 5
+      minor : 1
+11:31:51,775 INFO  [TransactionFactoryFactory] Transaction strategy: org.hibernate.ejb.transaction.JoinableCMTTransactionFactory
+11:31:51,780 INFO  [TransactionManagerLookupFactory] instantiating TransactionManagerLookup: org.hibernate.transaction.JBossTransactionManagerLookup
+11:31:51,780 INFO  [TransactionManagerLookupFactory] instantiated TransactionManagerLookup
+11:31:51,785 INFO  [SettingsFactory] Automatic flush during beforeCompletion(): disabled
+11:31:51,785 INFO  [SettingsFactory] Automatic session close at end of transaction: disabled
+11:31:51,785 INFO  [SettingsFactory] JDBC batch size: 15
+11:31:51,785 INFO  [SettingsFactory] JDBC batch updates for versioned data: disabled
+11:31:51,785 INFO  [SettingsFactory] Scrollable result sets: enabled
+11:31:51,785 INFO  [SettingsFactory] JDBC3 getGeneratedKeys(): enabled
+11:31:51,790 INFO  [SettingsFactory] Connection release mode: auto
+11:31:51,790 INFO  [SettingsFactory] Maximum outer join fetch depth: 2
+11:31:51,790 INFO  [SettingsFactory] Default batch fetch size: 1
+11:31:51,790 INFO  [SettingsFactory] Generate SQL with comments: disabled
+11:31:51,790 INFO  [SettingsFactory] Order SQL updates by primary key: disabled
+11:31:51,790 INFO  [SettingsFactory] Order SQL inserts for batching: disabled
+11:31:51,795 INFO  [SettingsFactory] Query translator: org.hibernate.hql.ast.ASTQueryTranslatorFactory
+11:31:51,795 INFO  [ASTQueryTranslatorFactory] Using ASTQueryTranslatorFactory
+11:31:51,795 INFO  [SettingsFactory] Query language substitutions: {}
+11:31:51,795 INFO  [SettingsFactory] JPA-QL strict compliance: enabled
+11:31:51,795 INFO  [SettingsFactory] Second-level cache: enabled
+11:31:51,795 INFO  [SettingsFactory] Query cache: disabled
+11:31:51,800 INFO  [SettingsFactory] Cache region factory : org.hibernate.cache.impl.bridge.RegionFactoryCacheProviderBridge
+11:31:51,800 INFO  [RegionFactoryCacheProviderBridge] Cache provider: org.hibernate.cache.HashtableCacheProvider
+11:31:51,800 INFO  [SettingsFactory] Optimize cache for minimal puts: disabled
+11:31:51,800 INFO  [SettingsFactory] Cache region prefix: persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSWebIntegrationTierPU
+11:31:51,800 INFO  [SettingsFactory] Structured second-level cache entries: disabled
+11:31:51,800 INFO  [SettingsFactory] Statistics: disabled
+11:31:51,805 INFO  [SettingsFactory] Deleted entity synthetic identifier rollback: disabled
+11:31:51,805 INFO  [SettingsFactory] Default entity-mode: pojo
+11:31:51,805 INFO  [SettingsFactory] Named query checking : enabled
+11:31:51,805 INFO  [SettingsFactory] Check Nullability in Core (should be disabled when Bean Validation is on): disabled
+11:31:51,815 INFO  [SessionFactoryImpl] building session factory
+11:31:51,815 INFO  [BasicTypeRegistry] Type registration [wrapper_materialized_blob] overrides previous : org.hibernate.type.WrappedMaterializedBlobType@69683ca4
+11:31:51,815 INFO  [BasicTypeRegistry] Type registration [clob] overrides previous : org.hibernate.type.ClobType@3a65690c
+11:31:51,815 INFO  [BasicTypeRegistry] Type registration [java.sql.Clob] overrides previous : org.hibernate.type.ClobType@3a65690c
+11:31:51,815 INFO  [BasicTypeRegistry] Type registration [wrapper_characters_clob] overrides previous : org.hibernate.type.CharacterArrayClobType@57d3b0c7
+11:31:51,820 INFO  [BasicTypeRegistry] Type registration [materialized_blob] overrides previous : org.hibernate.type.MaterializedBlobType@afb05dd
+11:31:51,820 INFO  [BasicTypeRegistry] Type registration [characters_clob] overrides previous : org.hibernate.type.PrimitiveCharacterArrayClobType@663df5cc
+11:31:51,820 INFO  [BasicTypeRegistry] Type registration [materialized_clob] overrides previous : org.hibernate.type.MaterializedClobType@6dd45884
+11:31:51,820 INFO  [BasicTypeRegistry] Type registration [blob] overrides previous : org.hibernate.type.BlobType@fff7a71
+11:31:51,820 INFO  [BasicTypeRegistry] Type registration [java.sql.Blob] overrides previous : org.hibernate.type.BlobType@fff7a71
+11:31:51,870 INFO  [SessionFactoryObjectFactory] Factory name: persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSWebIntegrationTierPU
+11:31:51,870 INFO  [NamingHelper] JNDI InitialContext properties:{java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory, java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces}
+11:31:51,875 INFO  [SessionFactoryObjectFactory] Bound factory to JNDI name: persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSWebIntegrationTierPU
+11:31:51,875 INFO  [NamingHelper] JNDI InitialContext properties:{java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory, java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces}
+11:31:52,010 INFO  [SessionSpecContainer] Starting jboss.j2ee:jar=JCMSIntegrationTier.jar,name=jcms/integrationtier/ejb/base/JCMSWebSystemFacade,service=EJB3
+11:31:52,020 INFO  [EJBContainer] STARTED EJB: jcms.integrationtier.base.JCMSWebSystemFacade ejbName: jcms/integrationtier/ejb/base/JCMSWebSystemFacade
+11:31:52,070 INFO  [JndiSessionRegistrarBase] Binding the following Entries in Global JNDI:
+
+	jcms/integrationtier/ejb/base/JCMSWebSystemFacade/remote - EJB3.x Default Remote Business Interface
+	jcms/integrationtier/ejb/base/JCMSWebSystemFacade/remote-jcms.integrationtier.base.JCMSWebSystemFacadeRemote - EJB3.x Remote Business Interface
+	jcms/integrationtier/ejb/base/JCMSWebSystemFacade/local - EJB3.x Default Local Business Interface
+	jcms/integrationtier/ejb/base/JCMSWebSystemFacade/local-jcms.integrationtier.base.JCMSWebSystemFacadeLocal - EJB3.x Local Business Interface
+	jcms/integrationtier/ejb/base/JCMSWebSystemFacade/local-jcms.integrationtier.base.ITJCMSWebBaseFacadeLocal - EJB3.x Local Business Interface
+
+11:31:52,075 WARN  [TimerServiceContainer] EJBTHREE-2193: using deprecated TimerServiceFactory for restoring timers
+11:31:52,220 INFO  [SessionSpecContainer] Starting jboss.j2ee:jar=JCMSIntegrationTier.jar,name=jcms/integrationtier/ejb/base/SystemFacade,service=EJB3
+11:31:52,220 INFO  [EJBContainer] STARTED EJB: jcms.integrationtier.base.SystemFacade ejbName: jcms/integrationtier/ejb/base/SystemFacade
+11:31:52,260 INFO  [JndiSessionRegistrarBase] Binding the following Entries in Global JNDI:
+
+	jcms/integrationtier/ejb/base/SystemFacade/remote - EJB3.x Default Remote Business Interface
+	jcms/integrationtier/ejb/base/SystemFacade/remote-jcms.integrationtier.base.SystemFacadeRemote - EJB3.x Remote Business Interface
+	jcms/integrationtier/ejb/base/SystemFacade/local - EJB3.x Default Local Business Interface
+	jcms/integrationtier/ejb/base/SystemFacade/local-jcms.integrationtier.base.ITBaseFacadeLocal - EJB3.x Local Business Interface
+	jcms/integrationtier/ejb/base/SystemFacade/local-jcms.integrationtier.base.SystemFacadeLocal - EJB3.x Local Business Interface
+
+11:31:52,265 WARN  [TimerServiceContainer] EJBTHREE-2193: using deprecated TimerServiceFactory for restoring timers
+11:31:52,290 WARN  [InterceptorInfoRepository] EJBTHREE-1852: InterceptorInfoRepository is deprecated
+11:31:52,535 INFO  [JBossASKernel] Created KernelDeployment for: JCMSMiddleTier.jar
+11:31:52,535 INFO  [JBossASKernel] installing bean: jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/VocabularyFacade,service=EJB3
+11:31:52,540 INFO  [JBossASKernel]   with dependencies:
+11:31:52,540 INFO  [JBossASKernel]   and demands:
+11:31:52,540 INFO  [JBossASKernel] 	jboss-switchboard:appName=JCMSMiddleTier,module=JCMSMiddleTier,name=jcms/businesstier/ejb/facade/VocabularyFacade; Required: Create
+11:31:52,540 INFO  [JBossASKernel] 	jboss.ejb:service=EJBTimerService; Required: Described
+11:31:52,540 INFO  [JBossASKernel]   and supplies:
+11:31:52,545 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/VocabularyFacade/local
+11:31:52,545 INFO  [JBossASKernel] 	Class:jcms.middletier.facade.VocabularyFacadeRemote
+11:31:52,545 INFO  [JBossASKernel] 	Class:jcms.middletier.base.BTBaseFacadeLocal
+11:31:52,545 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/VocabularyFacade/remote-jcms.middletier.facade.VocabularyFacadeRemote
+11:31:52,545 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/VocabularyFacade/local-jcms.middletier.base.BTBaseFacadeLocal
+11:31:52,545 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/VocabularyFacade
+11:31:52,550 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/VocabularyFacade/remote
+11:31:52,550 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/VocabularyFacade/local-jcms.middletier.facade.VocabularyFacadeLocal
+11:31:52,550 INFO  [JBossASKernel] 	Class:jcms.middletier.facade.VocabularyFacadeLocal
+11:31:52,550 INFO  [JBossASKernel] Added bean(jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/VocabularyFacade,service=EJB3) to KernelDeployment of: JCMSMiddleTier.jar
+11:31:52,550 INFO  [JBossASKernel] installing bean: jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/SessionManagerFacade,service=EJB3
+11:31:52,555 INFO  [JBossASKernel]   with dependencies:
+11:31:52,555 INFO  [JBossASKernel]   and demands:
+11:31:52,555 INFO  [JBossASKernel] 	jboss.ejb:service=EJBTimerService; Required: Described
+11:31:52,555 INFO  [JBossASKernel] 	jboss-switchboard:appName=JCMSMiddleTier,module=JCMSMiddleTier,name=jcms/businesstier/ejb/facade/SessionManagerFacade; Required: Create
+11:31:52,555 INFO  [JBossASKernel]   and supplies:
+11:31:52,560 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/SessionManagerFacade/local-jcms.middletier.facade.SessionManagerFacadeLocal
+11:31:52,560 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/SessionManagerFacade/local-jcms.middletier.base.BTBaseFacadeLocal
+11:31:52,560 INFO  [JBossASKernel] 	Class:jcms.middletier.facade.SessionManagerFacadeRemote
+11:31:52,560 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/SessionManagerFacade/local
+11:31:52,560 INFO  [JBossASKernel] 	Class:jcms.middletier.base.BTBaseFacadeLocal
+11:31:52,560 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/SessionManagerFacade/remote-jcms.middletier.facade.SessionManagerFacadeRemote
+11:31:52,565 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/SessionManagerFacade
+11:31:52,565 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/SessionManagerFacade/remote
+11:31:52,565 INFO  [JBossASKernel] 	Class:jcms.middletier.facade.SessionManagerFacadeLocal
+11:31:52,565 INFO  [JBossASKernel] Added bean(jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/SessionManagerFacade,service=EJB3) to KernelDeployment of: JCMSMiddleTier.jar
+11:31:52,565 INFO  [JBossASKernel] installing bean: jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/JCMSWebFacade,service=EJB3
+11:31:52,570 INFO  [JBossASKernel]   with dependencies:
+11:31:52,570 INFO  [JBossASKernel]   and demands:
+11:31:52,570 INFO  [JBossASKernel] 	jboss.ejb:service=EJBTimerService; Required: Described
+11:31:52,570 INFO  [JBossASKernel] 	jboss-switchboard:appName=JCMSMiddleTier,module=JCMSMiddleTier,name=jcms/businesstier/ejb/facade/JCMSWebFacade; Required: Create
+11:31:52,570 INFO  [JBossASKernel]   and supplies:
+11:31:52,575 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/JCMSWebFacade
+11:31:52,575 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/JCMSWebFacade/local-jcms.middletier.base.BTBaseFacadeLocal
+11:31:52,575 INFO  [JBossASKernel] 	Class:jcms.middletier.base.BTBaseFacadeLocal
+11:31:52,575 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/JCMSWebFacade/local
+11:31:52,575 INFO  [JBossASKernel] Added bean(jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/JCMSWebFacade,service=EJB3) to KernelDeployment of: JCMSMiddleTier.jar
+11:31:52,580 INFO  [JBossASKernel] installing bean: jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/ServiceFacade,service=EJB3
+11:31:52,580 INFO  [JBossASKernel]   with dependencies:
+11:31:52,580 INFO  [JBossASKernel]   and demands:
+11:31:52,580 INFO  [JBossASKernel] 	jboss.ejb:service=EJBTimerService; Required: Described
+11:31:52,580 INFO  [JBossASKernel] 	jboss-switchboard:appName=JCMSMiddleTier,module=JCMSMiddleTier,name=jcms/businesstier/ejb/facade/ServiceFacade; Required: Create
+11:31:52,580 INFO  [JBossASKernel]   and supplies:
+11:31:52,585 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/ServiceFacade/local-jcms.middletier.facade.ServiceFacadeLocal
+11:31:52,585 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/ServiceFacade/local-jcms.middletier.base.BTBaseFacadeLocal
+11:31:52,585 INFO  [JBossASKernel] 	Class:jcms.middletier.facade.ServiceFacadeRemote
+11:31:52,585 INFO  [JBossASKernel] 	Class:jcms.middletier.facade.ServiceFacadeLocal
+11:31:52,585 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/ServiceFacade/remote
+11:31:52,585 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/ServiceFacade
+11:31:52,590 INFO  [JBossASKernel] 	Class:jcms.middletier.base.BTBaseFacadeLocal
+11:31:52,590 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/ServiceFacade/remote-jcms.middletier.facade.ServiceFacadeRemote
+11:31:52,590 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/ServiceFacade/local
+11:31:52,590 INFO  [JBossASKernel] Added bean(jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/ServiceFacade,service=EJB3) to KernelDeployment of: JCMSMiddleTier.jar
+11:31:52,595 INFO  [JBossASKernel] installing bean: jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/DocumentFacade,service=EJB3
+11:31:52,595 INFO  [JBossASKernel]   with dependencies:
+11:31:52,595 INFO  [JBossASKernel]   and demands:
+11:31:52,595 INFO  [JBossASKernel] 	jboss.ejb:service=EJBTimerService; Required: Described
+11:31:52,595 INFO  [JBossASKernel] 	jboss-switchboard:appName=JCMSMiddleTier,module=JCMSMiddleTier,name=jcms/businesstier/ejb/facade/DocumentFacade; Required: Create
+11:31:52,595 INFO  [JBossASKernel]   and supplies:
+11:31:52,600 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/DocumentFacade/local-jcms.middletier.base.BTBaseFacadeLocal
+11:31:52,600 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/DocumentFacade
+11:31:52,600 INFO  [JBossASKernel] 	Class:jcms.middletier.facade.DocumentFacadeRemote
+11:31:52,600 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/DocumentFacade/remote-jcms.middletier.facade.DocumentFacadeRemote
+11:31:52,600 INFO  [JBossASKernel] 	Class:jcms.middletier.base.BTBaseFacadeLocal
+11:31:52,600 INFO  [JBossASKernel] 	Class:jcms.middletier.facade.DocumentFacadeLocal
+11:31:52,605 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/DocumentFacade/local
+11:31:52,605 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/DocumentFacade/local-jcms.middletier.facade.DocumentFacadeLocal
+11:31:52,605 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/DocumentFacade/remote
+11:31:52,605 INFO  [JBossASKernel] Added bean(jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/DocumentFacade,service=EJB3) to KernelDeployment of: JCMSMiddleTier.jar
+11:31:52,610 INFO  [JBossASKernel] installing bean: jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/RepositoryFacade,service=EJB3
+11:31:52,610 INFO  [JBossASKernel]   with dependencies:
+11:31:52,610 INFO  [JBossASKernel]   and demands:
+11:31:52,610 INFO  [JBossASKernel] 	jboss.ejb:service=EJBTimerService; Required: Described
+11:31:52,610 INFO  [JBossASKernel] 	jboss-switchboard:appName=JCMSMiddleTier,module=JCMSMiddleTier,name=jcms/businesstier/ejb/facade/RepositoryFacade; Required: Create
+11:31:52,610 INFO  [JBossASKernel]   and supplies:
+11:31:52,615 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/RepositoryFacade/remote
+11:31:52,615 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/RepositoryFacade/remote-jcms.middletier.facade.RepositoryFacadeRemote
+11:31:52,615 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/RepositoryFacade/local-jcms.middletier.facade.RepositoryFacadeLocal
+11:31:52,615 INFO  [JBossASKernel] 	Class:jcms.middletier.base.BTBaseFacadeLocal
+11:31:52,615 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/RepositoryFacade
+11:31:52,615 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/RepositoryFacade/local-jcms.middletier.base.BTBaseFacadeLocal
+11:31:52,620 INFO  [JBossASKernel] 	Class:jcms.middletier.facade.RepositoryFacadeRemote
+11:31:52,620 INFO  [JBossASKernel] 	Class:jcms.middletier.facade.RepositoryFacadeLocal
+11:31:52,620 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/RepositoryFacade/local
+11:31:52,620 INFO  [JBossASKernel] Added bean(jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/RepositoryFacade,service=EJB3) to KernelDeployment of: JCMSMiddleTier.jar
+11:31:52,625 INFO  [JBossASKernel] installing bean: jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/ReportFacade,service=EJB3
+11:31:52,625 INFO  [JBossASKernel]   with dependencies:
+11:31:52,625 INFO  [JBossASKernel]   and demands:
+11:31:52,625 INFO  [JBossASKernel] 	jboss.ejb:service=EJBTimerService; Required: Described
+11:31:52,625 INFO  [JBossASKernel] 	jboss-switchboard:appName=JCMSMiddleTier,module=JCMSMiddleTier,name=jcms/businesstier/ejb/facade/ReportFacade; Required: Create
+11:31:52,625 INFO  [JBossASKernel]   and supplies:
+11:31:52,625 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/ReportFacade/local-jcms.middletier.base.BTBaseFacadeLocal
+11:31:52,630 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/ReportFacade
+11:31:52,630 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/ReportFacade/remote-jcms.middletier.facade.ReportFacadeRemote
+11:31:52,630 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/ReportFacade/local-jcms.middletier.facade.ReportFacadeLocal
+11:31:52,630 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/ReportFacade/local
+11:31:52,630 INFO  [JBossASKernel] 	Class:jcms.middletier.facade.ReportFacadeRemote
+11:31:52,630 INFO  [JBossASKernel] 	Class:jcms.middletier.base.BTBaseFacadeLocal
+11:31:52,635 INFO  [JBossASKernel] 	jndi:jcms/businesstier/ejb/facade/ReportFacade/remote
+11:31:52,635 INFO  [JBossASKernel] 	Class:jcms.middletier.facade.ReportFacadeLocal
+11:31:52,635 INFO  [JBossASKernel] Added bean(jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/ReportFacade,service=EJB3) to KernelDeployment of: JCMSMiddleTier.jar
+11:31:52,715 INFO  [SessionSpecContainer] Starting jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/DocumentFacade,service=EJB3
+11:31:52,715 INFO  [EJBContainer] STARTED EJB: jcms.middletier.facade.DocumentFacade ejbName: jcms/businesstier/ejb/facade/DocumentFacade
+11:31:52,730 INFO  [JndiSessionRegistrarBase] Binding the following Entries in Global JNDI:
+
+	jcms/businesstier/ejb/facade/DocumentFacade/remote - EJB3.x Default Remote Business Interface
+	jcms/businesstier/ejb/facade/DocumentFacade/remote-jcms.middletier.facade.DocumentFacadeRemote - EJB3.x Remote Business Interface
+	jcms/businesstier/ejb/facade/DocumentFacade/local - EJB3.x Default Local Business Interface
+	jcms/businesstier/ejb/facade/DocumentFacade/local-jcms.middletier.base.BTBaseFacadeLocal - EJB3.x Local Business Interface
+	jcms/businesstier/ejb/facade/DocumentFacade/local-jcms.middletier.facade.DocumentFacadeLocal - EJB3.x Local Business Interface
+
+11:31:52,735 WARN  [TimerServiceContainer] EJBTHREE-2193: using deprecated TimerServiceFactory for restoring timers
+11:31:52,735 INFO  [SessionSpecContainer] Starting jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/VocabularyFacade,service=EJB3
+11:31:52,740 INFO  [EJBContainer] STARTED EJB: jcms.middletier.facade.VocabularyFacade ejbName: jcms/businesstier/ejb/facade/VocabularyFacade
+11:31:52,755 INFO  [JndiSessionRegistrarBase] Binding the following Entries in Global JNDI:
+
+	jcms/businesstier/ejb/facade/VocabularyFacade/remote - EJB3.x Default Remote Business Interface
+	jcms/businesstier/ejb/facade/VocabularyFacade/remote-jcms.middletier.facade.VocabularyFacadeRemote - EJB3.x Remote Business Interface
+	jcms/businesstier/ejb/facade/VocabularyFacade/local - EJB3.x Default Local Business Interface
+	jcms/businesstier/ejb/facade/VocabularyFacade/local-jcms.middletier.facade.VocabularyFacadeLocal - EJB3.x Local Business Interface
+	jcms/businesstier/ejb/facade/VocabularyFacade/local-jcms.middletier.base.BTBaseFacadeLocal - EJB3.x Local Business Interface
+
+11:31:52,755 WARN  [TimerServiceContainer] EJBTHREE-2193: using deprecated TimerServiceFactory for restoring timers
+11:31:52,760 INFO  [SessionSpecContainer] Starting jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/ReportFacade,service=EJB3
+11:31:52,760 INFO  [EJBContainer] STARTED EJB: jcms.middletier.facade.ReportFacade ejbName: jcms/businesstier/ejb/facade/ReportFacade
+11:31:52,785 INFO  [JndiSessionRegistrarBase] Binding the following Entries in Global JNDI:
+
+	jcms/businesstier/ejb/facade/ReportFacade/remote - EJB3.x Default Remote Business Interface
+	jcms/businesstier/ejb/facade/ReportFacade/remote-jcms.middletier.facade.ReportFacadeRemote - EJB3.x Remote Business Interface
+	jcms/businesstier/ejb/facade/ReportFacade/local - EJB3.x Default Local Business Interface
+	jcms/businesstier/ejb/facade/ReportFacade/local-jcms.middletier.base.BTBaseFacadeLocal - EJB3.x Local Business Interface
+	jcms/businesstier/ejb/facade/ReportFacade/local-jcms.middletier.facade.ReportFacadeLocal - EJB3.x Local Business Interface
+
+11:31:52,790 WARN  [TimerServiceContainer] EJBTHREE-2193: using deprecated TimerServiceFactory for restoring timers
+11:31:52,800 INFO  [SessionSpecContainer] Starting jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/RepositoryFacade,service=EJB3
+11:31:52,800 INFO  [EJBContainer] STARTED EJB: jcms.middletier.facade.RepositoryFacade ejbName: jcms/businesstier/ejb/facade/RepositoryFacade
+11:31:52,810 INFO  [JndiSessionRegistrarBase] Binding the following Entries in Global JNDI:
+
+	jcms/businesstier/ejb/facade/RepositoryFacade/remote - EJB3.x Default Remote Business Interface
+	jcms/businesstier/ejb/facade/RepositoryFacade/remote-jcms.middletier.facade.RepositoryFacadeRemote - EJB3.x Remote Business Interface
+	jcms/businesstier/ejb/facade/RepositoryFacade/local - EJB3.x Default Local Business Interface
+	jcms/businesstier/ejb/facade/RepositoryFacade/local-jcms.middletier.base.BTBaseFacadeLocal - EJB3.x Local Business Interface
+	jcms/businesstier/ejb/facade/RepositoryFacade/local-jcms.middletier.facade.RepositoryFacadeLocal - EJB3.x Local Business Interface
+
+11:31:52,815 WARN  [TimerServiceContainer] EJBTHREE-2193: using deprecated TimerServiceFactory for restoring timers
+11:31:52,820 INFO  [SessionSpecContainer] Starting jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/ServiceFacade,service=EJB3
+11:31:52,820 INFO  [EJBContainer] STARTED EJB: jcms.middletier.facade.ServiceFacade ejbName: jcms/businesstier/ejb/facade/ServiceFacade
+11:31:52,840 INFO  [JndiSessionRegistrarBase] Binding the following Entries in Global JNDI:
+
+	jcms/businesstier/ejb/facade/ServiceFacade/remote - EJB3.x Default Remote Business Interface
+	jcms/businesstier/ejb/facade/ServiceFacade/remote-jcms.middletier.facade.ServiceFacadeRemote - EJB3.x Remote Business Interface
+	jcms/businesstier/ejb/facade/ServiceFacade/local - EJB3.x Default Local Business Interface
+	jcms/businesstier/ejb/facade/ServiceFacade/local-jcms.middletier.facade.ServiceFacadeLocal - EJB3.x Local Business Interface
+	jcms/businesstier/ejb/facade/ServiceFacade/local-jcms.middletier.base.BTBaseFacadeLocal - EJB3.x Local Business Interface
+
+11:31:52,845 WARN  [TimerServiceContainer] EJBTHREE-2193: using deprecated TimerServiceFactory for restoring timers
+11:31:52,850 INFO  [SessionSpecContainer] Starting jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/SessionManagerFacade,service=EJB3
+11:31:52,850 INFO  [EJBContainer] STARTED EJB: jcms.middletier.facade.SessionManagerFacade ejbName: jcms/businesstier/ejb/facade/SessionManagerFacade
+11:31:52,870 INFO  [JndiSessionRegistrarBase] Binding the following Entries in Global JNDI:
+
+	jcms/businesstier/ejb/facade/SessionManagerFacade/remote - EJB3.x Default Remote Business Interface
+	jcms/businesstier/ejb/facade/SessionManagerFacade/remote-jcms.middletier.facade.SessionManagerFacadeRemote - EJB3.x Remote Business Interface
+	jcms/businesstier/ejb/facade/SessionManagerFacade/local - EJB3.x Default Local Business Interface
+	jcms/businesstier/ejb/facade/SessionManagerFacade/local-jcms.middletier.base.BTBaseFacadeLocal - EJB3.x Local Business Interface
+	jcms/businesstier/ejb/facade/SessionManagerFacade/local-jcms.middletier.facade.SessionManagerFacadeLocal - EJB3.x Local Business Interface
+
+11:31:52,875 WARN  [TimerServiceContainer] EJBTHREE-2193: using deprecated TimerServiceFactory for restoring timers
+11:31:52,890 INFO  [SessionSpecContainer] Starting jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/JCMSWebFacade,service=EJB3
+11:31:52,890 INFO  [EJBContainer] STARTED EJB: jcms.middletier.facade.JCMSWebFacade ejbName: jcms/businesstier/ejb/facade/JCMSWebFacade
+11:31:52,895 INFO  [JndiSessionRegistrarBase] Binding the following Entries in Global JNDI:
+
+	jcms/businesstier/ejb/facade/JCMSWebFacade/local - EJB3.x Default Local Business Interface
+	jcms/businesstier/ejb/facade/JCMSWebFacade/local-jcms.middletier.base.BTBaseFacadeLocal - EJB3.x Local Business Interface
+
+11:31:52,895 WARN  [TimerServiceContainer] EJBTHREE-2193: using deprecated TimerServiceFactory for restoring timers
+11:31:52,990 INFO  [xnio] XNIO Version 2.1.0.CR2
+11:31:53,000 INFO  [nio] XNIO NIO Implementation Version 2.1.0.CR2
+11:31:53,110 INFO  [remoting] JBoss Remoting version 3.1.0.Beta2
+11:31:53,334 INFO  [Version] WELD-000900 1.1.2 (Final)
+11:31:53,374 INFO  [TomcatDeployment] deploy, ctxPath=/
+11:31:53,419 INFO  [service] Removing bootstrap log handlers
+11:37:35,062 INFO  [service] Restored bootstrap log handlers
+11:37:35,067 INFO  [TomcatDeployment] undeploy, ctxPath=/
+11:37:35,107 INFO  [SessionSpecContainer] Stopping jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/SessionManagerFacade,service=EJB3
+11:37:35,112 INFO  [EJBContainer] STOPPED EJB: jcms.middletier.facade.SessionManagerFacade ejbName: jcms/businesstier/ejb/facade/SessionManagerFacade
+11:37:35,117 INFO  [SessionSpecContainer] Stopping jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/ServiceFacade,service=EJB3
+11:37:35,122 INFO  [EJBContainer] STOPPED EJB: jcms.middletier.facade.ServiceFacade ejbName: jcms/businesstier/ejb/facade/ServiceFacade
+11:37:35,122 INFO  [SessionSpecContainer] Stopping jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/ReportFacade,service=EJB3
+11:37:35,127 INFO  [EJBContainer] STOPPED EJB: jcms.middletier.facade.ReportFacade ejbName: jcms/businesstier/ejb/facade/ReportFacade
+11:37:35,127 INFO  [SessionSpecContainer] Stopping jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/VocabularyFacade,service=EJB3
+11:37:35,132 INFO  [EJBContainer] STOPPED EJB: jcms.middletier.facade.VocabularyFacade ejbName: jcms/businesstier/ejb/facade/VocabularyFacade
+11:37:35,137 INFO  [SessionSpecContainer] Stopping jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/JCMSWebFacade,service=EJB3
+11:37:35,137 INFO  [EJBContainer] STOPPED EJB: jcms.middletier.facade.JCMSWebFacade ejbName: jcms/businesstier/ejb/facade/JCMSWebFacade
+11:37:35,137 INFO  [SessionSpecContainer] Stopping jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/RepositoryFacade,service=EJB3
+11:37:35,142 INFO  [EJBContainer] STOPPED EJB: jcms.middletier.facade.RepositoryFacade ejbName: jcms/businesstier/ejb/facade/RepositoryFacade
+11:37:35,147 INFO  [SessionSpecContainer] Stopping jboss.j2ee:jar=JCMSMiddleTier.jar,name=jcms/businesstier/ejb/facade/DocumentFacade,service=EJB3
+11:37:35,152 INFO  [EJBContainer] STOPPED EJB: jcms.middletier.facade.DocumentFacade ejbName: jcms/businesstier/ejb/facade/DocumentFacade
+11:37:35,197 INFO  [SessionSpecContainer] Stopping jboss.j2ee:jar=JCMSIntegrationTier.jar,name=jcms/integrationtier/ejb/base/JCMSWebSystemFacade,service=EJB3
+11:37:35,202 INFO  [EJBContainer] STOPPED EJB: jcms.integrationtier.base.JCMSWebSystemFacade ejbName: jcms/integrationtier/ejb/base/JCMSWebSystemFacade
+11:37:35,207 INFO  [SessionSpecContainer] Stopping jboss.j2ee:jar=JCMSIntegrationTier.jar,name=jcms/integrationtier/ejb/base/SystemFacade,service=EJB3
+11:37:35,212 INFO  [EJBContainer] STOPPED EJB: jcms.integrationtier.base.SystemFacade ejbName: jcms/integrationtier/ejb/base/SystemFacade
+11:37:35,217 INFO  [PersistenceUnitDeployment] Stopping persistence unit persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSWebIntegrationTierPU
+11:37:35,217 INFO  [SessionFactoryImpl] closing
+11:37:35,217 INFO  [SessionFactoryObjectFactory] Unbinding factory from JNDI name: persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSWebIntegrationTierPU
+11:37:35,217 INFO  [NamingHelper] JNDI InitialContext properties:{java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory, java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces}
+11:37:35,222 INFO  [SessionFactoryObjectFactory] Unbound factory from JNDI name: persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSWebIntegrationTierPU
+11:37:35,227 INFO  [PersistenceUnitDeployment] Stopping persistence unit persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSIntegrationTierPU
+11:37:35,227 INFO  [SessionFactoryImpl] closing
+11:37:35,227 INFO  [SessionFactoryObjectFactory] Unbinding factory from JNDI name: persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSIntegrationTierPU
+11:37:35,227 INFO  [NamingHelper] JNDI InitialContext properties:{java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory, java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces}
+11:37:35,227 INFO  [SessionFactoryObjectFactory] Unbound factory from JNDI name: persistence.unit:unitName=JCMSIntegrationTier.jar#JCMSIntegrationTierPU
+11:37:35,247 INFO  [PersistenceUnitDeployment] Stopping persistence unit persistence.unit:unitName=jboss-ejb3-timerservice-mk2.jar#timerdb
+11:37:35,247 INFO  [SessionFactoryImpl] closing
+11:37:35,247 INFO  [SessionFactoryObjectFactory] Unbinding factory from JNDI name: persistence.unit:unitName=jboss-ejb3-timerservice-mk2.jar#timerdb
+11:37:35,247 INFO  [NamingHelper] JNDI InitialContext properties:{java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory, java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces}
+11:37:35,247 INFO  [SessionFactoryObjectFactory] Unbound factory from JNDI name: persistence.unit:unitName=jboss-ejb3-timerservice-mk2.jar#timerdb
+11:37:35,252 INFO  [ConnectionFactoryBindingService] Unbound ConnectionManager 'jboss.jca:service=DataSourceBinding,name=DefaultDS' from JNDI name 'java:DefaultDS'
+11:37:35,262 INFO  [ConnectionFactoryBindingService] Unbound ConnectionManager 'jboss.jca:service=DataSourceBinding,name=RSLIMSDS' from JNDI name 'java:RSLIMSDS'
+11:37:35,272 INFO  [ConnectionFactoryBindingService] Unbound ConnectionManager 'jboss.jca:service=DataSourceBinding,name=JCMSWebDBDS' from JNDI name 'java:JCMSWebDBDS'
+11:37:35,282 INFO  [ConnectionFactoryBindingService] Unbound ConnectionManager 'jboss.jca:service=DataSourceBinding,name=JCMSWebDS' from JNDI name 'java:JCMSWebDS'
+11:37:35,292 WARN  [ComponentDeploymentContext] Removing name on null names: jboss.naming:application=jboss-xa-jdbc
+11:37:35,297 WARN  [ComponentDeploymentContext] Removing name on null names: jboss.naming:application=jboss-local-jdbc
+11:37:35,307 INFO  [TomcatDeployment] undeploy, ctxPath=/invoker
+11:37:35,322 INFO  [jbossatx] ARJUNA-32018 Destroying TransactionManagerService
+11:37:35,332 INFO  [jbossatx] ARJUNA-32014 Stopping transaction recovery manager
+11:37:35,467 INFO  [JMXConnector] JMXConnector stopped
+11:37:37,152 INFO  [AbstractServer] Stopped: JBossAS [6.1.0.Final "Neo"] in 2s:230ms

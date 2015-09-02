@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<aop xmlns="urn:jboss:aop-beans:1.0">
+
+    <interceptor factory="org.jboss.ejb3.concurrency.aop.interceptor.ContainerManagedConcurrencyInterceptorFactory" scope="PER_INSTANCE"/>
+    
+    <stack name="SingletonSessionClientInterceptors">
+      <interceptor-ref name="org.jboss.ejb3.remoting.IsLocalInterceptor"/>
+      <interceptor-ref name="org.jboss.ejb3.security.client.SecurityClientInterceptor"/>
+      <interceptor-ref name="org.jboss.aspects.tx.ClientTxPropagationInterceptor"/>
+      <interceptor-ref name="org.jboss.ejb3.async.impl.interceptor.AsynchronousInterceptorFactory" scope="PER_CLASS"/>      
+      <interceptor-ref name="org.jboss.aspects.remoting.InvokeRemoteInterceptor"/>
+    </stack>
+    
+   <domain name="Singleton Bean" extends="Intercepted Bean" inheritBindings="true">
+
+      <!-- Because of a bug in org.jboss.aop.microcontainer.beans.metadata.StackBeanMetaDataFactory (unscoped stack name)
+           we must define a stack with a different name. -->
+      <stack name="SingletonLifecycleCallbackStack">
+         <interceptor-ref name="org.jboss.aspects.currentinvocation.CurrentInvocationInterceptor"/>
+         <advice name="setup" aspect="InvocationContextInterceptor"/>
+         <interceptor-ref name="CurrentInvocationContextInterceptor"/>
+         <interceptor-ref name="org.jboss.aspects.tx.TxPropagationInterceptor"/>
+         <interceptor-ref name="CMTTx"/>
+         <interceptor-ref name="org.jboss.ejb3.tx.BMTTxInterceptorFactory"/>
+         <interceptor-ref name="org.jboss.ejb3.entity.TransactionScopedEntityManagerInterceptor"/>
+      </stack>
+
+      <bind pointcut="execution(public * *->*(..))">
+         <interceptor-ref name="org.jboss.ejb3.ENCPropagationInterceptor"/>
+         <interceptor-ref name="org.jboss.ejb3.security.AuthenticationInterceptorFactory"/>
+         <interceptor-ref name="org.jboss.ejb3.async.impl.interceptor.AsynchronousInterceptorFactory"/>
+      </bind>
+      <bind pointcut="execution(public * @org.jboss.ejb3.annotation.SecurityDomain->*(..))">
+         <interceptor-ref name="Basic Authorization"/>
+      </bind>
+      <bind pointcut="execution(public * *->*(..))">
+         <interceptor-ref name="org.jboss.ejb3.security.RunAsSecurityInterceptorFactory"/>
+      </bind>
+      <bind pointcut="execution(public * *->*(..))">
+         <interceptor-ref name="org.jboss.aspects.tx.TxPropagationInterceptor"/> 
+         <interceptor-ref name="CMTTx"/>
+         <interceptor-ref name="org.jboss.ejb3.tx.BMTTxInterceptorFactory"/>
+         <interceptor-ref name="org.jboss.ejb3.AllowedOperationsInterceptor"/>
+         <!-- container concurrency management -->
+         <interceptor-ref name="org.jboss.ejb3.concurrency.aop.interceptor.ContainerManagedConcurrencyInterceptorFactory"/>
+         <interceptor-ref name="org.jboss.ejb3.entity.TransactionScopedEntityManagerInterceptor"/> 
+         <stack-ref name="EJBInterceptors"/>
+      </bind>
+      
+        <stack name="SingletonBeanTimeoutMethodStack">
+
+            <!--  Include the common timeout method stack
+                After JBAS-8130, just use this stack-ref and remove the 4 duplicate listed interceptor-refs
+                below 
+            <stack-ref name="TimeoutMethodStack"/> -->
+            
+            <interceptor-ref name="org.jboss.ejb3.interceptor.EJB3TCCLInterceptor"/>
+            <interceptor-ref name="org.jboss.aspects.currentinvocation.CurrentInvocationInterceptor"/>
+            <interceptor-ref name="CurrentInvocationContextInterceptor"/>
+            <interceptor-ref name="org.jboss.ejb3.BlockContainerShutdownInterceptor"/>
+            
+            <!--  The additional Singleton bean specific ones -->
+            <interceptor-ref name="org.jboss.ejb3.ENCPropagationInterceptor"/>
+            <interceptor-ref name="org.jboss.aspects.tx.TxPropagationInterceptor"/> 
+            <interceptor-ref name="CMTTx"/>
+            <interceptor-ref name="org.jboss.ejb3.tx.BMTTxInterceptorFactory"/>
+            <interceptor-ref name="org.jboss.ejb3.AllowedOperationsInterceptor"/>
+            <interceptor-ref name="org.jboss.ejb3.concurrency.aop.interceptor.ContainerManagedConcurrencyInterceptorFactory"/>
+            <interceptor-ref name="org.jboss.ejb3.entity.TransactionScopedEntityManagerInterceptor"/> 
+            <!-- Uncomment the following EJBInterceptors and comment out from org.jboss.ejb3.connectionmanager.CachedConnectionInterceptorFactory to
+             org.jboss.ejb3.async.impl.interceptor.AsynchronousInterceptor once, JBAS-8130 is fixed
+            <stack-ref name="EJBInterceptors"/> -->
+            
+            <interceptor-ref name="org.jboss.ejb3.connectionmanager.CachedConnectionInterceptorFactory"/>
+            <interceptor-ref name="org.jboss.ejb3.async.impl.interceptor.AsynchronousServerInterceptor" />
+            <advice name="setup" aspect="InvocationContextInterceptor"/>
+            <advice name="fillMethod" aspect="InvocationContextInterceptor"/>
+            <advice name="aroundInvoke" aspect="InjectInterceptorsFactory"/>
+      </stack>
+      
+      
+   </domain>
+
+   
+
+</aop>

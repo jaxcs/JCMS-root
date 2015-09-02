@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td bgcolor="#808000">
+                <h:graphicImage url="#{msgs['mainbar.spacer']}" alt="" width="1" height="2"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" class="barBackground" cellpadding="2" cellspacing="2" >
+                    <tr>
+                        <td align="left" class="menu">
+                        
+                        <h:commandLink action="home" immediate="true" >
+                            <h:outputText value="#{msgs['mainbar.homeLink']}" />
+                        </h:commandLink>
+                        
+                        <h:commandLink action="administrationHome" immediate="true" rendered="#{Login_Backing.hasAdministration}" >
+                            <h:outputText value="#{msgs['mainbar.administrationLink']}" />
+                        </h:commandLink>
+                            
+                        <h:commandLink action="colonyManagement" immediate="true" rendered="#{Login_Backing.hasColonyManagement}">
+                            <h:outputText value="#{msgs['mainbar.colonyManagementLink']}" />
+                        </h:commandLink>
+                            
+                        <h:commandLink action="sample" immediate="true" rendered="#{Login_Backing.hasColonyManagement}">
+                            <h:outputText value="#{msgs['mainbar.Samples']}"/>
+                        </h:commandLink>
+                            
+                        <h:commandLink action="experiment" immediate="true" rendered="#{Login_Backing.hasColonyManagement}">
+                            <h:outputText value="#{msgs['mainbar.experimentLink']}"/>
+                        </h:commandLink>
+                            
+                        <h:commandLink action="query" immediate="true" rendered="#{Login_Backing.hasQuerying}" >
+                            <h:outputText value="#{msgs['mainbar.queriesLink']}" />
+                        </h:commandLink>
+
+                        <h:commandLink action="reports" immediate="true" rendered="#{Login_Backing.hasReporting}" >
+                            <h:outputText value="#{msgs['mainbar.reportsLink']}" />
+                        </h:commandLink>
+
+                        <h:commandLink action="cageCard" immediate="true" rendered="#{Login_Backing.hasReporting}">
+                            <h:outputText value="#{msgs['mainbar.cageCardLink']}" />
+                        </h:commandLink>
+                            
+                        <h:commandLink action="jpt" immediate="true" rendered="#{Login_Backing.hasReporting}">
+                            <h:outputText value="#{msgs['mainbar.JPTLink']}" />
+                        </h:commandLink>
+                            
+                        <h:commandLink action="#{Preferences_Backing.initializePreferences()}" 
+                                       immediate="true" 
+                                       rendered="#{Login_Backing.hasQuerying}">
+                            <h:outputText value="#{msgs['mainbar.myPreferencesLink']}"/>
+                        </h:commandLink>
+                        
+                        <h:outputLink onclick="window.open('/jcms/jcmsWeb/homeAbout.xhtml', 'AboutBox', 'height=550, width=750, dependent=yes, menubar=no, toolbar=no'); return false;" value="#">
+                            <h:outputText value="#{msgs['about.about']}" />
+                        </h:outputLink>
+                    </td>
+
+                    <td align="right" class="menu">
+                        <h:panelGroup>
+                            <!-- Logout invalidates session -->
+                            <h:commandLink action="#{Login_Backing.logoutAction}"  immediate="true">
+                                <h:outputText value="#{msgs['mainbar.logoutLink']}"/>
+                            </h:commandLink>
+                        </h:panelGroup>
+                        
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr><td bgcolor="#808000"><h:graphicImage url="#{msgs['mainbar.spacer']}" alt="" width="1" height="2"/>
+            </td>
+        </tr>
+        <tr><td><h3>&nbsp;</h3></td></tr>
+        <tr>
+            <td>
+                <h3>&nbsp;&nbsp;Logged in as:&nbsp;<h:outputText value="#{Login_Backing.loggedUser}" /></h3>
+            </td>
+        </tr>
+    </table>
+
+</ui:composition>    

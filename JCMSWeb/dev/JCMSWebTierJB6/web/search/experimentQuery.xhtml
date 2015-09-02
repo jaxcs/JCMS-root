@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Experiment Query</title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js" >
+        </script>
+    </h:head>
+    <h:body style="margin-left:10px;margin-right:10px;">
+        <h:form id="experimentQueryFormId">
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <h1>
+                <h:outputText value="Experiment Query" style="h1"/>
+            </h1>
+        <!-- STATUS -->
+            <p:ajaxStatus id="statusPage" style="width:16px;height:16px;" >  
+                <f:facet name="start">  
+                    <h:graphicImage  value="../images/bhi_ball.gif"/>
+                </f:facet>
+                <f:facet name="complete">  
+                    <h:graphicImage value="../images/bhi_ball_white.gif" />  
+                </f:facet>  
+            </p:ajaxStatus>
+                   
+            <br></br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <p:commandButton
+                        value="#{msgs['common.runQuery']}"
+                        styleClass="mediumButton"
+                        action="#{ExperimentQuery_Backing.runQueryAction}"
+                        id="run1" 
+                        onclick="PF('dlg1').show();"
+                        update="rowCount datResults"/>
+            &nbsp;&nbsp;
+            <p:commandButton
+                        value="#{msgs['common.clear']}"
+                        styleClass="mediumButton"
+                        action="#{ExperimentQuery_Backing.clearQueryAction}"
+                        update="experimentQueryFormId"
+                        id="clear1"/>
+            <!-- Messages -->
+            <hr></hr>
+            &nbsp;
+            <p:messages id="expQueryMessagesID" for="expQueryMessages" autoUpdate="true"/>
+            <hr /><br />
+            &nbsp; &nbsp;
+            
+            <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5"
+                             columnClasses="detailPane, detailPane">
+
+                    <h:panelGroup styleClass="formTitle">
+
+                        <h:panelGrid columns="3"
+                                     columnClasses="innerTableTD, rowHeader, innerTableTD"
+                                     styleClass="innerTable">
+
+                            <h:panelGroup>
+                                <h3><h:outputText value="Output"></h:outputText></h3>                                    
+                                <h:selectBooleanCheckbox id="checkAll"
+                                                         onclick="checkAllRowsExperimentQuery(this.form, 'checkAll');"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h3><h:outputText value="Field"></h:outputText></h3>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h3><h:outputLabel value="Filter Criteria" /></h3>
+                            </h:panelGroup>
+                        
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDataID"
+                                    value="#{ExperimentQuery_Backing.search.selectDataID}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Data ID" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="2">
+                                    <h:panelGroup>
+                                        <h:outputText value="#{ExperimentQuery_Backing.search.dataIDFilter}"/>
+                                        &nbsp;&nbsp;
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <h:inputText value="#{ExperimentQuery_Backing.search.dataIDFrom}" 
+                                                     size="10" />
+                                        &nbsp;&nbsp;
+                                        <h:outputText value="#{msgs['search.to']}" ></h:outputText>
+                                        &nbsp;&nbsp;
+                                        <h:inputText value="#{ExperimentQuery_Backing.search.dataIDTo}"
+                                                     size="10" />
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectTestType"
+                                    value="true"
+                                    disabled="true"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Test Type " />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="2">
+                                    <h:panelGroup>
+                                        <h:outputText value="#{ExperimentQuery_Backing.search.testTypeFilter}" />
+                                        &nbsp;&nbsp;
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:autoComplete id="testType" value="#{ExperimentQuery_Backing.expDataDescriptorDTO}" label="testType"  
+                                                       dropdown="false" scrollHeight="400"
+                                                       var="dm"
+                                                       itemLabel="#{dm.testType}"
+                                                       itemValue="#{dm}"
+                                                       completeMethod="#{ExperimentQuery_Backing.completeTestType}"
+                                                       converter="testTypeConverter"
+                                                       forceSelection="true">                                     
+                                        </p:autoComplete>
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDataOwner"
+                                    value="#{ExperimentQuery_Backing.search.selectDataOwner}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Data Owner / Workgroup"  />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <p:fieldset legend="Select Filter" toggleable="true" toggleSpeed="500" collapsed="true">
+                                    <h:outputLabel value="Data Owner / Workgroup" styleClass="collapsiblePanelLabel" />
+                                    <p:pickList value="#{ExperimentQuery_Backing.dataOwners}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true" converter="ownerConverter"
+                                                var="dataOwner" itemLabel="#{dataOwner.owner}" itemValue="#{dataOwner}">
+                                        <f:facet name="sourceCaption">Select Owner(s)</f:facet>
+                                        <f:facet name="targetCaption">Selected Owner(s)</f:facet>  
+                                    </p:pickList>
+                                </p:fieldset>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectCollectionDate"
+                                    value="#{ExperimentQuery_Backing.search.selectCollectionDate}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Data Collection Date" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <p:calendar id="startDate"
+                                            value="#{ExperimentQuery_Backing.search.startDate}"
+                                            pattern="#{ExperimentQuery_Backing.date_format}">
+                                </p:calendar>
+                                &nbsp;&nbsp;
+                                <h:outputText value="#{msgs['search.to']}"></h:outputText>
+                                &nbsp;&nbsp;
+                                <p:calendar id="endDate"
+                                            value="#{ExperimentQuery_Backing.search.endDate}"
+                                            pattern="#{ExperimentQuery_Backing.date_format}">
+                                </p:calendar>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectCollectionAge"
+                                    value="#{ExperimentQuery_Backing.search.selectCollectionAge}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Age at Data Collection" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:panelGrid>
+                                    <h:selectOneRadio value="#{ExperimentQuery_Backing.search.ageMeasure}" >
+                                        <f:selectItems value="#{ExperimentQuery_Backing.selectItemWrapper.ageMeasures}" />
+                                    </h:selectOneRadio>
+                                </h:panelGrid>
+
+                                <h:selectOneMenu value="#{ExperimentQuery_Backing.search.ageFilter}" >
+                                    <f:selectItems value="#{ExperimentQuery_Backing.selectItemWrapper.ageFilters}" />
+                                    <p:ajax event="change" update="outAge" />
+                                </h:selectOneMenu>
+                                &nbsp;&nbsp;
+
+                                <h:panelGroup id="outAge">
+                                    <h:inputText value="#{ExperimentQuery_Backing.search.ageFrom}"
+                                                 rendered="#{ExperimentQuery_Backing.search.ageFilter != '' and ExperimentQuery_Backing.search.ageFilter != ' '}" size="5"/>
+                                    &nbsp;&nbsp;
+                                    <h:outputText value="#{msgs['search.to']}"
+                                                  rendered="#{ExperimentQuery_Backing.search.ageFilter == 'Between'}"></h:outputText>
+                                    &nbsp;&nbsp;
+                                    <h:inputText value="#{ExperimentQuery_Backing.search.ageTo}"
+                                                 rendered="#{ExperimentQuery_Backing.search.ageFilter == 'Between'}" size="5"/>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectAbnormalData"
+                                    value="#{ExperimentQuery_Backing.search.selectAbnormalData}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Abnormal Data" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:panelGrid>
+                                    <h:selectOneRadio value="#{ExperimentQuery_Backing.search.abnormalDataChoice}" >
+                                        <f:selectItems value="#{ExperimentQuery_Backing.selectItemWrapper.abnormalDataChoices}" />
+                                    </h:selectOneRadio>
+                                </h:panelGrid>
+                            </h:panelGroup>   
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseID"
+                                    value="#{ExperimentQuery_Backing.search.selectMouseID}"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['mouseId']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:panelGrid columns="2">
+                                    <h:panelGroup>
+                                        <h:selectOneMenu value="#{ExperimentQuery_Backing.search.mouseFilter}">
+                                            <f:selectItems value="#{ExperimentQuery_Backing.selectItemWrapper.mouseFilters}" />
+                                        </h:selectOneMenu>
+                                        &nbsp;&nbsp;
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:inputText value="#{ExperimentQuery_Backing.search.mouseIDLike}" />
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseLifeStatus"
+                                    value="#{ExperimentQuery_Backing.search.selectMouseLifeStatus}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['lifeStatus']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <p:fieldset legend="Select Filter" toggleable="true" toggleSpeed="500" collapsed="true">
+                                    <h:outputLabel value="Life Status" styleClass="collapsiblePanelLabel" />
+                                    <p:pickList value="#{ExperimentQuery_Backing.lifeStatuses}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true" converter="lifeStatusConverter"
+                                                var="lifeStatus" itemLabel="#{lifeStatus.lifeStatus} : #{lifeStatus.description}" itemValue="#{lifeStatus}">
+                                        <f:facet name="sourceCaption">Select Life Status(es)</f:facet>
+                                        <f:facet name="targetCaption">Selected Life Status(es)</f:facet>  
+                                    </p:pickList>
+                                </p:fieldset>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseStrain"
+                                    value="#{ExperimentQuery_Backing.search.selectMouseStrain}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['strain']}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <p:fieldset legend="Select Filter" toggleable="true" toggleSpeed="500" collapsed="true">
+                                    <h:outputLabel value="#{msgs['strain']}" styleClass="collapsiblePanelLabel" />
+                                    <p:pickList value="#{ExperimentQuery_Backing.strains}" filterMatchMode="contains"
+                                                showSourceFilter="true" showTargetFilter="true" converter="strainConverter"
+                                                var="strain" itemLabel="#{strain.jrNum} : #{strain.strainName}" itemValue="#{strain}">
+                                        <f:facet name="sourceCaption">Select Strain(s)</f:facet>
+                                        <f:facet name="targetCaption">Selected Strain(s)</f:facet>  
+                                    </p:pickList>
+                                </p:fieldset>
+                            </h:panelGroup>                                                       
+                        </h:panelGrid>
+                    </h:panelGroup>
+                
+                <!-- Check boxes on the right hand side of the page, for selecting output items with no filter criteria -->
+                    <h:panelGroup styleClass="formTitle">
+                        <h:panelGrid columns="2"
+                                     columnClasses="innerTableTD, rowHeader"
+                                     styleClass="innerTable">
+                            <h:panelGroup>
+                                <h3><h:outputText value="Output"></h:outputText></h3>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h3><h:outputText value="Field"></h:outputText></h3>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectDataResults"
+                                    value="#{ExperimentQuery_Backing.search.selectDataResults}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Data Results" />
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectGeneration"
+                                    value="#{ExperimentQuery_Backing.search.selectGeneration}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Mouse Generation" />
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectBirthDate"
+                                    value="#{ExperimentQuery_Backing.search.selectBirthDate}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Mouse Birth Date" />
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectSex"
+                                    value="#{ExperimentQuery_Backing.search.selectSex}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Mouse Sex" />
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectCOD"
+                                    value="#{ExperimentQuery_Backing.search.selectCOD}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Mouse Cause of Death" />
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseCageID"
+                                    value="#{ExperimentQuery_Backing.search.selectMouseCageID}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Cage ID" />
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectCageName"
+                                    value="#{ExperimentQuery_Backing.search.selectCageName}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Cage Name" />
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:selectBooleanCheckbox
+                                    id="selectMouseComment"
+                                    value="#{ExperimentQuery_Backing.search.selectMouseComment}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Mouse Comment" />
+                            </h:panelGroup>
+                            
+                        </h:panelGrid>
+                     </h:panelGroup>
+                
+                
+             </h:panelGrid> 
+            <!-- Extra panels go here -->
+            <p:dialog header="Experiment Query Results" widgetVar="dlg1" modal="true" width="750" height="650" 
+                      id="runExperimentQueryPanel">
+                <f:facet name="header">
+                    <h:outputText value="Experiment Query Search Results" />
+                </f:facet>
+
+                    <h:panelGroup id="resultsExperimentQueryRowCnt">
+                        <h3><h:outputText id="rowCount" value="#{ExperimentQuery_Backing.rowCnt}"/> Search results </h3>
+                    </h:panelGroup>
+                    
+                    <hr />
+                    <h:commandLink value="Download Result"
+                                   action="#{ExperimentQuery_Backing.downloadSearchResultsAction}">
+                    </h:commandLink>
+
+                    &nbsp;
+                    <br /><br />
+                    <br /><br /> 
+                    &nbsp;
+                    <p:dataTable id="datResults" 
+                                value="#{ExperimentQuery_Backing.resultList}"
+                                sortMode="single"
+                                paginator="true"
+                                rows="#{restrict['size.list.numberOfRows']}"
+                                var="row"
+                                filteredValue="#{ExperimentQuery_Backing.filteredResultList}"
+                                scrollable="true"
+                                resizableColumns="true">
+                                
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectTestType == true}"
+                                 headerText="Test Type"
+                                 sortBy="#{row.testType}" 
+                                 width="100">
+                            <h:outputText value="#{row.testType}"/>
+                        </p:column>
+                        
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataID == true}"
+                                 headerText="Data ID"
+                                 sortBy="#{row.dataID}"
+                                 filterBy="#{row.dataID}"
+                                 filterMatchMode="contains"
+                                 width="40">
+                            <h:outputText value="#{row.dataID}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataOwner == true}"
+                                 sortBy="#{row.dataOwner}" 
+                                 headerText="Data Owner"
+                                 filterBy="#{row.dataOwner}"
+                                 filterMatchMode="contains"
+                                 width="60">
+                            <h:outputText value="#{row.dataOwner}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectCollectionDate == true}"
+                                 sortBy="#{row.expDate}" 
+                                 headerText="Data Collection Date"
+                                 filterBy="#{row.expDate}"
+                                 filterMatchMode="contains"
+                                 width="100">
+                            <h:outputText value="#{row.expDate}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectCollectionAge == true}"
+                                 sortBy="#{row.age}" 
+                                 headerText="Age in Days"
+                                 filterBy="#{row.age}"
+                                 filterMatchMode="contains"
+                                 width="40">
+                            <h:outputText value="#{row.age}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectAbnormalData == true}"
+                                 sortBy="#{row.abnormalData}" 
+                                 headerText="Abnormal Data"
+                                 filterBy="#{row.abnormalData}"
+                                 filterMatchMode="contains"
+                                 width="40">
+                            <h:outputText value="#{row.abnormalData}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectMouseID == true}"
+                                 sortBy="#{row.mouseID}" 
+                                 headerText="Mouse ID"
+                                 filterBy="#{row.mouseID}"
+                                 filterMatchMode="contains"
+                                 width="60">
+                            <h:outputText value="#{row.mouseID}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectMouseOwner == true}"
+                                 sortBy="#{row.mouseOwner}" 
+                                 headerText="Mouse Owner"
+                                 filterBy="#{row.mouseOwner}"
+                                 filterMatchMode="contains"
+                                 width="60">
+                            <h:outputText value="#{row.mouseOwner}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectMouseStrain == true}"
+                                 sortBy="#{row.strain}" 
+                                 headerText="Strain"
+                                 filterBy="#{row.strain}"
+                                 filterMatchMode="contains"
+                                 width="200">
+                            <h:outputText value="#{row.strain}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectMouseStrain == true}"
+                                 sortBy="#{row.jrNum}" 
+                                 headerText="Stock #"
+                                 filterBy="#{row.jrNum}"
+                                 filterMatchMode="contains"
+                                 width="60">
+                            <h:outputText value="#{row.jrNum}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectGeneration == true}"
+                                 sortBy="#{row.generation}"
+                                 headerText="Generation"
+                                 filterBy="#{row.generation}"
+                                 filterMatchMode="contains"
+                                 width="60">
+                            <h:outputText value="#{row.generation}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectBirthDate == true}"
+                                 sortBy="#{row.birthDate}" 
+                                 headerText="Birth Date"
+                                 filterBy="#{row.birthDate}"
+                                 filterMatchMode="contains"
+                                 width="100">
+                            <h:outputText value="#{row.birthDate}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectSex == true}"
+                                 sortBy="#{row.sex}" 
+                                 headerText="Sex"
+                                 filterBy="#{row.sex}"
+                                 filterMatchMode="contains"
+                                 width="40">
+                            <h:outputText value="#{row.sex}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectMouseLifeStatus == true}"
+                                 sortBy="#{row.lifeStatus}" 
+                                 headerText="Life Status"
+                                 filterBy="#{row.lifeStatus}"
+                                 filterMatchMode="contains"
+                                 width="40">
+                            <h:outputText value="#{row.lifeStatus}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectCOD == true}"
+                                 sortBy="#{row.causeOfDeath}" 
+                                 headerText="Cause of Death"
+                                 filterBy="#{row.causeOfDeath}"
+                                 filterMatchMode="contains"
+                                 width="60">
+                            <h:outputText value="#{row.causeOfDeath}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectMouseCageID == true}"
+                                 sortBy="#{row.containerID}" 
+                                 headerText="Cage ID"
+                                 filterBy="#{row.containerID}"
+                                 filterMatchMode="contains"
+                                 width="40">
+                            <h:outputText value="#{row.containerID}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectCageName == true}"
+                                 sortBy="#{row.containerName}" 
+                                 headerText="Cage Name"
+                                 filterBy="#{row.containerName}"
+                                 filterMatchMode="contains"
+                                 width="60">
+                            <h:outputText value="#{row.containerName}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectMouseComment == true}"
+                                 sortBy="#{row.mouseComments}" 
+                                 headerText="Mouse Comments"
+                                 filterBy="#{row.mouseComments}"
+                                 filterMatchMode="contains"
+                                 width="120">
+                            <h:outputText value="#{row.mouseComments}"/>
+                        </p:column>
+                            
+                        <!-- NEED TO GET THE PAGE TO NOT RENDER UNTIL AFTER RUN QUERY ACTION SO THE CHECK IF dxHeader is blank will work
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true and !ExperimentQuery_Backing.search.d1Header == ''}"-->
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"          
+                             sortBy="#{row.d1}" 
+                             headerText="#{ExperimentQuery_Backing.search.d1Header}"
+                             filterBy="#{row.d1}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d1}"/>
+                        </p:column>
+
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d2}"
+                             headerText="#{ExperimentQuery_Backing.search.d2Header}"
+                             filterBy="#{row.d2}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d2}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d3}"
+                             headerText="#{ExperimentQuery_Backing.search.d3Header}"
+                             filterBy="#{row.d3}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d3}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d4}"
+                             headerText="#{ExperimentQuery_Backing.search.d4Header}"
+                             filterBy="#{row.d4}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d4}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d5}"
+                             headerText="#{ExperimentQuery_Backing.search.d5Header}"
+                             filterBy="#{row.d5}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d5}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d6}"
+                             headerText="#{ExperimentQuery_Backing.search.d6Header}"
+                             filterBy="#{row.d6}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d6}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d7}"
+                             headerText="#{ExperimentQuery_Backing.search.d7Header}"
+                             filterBy="#{row.d7}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d7}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d8}"
+                             headerText="#{ExperimentQuery_Backing.search.d8Header}"
+                             filterBy="#{row.d8}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d8}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d9}"
+                             headerText="#{ExperimentQuery_Backing.search.d9Header}"
+                             filterBy="#{row.d9}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d9}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d10}"
+                             headerText="#{ExperimentQuery_Backing.search.d10Header}"
+                             filterBy="#{row.d10}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d10}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d11}"
+                             headerText="#{ExperimentQuery_Backing.search.d11Header}"
+                             filterBy="#{row.d11}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d11}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d12}"
+                             headerText="#{ExperimentQuery_Backing.search.d12Header}"
+                             filterBy="#{row.d12}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d12}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d13}"
+                             headerText="#{ExperimentQuery_Backing.search.d13Header}"
+                             filterBy="#{row.d13}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d13}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d14}"
+                             headerText="#{ExperimentQuery_Backing.search.d14Header}"
+                             filterBy="#{row.d14}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d14}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d15}"
+                             headerText="#{ExperimentQuery_Backing.search.d15Header}"
+                             filterBy="#{row.d15}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d15}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d16}"
+                             headerText="#{ExperimentQuery_Backing.search.d16Header}"
+                             filterBy="#{row.d16}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d16}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d17}"
+                             headerText="#{ExperimentQuery_Backing.search.d17Header}"
+                             filterBy="#{row.d17}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d17}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d18}"
+                             headerText="#{ExperimentQuery_Backing.search.d18Header}"
+                             filterBy="#{row.d18}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d18}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d19}"
+                             headerText="#{ExperimentQuery_Backing.search.d19Header}"
+                             filterBy="#{row.d19}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d19}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d20}"
+                             headerText="#{ExperimentQuery_Backing.search.d20Header}"
+                             filterBy="#{row.d20}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d20}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d21}"
+                             headerText="#{ExperimentQuery_Backing.search.d21Header}"
+                             filterBy="#{row.d21}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d21}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d22}"
+                             headerText="#{ExperimentQuery_Backing.search.d22Header}"
+                             filterBy="#{row.d22}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d22}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d23}"
+                             headerText="#{ExperimentQuery_Backing.search.d23Header}"
+                             filterBy="#{row.d23}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d23}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d24}"
+                             headerText="#{ExperimentQuery_Backing.search.d24Header}"
+                             filterBy="#{row.d24}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d24}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d25}"
+                             headerText="#{ExperimentQuery_Backing.search.d25Header}"
+                             filterBy="#{row.d25}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d25}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d26}"
+                             headerText="#{ExperimentQuery_Backing.search.d26Header}"
+                             filterBy="#{row.d26}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d26}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d27}"
+                             headerText="#{ExperimentQuery_Backing.search.d27Header}"
+                             filterBy="#{row.d27}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d27}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d28}"
+                             headerText="#{ExperimentQuery_Backing.search.d28Header}"
+                             filterBy="#{row.d28}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d28}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d29}"
+                             headerText="#{ExperimentQuery_Backing.search.d29Header}"
+                             filterBy="#{row.d29}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d29}"/>
+                        </p:column>
+                        <p:column rendered="#{ExperimentQuery_Backing.search.selectDataResults == true}"
+                             sortBy="#{row.d30}"
+                             headerText="#{ExperimentQuery_Backing.search.d30Header}"
+                             filterBy="#{row.d30}"
+                             filterMatchMode="contains"
+                             width="90">
+                            <h:outputText value="#{row.d30}"/>
+                        </p:column>
+                        
+                    </p:dataTable>
+            </p:dialog>
+        </h:form>
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+    </h:body>
+</html>

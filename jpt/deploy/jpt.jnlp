@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="http://colonymanagement.jax.org/jpt/" href="jpt.jnlp">
+    <information>
+        <title>JCMS Pedigree Tracker</title>
+        <vendor>The Jackson Laboratory</vendor>
+        <homepage href="http://colonymanagement.jax.org/"/>
+        <description>As simple application that will navigate the Mouse, Mating and Litter
+hierarchy for a JCMS database.</description>
+        <description kind="short">JCMS Pedigree Tracker</description>
+        <icon href="jptSplash.png" kind="splash"/>
+        <offline-allowed/>
+        <shortcut online="true">
+          <desktop/>
+          <menu submenu="The Jackson Laboratory"/>
+        </shortcut>
+    </information>
+    <security>
+        <all-permissions/>
+    </security>
+    <resources>
+        <j2se version="1.6+"/>
+        <jar href="jptGUI.jar" main="true" download="eager"/>
+        <jar href="lib/appframework-1.0.3.jar" download="eager"/>
+        <jar href="lib/beansbinding-1.2.1.jar" download="eager"/>
+        <jar href="lib/commons-lang-2.4.jar" download="eager"/>
+        <jar href="lib/jptDataAccess.jar" download="eager"/>
+        <jar href="lib/mysql-connector-java-5.1.6-bin.jar" download="eager"/>
+        <jar href="lib/swing-worker-1.1.jar" download="eager"/>
+    </resources>
+    <application-desc main-class="org.jax.cs.apps.jcms.jpt.jptGUIApp">
+    </application-desc>
+</jnlp>

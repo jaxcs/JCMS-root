@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- $Id: jboss-service.xml 77499 2008-08-26 18:38:57Z dimitris@jboss.org $ -->
+
+<!-- ===================================================================== -->
+<!--  JBoss Server Configuration                                           -->
+<!-- ===================================================================== -->
+
+<server>
+    
+    <!-- ==================================================================== -->
+    <!-- Main Deployer                                                        -->
+    <!-- ==================================================================== -->
+    <mbean code="org.jboss.deployment.MainDeployer"
+        name="jboss.system:service=MainDeployer">
+        <!-- This is used to delegate the deployment handling -->
+        <attribute name="KernelMainDeployer"><inject bean="MainDeployer" /></attribute>
+        <!-- This is used to validate incomplete deployments -->
+        <attribute name="Controller"><inject bean="jboss.kernel:service=Kernel" property="controller"/></attribute>
+    </mbean>
+    
+    <!-- ==================================================================== -->
+    <!-- XMBean Persistence                                                   -->
+    <!-- ==================================================================== -->
+    <mbean code="org.jboss.system.pm.AttributePersistenceService"
+        name="jboss:service=AttributePersistenceService"
+        xmbean-dd="resource:xmdesc/AttributePersistenceService-xmbean.xml">
+        <!-- the AttributePersistenceService is persistent, itself -->
+        
+        <!--
+            <attribute name="AttributePersistenceManagerClass">org.jboss.system.pm.XMLAttributePersistenceManager</attribute>
+            <attribute name="AttributePersistenceManagerConfig">
+            <data-directory>data/xmbean-attrs</data-directory>
+            </attribute>
+            <attribute name="ApmDestroyOnServiceStop">false</attribute>
+            <attribute name="VersionTag"></attribute>
+        -->
+    </mbean>
+    
+    
+    <!-- ==================================================================== -->
+    <!-- Class Loading                                                        -->
+    <!-- ==================================================================== -->
+    
+    <!-- A mini webserver used for dynamic and class and resource loading --> 
+    <mbean code="org.jboss.web.WebService"
+        name="jboss:service=WebService">
+        <!-- The Bind address and Port -->
+        <attribute name="BindAddress">
+            <!-- Get the interface to use from ServiceBindingManager. -->
+            <value-factory bean="ServiceBindingManager" method="getStringBinding" parameter="jboss:service=WebService"/>
+        </attribute>      
+        <attribute name="Port">
+            <!-- Get the port to use from ServiceBindingManager. -->
+            <value-factory bean="ServiceBindingManager" method="getIntBinding" parameter="jboss:service=WebService"/>
+        </attribute>
+        <!--  The address to use for the host portion of the RMI codebase URL -->
+        <attribute name="Host">${java.rmi.server.hostname}</attribute>
+        <!-- Should non-EJB .class files be downloadable -->
+        <attribute name="DownloadServerClasses">true</attribute>
+        <!-- Should resources other than .class files be downloadable. Both
+            DownloadServerClasses and DownloadResources must be true for resources
+            to be downloadable. This is false by default because its generally a
+            bad idea as server configuration files that container security
+            information can be accessed.
+        -->
+        <attribute name="DownloadResources">false</attribute>
+        
+        <!-- Use the default thread pool for dynamic class loading -->
+        <attribute name="Executor">
+            <inject bean="ThreadPool"/>
+        </attribute>
+    </mbean>
+ 
+    <!-- ==================================================================== -->
+    <!-- Security                                                             -->
+    <!-- ==================================================================== -->
+    
+    <!-- JAAS security manager and realm mapping -->
+    <mbean code="org.jboss.security.plugins.JaasSecurityManagerService"
+        name="jboss.security:service=JaasSecurityManager">
+        <!-- A flag which indicates whether the SecurityAssociation server mode
+            is set on service creation. This is true by default since the
+            SecurityAssociation should be thread local for multi-threaded server
+            operation.
+        -->
+        <attribute name="ServerMode">true</attribute>
+        <attribute name="SecurityManagerClassName">org.jboss.security.plugins.JaasSecurityManager</attribute>
+        <attribute name="DefaultUnauthenticatedPrincipal">anonymous</attribute>
+        <!-- DefaultCacheTimeout: Specifies the default timed cache policy timeout
+            in seconds.
+            If you want to disable caching of security credentials, set this to 0 to
+            force authentication to occur every time. This has no affect if the
+            AuthenticationCacheJndiName has been changed from the default value.
+        -->
+        <attribute name="DefaultCacheTimeout">1800</attribute>
+        <!-- DefaultCacheResolution: Specifies the default timed cache policy
+            resolution in seconds. This controls the interval at which the cache
+            current timestamp is updated and should be less than the DefaultCacheTimeout
+            in order for the timeout to be meaningful. This has no affect if the
+            AuthenticationCacheJndiName has been changed from the default value.
+        -->
+        <attribute name="DefaultCacheResolution">60</attribute>
+        <!-- DeepCopySubjectMode: This set the copy mode of subjects done by the
+            security managers to be deep copies that makes copies of the subject
+            principals and credentials if they are cloneable. It should be set to
+            true if subject include mutable content that can be corrupted when
+            multiple threads have the same identity and cache flushes/logout clearing
+            the subject in one thread results in subject references affecting other
+            threads.
+        -->
+        <attribute name="DeepCopySubjectMode">false</attribute>
+    </mbean>
+    
+    <!-- ==================================================================== -->
+    <!-- An MBean that is a registry for JDBC type-mapping metadata           -->
+    <!-- ==================================================================== -->
+    
+    <mbean code="org.jboss.ejb.plugins.cmp.jdbc.metadata.MetaDataLibrary"
+        name="jboss.jdbc:service=metadata"/>
+    
+</server>

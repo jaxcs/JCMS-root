@@ -1,0 +1,117 @@
+/* 
+    Document   : kaplanMeierStyles
+    Created on : Apr 22, 2014, 5:00:04 PM
+    Author     : mkamato
+    Description: styles for kaplan meier plots
+*/
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+.x.axis path {
+   /* display: none; */
+}
+.line1 {
+    fill: none;
+    stroke-width: 1.5px;
+    stroke: blue; 
+}
+rect.line1 {
+    fill: blue; 
+    stroke: steelblue;
+}
+.line2 path{
+    fill: none;
+    stroke-width: 1.5px;
+    stroke: red; 
+}
+rect.line2 {
+    fill: red; 
+    stroke: steelblue;
+}
+.line3 path {
+    fill: none;
+    stroke-width: 1.5px;
+    stroke: green; 
+}
+rect.line3 {
+    fill: green; 
+    stroke: steelblue;
+}
+.line4 path {
+    fill: none;
+    stroke-width: 1.5px;
+    stroke: purple; 
+}
+rect.line4 {
+    fill: purple; 
+    stroke: steelblue;
+}
+.line5 path {
+    fill: none;
+    stroke-width: 1.5px;
+    stroke: orange; 
+}
+rect.line5 {
+    fill: orange; 
+    stroke: steelblue;
+}
+.line6 path {
+    fill: none;
+    stroke-width: 1.5px;
+    stroke: yellow; 
+}
+rect.line6 {
+    fill: yellow;
+    stroke: steelblue;
+}
+.line7 path {
+    fill: none;
+    stroke-width: 1.5px;
+    stroke: black; 
+}
+rect.line7 {
+    fill: black;
+    stroke: steelblue;
+}
+table.legend  {
+    border: 2px solid steelblue;
+    vertical-align: top;
+    margin-left: 90px;
+/*     margin-right: 45px; */}
+td.legend  {
+    vertical-align: top;
+}
+
+div.Table
+{
+    display: table;
+}
+div.Title
+{
+    display: table-caption;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+}
+div.Heading
+{
+    display: table-row;
+    font-weight: bold;
+    text-align: center;
+}
+div.Row
+{
+    display: table-row;
+}
+div.Cell
+{
+    display: table-cell;
+    border: solid;
+    border-width: thin;
+    padding-left: 5px;
+    padding-right: 5px;
+}

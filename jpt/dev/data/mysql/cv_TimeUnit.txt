@@ -1,0 +1,4 @@
+1,h,60,Hours
+2,d,1440,Days
+3,ww,10080,Weeks
+4,m,43800,Months

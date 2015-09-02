@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Bean Validation (jsr303) core beans.
+-->
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+  <!-- ValidatorFactory factory 
+  We currently use org.hibernate.validator.util.LazyValidatorFactory
+  Two contracts are important:
+   - it lazily creates the ValidatorFactory when getValidator() is first requested
+   - it enforces that the default validation provider is Hibernate Validator
+   The latter is necessary to ensure that by default AS uses Hibernate Validator. This will reduce confusion
+   for support and for people using Bean Validation
+  -->
+  <beanfactory name="ValidatorFactoryFactory" class="org.hibernate.validator.util.LazyValidatorFactory"/>
+
+  <!-- JEE DU filter -->
+  <bean name="VFDUFilter" class="org.jboss.beanvalidation.util.AttachmentPresentDeploymentUnitFilter">
+    <property name="attachmentNames">
+      <set>
+        <value>org.jboss.metadata.ear.jboss.JBossAppMetaData</value>
+        <value>org.jboss.metadata.web.jboss.JBossWebMetaData</value>
+        <value>org.jboss.metadata.ejb.jboss.JBossMetaData</value>
+      </set>
+    </property>
+  </bean>
+
+  <!-- Default JNDI name creator -->
+  <bean name="DefaultJndiBinder" class="org.jboss.beanvalidation.util.DefaultJndiBinder">
+    <demand state="Instantiated">LocalNamingBean</demand>
+  </bean>
+
+</deployment>

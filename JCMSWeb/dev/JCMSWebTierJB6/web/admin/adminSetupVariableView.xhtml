@@ -1,0 +1,495 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+    <div align="right" class="nowrap">
+        <h:panelGroup>
+            <h:selectBooleanCheckbox value="#{trackerBean.show}" title="Show Description">
+                <f:ajax event="click" 
+                        listener="#{trackerBean.toggleDescriptionAction}" 
+                        render="tpSetupVariables" />
+            </h:selectBooleanCheckbox>
+            <h:outputLabel value="Show Descriptions" />
+        </h:panelGroup>
+    </div>
+    <rich:tabPanel switchType="client" 
+                id="tpSetupVariables" 
+                styleClass="tabPanel"
+                headerPosition="top">
+        <rich:tab header="Cage">
+            <h3><h:outputLabel value="Cage Defaults"></h:outputLabel></h3>
+            <h:panelGrid columns="#{trackerBean.columns}"
+                            id="setupVariablesContainerDefaultsPanel"
+                            columnClasses="rowHeader, innerTableTD"
+                            styleClass="innerTable tabTable">
+
+                <h:panelGroup>
+                    <h:outputLabel value="Cage Status"></h:outputLabel>
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+                <h:selectOneMenu value="#{adminSetupVariableBean.JCMSDefaultContainerStatus.MTSValue}"
+                                    title="#{adminSetupVariableBean.JCMSDefaultContainerStatus.MTSDescription}" 
+                                    required="true" 
+                                    requiredMessage="Required value missing, select a Cage Status">
+                    <f:selectItems value="#{adminSetupVariableBean.selectItemWrapper.cvContainerStatusItemsStringOptional}"/>
+                </h:selectOneMenu>
+                <h:outputText value="#{adminSetupVariableBean.JCMSDefaultContainerStatus.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+                <h:panelGroup>
+                    <h:outputLabel value="Mouse Room"></h:outputLabel>
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+                <h:selectOneMenu value="#{adminSetupVariableBean.MTSDefaultMouseRoom.MTSValue}"
+                                    title="#{adminSetupVariableBean.MTSDefaultMouseRoom.MTSDescription}" 
+                                    required="true" 
+                                    requiredMessage="Required value missing, select a Mouse Room">
+                    <f:selectItems value="#{adminSetupVariableBean.selectItemWrapper.cvRoomItemsStringOptional}"/>
+                </h:selectOneMenu>
+                <h:outputText value="#{adminSetupVariableBean.MTSDefaultMouseRoom.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+                <h:panelGroup>
+                    <h:outputLabel value="Maximum Mice Per Cage"></h:outputLabel>
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+                <h:inputText value="#{adminSetupVariableBean.MTSMaxMicePerPen.MTSValue}"
+                                title="#{adminSetupVariableBean.MTSMaxMicePerPen.MTSDescription}" 
+                                required="true" 
+                                requiredMessage="Required value missing, enter Maximum Mice Per Cage"
+                                validatorMessage="Data type error, enter a number for Maximum Mice Per Cage" >
+                    <f:validateRegex pattern="[0-9]+" />
+                </h:inputText>
+                <h:outputText value="#{adminSetupVariableBean.MTSMaxMicePerPen.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+                <h:outputLabel value="Use Cage Names"></h:outputLabel>
+                <h:selectBooleanCheckbox value="#{adminSetupVariableBean.JCMSUsingPenNames.MTSValue}"
+                                            title="#{adminSetupVariableBean.JCMSUsingPenNames.MTSDescription}">
+                </h:selectBooleanCheckbox>
+                <h:outputText value="#{adminSetupVariableBean.JCMSUsingPenNames.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+                <h:outputLabel value="Automatically Increment Cage ID"></h:outputLabel>
+                <h:selectBooleanCheckbox value="#{adminSetupVariableBean.JCMSCreatePenIncrement.MTSValue}" 
+                                            title="#{adminSetupVariableBean.JCMSCreatePenIncrement.MTSDescription}">
+                </h:selectBooleanCheckbox>
+                <h:outputText value="#{adminSetupVariableBean.JCMSCreatePenIncrement.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+                
+                <h:outputLabel value="Warn About Duplicate Cage Names"></h:outputLabel>
+                <h:selectBooleanCheckbox value="#{adminSetupVariableBean.JCMSWarnDuplicatePenName.MTSValue}" 
+                                            title="#{adminSetupVariableBean.JCMSWarnDuplicatePenName.MTSDescription}">
+                </h:selectBooleanCheckbox>
+                <h:outputText value="#{adminSetupVariableBean.JCMSWarnDuplicatePenName.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+                
+            </h:panelGrid>
+
+            <br />
+            <h3><h:outputLabel value="Cage Cards"></h:outputLabel></h3>
+            <h:panelGrid columns="#{trackerBean.columns}"
+                            id="setupVariablesContainerCageCardPanel"
+                            columnClasses="rowHeader, innerTableTD"
+                            styleClass="innerTable tabTable">
+                <h:panelGroup>
+                    <h:outputLabel value="Detail Card Note"></h:outputLabel>
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+                <h:inputText value="#{adminSetupVariableBean.MTSCageCardDetailNote.MTSValue}"
+                                title="#{adminSetupVariableBean.MTSCageCardDetailNote.MTSDescription}"  
+                                    required="true" 
+                                    requiredMessage="Required value missing, enter a Detail Card Note">
+                </h:inputText>
+                <h:outputText value="#{adminSetupVariableBean.MTSCageCardDetailNote.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+                <h:panelGroup>
+                    <h:outputLabel value="Phone Number"></h:outputLabel>
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+                <h:inputText value="#{adminSetupVariableBean.MTSPIPhone.MTSValue}"
+                                title="#{adminSetupVariableBean.MTSPIPhone.MTSDescription}" 
+                                    required="true" 
+                                    requiredMessage="Required value missing, enter a Phone Number">
+                </h:inputText>
+                <h:outputText value="#{adminSetupVariableBean.MTSPIPhone.MTSDescription}"  
+                                rendered="#{trackerBean.show}" />
+
+                <h:panelGroup>
+                    <h:outputLabel value="Lab Name"></h:outputLabel>
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+                <h:inputText value="#{adminSetupVariableBean.MTSPIName.MTSValue}"
+                                title="#{adminSetupVariableBean.MTSPIName.MTSDescription}"  
+                                    required="true" 
+                                    requiredMessage="Required value missing, enter a Lab Name">
+                </h:inputText>
+                <h:outputText value="#{adminSetupVariableBean.MTSPIName.MTSDescription}"  
+                                rendered="#{trackerBean.show}" />
+
+                <h:outputLabel value="Print Exited Mice"></h:outputLabel>
+                <h:selectBooleanCheckbox value="#{adminSetupVariableBean.JCMSPrintExitedMiceOnCageCards.MTSValue}"
+                                            title="#{adminSetupVariableBean.JCMSPrintExitedMiceOnCageCards.MTSDescription}">
+                </h:selectBooleanCheckbox>
+                <h:outputText value="#{adminSetupVariableBean.JCMSPrintExitedMiceOnCageCards.MTSDescription}"  
+                                rendered="#{trackerBean.show}" />
+
+                <h:outputLabel value="Relax Restrictions on Cage IDs"></h:outputLabel>
+                <h:selectBooleanCheckbox value="#{adminSetupVariableBean.MTSRelaxedPenNums.MTSValue}"
+                                            title="#{adminSetupVariableBean.MTSRelaxedPenNums.MTSDescription}">
+                </h:selectBooleanCheckbox>
+                <h:outputText value="#{adminSetupVariableBean.MTSRelaxedPenNums.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+            </h:panelGrid>
+
+            <br />
+
+            <br /><hr />
+            <div align="center">
+                <h:panelGrid>
+                    <h:panelGroup>
+                        <a4j:commandButton value="Save"
+                                            action="#{adminSetupVariableBean.saveAction}"
+                                            render="containerDefaultsPanel containerCageCardPanel"
+                                            styleClass="mediumButton"
+                                            status="statusTable">                                       
+                        </a4j:commandButton>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </div>
+        </rich:tab>
+        <rich:tab header="Genotype" rendered="false">
+            <h:panelGrid columns="#{trackerBean.columns}"
+                            id="setupVariablesGenotypePanel"
+                            columnClasses="rowHeader, innerTableTD"
+                            styleClass="innerTable tabTable">
+            </h:panelGrid>
+            <br /><hr />
+            <div align="center">
+                <h:panelGrid>
+                    <h:panelGroup>
+                        <a4j:commandButton value="Save"
+                                            action="#{adminSetupVariableBean.saveAction}"
+                                            styleClass="mediumButton"
+                                            status="statusTable">                                       
+                        </a4j:commandButton>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </div>
+        </rich:tab>
+        <rich:tab header="Litter">
+            <h:panelGrid columns="#{trackerBean.columns}"
+                            id="setupVariablesLitterPanel"
+                            columnClasses="rowHeader, innerTableTD"
+                            styleClass="innerTable tabTable">
+
+                <h:outputLabel value="Loop Litter Numbers"></h:outputLabel>
+                <h:selectBooleanCheckbox value="#{adminSetupVariableBean.JCMSLoopLitterNumbers.MTSValue}"
+                                            title="#{adminSetupVariableBean.JCMSLoopLitterNumbers.MTSDescription}">
+                </h:selectBooleanCheckbox>
+                <h:outputText value="#{adminSetupVariableBean.JCMSLoopLitterNumbers.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+                <h:outputLabel value="Automatically Generate Litter Numbers"></h:outputLabel>
+                <h:selectBooleanCheckbox value="#{adminSetupVariableBean.MTSAutoLitterNums.MTSValue}" 
+                                            title="#{adminSetupVariableBean.MTSAutoLitterNums.MTSDescription}">
+                </h:selectBooleanCheckbox>
+                <h:outputText value="#{adminSetupVariableBean.MTSAutoLitterNums.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+                <h:panelGroup>
+                    <h:outputLabel value="Number of Auto Litter Numbers per Mating"></h:outputLabel>
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+                <h:inputText value="#{adminSetupVariableBean.MTSNumAutoLitterNums.MTSValue}"
+                                title="#{adminSetupVariableBean.MTSNumAutoLitterNums.MTSDescription}" 
+                                required="true" 
+                                requiredMessage="Required value missing, enter Number of Auto Litter Numbers per Mating"
+                                validatorMessage="Data type error, enter a number for Number of Auto Litter Numbers per Mating" >
+                    <f:validateRegex pattern="[0-9]+" />
+                </h:inputText>
+                <h:outputText value="#{adminSetupVariableBean.MTSNumAutoLitterNums.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+            </h:panelGrid>
+
+            <br /><hr /><br />
+            <div align="center">
+                <h:panelGrid>
+                    <h:panelGroup>
+                        <a4j:commandButton value="Save"
+                                            action="#{adminSetupVariableBean.saveAction}"
+                                            styleClass="mediumButton"
+                                            status="statusTable">                                       
+                        </a4j:commandButton>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </div>
+        </rich:tab>
+        <rich:tab header="Mating" rendered="false">
+            <h:panelGrid columns="#{trackerBean.columns}"
+                            id="setupVariablesMatingPanel"
+                            columnClasses="rowHeader, innerTableTD"
+                            styleClass="innerTable tabTable">
+            </h:panelGrid>
+            <br /><hr /><br />
+            <div align="center">
+                <h:panelGrid>
+                    <h:panelGroup>
+                        <a4j:commandButton value="Save"
+                                            action="#{adminSetupVariableBean.saveAction}"
+                                            styleClass="mediumButton"
+                                            status="statusTable">                                       
+                        </a4j:commandButton>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </div>
+        </rich:tab>
+        <rich:tab header="Mouse">
+            <h:panelGrid columns="#{trackerBean.columns}"
+                            id="setupVariablesMousePanel"
+                            columnClasses="rowHeader, innerTableTD"
+                            styleClass="innerTable tabTable">
+
+                <h:outputLabel value="Strain Name First"></h:outputLabel>
+                <h:selectBooleanCheckbox value="#{adminSetupVariableBean.JCMSStrainNameFirst.MTSValue}"
+                                            title="#{adminSetupVariableBean.JCMSStrainNameFirst.MTSDescription}">
+                </h:selectBooleanCheckbox>
+                <h:outputText value="#{adminSetupVariableBean.JCMSStrainNameFirst.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+                <h:panelGroup styleClass="nowrap">
+                    <h:outputLabel value="Standard Wean Time"></h:outputLabel>
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+                <h:inputText value="#{adminSetupVariableBean.JCMSStandardWeanTime.MTSValue}"
+                                title="#{adminSetupVariableBean.JCMSStandardWeanTime.MTSDescription}" 
+                                required="true" 
+                                requiredMessage="Required value missing, enter Standard Wean Time"
+                                validatorMessage="Data type error, enter a number for Standard Wean Time" >
+                    <f:validateRegex pattern="[0-9]+" />
+                </h:inputText>
+                <h:outputText value="#{adminSetupVariableBean.JCMSStandardWeanTime.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+                <h:panelGroup styleClass="nowrap">
+                    <h:outputLabel value="Extended Wean Time"></h:outputLabel>
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+                <h:inputText value="#{adminSetupVariableBean.JCMSExtWeanTime.MTSValue}"
+                                title="#{adminSetupVariableBean.JCMSExtWeanTime.MTSDescription}" 
+                                required="true" 
+                                requiredMessage="Required value missing, enter Extended Wean Time"
+                                validatorMessage="Data type error, enter a number for Extended Wean Time" >
+                    <f:validateRegex pattern="[0-9]+" />
+                </h:inputText>
+                <h:outputText value="#{adminSetupVariableBean.JCMSExtWeanTime.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+                <h:outputLabel value="Mouse ID Prefix"></h:outputLabel>
+                <h:inputText value="#{adminSetupVariableBean.MTSMouseIDPrefix.MTSValue}" 
+                                title="#{adminSetupVariableBean.MTSMouseIDPrefix.MTSDescription}">
+                </h:inputText>
+                <h:outputText value="#{adminSetupVariableBean.MTSMouseIDPrefix.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+            </h:panelGrid>
+            <br /><hr />
+            <div align="center">
+                <h:panelGrid>
+                    <h:panelGroup>
+                        <a4j:commandButton value="Save"
+                                            action="#{adminSetupVariableBean.saveAction}"
+                                            styleClass="mediumButton"
+                                            status="statusTable">                                       
+                        </a4j:commandButton>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </div>
+        </rich:tab>
+        <rich:tab header="Security">
+            <h:panelGrid columns="#{trackerBean.columns}"
+                            id="setupVariablesSecurityPanel"
+                            columnClasses="rowHeader, innerTableTD"
+                            styleClass="innerTable tabTable">
+
+                <h:outputLabel value="Enforce Password Change"></h:outputLabel>
+                <h:selectBooleanCheckbox value="#{adminSetupVariableBean.JCMSEnforcePasswordChange.MTSValue}"
+                                            title="#{adminSetupVariableBean.JCMSEnforcePasswordChange.MTSDescription}">
+                </h:selectBooleanCheckbox>
+                <h:outputText value="#{adminSetupVariableBean.JCMSEnforcePasswordChange.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+                <h:panelGroup styleClass="nowrap">
+                    <h:outputLabel value="Password Change Period"></h:outputLabel>
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+                <h:inputText value="#{adminSetupVariableBean.JCMSPasswordChangePeriod.MTSValue}"
+                                title="#{adminSetupVariableBean.JCMSPasswordChangePeriod.MTSDescription}" 
+                                required="true" 
+                                requiredMessage="Required value missing, enter Password Change Period"
+                                validatorMessage="Data type error, enter a number for Password Change Period" >
+                    <f:validateRegex pattern="[0-9]+" />
+                </h:inputText>
+                <h:outputText value="#{adminSetupVariableBean.JCMSPasswordChangePeriod.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+            </h:panelGrid>
+            <br /><hr />
+            <div align="center">
+                <h:panelGrid>
+                    <h:panelGroup>
+                        <a4j:commandButton value="Save"
+                                            action="#{adminSetupVariableBean.saveAction}"
+                                            styleClass="mediumButton"
+                                            status="statusTable">                                       
+                        </a4j:commandButton>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </div>
+        </rich:tab>
+
+        <rich:tab header="Preferences">
+            <h:panelGrid columns="#{trackerBean.columns}"
+                            id="setupVariablesPreferencesPanel"
+                            columnClasses="rowHeader, innerTableTD"
+                            styleClass="innerTable tabTable">
+
+                <h:outputLabel value="Date Format Preference"></h:outputLabel>
+                <h:panelGrid columns ="5">
+                    <h:selectOneMenu value="#{adminSetupVariableBean.firstDateUnit}">
+                        <f:selectItem itemValue="dd" itemLabel="dd"/>
+                        <f:selectItem itemValue="MM" itemLabel="MM"/>
+                        <f:selectItem itemValue="yy" itemLabel="yy"/>
+                        <f:selectItem itemValue="yyyy" itemLabel="yyyy"/>
+                    </h:selectOneMenu>
+                    <h:selectOneMenu id="separatorCharOne" value="#{adminSetupVariableBean.separatorCharacter}">
+                        <f:selectItem itemValue="." itemLabel="."/>
+                        <f:selectItem itemValue="/" itemLabel="/"/>
+                        <f:selectItem itemValue="-" itemLabel="-"/>
+                        <a4j:ajax render="separatorCharTwo" event="change"/>
+                    </h:selectOneMenu>
+                    <h:selectOneMenu value="#{adminSetupVariableBean.secondDateUnit}">
+                        <f:selectItem itemValue="dd" itemLabel="dd"/>
+                        <f:selectItem itemValue="MM" itemLabel="MM"/>
+                        <f:selectItem itemValue="yy" itemLabel="yy"/>
+                        <f:selectItem itemValue="yyyy" itemLabel="yyyy"/>
+                    </h:selectOneMenu>
+                    <h:selectOneMenu id="separatorCharTwo" value="#{adminSetupVariableBean.separatorCharacter}">
+                        <f:selectItem itemValue="." itemLabel="."/>
+                        <f:selectItem itemValue="/" itemLabel="/"/>
+                        <f:selectItem itemValue="-" itemLabel="-"/>
+                        <a4j:ajax render="separatorCharOne" event="change"/>
+                    </h:selectOneMenu>
+                    <h:selectOneMenu value="#{adminSetupVariableBean.thirdDateUnit}">
+                        <f:selectItem itemValue="dd" itemLabel="dd"/>
+                        <f:selectItem itemValue="MM" itemLabel="MM"/>
+                        <f:selectItem itemValue="yy" itemLabel="yy"/>
+                        <f:selectItem itemValue="yyyy" itemLabel="yyyy"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:outputText value="#{adminSetupVariableBean.JCMSWebDateFormat.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+            </h:panelGrid>
+            <br /><hr />
+            <div align="center">
+                <h:panelGrid>
+                    <h:panelGroup>
+                        <a4j:commandButton value="Save"
+                                            action="#{adminSetupVariableBean.saveAction}"
+                                            styleClass="mediumButton"
+                                            status="statusTable">                                       
+                        </a4j:commandButton>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </div>
+        </rich:tab>
+
+        <rich:tab header="Query" rendered="false">
+            <h:panelGrid columns="#{trackerBean.columns}"
+                            id="setupVariablesQueryPanel"
+                            columnClasses="rowHeader, innerTableTD"
+                            styleClass="innerTable tabTable">
+
+                <h:outputLabel value="Strain Name First"></h:outputLabel>
+                <h:selectBooleanCheckbox value="#{adminSetupVariableBean.JCMSStrainNameFirst.MTSValue}"
+                                            title="#{adminSetupVariableBean.JCMSStrainNameFirst.MTSDescription}">
+                </h:selectBooleanCheckbox>
+                <h:outputText value="#{adminSetupVariableBean.JCMSStrainNameFirst.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+                <h:panelGroup styleClass="nowrap">
+                    <h:outputLabel value="Standard Wean Time"></h:outputLabel>
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+                <h:inputText value="#{adminSetupVariableBean.JCMSStandardWeanTime.MTSValue}"
+                                title="#{adminSetupVariableBean.JCMSStandardWeanTime.MTSDescription}" 
+                                required="true" 
+                                requiredMessage="Required value missing, enter Standard Wean Time"
+                                validatorMessage="Data type error, enter a number for Standard Wean Time" >
+                    <f:validateRegex pattern="[0-9]+" />
+                </h:inputText>
+                <h:outputText value="#{adminSetupVariableBean.JCMSStandardWeanTime.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+                <h:panelGroup styleClass="nowrap">
+                    <h:outputLabel value="Extended Wean Time"></h:outputLabel>
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+                <h:inputText value="#{adminSetupVariableBean.JCMSExtWeanTime.MTSValue}"
+                                title="#{adminSetupVariableBean.JCMSExtWeanTime.MTSDescription}" 
+                                required="true" 
+                                requiredMessage="Required value missing, enter Extended Wean Time"
+                                validatorMessage="Data type error, enter a number for Extended Wean Time" >
+                    <f:validateRegex pattern="[0-9]+" />
+                </h:inputText>
+                <h:outputText value="#{adminSetupVariableBean.JCMSExtWeanTime.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+                <h:outputLabel value="Mouse ID Prefix"></h:outputLabel>
+                <h:selectBooleanCheckbox value="#{adminSetupVariableBean.MTSMouseIDPrefix.MTSValue}" 
+                                            title="#{adminSetupVariableBean.MTSMouseIDPrefix.MTSDescription}">
+                </h:selectBooleanCheckbox>
+                <h:outputText value="#{adminSetupVariableBean.MTSMouseIDPrefix.MTSDescription}" 
+                                rendered="#{trackerBean.show}" />
+
+            </h:panelGrid>
+            <br /><hr />
+            <div align="center">
+                <h:panelGrid>
+                    <h:panelGroup>
+                        <a4j:commandButton value="Save"
+                                            action="#{adminSetupVariableBean.saveAction}"
+                                            styleClass="mediumButton"
+                                            status="statusTable">                                       
+                        </a4j:commandButton>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </div>
+        </rich:tab>
+    </rich:tabPanel>
+</ui:composition>
+        

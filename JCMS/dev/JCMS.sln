@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "JAX-CMS", "JAX-CMS.vdproj", "{8B615205-B542-4951-B3A5-DEACD2CE481D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B615205-B542-4951-B3A5-DEACD2CE481D}.Debug|Default.ActiveCfg = Debug
+		{8B615205-B542-4951-B3A5-DEACD2CE481D}.Debug|Default.Build.0 = Debug
+		{8B615205-B542-4951-B3A5-DEACD2CE481D}.Release|Default.ActiveCfg = Release
+		{8B615205-B542-4951-B3A5-DEACD2CE481D}.Release|Default.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

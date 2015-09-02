@@ -1,0 +1,564 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui">
+    <h:panelGrid columns="1" id="cageResultsGridId">
+        <h:panelGroup id="cageResultsPanelId">
+            <a4j:jsFunction name="showHistory" 
+                            action="#{adminCageBean.showCageHistory}" 
+                            render="cageHistoryPanel mousePanel printCageCardPanel" 
+                            oncomplete="disableInputDate();" 
+                            status="statusTable" >
+                <a4j:param name="currentRow" assignTo="#{adminCageBean.containerKey}"  />
+            </a4j:jsFunction>
+
+            <h:panelGrid columns="1">
+                <h:panelGroup>
+                    <div align="right">
+                        <h:outputText value="Results " /><h:outputText id="cageFilterCount"/>&nbsp;
+                        <h:outputText value="of #{adminCageBean.vocabularyDataModel.rowCount}" />
+                    </div>
+
+                    <rich:dataTable
+                        id="cageResultsTableId"
+                        value="#{adminCageBean.vocabularyDataModel}"
+                        var="dm"
+                        rows="#{adminCageBean.rows}"
+                        style=" width: 620px;"
+                        rowKeyVar="tableRowIndex" 
+                        onrowclick="$(this.parentElement).find('.rf-dt-r').removeClass('selected-dt-row'); $(this).addClass('selected-dt-row'); showHistoryCheck(#{dm.container_key});"
+                        sortMode="single">
+
+                        <f:facet name="header">
+                            <h:outputText value="Cage" />&nbsp;
+                            <h:outputText value="#{adminCageBean.rowIndex}" />&nbsp;
+                            <h:outputText value="#{tableRowIndex}" />
+                        </f:facet>
+                        <f:facet name="footer" class="dataScroller" >
+                            <rich:dataScroller for="cageResultsTableId" 
+                                                renderIfSinglePage="false"
+                                                page="#{adminCageBean.gridPage}" />
+                        </f:facet>                     
+
+                        <rich:column rendered="#{adminCageBean.rowIndex == tableRowIndex}" 
+                                        styleClass="nowrap" 
+                                        width="60px;">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['common.actions']}" />
+                            </f:facet>
+                            <a4j:commandButton title="#{msgs['common.save']}"
+                                                image="/images/icon-save.gif"
+                                                action="#{adminCageBean.saveAction}"
+                                                render="cageResultsGridId cageHistoryPanel"  
+                                                oncomplete="setNumberOfFilteredRows(); disableInputDate(); setIsEdit(false);" >
+                                <f:param name="paramPrimaryKey" value="#{dm.container_key}" />
+                                <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                            </a4j:commandButton>
+                            &nbsp;&nbsp;
+                            <a4j:commandButton title="Cancel"
+                                                image="/images/cancel.png"
+                                                action="#{adminCageBean.cancelAction}"
+                                                immediate="true"
+                                                style="width:16px; height:16px;"
+                                                render="cageResultsGridId"  
+                                                oncomplete="setNumberOfFilteredRows(); disableInputDate(); setIsEdit(false);" >
+                            </a4j:commandButton>
+                        </rich:column>
+                        <rich:column rendered="#{!(adminCageBean.rowIndex == tableRowIndex)}" 
+                                        styleClass="nowrap" 
+                                        width="60px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['common.actions']}" />
+                            </f:facet>
+                            <a4j:commandButton title="#{msgs['common.edit']}"
+                                                image="/images/edit.gif"
+                                                action="#{adminCageBean.editAction}"
+                                                render="cageHistoryPanel cageResultsGridId "
+                                                oncomplete="setNumberOfFilteredRows(); disableInputDate(); moveFocusToInput(); setIsEdit(true);">
+                                <f:param name="paramPrimaryKey" value="#{dm.container_key}" />
+                                <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                            </a4j:commandButton>
+                            &nbsp;&nbsp;
+
+                        </rich:column>                                        
+
+                        <rich:column sortBy="#{dm.containerID}" 
+                                        sortOrder="#{adminCageBean.sortBO.column1Order}"
+                                        filterValue="#{adminCageBean.filterBO.column1Filter}" 
+                                        filterExpression="#{fn:containsIgnoreCase(dm.containerID, adminCageBean.filterBO.column1Filter)}" 
+                                        style="cursor: pointer;"
+                                        width="120px" >
+                            <f:facet name="header">
+                                <h:outputText value="Cage ID" />
+                                <br />
+                                <a4j:commandButton image="#{adminCageBean.sortBO.column1Image}" 
+                                                    render="cageResultsTableId" 
+                                                    action="#{adminCageBean.sortBO.sortByColumn1}" 
+                                                    status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{adminCageBean.filterBO.column1Filter}" 
+                                                rendered="#{adminCageBean.vocabularyDataModel.rowCount gt 0}"  
+                                                style="width:100px;">
+                                    <a4j:ajax event="blur" render="cageResultsTableId" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.containerID}" />
+                        </rich:column>
+
+                        <rich:column sortBy="#{dm.containerName}" 
+                                        sortOrder="#{adminCageBean.sortBO.column2Order}"
+                                        filterValue="#{adminCageBean.filterBO.column2Filter}" 
+                                        filterExpression="#{fn:containsIgnoreCase(dm.containerName, adminCageBean.filterBO.column2Filter)}" 
+                                        style="cursor: pointer;"
+                                        width="150px">
+                            <f:facet name="header">
+                                <h:outputText value="Cage Name" styleClass="nowrap" />
+                                <br />
+                                <a4j:commandButton image="#{adminCageBean.sortBO.column2Image}" 
+                                                    render="cageResultsTableId" 
+                                                    action="#{adminCageBean.sortBO.sortByColumn2}" 
+                                                    status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{adminCageBean.filterBO.column2Filter}" 
+                                                rendered="#{adminCageBean.vocabularyDataModel.rowCount gt 0}"  
+                                                style="width:130px;">
+                                    <a4j:ajax event="blur" render="cageResultsTableId" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.containerName}"
+                                            rendered="#{!(adminCageBean.rowIndex == tableRowIndex)}" />
+                            <h:inputText value="#{dm.containerName}" 
+                                            rendered="#{adminCageBean.rowIndex == tableRowIndex}" 
+                                            class="startHere">
+                            </h:inputText>
+                        </rich:column>
+
+                        <rich:column sortBy="#{dm.cageHistoryDTO.containerStatus}" 
+                                        sortOrder="#{adminCageBean.sortBO.column3Order}"
+                                        filterValue="#{adminCageBean.filterBO.column3Filter}" 
+                                        filterExpression="#{fn:containsIgnoreCase(dm.cageHistoryDTO.containerStatus, adminCageBean.filterBO.column3Filter)}" 
+                                        style="cursor: pointer;"
+                                        width="150px">
+                            <f:facet name="header">
+                                <h:outputText value="Cage Status" styleClass="nowrap" />
+                                <br />
+                                <a4j:commandButton image="#{adminCageBean.sortBO.column3Image}" 
+                                                    render="cageResultsTableId" 
+                                                    action="#{adminCageBean.sortBO.sortByColumn3}" 
+                                                    status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{adminCageBean.filterBO.column3Filter}" 
+                                                rendered="#{adminCageBean.vocabularyDataModel.rowCount gt 0}"  
+                                                style="width:130px;">
+                                    <a4j:ajax event="blur" render="cageResultsTableId" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.cageHistoryDTO.containerStatus}"
+                                            rendered="#{!(adminCageBean.rowIndex == tableRowIndex)}" />
+                            <h:selectOneMenu value="#{dm.cageHistoryDTO.containerStatuskey}" 
+                                                rendered="#{adminCageBean.rowIndex == tableRowIndex}" >
+                                <f:selectItems value="#{adminCageBean.selectItemWrapper.cvContainerStatusItemsPairOptional}"/>
+                            </h:selectOneMenu>
+                        </rich:column>
+
+                        <rich:column sortBy="#{dm.cageHistoryDTO.actionDate}" 
+                                        sortOrder="#{adminCageBean.sortBO.column4Order}"
+                                        filterValue="#{adminCageBean.filterBO.column4Filter}" 
+                                        filterExpression="#{fn:containsIgnoreCase(dm.cageHistoryDTO.actionDate, adminCageBean.filterBO.column4Filter)}" 
+                                        width="150px" >
+                            <f:facet name="header">
+                                <h:outputText value="Cage Action Date" />
+                                <br />
+                                <a4j:commandButton image="#{adminCageBean.sortBO.column4Image}" 
+                                                    render="cageResultsTableId" 
+                                                    action="#{adminCageBean.sortBO.sortByColumn4}" 
+                                                    status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{adminCageBean.filterBO.column4Filter}" 
+                                                rendered="#{adminCageBean.vocabularyDataModel.rowCount gt 0}"  
+                                                style="width:130px;">
+                                    <a4j:ajax event="blur" render="cageResultsTableId" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                                </h:inputText>
+                            </f:facet>
+
+                            <rich:calendar 
+                                        datePattern="#{adminCageBean.date_format_with_time}"
+                                        enableManualInput="true" 
+                                        rendered="#{adminCageBean.rowIndex == tableRowIndex}"
+                                        value="#{dm.cageHistoryDTO.actionDate}">
+                            </rich:calendar>
+                            <rich:calendar datePattern="#{adminCageBean.date_format_with_time}"  
+                                        value="#{dm.cageHistoryDTO.actionDate}"
+                                        disabled="true"
+                                        rendered="#{!(adminCageBean.rowIndex == tableRowIndex)}"  >
+                            </rich:calendar>
+                        </rich:column>
+
+                        <rich:column filterValue="#{adminCageBean.filterBO.column7Filter}" 
+                                        filterExpression="#{fn:containsIgnoreCase(dm.comment, adminCageBean.filterBO.column7Filter)}"
+                                        styleClass="strainColumn" >
+                            <f:facet name="header">
+                                <h:outputText value="Comment" />
+                                <br />
+                                <br />
+                                <h:inputText value="#{adminCageBean.filterBO.column7Filter}"  
+                                                rendered="#{adminCageBean.vocabularyDataModel.rowCount gt 0}"  
+                                                styleClass="strainFilter" >
+                                    <a4j:ajax event="blur" render="cageResultsTableId" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.comment}" 
+                                            rendered="#{!(adminCageBean.rowIndex == tableRowIndex)}"/>
+                            <h:inputTextarea value="#{dm.comment}"
+                                                styleClass="strainInput"
+                                                rows="1" 
+                                                rendered="#{adminCageBean.rowIndex == tableRowIndex}" />
+                        </rich:column>
+
+                        <rich:column sortBy="#{dm.cageHistoryDTO.roomName}" 
+                                        sortOrder="#{adminCageBean.sortBO.column5Order}"
+                                        filterValue="#{adminCageBean.filterBO.column5Filter}" 
+                                        filterExpression="#{fn:containsIgnoreCase(dm.cageHistoryDTO.roomName, adminCageBean.filterBO.column5Filter)}" 
+                                        style="cursor: pointer;"
+                                        width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="Room" styleClass="nowrap" />
+                                <br />
+                                <a4j:commandButton image="#{adminCageBean.sortBO.column5Image}" 
+                                                    render="cageResultsTableId" 
+                                                    action="#{adminCageBean.sortBO.sortByColumn5}" 
+                                                    status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{adminCageBean.filterBO.column5Filter}" 
+                                                rendered="#{adminCageBean.vocabularyDataModel.rowCount gt 0}"  
+                                                style="width:100px;">
+                                    <a4j:ajax event="blur" render="cageResultsTableId" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.cageHistoryDTO.roomName}"
+                                            rendered="#{!(adminCageBean.rowIndex == tableRowIndex)}" />
+                            <h:selectOneMenu value="#{dm.cageHistoryDTO.roomKey}" 
+                                                rendered="#{adminCageBean.rowIndex == tableRowIndex}" >
+                                <f:selectItems value="#{adminCageBean.selectItemWrapper.cvRoomItemsPairOptional}"/>
+                            </h:selectOneMenu>
+                        </rich:column>
+
+                        <rich:column sortBy="#{dm.cageHistoryDTO.levelId}" 
+                                        sortOrder="#{adminCageBean.sortBO.column8Order}"
+                                        filterValue="#{adminCageBean.filterBO.column8Filter}" 
+                                        filterExpression="#{fn:containsIgnoreCase(dm.cageHistoryDTO.roomName, adminCageBean.filterBO.column8Filter)}" 
+                                        style="cursor: pointer;"
+                                        width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="Vivaria Layout" styleClass="nowrap" />
+                                <br />
+                                <a4j:commandButton image="#{adminCageBean.sortBO.column8Image}" 
+                                                    render="cageResultsTableId" 
+                                                    action="#{adminCageBean.sortBO.sortByColumn8}" 
+                                                    status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{adminCageBean.filterBO.column8Filter}" 
+                                                rendered="#{adminCageBean.vocabularyDataModel.rowCount gt 0}"  
+                                                style="width:100px;">
+                                    <a4j:ajax event="blur" render="cageResultsTableId" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.cageHistoryDTO.levelId}" />
+                        </rich:column>
+
+                        <rich:column sortBy="#{dm.cageHistoryDTO.healthLevelHistory}" 
+                                        sortOrder="#{adminCageBean.sortBO.column6Order}"
+                                        filterValue="#{adminCageBean.filterBO.column6Filter}" 
+                                        filterExpression="#{fn:containsIgnoreCase(dm.cageHistoryDTO.healthLevelHistory, adminCageBean.filterBO.column6Filter)}" 
+                                        style="cursor: pointer;"
+                                        width="120px" >
+                            <f:facet name="header">
+                                <h:outputText value="Health Level" />
+                                <br />
+                                <a4j:commandButton image="#{adminCageBean.sortBO.column6Image}" 
+                                                    render="cageResultsTableId" 
+                                                    action="#{adminCageBean.sortBO.sortByColumn6}" 
+                                                    status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{adminCageBean.filterBO.column6Filter}" 
+                                                rendered="#{adminCageBean.vocabularyDataModel.rowCount gt 0}"  
+                                                style="width:100px;">
+                                    <a4j:ajax event="blur" render="cageResultsTableId" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.cageHistoryDTO.healthLevelHistory}" />
+                        </rich:column>
+
+                    </rich:dataTable>
+
+                </h:panelGroup>
+            </h:panelGrid>
+            <h:panelGrid columns="1">
+                <br />
+                <h:panelGroup id="cageHistoryPanel">
+                    <div align="right">
+                        <h:outputText value="#{msgs['search.results']} #{adminCageBean.cageHistoryDataModel.rowCount}" />
+                    </div>
+
+                    <rich:dataTable 
+                        id="cageHistoryResultsTableId"
+                        value="#{adminCageBean.cageHistoryDataModel}"
+                        var="dmCageHistory"
+                        rowKeyVar="tableHistoryRowIndex">
+
+                        <f:facet name="header">
+                            <h:outputText value="Cage #{adminCageBean.selectedCageDTO.containerID} History" />
+                            <rich:columnGroup>
+                                <rich:column>
+                                    <h:outputText value="#{msgs['common.actions']}" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="Action Date" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="Cage Status" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="Room" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="Vivaria Layout" />
+                                </rich:column>
+                            </rich:columnGroup>
+                        </f:facet>
+
+                        <rich:column rendered="#{adminCageBean.cageHistoryRowIndex == tableHistoryRowIndex}" 
+                                        styleClass="nowrap" 
+                                        width="60px;">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['common.actions']}" />
+                            </f:facet>
+                            <a4j:commandButton title="#{msgs['common.save']}"
+                                                image="/images/icon-save.gif"
+                                                action="#{adminCageBean.saveCageHistoryAction}"
+                                                render="cageResultsGridId cageHistoryPanel"  
+                                                oncomplete="disableInputDate(); " >
+                                <f:param name="paramHistoryRowIndex" value="#{tableHistoryRowIndex}" />
+                            </a4j:commandButton>
+                            &nbsp;&nbsp;
+                            <a4j:commandButton title="Cancel"
+                                                image="/images/cancel.png"
+                                                action="#{adminCageBean.cancelHistoryAction}"
+                                                immediate="true"
+                                                style="width:16px; height:16px;"
+                                                render="cageHistoryPanel"  
+                                                oncomplete="disableInputDate();" >
+                            </a4j:commandButton>
+                        </rich:column>
+                        <rich:column rendered="#{!(adminCageBean.cageHistoryRowIndex == tableHistoryRowIndex)}" 
+                                        styleClass="nowrap" 
+                                        width="60px;">
+                            <a4j:commandButton title="#{msgs['common.edit']}"
+                                                image="/images/edit.gif"
+                                                action="#{adminCageBean.editCageHistoryAction}"
+                                                render="cageHistoryPanel"
+                                                oncomplete="disableInputDate();">
+                                <f:param name="paramHistoryRowIndex" value="#{tableHistoryRowIndex}" />
+                            </a4j:commandButton>
+                            &nbsp;&nbsp;
+                            <a4j:commandButton title="#{msgs['common.delete']}"
+                                                image="/images/delete.gif"
+                                                action="#{adminCageBean.deleteCageHistoryAction}"
+                                                render="cageResultsTableId cageHistoryPanel"
+                                                rendered="#{adminCageBean.cageHistoryDataModel.rowCount gt 1}"
+                                                oncomplete="disableInputDate();">
+                                <f:param name="paramHistoryRowIndex" value="#{tableHistoryRowIndex}" />
+                            </a4j:commandButton>
+                            <a4j:commandButton title="#{msgs['common.delete']} Disabled"
+                                                image="/images/delete-disable.gif"
+                                                disabled="true"
+                                                rendered="#{adminCageBean.cageHistoryDataModel.rowCount lt 2}">
+                            </a4j:commandButton>
+                        </rich:column>                                        
+
+                        <rich:column width="150px" >
+                            <rich:calendar datePattern="#{adminCageBean.date_format_with_time}" 
+                                        value="#{dmCageHistory.actionDate}"
+                                        disabled="true"
+                                        enableManualInput="true"
+                                        rendered="#{!(adminCageBean.cageHistoryRowIndex == tableHistoryRowIndex)}">
+                            </rich:calendar>
+                            <rich:calendar datePattern="#{adminCageBean.date_format_with_time}"  
+                                        value="#{dmCageHistory.actionDate}"
+                                        disabled="false"
+                                        enableManualInput="true"
+                                        rendered="#{adminCageBean.cageHistoryRowIndex == tableHistoryRowIndex}">
+                            </rich:calendar>
+                        </rich:column>
+
+                        <rich:column width="150px" >
+                            <h:outputText value="#{dmCageHistory.containerStatus}" 
+                                            rendered="#{!(adminCageBean.cageHistoryRowIndex == tableHistoryRowIndex)}" />
+                            <h:selectOneMenu value="#{dmCageHistory.containerStatuskey}" 
+                                                rendered="#{adminCageBean.cageHistoryRowIndex == tableHistoryRowIndex}" >
+                                <f:selectItems value="#{adminCageBean.selectItemWrapper.cvContainerStatusItemsPairOptional}"/>
+                            </h:selectOneMenu>
+                        </rich:column>
+
+                        <rich:column width="150px" >
+                            <h:outputText value="#{dmCageHistory.roomName}" 
+                                            rendered="#{!(adminCageBean.cageHistoryRowIndex == tableHistoryRowIndex)}" />
+                            <h:selectOneMenu value="#{dmCageHistory.roomKey}" 
+                                                rendered="#{adminCageBean.cageHistoryRowIndex == tableHistoryRowIndex}" >
+                                <f:selectItems value="#{adminCageBean.selectItemWrapper.cvRoomItemsPairOptional}"/>
+                            </h:selectOneMenu>
+                        </rich:column>
+
+                        <rich:column width="150px" >
+                            <h:outputText value="#{dmCageHistory.levelId}" />
+                        </rich:column>
+
+                    </rich:dataTable>
+
+                </h:panelGroup>
+
+            </h:panelGrid>
+
+            <h:panelGroup>
+                <hr /><br />
+            </h:panelGroup>
+
+            <h:panelGrid columns="3">
+                <h:panelGroup id="mousePanel">
+
+                    <rich:dataTable 
+                        id="mouseResultsTableId"
+                        value="#{adminCageBean.mouseDataModel}"
+                        var="mouseRow"
+                        rowKeyVar="mouseRowIndex">
+
+                        <f:facet name="header">
+                            <h:outputText value="Cage #{adminCageBean.selectedCageDTO.containerID} Mice" />
+                            <rich:columnGroup>
+                                <rich:column>
+                                    <h:outputText value="ID" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="Sex" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="Breeding Status" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="Life Status" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="Birth Date" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="Generation" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="Strain Name" />
+                                </rich:column>
+                            </rich:columnGroup>
+                        </f:facet>
+
+                        <rich:column width="150px" >
+                            <h:outputText value="#{mouseRow.ID}" />
+                        </rich:column>
+                        <rich:column width="150px" >
+                            <h:outputText value="#{mouseRow.sex}" />
+                        </rich:column>
+                        <rich:column width="150px" >
+                            <h:outputText value="#{mouseRow.breedingStatus}" />
+                        </rich:column>
+                        <rich:column width="150px" >
+                            <h:outputText value="#{mouseRow.lifeStatus}" />
+                        </rich:column>
+                        <rich:column width="150px" >
+                            <rich:calendar datePattern="#{adminCageBean.date_format}"
+                                            value="#{mouseRow.birthDate}"
+                                            inputSize="20"
+                                            disabled="true"
+                                            showInput="true"
+                                            showWeeksBar="true"
+                                            defaultTime="12:00:00"
+                                            locale="en/US"
+                                            enableManualInput="false">
+                                <f:convertDateTime pattern="#{adminCageBean.date_format}" />
+                            </rich:calendar>
+                        </rich:column>
+                        <rich:column width="150px" >
+                            <h:outputText value="#{mouseRow.generation}" />
+                        </rich:column>
+                        <rich:column width="150px" >
+                            <h:outputText value="#{mouseRow.strainName}" />
+                        </rich:column>
+
+                    </rich:dataTable>
+                </h:panelGroup>
+
+                <h:panelGroup>&nbsp;&nbsp;&nbsp;&nbsp;</h:panelGroup>
+
+                <h:panelGroup id="printCageCardPanel">
+                    <H3>Cage Card Printing</H3><hr />
+                    <h:panelGrid columns="2" >
+                        <h:outputText value="Card Type" />
+                        <h:selectOneMenu id="cageCardQueryTypesID"
+                            value="#{adminCageBean.queryTypeDTO.queryType_key}" >
+                            <f:selectItems value="#{adminCageBean.cageCardQueryTypes}" />
+                            <a4j:ajax event="valueChange" 
+                                        execute="@this" 
+                                        render="queryDefintionID" />
+                        </h:selectOneMenu>
+
+                        <h:outputText value="Card Name" />
+                        <h:selectOneMenu id="queryDefintionID" value="#{adminCageBean.queryDefinitionDTO.queryDefinition_key}" >
+                            <f:selectItems value="#{adminCageBean.queryDefinitions}"/>
+                            <a4j:ajax event="valueChange" 
+                                        execute="@this" 
+                                        render="printCageCardID" />
+                        </h:selectOneMenu>
+
+                    </h:panelGrid>                                    
+
+                    <br />
+                    <h:panelGroup>
+                        <a4j:commandButton value="Print Card" 
+                                            id="printCageCardID"
+                                            disabled="#{adminCageBean.disablePrintCageCardButton}" 
+                                            immediate="true"
+                                            onclick="blankTarget()"> 
+                        </a4j:commandButton>
+                        <h:commandButton id = "secretButtonPrintCageCard" 
+                                            action = "#{adminCageBean.printCageCardAction}" 
+                                            immediate="true"
+                                            style="visibility:hidden;"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGrid>
+
+        </h:panelGroup>
+    </h:panelGrid>
+</ui:composition>
+        
+        

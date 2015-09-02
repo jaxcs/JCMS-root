@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+   <threads xmlns="urn:jboss:threads:2.0">
+      <thread-group name="XnioThreadGroup" group-name="xnio">
+         <parent-thread-group name="SystemThreadGroup"/>
+      </thread-group>
+
+      <thread-group name="XnioSelectorThreadGroup" group-name="xnio selector">
+         <parent-thread-group name="XnioThreadGroup"/>
+      </thread-group>
+
+      <thread-factory name="XnioThreadFactory" thread-name-pattern="xnio-pool%f-%t">
+         <thread-group name="XnioSelectorThreadGroup"/>
+      </thread-factory>
+   </threads>
+
+   <xnio xmlns="urn:jboss:xnio:2.1" provider="XnioProvider">
+
+      <provider name="XnioProvider">
+         <thread-factory name="XnioThreadFactory"/>
+
+         <options>
+            <option name="READ_THREADS" value="3"/>
+            <option name="WRITE_THREADS" value="1"/>
+            <option name="CONNECT_THREADS" value="1"/>
+         </options>
+      </provider>
+   </xnio>
+
+</deployment>

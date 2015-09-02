@@ -1,0 +1,8 @@
+endogenous,E
+multi allele knock out,MKO
+multi allele transgene,MTG
+transgene,TG
+knock out,KO
+knock in,KI
+tissue specific knock out,Floxed
+Combonation transgene + KO,CTK

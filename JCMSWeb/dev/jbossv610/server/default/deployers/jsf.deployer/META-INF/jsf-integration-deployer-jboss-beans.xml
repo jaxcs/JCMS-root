@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    JBoss JSF + JBossAS integration
+-->
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+  <bean name="JSFImplManagementDeployer" class="org.jboss.jsf.deployer.JSFImplManagementDeployer">
+    
+    <!--
+      * Specify if JSF should be automatically added to every WAR.
+    -->
+    <property name="alwaysAddJSF">false</property>
+
+    <!--
+      * Specify the servlet classes that signal this deployer to add JSF to a WAR. 
+    -->
+    <property name="facesServlets">
+       <collection elementClass="java.lang.String">
+          <value>javax.faces.webapp.FacesServlet</value>
+       </collection>
+    </property>
+    
+    <!--
+      * Specify the name of the default JSF configuration.
+    -->
+    <property name="defaultJSFConfig">
+       <value>Mojarra-2.0</value>
+    </property>
+    
+    <!-- 
+      *  Define where to find JSF implementations.  The key is the name
+      *  of the JSF configuration.  The value is a URL to the directory where
+      *  the implementation resides.  The implementation should include any 
+      *  jars that the implementation requires.  It should also include a 
+      *  web.xml file in the root.  Elements in the web.xml will be applied 
+      *  to all web applications applications that use the JSF configuration.
+      
+      Example URLs:
+            ${jboss.server.home.url}/deployers/jsf.deployer/Mojarra1.2
+                 scans Mojarra 1.2 for jars and web.xml
+            file:/myproject/jsflib
+                 scans /myproject/jsflib
+            http://www.test.com/jsfimpl/myfaces/
+                 scans the specified WebDAV location
+    -->
+    <property name="jsfConfigurations">
+      <map keyClass="java.lang.String" valueClass="java.lang.String">
+        <entry>
+          <key>Mojarra-1.2</key>
+          <value>${jboss.server.home.url}deployers/jsf.deployer/Mojarra-1.2</value>
+        </entry>
+        <entry>
+          <key>Mojarra-2.0</key>
+          <value>${jboss.server.home.url}deployers/jsf.deployer/Mojarra-2.0</value>
+        </entry>
+        <entry>
+          <key>MyFaces-2.0</key>
+          <value>${jboss.server.home.url}deployers/jsf.deployer/MyFaces-2.0</value>
+        </entry>
+
+      </map>   
+    </property>
+  </bean>
+
+  <bean name="JSFTldDeployer" class="org.jboss.jsf.deployer.JSFTldMetaDataDeployer"/>
+
+  <!-- Adds JSF Jars to the deployment -->
+  <bean name="JSFUrlIntegrationDeployer-12" class="org.jboss.jsf.deployer.JSFUrlIntegrationDeployer">
+    <property name="JSFConfigName">
+      <value>Mojarra-1.2</value>
+    </property>
+    <property name="JSFImplManagementDeployer">
+      <inject bean="JSFImplManagementDeployer"/>
+    </property>
+  </bean> 
+
+  <bean name="JSFUrlIntegrationDeployer-20" class="org.jboss.jsf.deployer.JSFUrlIntegrationDeployer">
+    <property name="JSFConfigName">
+      <value>Mojarra-2.0</value>
+    </property>
+    <property name="JSFImplManagementDeployer">
+      <inject bean="JSFImplManagementDeployer"/>
+    </property>
+  </bean>
+
+  <bean name="JSFUrlIntegrationDeployer-MyFaces-20" class="org.jboss.jsf.deployer.JSFUrlIntegrationDeployer">
+    <property name="JSFConfigName">
+      <value>MyFaces-2.0</value>
+    </property>
+    <property name="JSFImplManagementDeployer">
+      <inject bean="JSFImplManagementDeployer"/>
+    </property>
+  </bean>
+
+
+    
+  <bean name="JSFSharedWebMetaDataDeployer" class="org.jboss.jsf.deployer.JSFSharedWebMetaDataDeployer"/>
+
+
+</deployment>

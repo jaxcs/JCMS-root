@@ -1,0 +1,7 @@
+[ODBC]
+DRIVER={MySQL ODBC 3.51 Driver}
+SERVER=localhost
+PORT=3306
+DATABASE=jcms_db
+UID=root
+PWD=fence42

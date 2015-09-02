@@ -1,0 +1,2336 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>
+            <h:outputText value="#{msgs['colonyManagement.addMating']}"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js"></script>
+        <script type="text/javascript" src="/jcms/javascript/editMating.js"></script>        
+    </h:head>
+    <h:body>  
+        <h:form>
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+        </h:form>
+        <img src="../images/bhi_ball_white.gif" />
+
+        <!-- STATUS -->
+        <a4j:status >
+            <f:facet name="start">
+                <h:graphicImage  value="../images/bhi_ball.gif"/>
+            </f:facet>
+        </a4j:status>
+        
+        
+            <div style="margin-left:10px;margin-right:10px">
+                <h1>
+                    <h:outputText value="#{msgs['colonyManagement.header']}" style="h1"/>
+                    </h1><hr />
+
+                <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5" width="100%"
+                             columnClasses="colonyManagementSideBar,detailPane">
+                    <h:form>
+                        <h:panelGroup>
+                            <f:subview id="adminSideBar"><ui:include src="/colonyManagement/colonyManagementSideBar.xhtml"/></f:subview>
+                        </h:panelGroup>
+                    </h:form>
+                    
+                    <!-- RIGHT SIDE OF PAGE -->
+                    <h:panelGroup  styleClass="formTitle">
+                        <h:outputText value="#{msgs['colonyManagement.addMating']}" 
+                                      rendered="#{!Mating_Backing.editing}"/>
+                        <h:outputText value="Edit Mating" 
+                                      rendered="#{Mating_Backing.editing}"/>
+                        
+                        <h:form id="buttons1">
+                            <div align="left">
+                                <h:panelGrid columns = "3" border="0" title="actionButtons">
+                                    <a4j:commandButton
+                                        id="save1"
+                                        value="#{msgs['common.save']}"
+                                        rendered="#{!Mating_Backing.editing}"
+                                        styleClass="mediumButton"
+                                        action="#{Mating_Backing.saveAction}" 
+                                        render="dam1Panel, dam2Panel, sirePanel, changeDietId, scripts, penIDinput" />
+                                    <a4j:commandButton
+                                        id="edit1"
+                                        rendered="#{Mating_Backing.editing}"
+                                        value="#{msgs['common.save']}"
+                                        styleClass="mediumButton"
+                                        action="#{Mating_Backing.editMatingAction}" 
+                                        render="dam1Panel, dam2Panel, sirePanel, changeDietId, scripts"/>
+                                    <a4j:commandButton
+                                        id="savePreview1"
+                                        value = "Save and Preview Cage Card"
+                                        styleClass = "largeButton"
+                                        action="#{Mating_Backing.cageCardTest}"
+                                        rendered="#{!Mating_Backing.editing}"
+                                        render="dam1Panel, dam2Panel, sirePanel, successfulSave, scripts, penIDinput"
+                                        oncomplete="checkInput()"/>
+                                    <a4j:commandButton
+                                        id="preview1"
+                                        value = "Preview Cage Card"
+                                        styleClass = "largeButton"
+                                        rendered="#{!Mating_Backing.editing}"
+                                        action="#{Mating_Backing.validateCageCard}"
+                                        render="goodCard"
+                                        oncomplete="previewCageCard()"/>
+                                    <h:inputHidden
+                                        id="successfulSave"
+                                        value="#{Mating_Backing.successful}"/>
+                                </h:panelGrid>
+                            </div><hr />    
+                        </h:form>
+
+                    <h:form id="addMatingFormId">
+                        <!-- Messages -->
+                        <rich:messages />
+                        <br />
+
+                        <h:panelGrid columns="2"
+                                     columnClasses="listColumnEven, listColumnEven">
+                            <h:panelGrid columns="2"
+                                        columnClasses="rowHeader, innerTableTD"
+                                        styleClass="innerTable">
+                                <h:outputLabel value="Mating ID"
+                                            rendered="#{Mating_Backing.editing}"/>
+                                <h:panelGroup rendered="#{Mating_Backing.editing}">
+                                    <rich:autocomplete id="matingAutoCompleteID" mode="client" minChars="0" 
+                                            autofill="false"
+                                            disabled="#{Mating_Backing.matingIdDisabled}"
+                                            rendered="#{Mating_Backing.editing}"
+                                            autocompleteList="#{Mating_Backing.matings}"
+                                            value="#{Mating_Backing.matingEntity.matingID}"
+                                            valueChangeListener="#{Mating_Backing.changeMatingListener}">
+                                        <a4j:ajax event="change" render="dam1Panel originalDam1Label originalDam1Panel dam2Panel originalDam2Label originalDam2Panel sirePanel originalSireLabel originalSirePanel changeDietId StrainId generationOut matingDate retiredDate weanTime needGenotyping penIDPanel ownerId weanNoteId commentsId scripts matingAutoCompleteID genotypePanel"/>
+                                    </rich:autocomplete>
+                                    &nbsp;&nbsp;
+                                    <a4j:commandButton value="Next"
+                                                    styleClass="smallButton"
+                                                    rendered="#{Mating_Backing.editing}"
+                                                    action="#{Mating_Backing.nextMatingAction}"
+                                                    render="matingAutoCompleteID dam1Panel originalDam1Label originalDam1Panel dam2Panel originalDam2Label originalDam2Panel sirePanel originalSireLabel originalSirePanel changeDietId StrainId generationOut matingDate retiredDate weanTime needGenotyping penIDPanel ownerId weanNoteId commentsId scripts genotypePanel"/>
+                                    &nbsp;
+                                    <a4j:commandButton value="Previous"
+                                                    styleClass="smallButton"
+                                                    rendered="#{Mating_Backing.editing}"
+                                                    action="#{Mating_Backing.previousMatingAction}"
+                                                    render="matingAutoCompleteID dam1Panel originalDam1Label originalDam1Panel dam2Panel originalDam2Label originalDam2Panel sirePanel originalSireLabel originalSirePanel changeDietId StrainId generationOut matingDate retiredDate weanTime needGenotyping penIDPanel ownerId weanNoteId commentsId scripts genotypePanel"/>
+                                    &nbsp;&nbsp;
+                                    <a4j:commandButton value="Select Another Mating"
+                                                    styleClass="largeButton"
+                                                    rendered="#{Mating_Backing.editing}"
+                                                    action="#{Mating_Backing.activateMatingIDAutoComplete}"
+                                                    render="matingAutoCompleteID"/>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:outputLabel value="#{msgs['dam1']}" />
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                </h:panelGroup>
+
+                                <h:panelGroup id="dam1Panel">                            
+                                    <h:inputText id="dam1Input"
+                                                required="#{!empty param['buttons1:save1'] || 
+                                                            !empty param['buttons2:save2'] || 
+                                                            !empty param['buttons1:savePreview1'] ||
+                                                            !empty param['buttons2:savePreview2'] ||
+                                                            !empty param['buttons2:secretButton2']}"                                                
+                                                requiredMessage="#{customMessage['mating.dam1.missing']}"
+                                                value="#{Mating_Backing.dam1ID}"
+                                                maxlength="#{restrict['size.general.id']}"
+                                                size="#{restrict['size.general.id']}" 
+                                                valueChangeListener="#{Mating_Backing.setDam1IDValueChangeListener}">                                    
+                                        <a4j:ajax event="change"
+                                                render="dam1Input dam1Strain dam1Link changeDietId originalDam1Label originalDam1Panel dam1Diet dam1CageLabel genotypePanel"/>
+                                    </h:inputText>        
+                                    &nbsp;&nbsp;                            
+                                    <a4j:commandButton id="selectDam1" 
+                                                    action="#{Mating_Backing.clearMousePopupAction}"
+                                                    oncomplete="#{rich:component('findDam1Panel')}.show()"
+                                                    value="#{msgs['mating.selectDam1']}"
+                                                    styleClass="mediumButton" 
+                                                    render="dam1Holder, dam1SearchByStrain, dam1SearchByGene"/>
+                                    <script>document.getElementById('addMatingFormId:selectDam1').disabled = true;</script>
+                                    &nbsp;&nbsp;  
+                                    <b><h:outputLabel value="Strain" /></b>
+                                    &nbsp;&nbsp;  
+                                    <h:outputLabel id="dam1Strain" value="#{Mating_Backing.dam1Strain}" />
+                                    &nbsp;&nbsp;  
+                                    <b><h:outputLabel value="Cage ID" /></b>
+                                    &nbsp;&nbsp;  
+                                    <h:outputLabel id="dam1CageLabel"
+                                                value="#{Mating_Backing.dam1Pen}" 
+                                                rendered="#{!Mating_Backing.editing}"/>
+                                    <h:panelGroup id="dam1Link">
+                                        <h:commandLink id="dam1CommandLink"
+                                                    value="#{Mating_Backing.dam1Pen}"
+                                                    action="#{Mating_Backing.editDam1Container}"
+                                                    rendered="#{Mating_Backing.editing}">
+                                            <a4j:ajax oncomplete="#{rich:component('searchForPenForm')}.show()"
+                                                    render="penIDGroup useNextAvailableId cageNameInput cageStatusInput editPenActionDate roomInput penEditComments"/>
+                                        </h:commandLink>
+                                    </h:panelGroup>
+                                    <script>document.getElementById('addMatingFormId:dam1CommandLink').disabled = true;</script>
+                                        &nbsp;&nbsp;  
+                                    <b><h:outputLabel value="Diet" rendered="#{!Mating_Backing.pageBuilder.hideMatingDiet}"/></b>
+                                    &nbsp;&nbsp;  
+                                    <h:panelGroup id="dam1Diet">
+                                        <h:outputLabel value="#{Mating_Backing.dam1.diet}" 
+                                                    rendered="#{!Mating_Backing.editDam1Diet and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                    </h:panelGroup>
+                                    &nbsp;&nbsp;
+                                    <h:panelGroup id="dam1DietMenu">
+                                        <h:selectOneMenu value="#{Mating_Backing.dam1.diet}"
+                                                        rendered="#{Mating_Backing.editDam1Diet and !Mating_Backing.pageBuilder.hideMatingDiet}">
+                                            <f:selectItems value="#{Mating_Backing.selectItemWrapper.stringCvDietItems}"/>                                
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>
+                                    <h:panelGroup id="editDam1DietButton">
+                                        <a4j:commandButton id="dam1DietButton" value="Edit Diet" action="#{Mating_Backing.editDam1Diet}"
+                                                        render="dam1Diet dam1DietMenu editDam1DietButton saveDam1DietButton" 
+                                                        styleClass="mediumButton"
+                                                        rendered="#{!Mating_Backing.editDam1Diet and Mating_Backing.editing and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                    </h:panelGroup>
+                                    <script>document.getElementById('addMatingFormId:dam1DietButton').disabled = true;</script>
+                                    <h:panelGroup id="saveDam1DietButton">
+                                        <a4j:commandButton value="Save Diet" action="#{Mating_Backing.saveDam1Diet}"
+                                                        render="dam1Diet dam1DietMenu editDam1DietButton saveDam1DietButton" 
+                                                        styleClass="mediumButton"
+                                                        rendered="#{Mating_Backing.editDam1Diet and Mating_Backing.editing and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+
+                                <h:panelGroup id="originalDam1Label"
+                                            style="color: gray;">
+                                    <h:outputLabel rendered="#{Mating_Backing.showOldDam1 and Mating_Backing.editing}"
+                                                value="Original Dam1 ID" />
+                                </h:panelGroup>
+
+                                <h:panelGroup id="originalDam1Panel"
+                                            style="color: gray;">
+                                    <h:panelGroup rendered="#{Mating_Backing.showOldDam1 and Mating_Backing.editing}">                            
+                                        <h:outputText id="originalDam1Input"
+                                                    value="#{Mating_Backing.originalDam1.id}">                         
+                                        </h:outputText>                                   
+                                        &nbsp;&nbsp;  
+                                        <b><h:outputLabel value="Strain" /></b>
+                                        &nbsp;&nbsp;  
+                                        <h:outputLabel id="originalDam1Strain" value="#{Mating_Backing.originalDam1.strainKey.strainName}" />
+                                        &nbsp;&nbsp;  
+                                        <b><h:outputLabel value="Cage ID" /></b>
+                                        &nbsp;&nbsp;  
+                                        <h:panelGroup id ="originalDam1Link">
+                                            <h:commandLink value="#{Mating_Backing.originalDam1.penKey.containerID}"
+                                                        action="#{Mating_Backing.editOriginalDam1Container}">
+                                                <a4j:ajax oncomplete="#{rich:component('searchForPenForm')}.show()"
+                                                        render="penIDGroup useNextAvailableId cageNameInput cageStatusInput editPenActionDate roomInput penEditComments"/>
+                                            </h:commandLink>
+                                        </h:panelGroup>
+                                        &nbsp;&nbsp;  
+                                        <b><h:outputLabel value="Diet" rendered="#{!Mating_Backing.pageBuilder.hideMatingDiet}"/></b>
+                                        &nbsp;&nbsp;  
+                                        <h:panelGroup id="originalDam1Diet">
+                                            <h:outputLabel value="#{Mating_Backing.originalDam1.diet}"
+                                                        rendered="#{!Mating_Backing.editOriginalDam1Diet and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                        </h:panelGroup>
+                                        &nbsp;&nbsp;
+                                        <h:panelGroup id="originalDam1DietMenu">
+                                            <h:selectOneMenu value="#{Mating_Backing.originalDam1.diet}"
+                                                            rendered="#{Mating_Backing.editOriginalDam1Diet and !Mating_Backing.pageBuilder.hideMatingDiet}">
+                                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.stringCvDietItems}"/>                                
+                                            </h:selectOneMenu>
+                                        </h:panelGroup>
+                                        <h:panelGroup id="editOriginalDam1DietButton">
+                                            <a4j:commandButton value="Edit Diet" action="#{Mating_Backing.editOriginalDam1Diet}"
+                                                            styleClass="mediumButton"
+                                                            render="originalDam1Diet originalDam1DietMenu editOriginalDam1DietButton saveOriginalDam1DietButton" 
+                                                            rendered="#{!Mating_Backing.editOriginalDam1Diet and Mating_Backing.editing  and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                        </h:panelGroup>
+                                        <h:panelGroup id="saveOriginalDam1DietButton">
+                                            <a4j:commandButton value="Save Diet" action="#{Mating_Backing.saveOriginalDam1Diet}"
+                                                            styleClass="mediumButton"
+                                                            render="originalDam1Diet originalDam1DietMenu editOriginalDam1DietButton saveOriginalDam1DietButton" 
+                                                            rendered="#{Mating_Backing.editOriginalDam1Diet and Mating_Backing.editing and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{!Mating_Backing.pageBuilder.hideMatingDam2}">
+                                    <h:outputLabel value="#{msgs['dam2']}"/>
+                                    <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                        <h:graphicImage value="../images/hide.png" alt="" width="16" height="16"/> 
+                                    </a4j:commandLink>
+                                </h:panelGroup>
+
+                                <h:panelGroup id="dam2Panel" rendered="#{!Mating_Backing.pageBuilder.hideMatingDam2}">                            
+                                    <h:inputText id="dam2Input"
+                                                value="#{Mating_Backing.dam2ID}"
+                                                maxlength="#{restrict['size.general.id']}"
+                                                size="#{restrict['size.general.id']}" 
+                                                valueChangeListener="#{Mating_Backing.setDam2IDValueChangeListener}">                                    
+                                        <a4j:ajax event="change" render="dam2Input dam2Strain dam2Link dam2Diet dam2EditDietButton originalDam2Label originalDam2Panel dam2CageLabel genotypePanel" />
+                                    </h:inputText>                                    
+                                    &nbsp;&nbsp;                            
+                                    <a4j:commandButton 
+                                        id="selectDam2"
+                                        action="#{Mating_Backing.clearMousePopupAction}"
+                                        oncomplete="#{rich:component('findDam2Panel')}.show()"
+                                        value="#{msgs['mating.selectDam2']}"
+                                        render="dam2Holder, dam2SearchByGene"
+                                        styleClass="mediumButton" />
+                                    <script>document.getElementById('addMatingFormId:selectDam2').disabled = true;</script>
+                                    &nbsp;&nbsp;  
+                                    <b><h:outputLabel value="Strain" /></b>
+                                    &nbsp;&nbsp;
+                                    <h:outputLabel id="dam2Strain"
+                                                value="#{Mating_Backing.dam2Strain}" />
+                                    &nbsp;&nbsp;  
+                                    <b><h:outputLabel value="Cage ID" /></b>
+                                    &nbsp;&nbsp;  
+                                    <h:outputLabel id="dam2CageLabel"
+                                                value="#{Mating_Backing.dam2Pen}"
+                                                rendered="#{!Mating_Backing.editing}"/>
+                                    <h:panelGroup id="dam2Link">
+                                        <h:commandLink id="dam2CommandLink" 
+                                                    value="#{Mating_Backing.dam2Pen}"
+                                                    action="#{Mating_Backing.editDam2Container}"
+                                                    rendered="#{Mating_Backing.editing}">
+                                            <a4j:ajax oncomplete="#{rich:component('searchForPenForm')}.show()"
+                                                    render="penIDGroup useNextAvailableId cageNameInput cageStatusInput editPenActionDate roomInput penEditComments"/>
+                                        </h:commandLink>
+                                    </h:panelGroup>
+                                    <script>document.getElementById('addMatingFormId:dam2CommandLink').disabled = true;</script>
+                                    &nbsp;&nbsp;  
+                                    <b><h:outputLabel value="Diet" rendered="#{!Mating_Backing.pageBuilder.hideMatingDiet}"/></b>
+                                    &nbsp;&nbsp;  
+                                    <h:panelGroup id="dam2Diet">
+                                        <h:outputLabel value="#{Mating_Backing.dam2.diet}" 
+                                                    rendered="#{!Mating_Backing.editDam2Diet and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                    </h:panelGroup>
+                                    &nbsp;&nbsp;
+                                    <h:panelGroup id="dam2DietMenu">
+                                        <h:selectOneMenu value="#{Mating_Backing.dam2.diet}"
+                                                        rendered="#{Mating_Backing.editDam2Diet and !Mating_Backing.pageBuilder.hideMatingDiet}">
+                                            <f:selectItems value="#{Mating_Backing.selectItemWrapper.stringCvDietItems}"/>                                
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>
+                                    <h:panelGroup id="dam2EditDietButton">
+                                        <a4j:commandButton id="dam2DietButton" value="Edit Diet" action="#{Mating_Backing.editDam2Diet}"
+                                                        render="dam2Diet dam2DietMenu dam2EditDietButton dam2SaveDietButton" 
+                                                        styleClass="mediumButton"
+                                                        rendered="#{!Mating_Backing.editDam2Diet and Mating_Backing.dam2ID != '' and Mating_Backing.editing and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                    </h:panelGroup>
+                                    <script>document.getElementById('addMatingFormId:dam2DietButton').disabled = true;</script>
+                                    <h:panelGroup id="dam2SaveDietButton">
+                                        <a4j:commandButton value="Save Diet" action="#{Mating_Backing.saveDam2Diet}"
+                                                        styleClass="mediumButton"
+                                                        render="dam2Diet dam2DietMenu dam2EditDietButton dam2SaveDietButton" 
+                                                        rendered="#{Mating_Backing.editDam2Diet and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+
+                                <h:panelGroup id="originalDam2Label"
+                                            style="color: gray;"
+                                            rendered="#{!Mating_Backing.pageBuilder.hideMatingDam2}">
+                                    <h:outputLabel rendered="#{Mating_Backing.showOldDam2 and Mating_Backing.editing}"
+                                                value="Original Dam2 ID" />
+                                </h:panelGroup>
+
+                                <h:panelGroup id="originalDam2Panel"
+                                            style="color: gray;"
+                                            rendered="#{!Mating_Backing.pageBuilder.hideMatingDam2}">
+                                    <h:panelGroup rendered="#{Mating_Backing.showOldDam2 and Mating_Backing.editing}">                            
+                                        <h:outputText id="originalDam2Input"
+                                                    value="#{Mating_Backing.originalDam2.id}">                         
+                                        </h:outputText>                                   
+                                        &nbsp;&nbsp;  
+                                        <b><h:outputLabel value="Strain" /></b>
+                                        &nbsp;&nbsp;  
+                                        <h:outputLabel id="originalDam2Strain" value="#{Mating_Backing.originalDam2.strainKey.strainName}" />
+                                        &nbsp;&nbsp;  
+                                        <b><h:outputLabel value="Cage ID" /></b>
+                                        &nbsp;&nbsp;  
+                                        <h:panelGroup id="originalDam2Link">
+                                            <h:commandLink value="#{Mating_Backing.originalDam2.penKey.containerID}"
+                                                        action="#{Mating_Backing.editOriginalDam2Container}">
+                                                <a4j:ajax oncomplete="#{rich:component('searchForPenForm')}.show()"
+                                                        render="penIDGroup useNextAvailableId cageNameInput cageStatusInput editPenActionDate roomInput penEditComments"/>
+                                            </h:commandLink>
+                                        </h:panelGroup>
+                                        &nbsp;&nbsp;  
+                                        <b><h:outputLabel value="Diet" rendered="#{!Mating_Backing.pageBuilder.hideMatingDiet}" /></b>
+                                        &nbsp;&nbsp;  
+                                        <h:panelGroup id="originalDam2Diet">
+                                            <h:outputLabel value="#{Mating_Backing.originalDam2.diet}"
+                                                        rendered="#{!Mating_Backing.editOriginalDam2Diet and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                        </h:panelGroup>
+                                        &nbsp;&nbsp;
+                                        <h:panelGroup id="originalDam2DietMenu">
+                                            <h:selectOneMenu value="#{Mating_Backing.originalDam2.diet}"
+                                                            rendered="#{Mating_Backing.editOriginalDam2Diet and !Mating_Backing.pageBuilder.hideMatingDiet}">
+                                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.stringCvDietItems}"/>                                
+                                            </h:selectOneMenu>
+                                        </h:panelGroup>
+                                        <h:panelGroup id="editOriginalDam2DietButton">
+                                            <a4j:commandButton value="Edit Diet" action="#{Mating_Backing.editOriginalDam2Diet}"
+                                                            styleClass="mediumButton"
+                                                            render="originalDam2Diet originalDam2DietMenu editOriginalDam2DietButton saveOriginalDam2DietButton" 
+                                                            rendered="#{!Mating_Backing.editOriginalDam2Diet and Mating_Backing.editing and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                        </h:panelGroup>
+                                        <h:panelGroup id="saveOriginalDam2DietButton">
+                                            <a4j:commandButton value="Save Diet" action="#{Mating_Backing.saveOriginalDam2Diet}"
+                                                            styleClass="mediumButton"
+                                                            render="originalDam2Diet originalDam2DietMenu editOriginalDam2DietButton saveOriginalDam2DietButton" 
+                                                            rendered="#{Mating_Backing.editOriginalDam2Diet and Mating_Backing.editing and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+
+                                <h:panelGroup>
+                                    <h:outputLabel value="#{msgs['sireId']}" />
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                </h:panelGroup>
+
+                                <h:panelGroup id="sirePanel" layout="block">                            
+                                    <h:inputText id="sireInput"
+                                                required="#{!empty param['buttons1:save1'] || 
+                                                            !empty param['buttons2:save2'] || 
+                                                            !empty param['buttons1:savePreview1'] ||
+                                                            !empty param['buttons2:savePreview2'] ||
+                                                            !empty param['buttons2:secretButton2']}"                                                
+                                                requiredMessage="#{customMessage['mating.sire.missing']}"
+                                                value="#{Mating_Backing.sireID}"
+                                                maxlength="#{restrict['size.general.id']}"
+                                                size="#{restrict['size.general.id']}" 
+                                                valueChangeListener="#{Mating_Backing.setSireIDValueChangeListener}">                                    
+                                        <a4j:ajax event="change" render="sireInput, sireStrain, sireLink, sireDiet, StrainId, originalSireLabel, originalSirePanel, sireCageLabel, genotypePanel" />
+                                    </h:inputText>                                                                       
+                                    &nbsp;&nbsp;                            
+                                    <a4j:commandButton id="selectSire" 
+                                                    action="#{Mating_Backing.clearMousePopupAction}"
+                                                    oncomplete="#{rich:component('findSirePanel')}.show()"
+                                                    render="sireHolder, sireSearchByGene"
+                                                    value="#{msgs['mating.selectSire']}"
+                                                    styleClass="mediumButton" />
+                                    <script>document.getElementById('addMatingFormId:selectSire').disabled = true;</script>
+                                    &nbsp;&nbsp;  
+                                    <b><h:outputLabel value="Strain" /></b>
+                                    &nbsp;&nbsp;
+                                    <h:outputLabel id="sireStrain"
+                                                value="#{Mating_Backing.sireStrain}" />
+                                    &nbsp;&nbsp;  
+                                    <b><h:outputLabel value="Cage ID" /></b>
+                                    &nbsp;&nbsp;  
+                                    <h:outputLabel id="sireCageLabel"
+                                                value="#{Mating_Backing.sirePen}"
+                                                rendered="#{!Mating_Backing.editing}"/>
+                                    <h:panelGroup id="sireLink">
+                                        <h:commandLink id="sireCommandLink"
+                                                    value="#{Mating_Backing.sirePen}"
+                                                    action="#{Mating_Backing.editSireContainer}"
+                                                    rendered="#{Mating_Backing.editing}">
+                                            <a4j:ajax oncomplete="#{rich:component('searchForPenForm')}.show()"
+                                                    render="penIDGroup useNextAvailableId cageNameInput cageStatusInput editPenActionDate roomInput penEditComments"/>
+                                        </h:commandLink>
+                                    </h:panelGroup>
+                                    <script>document.getElementById('addMatingFormId:sireCommandLink').disabled = true;</script>
+                                    &nbsp;&nbsp;  
+                                    <b><h:outputLabel value="Diet" rendered="#{!Mating_Backing.pageBuilder.hideMatingDiet}" /></b>
+                                    &nbsp;&nbsp;  
+                                    <h:panelGroup id="sireDiet">
+                                        <h:outputLabel value="#{Mating_Backing.sire.diet}" 
+                                                    rendered="#{!Mating_Backing.editSireDiet and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                    </h:panelGroup>
+                                    &nbsp;&nbsp;
+                                    <h:panelGroup id="sireDietMenu">
+                                        <h:selectOneMenu value="#{Mating_Backing.sire.diet}"
+                                                        rendered="#{Mating_Backing.editSireDiet and !Mating_Backing.pageBuilder.hideMatingDiet}">
+                                            <f:selectItems value="#{Mating_Backing.selectItemWrapper.stringCvDietItems}"/>                                
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>
+                                    <h:panelGroup id="sireEditDietButton">
+                                        <a4j:commandButton id="sireDietButton" value="Edit Diet" action="#{Mating_Backing.editSireDiet}"
+                                                        styleClass="mediumButton"
+                                                        render="sireDiet sireDietMenu sireEditDietButton sireSaveDietButton" 
+                                                        rendered="#{!Mating_Backing.editSireDiet and Mating_Backing.editing and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                    </h:panelGroup>
+                                    <script>document.getElementById('addMatingFormId:sireDietButton').disabled = true;</script>
+                                    <h:panelGroup id="sireSaveDietButton">
+                                        <a4j:commandButton value="Save Diet" action="#{Mating_Backing.saveSireDiet}"
+                                                        styleClass="mediumButton"
+                                                        render="sireDiet sireDietMenu sireEditDietButton sireSaveDietButton" 
+                                                        rendered="#{Mating_Backing.editSireDiet and !Mating_Backing.pageBuilder.hideMatingDiet}"/>                                
+                                    </h:panelGroup>
+                                </h:panelGroup>
+
+                                <h:panelGroup id="originalSireLabel"
+                                            style="color: gray;">
+                                    <h:outputLabel rendered="#{Mating_Backing.showOldSire and Mating_Backing.editing}"
+                                                value="Original Sire ID" />
+                                </h:panelGroup>
+
+                                <h:panelGroup id="originalSirePanel"
+                                            style="color: gray;">
+                                    <h:panelGroup rendered="#{Mating_Backing.showOldSire and Mating_Backing.editing}">                            
+                                        <h:outputText id="originalSireInput"
+                                                    value="#{Mating_Backing.originalSire.id}">                         
+                                        </h:outputText>                                   
+                                        &nbsp;&nbsp;  
+                                        <b><h:outputLabel value="Strain" /></b>
+                                        &nbsp;&nbsp;  
+                                        <h:outputLabel id="originalSireStrain" value="#{Mating_Backing.originalSire.strainKey.strainName}" />
+                                        &nbsp;&nbsp;  
+                                        <b><h:outputLabel value="Cage ID" /></b>
+                                        &nbsp;&nbsp;  
+                                        <h:panelGroup id="originalSireLink">
+                                            <h:commandLink value="#{Mating_Backing.originalSire.penKey.containerID}"
+                                                        action="#{Mating_Backing.editOriginalSireContainer}">
+                                                <a4j:ajax oncomplete="#{rich:component('searchForPenForm')}.show()"
+                                                        render="penIDGroup useNextAvailableId cageNameInput cageStatusInput editPenActionDate roomInput penEditComments"/>
+                                            </h:commandLink>
+                                        </h:panelGroup>
+                                        &nbsp;&nbsp;  
+                                        <b><h:outputLabel value="Diet" rendered="#{!Mating_Backing.pageBuilder.hideMatingDiet}"/></b>
+                                        &nbsp;&nbsp;  
+                                        <h:panelGroup id="originalSireDiet">
+                                            <h:outputLabel value="#{Mating_Backing.originalSire.diet}"
+                                                        rendered="#{!Mating_Backing.editOriginalSireDiet and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                        </h:panelGroup>
+                                        &nbsp;&nbsp;
+                                        <h:panelGroup id="originalSireDietMenu">
+                                            <h:selectOneMenu value="#{Mating_Backing.originalSire.diet}"
+                                                            rendered="#{Mating_Backing.editOriginalSireDiet and !Mating_Backing.pageBuilder.hideMatingDiet}">
+                                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.stringCvDietItems}"/>                                
+                                            </h:selectOneMenu>
+                                        </h:panelGroup>
+                                        <h:panelGroup id="editOriginalSireDietButton">
+                                            <a4j:commandButton value="Edit Diet" action="#{Mating_Backing.editOriginalSireDiet}"
+                                                            styleClass="mediumButton"
+                                                            render="originalSireDiet originalSireDietMenu editOriginalSireDietButton saveOriginalSireDietButton" 
+                                                            rendered="#{!Mating_Backing.editOriginalSireDiet and Mating_Backing.editing and !Mating_Backing.pageBuilder.hideMatingDiet}"/>
+                                        </h:panelGroup>
+                                        <h:panelGroup id="saveOriginalSireDietButton">
+                                            <a4j:commandButton value="Save Diet" action="#{Mating_Backing.saveOriginalSireDiet}"
+                                                            styleClass="mediumButton"
+                                                            render="originalSireDiet originalSireDietMenu editOriginalSireDietButton saveOriginalSireDietButton" 
+                                                            rendered="#{Mating_Backing.editOriginalSireDiet and Mating_Backing.editing} and !Mating_Backing.pageBuilder.hideMatingDiet"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{!Mating_Backing.editing and !Mating_Backing.pageBuilder.hideMatingDiet}">
+                                    <h:outputLabel value="#{msgs['mouse.newDiet']}" />
+                                    <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                    <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                    </a4j:commandLink>
+                                </h:panelGroup>
+
+                                <h:panelGroup id="changeDietId" rendered="#{!Mating_Backing.editing and !Mating_Backing.pageBuilder.hideMatingDiet}">
+                                    <h:selectOneMenu value="#{Mating_Backing.newDiet}">
+                                        <f:selectItems value="#{Mating_Backing.selectItemWrapper.cvDietItems}" />
+                                        <f:converter converterId="dietConverter" />
+                                        <a4j:ajax event="valueChange" execute="@this" />
+                                    </h:selectOneMenu>
+                                </h:panelGroup>
+
+                                <h:panelGroup>
+                                    <h:outputLabel value="#{msgs['mating.strain']}" />
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" /> 
+                                </h:panelGroup>
+
+                                <h:panelGroup id="StrainId">
+                                    <h:panelGroup id="strainId1" >
+                                        <h:selectOneRadio id="strainStatus" value="#{Mating_Backing.strainStatus}" 
+                                                        valueChangeListener="#{Mating_Backing.strainStatusAction}">
+                                            <f:selectItem id="all" itemValue="All" itemLabel="All" />
+                                            <f:selectItem id="active" itemValue="Active only" itemLabel="Active only" />
+                                            <f:selectItem id="approved" itemValue="Approved only" itemLabel="Approved only" />
+                                            <a4j:ajax event="valueChange" render="strainOut" />
+                                        </h:selectOneRadio>
+                                        <h:panelGroup id="strainOut" >
+                                            <h:selectOneMenu value="#{Mating_Backing.matingEntity.strainKey}"
+                                                            rendered="#{Mating_Backing.strainStatus == 'All'}">
+                                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.allStrains}" />
+                                                <f:converter converterId="strainConverter" />
+                                                <a4j:ajax event="valueChange" execute="@this" />
+                                            </h:selectOneMenu>
+                                            <h:selectOneMenu value="#{Mating_Backing.matingEntity.strainKey}" 
+                                                            rendered="#{Mating_Backing.strainStatus == 'Active only'}" >
+                                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.activeStrainsOptional}" />
+                                                <f:converter converterId="strainConverter" />
+                                                <a4j:ajax event="valueChange" execute="@this" />
+                                            </h:selectOneMenu>
+                                            <h:selectOneMenu value="#{Mating_Backing.matingEntity.strainKey}" 
+                                                            rendered="#{Mating_Backing.strainStatus == 'Approved only'}" >
+                                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.approvedLitterStrains}" />
+                                                <f:converter converterId="strainConverter" />
+                                                <a4j:ajax event="valueChange" execute="@this" />
+                                            </h:selectOneMenu>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+
+                                <h:panelGroup>
+                                    <h:outputLabel value="#{msgs['mating.generation']}" />
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" /> 
+                                </h:panelGroup>
+
+                                <h:panelGroup id="generationOut">
+                                    <h:selectOneMenu value="#{Mating_Backing.generationEntity}" 
+                                                    id="genrationId" >
+                                        <f:selectItems value="#{Mating_Backing.selectItemWrapper.cvGenerationItemsOptional}" />
+                                        <f:converter converterId="generationConverter" />
+                                        <a4j:ajax listener="#{Mating_Backing.testing}"/>
+                                    </h:selectOneMenu>
+                                </h:panelGroup>                                
+
+                                <h:panelGroup>
+                                    <h:outputLabel value="#{msgs['mating.date']}" />
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                                </h:panelGroup>    
+
+                                <rich:calendar id="matingDate"
+                                            required="#{!empty param['buttons1:save1'] || 
+                                                        !empty param['buttons2:save2'] || 
+                                                        !empty param['buttons1:savePreview1'] ||
+                                                        !empty param['buttons2:savePreview2'] ||
+                                                        !empty param['buttons2:secretButton2']}"                                              
+                                            requiredMessage="#{customMessage['mating.date.missing']}"
+                                            value="#{Mating_Backing.matingEntity.matingDate}"
+                                            inputSize="#{msgs['common.minMaxSize']}"
+                                            datePattern="#{Mating_Backing.date_format}" 
+                                            showInput="true"
+                                            showWeeksBar="true"
+                                            enableManualInput="true"
+                                            valueChangeListener="validateMatingDateValueChangeListener">
+                                    <a4j:ajax event="change" render="matingDate" />
+                                </rich:calendar>
+
+                                <h:outputLabel value="Retired Date" 
+                                            rendered="#{Mating_Backing.editing}"/>      
+
+                                <rich:calendar id="retiredDate"                                              
+                                            value="#{Mating_Backing.matingEntity.retiredDate}"
+                                            inputSize="#{msgs['common.minMaxSize']}"
+                                            datePattern="#{Mating_Backing.date_format}" 
+                                            showInput="true"
+                                            showWeeksBar="true"
+                                            enableManualInput="true"
+                                            rendered="#{Mating_Backing.editing}"
+                                            valueChangeListener="validateMatingDateValueChangeListener">
+                                    <a4j:ajax event="change" render="matingDate" />
+                                </rich:calendar>
+
+                                <h:panelGroup rendered="#{!Mating_Backing.pageBuilder.hideWeanTime}" >
+                                    <h:outputLabel value="#{msgs['mating.weanTime']}" />
+                                    <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                        <h:graphicImage value="../images/hide.png" alt="" width="16" height="16"/>
+                                    </a4j:commandLink>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{!Mating_Backing.pageBuilder.hideWeanTime}" >
+                                    <h:selectOneRadio id="weanTime"
+                                                value="#{Mating_Backing.matingEntity.weanTime}">
+                                        <f:selectItem itemValue="#{true}" itemLabel="Standard"/>
+                                        <f:selectItem itemValue="#{false}" itemLabel="Extended"/>
+                                        <a4j:ajax listener="#{Mating_Backing.testing}"/>
+                                    </h:selectOneRadio>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{!Mating_Backing.pageBuilder.hideNeedsTyping}" >
+                                    <h:outputLabel value="#{msgs['mating.needGenotyping']}" />
+                                    <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                        <h:graphicImage value="../images/hide.png" alt="" width="16" height="16"/>
+                                    </a4j:commandLink>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{!Mating_Backing.pageBuilder.hideNeedsTyping}" >
+                                    <h:selectBooleanCheckbox
+                                        id="needGenotyping"
+                                        value="#{Mating_Backing.matingEntity.needsTyping}">
+                                        <a4j:ajax listener="#{Mating_Backing.testing}"/>
+                                    </h:selectBooleanCheckbox>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{!Mating_Backing.editing}">
+                                    <h:outputLabel value="#{msgs['pen#']}" />
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                </h:panelGroup>
+
+                                <h:panelGroup id="penIDPanel"
+                                            rendered="#{!Mating_Backing.editing}">                            
+                                    <h:inputText id="penIDinput"
+                                                value="#{Mating_Backing.matingEntity.suggestedPenID}"
+                                                maxlength="#{restrict['size.general.id']}"
+                                                size="#{restrict['size.general.id']}"
+                                                disabled="#{Mating_Backing.newPen.nextPen}">
+                                        <a4j:ajax event="change"
+                                                listener="#{Mating_Backing.cageIDValueChangeListener}"/>
+                                    </h:inputText>
+                                    &nbsp;&nbsp;         
+                                    <h:selectBooleanCheckbox id="nextPen"
+                                                            value="#{Mating_Backing.newPen.nextPen}" >
+                                        <a4j:ajax event="change" render="penIDPanel" 
+                                                listener="#{Mating_Backing.nextAvailableIDListener}" />
+                                    </h:selectBooleanCheckbox>
+                                    <h:outputLabel value="Use Next ID" />
+                                    &nbsp;
+                                    <a4j:commandButton 
+                                        id="addPenID"
+                                        action="#{Mating_Backing.clearPenPopupAction}"
+                                        oncomplete="#{rich:component('addPenPanel')}.show()"
+                                        value="#{msgs['pen.selectPen']}"
+                                        styleClass="mediumButton" 
+                                        disabled="#{Mating_Backing.newPen.nextPen}"/>
+                                    &nbsp;&nbsp;   
+                                    <a4j:commandButton 
+                                        id="addNewPenID"
+                                        action="#{Mating_Backing.clearNewPenPopupAction}"
+                                        oncomplete="#{rich:component('addNewPenPanel')}.show()"
+                                        value="#{msgs['pen.addNewPen']}"
+                                        styleClass="smallButton"
+                                        disabled="#{Mating_Backing.newPen.nextPen}"/>
+                                </h:panelGroup>
+
+                                <h:panelGroup>
+                                    <h:outputLabel value="#{msgs['owner']}" />
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" /> 
+                                </h:panelGroup>
+
+                                <h:selectOneMenu value="#{Mating_Backing.ownerEntity}" 
+                                                required="true"  
+                                                id="ownerId"
+                                                requiredMessage="#{customMessage['mouse.owner.missing']}">
+                                    <a4j:ajax event="change"
+                                            listener="#{Mating_Backing.testing}"/>
+                                    <f:selectItems value="#{Mating_Backing.selectItemWrapper.colonyManageOwnerItemsOptional}"/>
+                                    <f:converter converterId="ownerConverter" />
+                                </h:selectOneMenu>
+                                
+                                <h:panelGroup rendered="#{!Mating_Backing.pageBuilder.hideWeanNote}">
+                                    <h:outputLabel value="#{msgs['mating.weanNote']}" />
+                                    <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                        <h:graphicImage value="../images/hide.png" alt="" width="16" height="16"/> 
+                                    </a4j:commandLink>
+                                </h:panelGroup>
+                                <h:panelGroup id="weanNoteId" rendered="#{!Mating_Backing.pageBuilder.hideWeanNote}">
+                                    <h:inputTextarea cols="50" rows="3" value="#{Mating_Backing.matingEntity.weanNote}">
+                                        <a4j:ajax listener="#{Mating_Backing.testing}"/>
+                                    </h:inputTextarea>
+                                </h:panelGroup>
+                                
+                                <h:panelGroup rendered="#{!Mating_Backing.pageBuilder.hideMatingComment}">
+                                    <h:outputLabel value="#{msgs['comments']}" />
+                                    <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                        <h:graphicImage value="../images/hide.png" alt="" width="16" height="16"/> 
+                                    </a4j:commandLink>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{!Mating_Backing.pageBuilder.hideMatingComment}">
+                                    <h:inputTextarea id="commentsId" cols="50" rows="5" value="#{Mating_Backing.matingEntity.comment}" >
+                                        <a4j:ajax listener="#{Mating_Backing.testing}"/>
+                                    </h:inputTextarea>
+                                </h:panelGroup>
+                                
+                                <h:outputLabel value="Print Settings (Cage Cards)"
+                                            rendered="#{!Mating_Backing.editing}"/>
+                                <h:selectOneMenu id="cageCard" value = "#{Mating_Backing.entityKey}"
+                                                required="#{!empty param['buttons1:preview1'] || 
+                                                            !empty param['buttons2:preview2'] ||
+                                                            !empty param['buttons1:savePreview1'] || 
+                                                            !empty param['buttons2:savePreview2']}"
+                                                requiredMessage="#{customMessage['cagecard.cardID.missing']}"
+                                                rendered="#{!Mating_Backing.editing}">
+                                    <f:selectItems value="#{Mating_Backing.selectItemWrapper.matingCards}"/>  
+                                    <a4j:ajax listener="#{Mating_Backing.testing}"/>
+                                </h:selectOneMenu>
+                            </h:panelGrid>
+                            <rich:panel id="genotypePanel" rendered="#{Mating_Backing.editing}">
+                                <h:panelGrid columns="1">
+                                    <h:outputText value="Dam 1 Genotype: #{Mating_Backing.dam1Genotype}"/>
+                                    <h:outputText value="Dam 2 Genotype: #{Mating_Backing.dam2Genotype}" rendered="#{!Mating_Backing.pageBuilder.hideMatingDam2}"/>
+                                    <h:outputText value="Sire Genotype: #{Mating_Backing.sireGenotype}"/>
+                                </h:panelGrid>
+                            </rich:panel>
+                        </h:panelGrid>
+                    </h:form>
+                    <hr /><div align="left">
+                        <h:form id="buttons2">
+                            <h:panelGrid columns = "3" border="0" title="actionButtons">
+                                <a4j:commandButton id="save2"
+                                                   value="#{msgs['common.save']}"
+                                                   rendered="#{!Mating_Backing.editing}"
+                                                   styleClass="mediumButton"
+                                                   action="#{Mating_Backing.saveAction}" 
+                                                   render="dam1Panel, dam2Panel, sirePanel, changeDietId, scripts, penIDinput" />
+                                <a4j:commandButton id="edit2"
+                                                   rendered="#{Mating_Backing.editing}"
+                                                   value="#{msgs['common.save']}"
+                                                   styleClass="mediumButton"
+                                                   action="#{Mating_Backing.editMatingAction}" 
+                                                   render="dam1Panel, dam2Panel, sirePanel, changeDietId, scripts"/>
+                                <a4j:commandButton id="savePreview2"
+                                                   value = "Save and Preview Cage Card" 
+                                                   styleClass = "largeButton" 
+                                                   action="#{Mating_Backing.cageCardTest}"
+                                                   rendered="#{!Mating_Backing.editing}"
+                                                   render="dam1Panel, dam2Panel, sirePanel, successfulSave, scripts, penIDinput"
+                                                   oncomplete="checkInput()"/>
+                                <a4j:commandButton id="preview2"
+                                                   value = "Preview Cage Card"
+                                                   styleClass = "largeButton"
+                                                   action="#{Mating_Backing.validateCageCard}"
+                                                   render="goodCard"
+                                                   rendered="#{!Mating_Backing.editing}"
+                                                   oncomplete="previewCageCard()"/>
+                                <h:commandButton id="secretButton"
+                                                 action="#{Mating_Backing.previewCageCard}"
+                                                 style="visibility:hidden"/>  
+                                <h:commandButton id="secretButton2"
+                                                 action="#{Mating_Backing.previewCageCard}"
+                                                 style="visibility:hidden"/> 
+                                <a4j:commandButton id="secretButton3"
+                                                 action="#{Mating_Backing.makeSuccessfulFalse}"
+                                                 render="successfulSave"
+                                                 style = "visibility:hidden"/>
+                                <h:inputHidden id="goodCard"
+                                               value="#{Mating_Backing.goodCard}"/>
+                            </h:panelGrid>
+                        </h:form>
+                    </div>
+                </h:panelGroup>
+
+            </h:panelGrid>
+            </div>
+            <h:panelGroup id="scripts"> 
+                <script> enableElements();</script>
+            </h:panelGroup>
+
+    <!-- select pen ID modal panel -->            
+    <rich:popupPanel id="addPenPanel" autosized="true" width="800"
+                     onshow="document.getElementById('searchFormId:lookForTextId').focus();"
+                     top="10">
+
+        <f:facet name="header">
+            <h:outputText value="#{msgs['pen.penInfo']}" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="/images/delete.gif" id="hidelinkId1"  alt="#{msgs['common.close']}" 
+                                onclick="#{rich:component('addPenPanel')}.hide();"
+                                height="20" width="20" styleClass="hidelink" title="#{msgs['common.close']}" />
+            </h:panelGroup>
+        </f:facet>
+        <h:form id="searchFormId">
+            <rich:messages />
+
+            <h:outputLabel value="#{msgs['pen#']}" id="lookForTextId" />
+            &nbsp;&nbsp;
+            <h:selectOneMenu id="penIDFilter" value="#{Mating_Backing.penSearch.penFilter}" >
+                <f:selectItems value="#{Mating_Backing.selectItemWrapper.integerFilters}"/>
+            </h:selectOneMenu>
+            <h:inputText id="searchById" value="#{Mating_Backing.penSearch.penID}" 
+                         maxlength="#{restrict['size.general.id']}"
+                         size="#{restrict['size.general.id']}" />
+            &nbsp;&nbsp;
+
+            <h:outputLabel value="#{msgs['penName']}" id="lookForNameId" />
+            &nbsp;&nbsp;
+            <h:inputText id="searchByName" value="#{Mating_Backing.penSearch.containerName}" 
+                         maxlength="#{restrict['size.general.id']}"
+                         size="#{restrict['size.general.id']}" />
+            &nbsp;&nbsp;
+
+            <h:outputLabel value="#{msgs['penStatus']}" id="penStatusId" />
+            &nbsp;&nbsp;
+            <h:selectOneMenu value="#{Mating_Backing.penSearch.containerStatus}" >
+                <f:selectItems value="#{Mating_Backing.selectItemWrapper.cvContainerStatusItemsOptional}"/>
+                <f:converter converterId="containerStatusConverter" />
+            </h:selectOneMenu>
+            &nbsp;&nbsp;
+
+            <h:outputLabel value="#{msgs['room']}" id="penRoomId" />
+            &nbsp;&nbsp;
+            <h:selectOneMenu value="#{Mating_Backing.penSearch.room}" >
+                <f:selectItems value="#{Mating_Backing.selectItemWrapper.roomItems}"/>
+                <f:converter converterId="roomConverter" />
+            </h:selectOneMenu>
+
+            <br />
+            <br />
+
+            <a4j:commandButton
+                id="searchId"
+                value="#{msgs['line.search']}"
+                action="#{Mating_Backing.penSearchAction}"
+                styleClass="mediumButton"
+                type="submit"
+                render="searchResultsGridId, resultsTextId" />
+            &nbsp;&nbsp;
+            <a4j:commandButton
+                id="clearId"
+                value="#{msgs['filter.clear']}"
+                action="#{Mating_Backing.clearPenPopupAction}"
+                oncomplete="document.getElementById('searchFormId:lookForTextId').focus();"
+                styleClass="mediumButton"
+                render="searchResultsGridId,lookForTextId" />
+
+            <hr />
+
+            <h:panelGrid columns="1" id="searchResultsGridId">
+                <h:panelGroup id="resultsId">
+                    <h:outputText id="resultsTextId"
+                                  rendered="#{Mating_Backing.isPenResultCountDisplayed}"
+                                  value="#{msgs['search.results']} #{Mating_Backing.penInfoDataModel.rowCount}" />
+                </h:panelGroup>
+
+                <h:panelGroup id="resultsPanelId"
+                              rendered="#{Mating_Backing.penInfoDataModel.rowCount > 0}">
+                    <hr />
+
+                    <rich:extendedDataTable 
+                        id="penResultsTableId"
+                        value="#{Mating_Backing.penInfoDataModel}"
+                        var="penInfo"
+                        rows="15"
+                        styleClass="largeSizeExtendedDataTable"
+                        sortMode="#{Mating_Backing.penSelectionETB.sortMode}"
+                        selectionMode="#{Mating_Backing.penSelectionETB.selectionMode}"
+                        selection="#{Mating_Backing.penSelectionETB.selection}">
+
+                        <f:facet name="footer" class="dataScroller">
+                            <rich:dataScroller for="penResultsTableId" maxPages="5" renderIfSinglePage="false" />
+                        </f:facet>                     
+                        <rich:column sortBy="#{penInfo.containerID}" >
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['pen.pen#']}" id="containerId" />
+                            </f:facet>
+                            <h:outputText value="#{penInfo.containerID}" />
+                        </rich:column>
+                        <rich:column sortBy="#{penInfo.containerName}" >
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['pen.penName']}" id="containerNameId" />
+                            </f:facet>
+                            <h:outputText value="#{penInfo.containerName}" />
+                        </rich:column>
+                        <rich:column sortBy="#{penInfo.actionDate}" >
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['pen.actionDate']}" id="actionDateId" />
+                            </f:facet>
+                            <h:outputText value="#{penInfo.actionDate}" />
+                        </rich:column>
+                        <rich:column sortBy="#{penInfo.containerStatus}" >
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['pen.status']}" id="containerStatusId" />
+                            </f:facet>
+                            <h:outputText value="#{penInfo.containerStatus}" />
+                        </rich:column>
+                        <rich:column sortBy="#{penInfo.room}" >
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['pen.room']}" id="roomId" />
+                            </f:facet>
+                            <h:outputText value="#{penInfo.room}" />
+                        </rich:column>
+                    </rich:extendedDataTable>
+
+                    <hr /><div align="center">
+                        <h:panelGrid id="okCancelGrid" columns="1"
+                                     rendered="#{Mating_Backing.penInfoDataModel.rowCount > 0}">
+                            <h:panelGroup id="okCancelGroupId">
+                                <a4j:commandButton id="okPenId"
+                                                   value="#{msgs['common.ok']}"
+                                                   oncomplete="if (#{facesContext.maximumSeverity eq null or facesContext.maximumSeverity.ordinal lt 2}) #{rich:component('addPenPanel')}.hide();"   
+                                                   action="#{Mating_Backing.selectPenAction}"
+                                                   render="penIDPanel"
+                                                   rendered="#{!Mating_Backing.editing}"
+                                                   styleClass="mediumButton">                                       
+                                </a4j:commandButton>
+                                <a4j:commandButton id="okPenIdCreateMating"
+                                                   value="#{msgs['common.ok']}"
+                                                   oncomplete="if (#{facesContext.maximumSeverity eq null or facesContext.maximumSeverity.ordinal lt 2}) #{rich:component('addPenPanel')}.hide();"   
+                                                   action="#{Mating_Backing.selectPenAction}"
+                                                   render="penIDPanel"
+                                                   rendered="#{Mating_Backing.editing}"
+                                                   styleClass="mediumButton">                                       
+                                </a4j:commandButton>
+                                &nbsp;&nbsp;
+                                <a4j:commandButton id="cancelId"
+                                                   value="#{msgs['common.cancel']}"
+                                                   oncomplete="#{rich:component('addPenPanel')}.hide();"
+                                                   styleClass="mediumButton">
+                                </a4j:commandButton>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </div>
+                </h:panelGroup>
+            </h:panelGrid>
+        </h:form>
+    </rich:popupPanel>
+
+    <!-- pop up Add panel to create new pen. -->
+    <rich:popupPanel id="addNewPenPanel" autosized="true" width="450"
+                     top="10">
+        <f:facet name="header">
+            <h:outputText value="New Pen" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="/images/delete.gif" id="hidelink4"  
+                                onclick="#{rich:component('addNewPenPanel')}.hide();"
+                                alt="Close Window" height="20" width="20"
+                                styleClass="hidelink" title="Close" />
+            </h:panelGroup>
+        </f:facet>
+
+        <h:form id="AddNewPenId">
+            <h:outputText value="#{msgs['pen.addPen']}"></h:outputText>
+            <hr />
+            <rich:messages />
+            <br />
+            <h:panelGrid columns="2"
+                         columnClasses="rowHeader, innerTableTD"
+                         styleClass="innerTable">
+
+                <h:panelGroup>
+                    <h:outputLabel value="#{msgs['pen#']}" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+
+                <h:panelGroup>
+                    <h:panelGroup id="OutID">
+                        <h:inputText 
+                            id="penId" 
+                            value="#{Mating_Backing.newPen.penEntity.containerID}"
+                            maxlength="#{restrict['size.general.id']}"
+                            size="#{restrict['size.general.id']}" 
+                            rendered="#{Mating_Backing.newPen.nextPen == false}">
+                        </h:inputText>
+
+                        <h:inputText 
+                            id="penId1"
+                            value="#{Mating_Backing.newPen.penEntity.containerID}"
+                            maxlength="#{restrict['size.general.id']}"
+                            size="#{restrict['size.general.id']}" 
+                            disabled="true" 
+                            rendered="#{Mating_Backing.newPen.nextPen == true}">
+                        </h:inputText>
+                    </h:panelGroup>
+                    &nbsp;&nbsp;                                                    
+                    <h:selectBooleanCheckbox
+                        id="nextPen"
+                        value="#{Mating_Backing.newPen.nextPen}" >
+                        <a4j:ajax event="change" render="OutID" />
+                    </h:selectBooleanCheckbox>
+                    <h:outputLabel value="Use next available ID" />
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{Mating_Backing.newPen.penNameFlag}">
+                <h:outputLabel value="#{msgs['penName']}" />
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{Mating_Backing.newPen.penNameFlag}">
+                <h:inputText required="false" id="penNameId"
+                             value="#{Mating_Backing.newPen.penEntity.containerName}"
+                             maxlength="#{restrict['size.general.id']}"
+                             size="25" >
+                </h:inputText>
+                </h:panelGroup>
+
+                <h:panelGroup>
+                    <h:outputLabel value="#{msgs['penStatus']}" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+
+                <h:selectOneMenu required="true" 
+                                 requiredMessage="#{customMessage['pen.status.missing']}"
+                                 value="#{Mating_Backing.newPen.status}" >
+                    <f:selectItems value="#{Mating_Backing.selectItemWrapper.cvContainerStatusItemsOptional}"/>
+                    <f:converter converterId="containerStatusConverter" />
+                </h:selectOneMenu>
+
+                <h:panelGroup>
+                    <h:outputLabel value="#{msgs['pen.actionDate']}" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                </h:panelGroup>    
+
+                <rich:calendar id="actionDate"
+                               required="true"
+                               requiredMessage="#{customMessage['mouse.date.missing']}"
+                               value="#{Mating_Backing.newPen.actionDate}"
+                               inputSize="#{msgs['common.minMaxSize']}"
+                               datePattern="#{Mating_Backing.date_format}" 
+                               showInput="true"
+                               showWeeksBar="true"
+                               enableManualInput="true">
+                    <a4j:ajax event="change" render="actionDate" />
+                </rich:calendar>
+
+                <h:panelGroup>
+                    <h:outputLabel value="#{msgs['room']}" id="penRoomId" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+
+                <h:selectOneMenu value="#{Mating_Backing.newPen.room}" >
+                    <f:selectItems value="#{Mating_Backing.selectItemWrapper
+                                            .cvRoomItems}"/>
+                    <f:converter converterId="roomConverter" />
+                </h:selectOneMenu>
+
+                <h:panelGroup rendered="#{Mating_Backing.newPen.penCommentsFlag}">
+                    <h:outputLabel value="#{msgs['pen.comments']}" />
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{Mating_Backing.newPen.penCommentsFlag}">
+                    <h:inputTextarea cols="50" rows="5" value="#{Mating_Backing.newPen.penEntity.comment}" />
+                </h:panelGroup>
+            </h:panelGrid>
+
+            &nbsp;&nbsp;
+
+            <div align="center">
+                <h:panelGrid id="okCancelGrid4" columns="1">
+                    <h:panelGroup id="okCancelGroupId1">
+                        <a4j:commandButton value="#{msgs['common.save']}"
+                                           oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('addNewPenPanel')}.hide();"
+                                           action="#{Mating_Backing.savePenAndCloseAction}"
+                                           render="penIDPanel"
+                                           styleClass="mediumButton">
+                        </a4j:commandButton>
+                        &nbsp;&nbsp;
+                        <a4j:commandButton value="#{msgs['common.cancel']}"
+                                           oncomplete="#{rich:component('addNewPenPanel')}.hide();"
+                                           styleClass="mediumButton">
+                        </a4j:commandButton> 
+                    </h:panelGroup>
+                </h:panelGrid>
+                </div>
+            </h:form>
+        </rich:popupPanel>
+
+    <!-- Find dam1 Panel -->
+    <rich:popupPanel id="findDam1Panel" width="700" height="550"
+                         keepVisualState="true" resizeable="true" 
+                         top="10">
+            <f:facet name="header">
+                <h:outputText value="Find Dam1" />
+            </f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="/images/delete.gif" id="hideDam1PanelID"  alt="#{msgs['common.close']}" 
+                                    onclick="#{rich:component('findDam1Panel')}.hide();return false;"
+                                    height="20" width="20" styleClass="hidelink" title="#{msgs['common.close']}" />
+                </h:panelGroup>
+            </f:facet>
+            <img src="../images/bhi_ball_white.gif" />
+            <!-- STATUS -->
+            <a4j:status >
+                <f:facet name="start">
+                    <h:graphicImage  value="../images/bhi_ball.gif"/>
+                </f:facet>
+            </a4j:status>
+            <h:form id="findDam1PanelForm">
+                <rich:messages style="color:red;"></rich:messages>
+                <table class="white-space: nowrap; width:740px;">
+                    <tr>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['mouseId']}" id="lookForMouseId" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="mouseIDFilter" value="#{Mating_Backing.mouseSearch.mouseFilter}" >
+                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.mouseFilters}"/>
+                            </h:selectOneMenu>
+                            <h:inputText id="searchById" value="#{Mating_Backing.mouseSearch.mouseID}" 
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" />
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['strain']}" id="lookForStrainId" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="dam1SearchByStrain" value="#{Mating_Backing.mouseSearch.strain}" >
+                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.allStrains}"/>
+                                <f:converter converterId="strainConverter" />
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>                    
+                    <tr>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['generation']}" id="generationId" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu value="#{Mating_Backing.mouseSearch.generation}" >
+                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.cvGenerationItemsOptional}"/>
+                                <f:converter converterId="generationConverter" />
+                            </h:selectOneMenu>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['genotype.gene']}" id="lookForGeneId1" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="dam1SearchByGene" title="Equals this gene" 
+                                             value="#{Mating_Backing.genotypeSearchDTO.gene}" 
+                                             valueChangeListener="#{Mating_Backing.geneFilterChanged}" >
+                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.genesItemsOptional}"/>
+                                <f:converter converterId="genesConverter" />
+                                <a4j:ajax event="change" render="lookForAllele1Id1, lookForAllele2Id1" status="statusPage" />
+                            </h:selectOneMenu>               
+                            &nbsp;&nbsp;
+                            <h:inputText id="searchByPartialGene" title="Contains this gene" 
+                                         value="#{Mating_Backing.genotypeSearchDTO.partialGene}" 
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" >
+                            </h:inputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['dateOfBirth']}" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <rich:calendar id="birthDate1"
+                                           value="#{Mating_Backing.mouseSearch.DOBStartDate}"
+                                           inputSize="#{msgs['common.minMaxSize']}"
+                                           datePattern="#{Mating_Backing.date_format}" 
+                                           showInput="true"
+                                           showWeeksBar="true"
+                                           enableManualInput="true">
+                            </rich:calendar>                            
+                            &nbsp;&nbsp;
+                            <h:outputLabel value="To" />
+                            &nbsp;&nbsp;
+                            <rich:calendar id="birthDate2"
+                                           value="#{Mating_Backing.mouseSearch.DOBEndDate}"
+                                           inputSize="#{msgs['common.minMaxSize']}"
+                                           datePattern="#{Mating_Backing.date_format}" 
+                                           showInput="true"
+                                           showWeeksBar="true"
+                                           enableManualInput="true">
+                            </rich:calendar>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['genotype.firstAllele']}" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="lookForAllele1Id1" value="#{Mating_Backing.genotypeSearchDTO.alleleName1}" > 
+                                <f:selectItems value="#{Mating_Backing.allele1FilterItems}"/>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['pen#']}" />
+                        </td>
+                        <!-- Value -->
+                        <td style="white-space: nowrap;">
+                            <h:selectOneMenu id="penIDFilter" value="#{Mating_Backing.mouseSearch.penFilter}" >
+                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.integerFilters}"/>
+                            </h:selectOneMenu>
+                            <h:inputText id="searchByPenId" value="#{Mating_Backing.mouseSearch.penID}" 
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" />
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <!-- Label -->
+                        <td style="white-space: nowrap;">
+                            <h:outputLabel value="#{msgs['genotype.secondAllele']}" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="lookForAllele2Id1" value="#{Mating_Backing.genotypeSearchDTO.alleleName2}" > 
+                                <f:selectItems value="#{Mating_Backing.allele2FilterItems}"/>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Label -->
+                        <td colspan="5">
+                            <h:outputLabel value="#{msgs['owner']}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <h:panelGroup id="ownersId">   
+                                <rich:pickList value="#{Mating_Backing.mouseSearch.owners}" 
+                                               disabled="false"  >
+                                    <f:selectItems value="#{Mating_Backing.selectItemWrapper.colonyManageOwnerItems}"/>
+                                    <f:converter converterId="ownerConverter" />
+                                </rich:pickList>
+                            </h:panelGroup>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <a4j:commandButton id="search"
+                                   value="#{msgs['line.search']}"
+                                   styleClass="mediumButton"
+                                   action="#{Mating_Backing.executeDamSearch}"
+                                   type="submit"
+                                   render="dam1Holder"/>
+                <a4j:status name="statusTable">
+                    <f:facet name="start">
+                        &nbsp;&nbsp;
+                        <h:graphicImage  value="../images/bhi_ball.gif"/>
+                    </f:facet>
+                </a4j:status>    
+                <br />
+                <h:panelGrid columns="1" id="dam1Holder">
+                    <h:outputText id="mouseResultsTextId1"
+                                  rendered="#{Mating_Backing.isMouseResultCountDisplayed}"
+                                  value="#{msgs['search.results']} #{Mating_Backing.mouseDataModel.rowCount}" />
+                    <rich:extendedDataTable
+                        rendered="#{Mating_Backing.isMouseResultCountDisplayed}"
+                        id="mouseSearchResultsTable"
+                        value="#{Mating_Backing.mouseDataModel}"
+                        styleClass="largestSizeExtendedDataTable"
+                        var="dm" 
+                        rows="10"
+                        selectionMode="#{Mating_Backing.mouseSelectionETB.selectionMode}"
+                        frozenColumns="0"
+                        selection="#{Mating_Backing.mouseSelectionETB.selection}"
+                        sortMode="#{Mating_Backing.mouseSelectionETB.sortMode}">
+                        <f:facet name="footer" class="dataScroller">
+                            <rich:dataScroller for="mouseSearchResultsTable" 
+                                               id="userResultsDataScroller"
+                                               maxPages="5"                                    
+                                               renderIfSinglePage="false" />
+                        </f:facet> 
+                        <rich:column id="id"
+                                     sortBy="#{dm.id}"
+                                     sortOrder="#{sortingBean.column1Order}"
+                                     filterValue="#{filterBean.column1Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.id, filterBean.column1Filter)}"  
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['mouseId']}" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column1Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn1}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column1Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.id}"/>
+                        </rich:column>
+                        <rich:column id="birthDate"
+                                     sortBy="#{dm.birthDate}"
+                                     sortOrder="#{sortingBean.column2Order}"
+                                     filterValue="#{filterBean.column2Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.birthDate, filterBean.column2Filter)}"   
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['dateOfBirth']}" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column2Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn2}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column2Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.birthDate}"/>
+                        </rich:column>
+                        <rich:column id="generation"
+                                     sortBy="#{dm.generation}"
+                                     sortOrder="#{sortingBean.column3Order}"
+                                     filterValue="#{filterBean.column3Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.generation, filterBean.column3Filter)}"   
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['generation']}" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column3Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn3}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column3Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.generation}"/>
+                        </rich:column>
+                        <rich:column id="owner"
+                                     sortBy="#{dm.owner}"
+                                     sortOrder="#{sortingBean.column4Order}"
+                                     filterValue="#{filterBean.column4Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.owner, filterBean.column4Filter)}"  
+                                     width="150px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['owner']}" style="white-space: nowrap;" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column4Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn4}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column4Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.owner}"/>
+                        </rich:column>
+                        <rich:column id="lifeStatus"
+                                     sortBy="#{dm.lifeStatus}"
+                                     sortOrder="#{sortingBean.column5Order}"
+                                     filterValue="#{filterBean.column5Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.lifeStatus, filterBean.column5Filter)}"   
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="#{msgs['lifeStatus']}" />
+                                    <br />
+                                    <a4j:commandButton image="#{sortingBean.column5Image}" 
+                                                       render="mouseSearchResultsTable" 
+                                                       action="#{sortingBean.sortByColumn5}" 
+                                                       status="statusTable"/>
+                                    <br />
+                                    <h:inputText value="#{filterBean.column5Filter}" styleClass="w100">
+                                        <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{dm.lifeStatus}"/>
+                        </rich:column>
+                        <rich:column id="breedingStatus"
+                                     sortBy="#{dm.breedingStatus}"
+                                     sortOrder="#{sortingBean.column6Order}"
+                                     filterValue="#{filterBean.column6Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.breedingStatus, filterBean.column6Filter)}"   
+                                     width="150px">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="#{msgs['breedingStatus']}" style="white-space: nowrap;" />
+                                    <br />
+                                    <a4j:commandButton image="#{sortingBean.column6Image}" 
+                                                       render="mouseSearchResultsTable" 
+                                                       action="#{sortingBean.sortByColumn6}" 
+                                                       status="statusTable"/>
+                                    <br />
+                                    <h:inputText value="#{filterBean.column6Filter}" styleClass="w100">
+                                        <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{dm.breedingStatus}" />
+                        </rich:column>
+                    </rich:extendedDataTable>
+                    <br />
+                    <h:panelGrid columns = "2">
+                        <a4j:commandButton id="selectMouseButton"
+                                           value="#{msgs['common.ok']}"
+                                           oncomplete="if (#{facesContext.maximumSeverity eq null or facesContext.maximumSeverity.ordinal lt 2}) #{rich:component('findDam1Panel')}.hide();"   
+                                           action="#{Mating_Backing.selectDam1Action}"
+                                           render="dam1Panel, findDam1PanelForm, scripts, genotypePanel"
+                                           rendered="#{Mating_Backing.isMouseResultCountDisplayed}"
+                                           styleClass="mediumButton"/>
+                        <a4j:commandButton id="cancel"
+                                           value="Cancel"
+                                           render="findDam1PanelForm"
+                                           styleClass="mediumButton"
+                                           rendered="#{Mating_Backing.isMouseResultCountDisplayed}"
+                                           immediate="true"
+                                           oncomplete="#{rich:component('findDam1Panel')}.hide();"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </h:form>
+        </rich:popupPanel>
+    
+    <!-- Find dam2 Panel -->
+    <rich:popupPanel id="findDam2Panel" width="700" height="550"
+                         keepVisualState="true" resizeable="true" 
+                         top="10">
+            <f:facet name="header">
+                <h:outputText value="Find Dam2" />
+            </f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="/images/delete.gif" id="hideDam2PanelID"  alt="#{msgs['common.close']}" 
+                                    onclick="#{rich:component('findDam2Panel')}.hide();return false;"
+                                    height="20" width="20" styleClass="hidelink" title="#{msgs['common.close']}" />
+                </h:panelGroup>
+            </f:facet>
+            <img src="../images/bhi_ball_white.gif" />
+            <!-- STATUS -->
+            <a4j:status >
+                <f:facet name="start">
+                    <h:graphicImage  value="../images/bhi_ball.gif"/>
+                </f:facet>
+            </a4j:status>
+            <h:form id="findDam2PanelForm">
+                <rich:messages style="color:red;"></rich:messages>
+                <table class="white-space: nowrap; width:800px;">
+                    <tr>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['mouseId']}" id="lookForMouseId" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="mouseIDFilter" value="#{Mating_Backing.mouseSearch.mouseFilter}" >
+                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.mouseFilters}"/>
+                            </h:selectOneMenu>
+                            <h:inputText id="searchById" value="#{Mating_Backing.mouseSearch.mouseID}" 
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" />
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['strain']}" id="lookForStrainId" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="searchByStrain" value="#{Mating_Backing.mouseSearch.strain}" >
+                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.allStrains}"/>
+                                <f:converter converterId="strainConverter" />
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>                    
+                    <tr>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['generation']}" id="generationId" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu value="#{Mating_Backing.mouseSearch.generation}" >
+                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.cvGenerationItemsOptional}"/>
+                                <f:converter converterId="generationConverter" />
+                            </h:selectOneMenu>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['genotype.gene']}" id="lookForGeneId1" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="dam2SearchByGene" title="Equals this gene" 
+                                             value="#{Mating_Backing.genotypeSearchDTO.gene}" 
+                                             valueChangeListener="#{Mating_Backing.geneFilterChanged}" >
+                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.genesItemsOptional}"/>
+                                <f:converter converterId="genesConverter" />
+                                <a4j:ajax event="change" render="lookForAllele1Id1, lookForAllele2Id1" status="statusPage" />
+                            </h:selectOneMenu>               
+                            &nbsp;&nbsp;
+                            <h:inputText id="searchByPartialGene" title="Contains this gene" 
+                                         value="#{Mating_Backing.genotypeSearchDTO.partialGene}" 
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" >
+                            </h:inputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['dateOfBirth']}" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <rich:calendar id="birthDate1"
+                                           value="#{Mating_Backing.mouseSearch.DOBStartDate}"
+                                           inputSize="#{msgs['common.minMaxSize']}"
+                                           datePattern="#{Mating_Backing.date_format}" 
+                                           showInput="true"
+                                           showWeeksBar="true"
+                                           enableManualInput="true">
+                            </rich:calendar>                            
+                            &nbsp;&nbsp;
+                            <h:outputLabel value="To" />
+                            &nbsp;&nbsp;
+                            <rich:calendar id="birthDate2"
+                                           value="#{Mating_Backing.mouseSearch.DOBEndDate}"
+                                           inputSize="#{msgs['common.minMaxSize']}"
+                                           datePattern="#{Mating_Backing.date_format}" 
+                                           showInput="true"
+                                           showWeeksBar="true"
+                                           enableManualInput="true">
+                            </rich:calendar>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['genotype.firstAllele']}" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="lookForAllele1Id1" value="#{Mating_Backing.genotypeSearchDTO.alleleName1}" > 
+                                <f:selectItems value="#{Mating_Backing.allele1FilterItems}"/>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['pen#']}" />
+                        </td>
+                        <!-- Value -->
+                        <td style="white-space: nowrap;">
+                            <h:selectOneMenu id="penIDFilter" value="#{Mating_Backing.mouseSearch.penFilter}" >
+                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.integerFilters}"/>
+                            </h:selectOneMenu>
+                            <h:inputText id="searchByPenId" value="#{Mating_Backing.mouseSearch.penID}" 
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" />
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <!-- Label -->
+                        <td style="white-space: nowrap;">
+                            <h:outputLabel value="#{msgs['genotype.secondAllele']}" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="lookForAllele2Id1" value="#{Mating_Backing.genotypeSearchDTO.alleleName2}" > 
+                                <f:selectItems value="#{Mating_Backing.allele2FilterItems}"/>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Label -->
+                        <td colspan="5">
+                            <h:outputLabel value="#{msgs['owner']}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <h:panelGroup id="ownersId">   
+                                <rich:pickList value="#{Mating_Backing.mouseSearch.owners}" 
+                                               disabled="false"  >
+                                    <f:selectItems value="#{Mating_Backing.selectItemWrapper.colonyManageOwnerItems}"/>
+                                    <f:converter converterId="ownerConverter" />
+                                </rich:pickList>
+                            </h:panelGroup>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <a4j:commandButton id="search"
+                                   value="#{msgs['line.search']}"
+                                   styleClass="mediumButton"
+                                   action="#{Mating_Backing.executeDamSearch}"
+                                   type="submit"
+                                   render="dam2Holder"/>
+                <a4j:status name="statusTable">
+                    <f:facet name="start">
+                        &nbsp;&nbsp;
+                        <h:graphicImage  value="../images/bhi_ball.gif"/>
+                    </f:facet>
+                </a4j:status>    
+                <br />
+                <h:panelGrid columns="1" id="dam2Holder">
+                    <h:outputText id="mouseResultsTextId1"
+                                  rendered="#{Mating_Backing.isMouseResultCountDisplayed}"
+                                  value="#{msgs['search.results']} #{Mating_Backing.mouseDataModel.rowCount}" />
+                    <rich:extendedDataTable
+                        rendered="#{Mating_Backing.isMouseResultCountDisplayed}"
+                        id="mouseSearchResultsTable"
+                        value="#{Mating_Backing.mouseDataModel}"
+                        styleClass="largestSizeExtendedDataTable"
+                        var="dm" 
+                        rows="10"
+                        frozenColumns="0"
+                        sortMode="#{Mating_Backing.mouseSelectionETB.sortMode}"
+                        selectionMode="#{Mating_Backing.mouseSelectionETB.selectionMode}"
+                        selection="#{Mating_Backing.mouseSelectionETB.selection}">
+                        <f:facet name="footer" class="dataScroller">
+                            <rich:dataScroller for="mouseSearchResultsTable" 
+                                               id="userResultsDataScroller"
+                                               maxPages="5"                                    
+                                               renderIfSinglePage="false" />
+                        </f:facet> 
+                        <rich:column id="id"
+                                     sortBy="#{dm.id}"
+                                     sortOrder="#{sortingBean.column1Order}"
+                                     filterValue="#{filterBean.column1Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.id, filterBean.column1Filter)}"  
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['mouseId']}" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column1Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn1}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column1Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.id}"/>
+                        </rich:column>
+                        <rich:column id="birthDate"
+                                     sortBy="#{dm.birthDate}"
+                                     sortOrder="#{sortingBean.column2Order}"
+                                     filterValue="#{filterBean.column2Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.birthDate, filterBean.column2Filter)}"   
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['dateOfBirth']}" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column2Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn2}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column2Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.birthDate}"/>
+                        </rich:column>
+                        <rich:column id="generation"
+                                     sortBy="#{dm.generation}"
+                                     sortOrder="#{sortingBean.column3Order}"
+                                     filterValue="#{filterBean.column3Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.generation, filterBean.column3Filter)}"   
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['generation']}" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column3Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn3}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column3Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.generation}"/>
+                        </rich:column>
+                        <rich:column id="owner"
+                                     sortBy="#{dm.owner}"
+                                     sortOrder="#{sortingBean.column4Order}"
+                                     filterValue="#{filterBean.column4Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.owner, filterBean.column4Filter)}"  
+                                     width="150px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['owner']}" style="white-space: nowrap;" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column4Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn4}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column4Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.owner}"/>
+                        </rich:column>
+                        <rich:column id="lifeStatus"
+                                     sortBy="#{dm.lifeStatus}"
+                                     sortOrder="#{sortingBean.column5Order}"
+                                     filterValue="#{filterBean.column5Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.lifeStatus, filterBean.column5Filter)}"   
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="#{msgs['lifeStatus']}" />
+                                    <br />
+                                    <a4j:commandButton image="#{sortingBean.column5Image}" 
+                                                       render="mouseSearchResultsTable" 
+                                                       action="#{sortingBean.sortByColumn5}" 
+                                                       status="statusTable"/>
+                                    <br />
+                                    <h:inputText value="#{filterBean.column5Filter}" styleClass="w100">
+                                        <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{dm.lifeStatus}"/>
+                        </rich:column>
+                        <rich:column id="breedingStatus"
+                                     sortBy="#{dm.breedingStatus}"
+                                     sortOrder="#{sortingBean.column6Order}"
+                                     filterValue="#{filterBean.column6Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.breedingStatus, filterBean.column6Filter)}"   
+                                     width="150px">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="#{msgs['breedingStatus']}" style="white-space: nowrap;" />
+                                    <br />
+                                    <a4j:commandButton image="#{sortingBean.column6Image}" 
+                                                       render="mouseSearchResultsTable" 
+                                                       action="#{sortingBean.sortByColumn6}" 
+                                                       status="statusTable"/>
+                                    <br />
+                                    <h:inputText value="#{filterBean.column6Filter}" styleClass="w100">
+                                        <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{dm.breedingStatus}" />
+                        </rich:column>
+                    </rich:extendedDataTable>
+                    <br />
+                    <h:panelGrid columns = "2">
+                        <a4j:commandButton id="selectMouseButton"
+                                           value="#{msgs['common.ok']}"
+                                           oncomplete="if (#{facesContext.maximumSeverity eq null or facesContext.maximumSeverity.ordinal lt 2}) #{rich:component('findDam2Panel')}.hide();"   
+                                           action="#{Mating_Backing.selectDam2Action}"
+                                           render="dam2Panel, findDam2PanelForm, scripts, genotypePanel"
+                                           rendered="#{Mating_Backing.isMouseResultCountDisplayed}"
+                                           styleClass="mediumButton"/>
+                        <a4j:commandButton id="cancel"
+                                           value="Cancel"
+                                           styleClass="mediumButton"
+                                           render="findDam2PanelForm"
+                                           rendered="#{Mating_Backing.isMouseResultCountDisplayed}"
+                                           immediate="true"
+                                           oncomplete="#{rich:component('findDam2Panel')}.hide();"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </h:form>
+        </rich:popupPanel>
+    
+    <!-- Find sire Panel -->
+    <rich:popupPanel id="findSirePanel" width="700" height="550"
+                         keepVisualState="true" resizeable="true" 
+                         top="10">
+            <f:facet name="header">
+                <h:outputText value="Find Sire" />
+            </f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="/images/delete.gif" id="hideSirePanelID"  alt="#{msgs['common.close']}" 
+                                    onclick="#{rich:component('findSirePanel')}.hide();return false;"
+                                    height="20" width="20" styleClass="hidelink" title="#{msgs['common.close']}" />
+                </h:panelGroup>
+            </f:facet>
+            <img src="../images/bhi_ball_white.gif" />
+            <!-- STATUS -->
+            <a4j:status >
+                <f:facet name="start">
+                    <h:graphicImage  value="../images/bhi_ball.gif"/>
+                </f:facet>
+            </a4j:status>
+            <h:form id="findSirePanelForm">
+                <rich:messages style="color:red;"></rich:messages>
+                <table class="white-space: nowrap; width:800px;">
+                    <tr>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['mouseId']}" id="lookForMouseId" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="mouseIDFilter" value="#{Mating_Backing.mouseSearch.mouseFilter}" >
+                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.mouseFilters}"/>
+                            </h:selectOneMenu>
+                            <h:inputText id="searchById" value="#{Mating_Backing.mouseSearch.mouseID}" 
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" />
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['strain']}" id="lookForStrainId" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="searchByStrain" value="#{Mating_Backing.mouseSearch.strain}" >
+                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.allStrains}"/>
+                                <f:converter converterId="strainConverter" />
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>                    
+                    <tr>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['generation']}" id="generationId" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu value="#{Mating_Backing.mouseSearch.generation}" >
+                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.cvGenerationItemsOptional}"/>
+                                <f:converter converterId="generationConverter" />
+                            </h:selectOneMenu>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['genotype.gene']}" id="lookForGeneId1" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="sireSearchByGene" title="Equals this gene" 
+                                             value="#{Mating_Backing.genotypeSearchDTO.gene}" 
+                                             valueChangeListener="#{Mating_Backing.geneFilterChanged}" >
+                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.genesItemsOptional}"/>
+                                <f:converter converterId="genesConverter" />
+                                <a4j:ajax event="change" render="lookForAllele1Id1, lookForAllele2Id1" status="statusPage" />
+                            </h:selectOneMenu>               
+                            &nbsp;&nbsp;
+                            <h:inputText id="searchByPartialGene" title="Contains this gene" 
+                                         value="#{Mating_Backing.genotypeSearchDTO.partialGene}" 
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" >
+                            </h:inputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['dateOfBirth']}" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <rich:calendar id="birthDate1"
+                                           value="#{Mating_Backing.mouseSearch.DOBStartDate}"
+                                           inputSize="#{msgs['common.minMaxSize']}"
+                                           datePattern="#{Mating_Backing.date_format}" 
+                                           showInput="true"
+                                           showWeeksBar="true"
+                                           enableManualInput="true">
+                            </rich:calendar>                            
+                            &nbsp;&nbsp;
+                            <h:outputLabel value="To" />
+                            &nbsp;&nbsp;
+                            <rich:calendar id="birthDate2"
+                                           value="#{Mating_Backing.mouseSearch.DOBEndDate}"
+                                           inputSize="#{msgs['common.minMaxSize']}"
+                                           datePattern="#{Mating_Backing.date_format}" 
+                                           showInput="true"
+                                           showWeeksBar="true"
+                                           enableManualInput="true">
+                            </rich:calendar>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['genotype.firstAllele']}" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="lookForAllele1Id1" value="#{Mating_Backing.genotypeSearchDTO.alleleName1}" > 
+                                <f:selectItems value="#{Mating_Backing.allele1FilterItems}"/>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['pen#']}" />
+                        </td>
+                        <!-- Value -->
+                        <td style="white-space: nowrap;">
+                            <h:selectOneMenu id="penIDFilter" value="#{Mating_Backing.mouseSearch.penFilter}" >
+                                <f:selectItems value="#{Mating_Backing.selectItemWrapper.integerFilters}"/>
+                            </h:selectOneMenu>
+                            <h:inputText id="searchByPenId" value="#{Mating_Backing.mouseSearch.penID}" 
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" />
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <!-- Label -->
+                        <td style="white-space: nowrap;">
+                            <h:outputLabel value="#{msgs['genotype.secondAllele']}" />
+                        </td>
+                        <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="lookForAllele2Id1" value="#{Mating_Backing.genotypeSearchDTO.alleleName2}" > 
+                                <f:selectItems value="#{Mating_Backing.allele2FilterItems}"/>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Label -->
+                        <td colspan="5">
+                            <h:outputLabel value="#{msgs['owner']}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <h:panelGroup id="ownersId">   
+                                <rich:pickList value="#{Mating_Backing.mouseSearch.owners}" 
+                                               disabled="false"  >
+                                    <f:selectItems value="#{Mating_Backing.selectItemWrapper.colonyManageOwnerItems}"/>
+                                    <f:converter converterId="ownerConverter" />
+                                </rich:pickList>
+                            </h:panelGroup>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <a4j:commandButton id="search"
+                                   value="#{msgs['line.search']}"
+                                   styleClass="mediumButton"
+                                   action="#{Mating_Backing.executeSireSearch}"
+                                   type="submit"
+                                   render="sireHolder"/>
+                <a4j:status name="statusTable">
+                    <f:facet name="start">
+                        &nbsp;&nbsp;
+                        <h:graphicImage  value="../images/bhi_ball.gif"/>
+                    </f:facet>
+                </a4j:status>    
+                <br />
+                <h:panelGrid columns="1" id="sireHolder">
+                    <h:outputText id="mouseResultsTextId1"
+                                  rendered="#{Mating_Backing.isMouseResultCountDisplayed}"
+                                  value="#{msgs['search.results']} #{Mating_Backing.mouseDataModel.rowCount}" />
+                    <rich:extendedDataTable
+                        rendered="#{Mating_Backing.isMouseResultCountDisplayed}"
+                        id="mouseSearchResultsTable"
+                        value="#{Mating_Backing.mouseDataModel}"
+                        styleClass="largestSizeExtendedDataTable"
+                        var="dm" 
+                        rows="10"
+                        frozenColumns="0"
+                        sortMode="#{Mating_Backing.mouseSelectionETB.sortMode}"
+                        selectionMode="#{Mating_Backing.mouseSelectionETB.selectionMode}"
+                        selection="#{Mating_Backing.mouseSelectionETB.selection}">
+                        <f:facet name="footer" class="dataScroller">
+                            <rich:dataScroller for="mouseSearchResultsTable" 
+                                               id="userResultsDataScroller"
+                                               maxPages="5"                                    
+                                               renderIfSinglePage="false" />
+                        </f:facet> 
+                        <rich:column id="id"
+                                     sortBy="#{dm.id}"
+                                     sortOrder="#{sortingBean.column1Order}"
+                                     filterValue="#{filterBean.column1Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.id, filterBean.column1Filter)}"  
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['mouseId']}" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column1Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn1}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column1Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.id}"/>
+                        </rich:column>
+                        <rich:column id="birthDate"
+                                     sortBy="#{dm.birthDate}"
+                                     sortOrder="#{sortingBean.column2Order}"
+                                     filterValue="#{filterBean.column2Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.birthDate, filterBean.column2Filter)}"   
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['dateOfBirth']}" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column2Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn2}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column2Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.birthDate}"/>
+                        </rich:column>
+                        <rich:column id="generation"
+                                     sortBy="#{dm.generation}"
+                                     sortOrder="#{sortingBean.column3Order}"
+                                     filterValue="#{filterBean.column3Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.generation, filterBean.column3Filter)}"   
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['generation']}" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column3Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn3}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column3Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.generation}"/>
+                        </rich:column>
+                        <rich:column id="owner"
+                                     sortBy="#{dm.owner}"
+                                     sortOrder="#{sortingBean.column4Order}"
+                                     filterValue="#{filterBean.column4Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.owner, filterBean.column4Filter)}"  
+                                     width="150px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['owner']}" style="white-space: nowrap;" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column4Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn4}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column4Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.owner}"/>
+                        </rich:column>
+                        <rich:column id="lifeStatus"
+                                     sortBy="#{dm.lifeStatus}"
+                                     sortOrder="#{sortingBean.column5Order}"
+                                     filterValue="#{filterBean.column5Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.lifeStatus, filterBean.column5Filter)}"   
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="#{msgs['lifeStatus']}" />
+                                    <br />
+                                    <a4j:commandButton image="#{sortingBean.column5Image}" 
+                                                       render="mouseSearchResultsTable" 
+                                                       action="#{sortingBean.sortByColumn5}" 
+                                                       status="statusTable"/>
+                                    <br />
+                                    <h:inputText value="#{filterBean.column5Filter}" styleClass="w100">
+                                        <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{dm.lifeStatus}"/>
+                        </rich:column>
+                        <rich:column id="breedingStatus"
+                                     sortBy="#{dm.breedingStatus}"
+                                     sortOrder="#{sortingBean.column6Order}"
+                                     filterValue="#{filterBean.column6Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.breedingStatus, filterBean.column6Filter)}"   
+                                     width="150px">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="#{msgs['breedingStatus']}" style="white-space: nowrap;" />
+                                    <br />
+                                    <a4j:commandButton image="#{sortingBean.column6Image}" 
+                                                       render="mouseSearchResultsTable" 
+                                                       action="#{sortingBean.sortByColumn6}" 
+                                                       status="statusTable"/>
+                                    <br />
+                                    <h:inputText value="#{filterBean.column6Filter}" styleClass="w100">
+                                        <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{dm.breedingStatus}" />
+                        </rich:column>
+                    </rich:extendedDataTable>
+                    <br />
+                    <h:panelGrid columns = "2">
+                        <a4j:commandButton id="selectMouseButton"
+                                           value="#{msgs['common.ok']}"
+                                           oncomplete="if (#{facesContext.maximumSeverity eq null or facesContext.maximumSeverity.ordinal lt 2}) #{rich:component('findSirePanel')}.hide();"   
+                                           action="#{Mating_Backing.selectSireAction}"
+                                           render="sirePanel, findSirePanelForm, scripts, genotypePanel"
+                                           rendered="#{Mating_Backing.isMouseResultCountDisplayed}"
+                                           styleClass="mediumButton"/>
+                        <a4j:commandButton id="cancel"
+                                           value="Cancel"
+                                           styleClass="mediumButton"
+                                           render="findSirePanelForm"
+                                           rendered="#{Mating_Backing.isMouseResultCountDisplayed}"
+                                           immediate="true"
+                                           oncomplete="#{rich:component('findSirePanel')}.hide();"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </h:form>
+        </rich:popupPanel>
+    
+    
+    
+    <rich:popupPanel id="searchForPenForm" autosized="true"
+                     top="10">
+        <f:facet name="header">
+            <h:outputText value="Select Cage" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="/images/delete.gif" id="hidelink8"  
+                                onclick="#{rich:component('searchForPenForm')}.hide();"
+                                alt="Close Window" height="20" width="20"
+                                styleClass="hidelink" title="Close" />
+            </h:panelGroup>
+        </f:facet>
+        
+        <h:form id="editSelectedPenForm">
+        <h:panelGroup>
+            
+            <h:outputText value="Select Cage"/>
+            <hr />
+            <rich:messages />
+            <br />
+            <img src="../images/bhi_ball_white.gif" />
+            <!-- STATUS -->
+            <a4j:status>
+                <f:facet name="start">
+                    <h:graphicImage  value="../images/bhi_ball.gif"/>
+                </f:facet>            
+            </a4j:status>
+            <h:panelGrid id="penInfoPanel"
+                         columns="2"
+                         columnClasses="rowHeader, innerTableTD"
+                         styleClass="innerTable">                             
+                <h:panelGroup layout="block">
+                    <h:outputLabel value="#{msgs['pen#']}" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+                
+                <h:panelGroup>
+                    <h:panelGroup id="penIDGroup"
+                                layout="block">
+                        <rich:autocomplete id="penAutoCompleteID" mode="client" minChars="0" 
+                                        autofill="false"
+                                        disabled="#{Mating_Backing.next}"
+                                        autocompleteList="#{Mating_Backing.pens}"
+                                        value="#{Mating_Backing.editContainerDTO.containerID}">
+                            <a4j:ajax event="blur"
+                                      listener="#{Mating_Backing.changeEditContainerListener}"
+                                      render="cageNameInput cageStatusInput editPenActionDate roomInput penEditComments"/> 
+                        </rich:autocomplete>
+                        &nbsp;&nbsp;
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:selectBooleanCheckbox value="#{Mating_Backing.next}" id="useNextAvailableId">
+                            <a4j:ajax event="change" 
+                                    listener="#{Mating_Backing.changeToNextAvailablePenValues}"
+                                    render="penIDGroup cageNameInput cageStatusInput editPenActionDate roomInput penEditComments"/> 
+                        </h:selectBooleanCheckbox> 
+                        <h:outputText value="Use Next Available ID"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+                    
+                <h:panelGroup layout="block">
+                    <h:outputLabel value="#{msgs['penName']}" />
+                </h:panelGroup>
+                    
+                <h:panelGroup layout="block">
+                    <rich:autocomplete id="cageNameInput" mode="client" minChars="0"
+                                       autocompleteList="#{Mating_Backing.penNames}"
+                                       value="#{Mating_Backing.editContainerDTO.containerName}">
+                        <a4j:ajax event="change"
+                                  listener="#{Mating_Backing.testing}"/>
+                    </rich:autocomplete>
+                </h:panelGroup>
+                    
+                <h:panelGroup layout="block">
+                    <h:outputLabel value="#{msgs['penStatus']}" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+                    
+                <h:selectOneMenu id="cageStatusInput" required="true" 
+                                 requiredMessage="#{customMessage['pen.status.missing']}"
+                                 value="#{Mating_Backing.editContainerHistoryDTO.containerStatuskey}" >
+                    <a4j:ajax event="change"
+                              listener="#{Mating_Backing.testing}"/>
+                    <f:selectItems value="#{Mating_Backing.selectItemWrapper.stringStatuses}"/>
+                </h:selectOneMenu>
+                    
+                <h:panelGroup layout="block">
+                    <h:outputLabel value="#{msgs['pen.actionDate']}" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                </h:panelGroup>    
+                    
+                <rich:calendar id="editPenActionDate"
+                               required="true"
+                               requiredMessage="#{customMessage['mouse.date.missing']}"
+                               value="#{Mating_Backing.editContainerHistoryDTO.actionDate}"
+                               inputSize="#{msgs['common.minMaxSize']}"
+                               datePattern="#{Mating_Backing.date_format}" 
+                               showInput="true"
+                               showWeeksBar="true"
+                               enableManualInput="true">
+                    <a4j:ajax event="change" render="actionDate" />
+                </rich:calendar>
+                    
+                <h:panelGroup layout="block">
+                    <h:outputLabel value="#{msgs['room']}" id="penRoomId" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+                    
+                <h:selectOneMenu id="roomInput" 
+                                 value="#{Mating_Backing.editContainerHistoryDTO.roomKey}">
+                    <a4j:ajax event="change"
+                              listener="#{Mating_Backing.testing}"/>
+                    <f:selectItems value="#{Mating_Backing.selectItemWrapper.stringRooms}"/>
+                </h:selectOneMenu>
+                    
+                <h:panelGroup layout="block">
+                    <h:outputLabel value="#{msgs['pen.comments']}" />
+                </h:panelGroup>
+                    
+                <h:panelGroup layout="block">
+                    <h:inputTextarea id="penEditComments" cols="50" rows="5" value="#{Mating_Backing.editContainerDTO.comment}">
+                        <a4j:ajax event="change"
+                                  listener="#{Mating_Backing.testing}"/>
+                    </h:inputTextarea>
+                </h:panelGroup>
+            </h:panelGrid>
+        </h:panelGroup>
+        </h:form>
+                
+            &nbsp;&nbsp;
+        <h:form id="buttons">    
+            <div align="center">
+                <h:panelGrid id="okCancelGrid4" columns="1">
+                    <h:panelGroup id="okCancelGroupId1">
+                        <a4j:commandButton value="#{msgs['common.save']}"
+                                           oncomplete="if (#{facesContext.maximumSeverity.ordinal == 0}) #{rich:component('searchForPenForm')}.hide();"
+                                           action="#{Mating_Backing.editPen}"
+                                           render="dam1Panel dam2Panel sirePanel scripts originalDam1Panel originalSirePanel originalDam2Panel"
+                                           styleClass="mediumButton">
+                        </a4j:commandButton> 
+                        &nbsp;&nbsp;
+                        <a4j:commandButton value="Cancel"
+                                           onclick="#{rich:component('searchForPenForm')}.hide();"
+                                           render="dam1Link dam2Link sireLink"
+                                           styleClass="mediumButton">
+                        </a4j:commandButton>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </div>
+        </h:form>
+    </rich:popupPanel>
+
+    <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+    </h:body>
+</html>

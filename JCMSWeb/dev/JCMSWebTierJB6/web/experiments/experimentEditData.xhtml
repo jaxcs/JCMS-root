@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui">
+      
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>
+            <h:outputText value="Experiments"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js" >
+        </script>
+    </h:head>
+    
+    <h:body style="margin-left:10px;margin-right:10px;">
+        <h:form id="experimentHomeFormId">
+          <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+          <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+        </h:form>
+
+        <h:panelGrid columns="2" border="0">
+            <h:panelGroup>
+                <h1><h:outputText value="Experimental Data" /></h1>
+            </h:panelGroup>
+        </h:panelGrid>
+        <hr />
+        <h:panelGrid columns="2" cellpadding="5" cellspacing="5" 
+                     styleClass="panelColumns" >
+            <!-- Left side -->
+            <h:panelGroup>
+                <f:subview id="colonyManagementSideBar"><ui:include src="/experiments/experimentSideBar.xhtml"/></f:subview>
+            </h:panelGroup>
+            <!-- Right side -->
+            <h:panelGroup>
+                <h:form id="expDataFormId">
+                    <h:outputText value="Edit Data" styleClass="formTitle" rendered="#{ExperimentEditData_Backing.editing}" />
+                    <h:outputText value="Add Data" styleClass="formTitle" rendered="#{!ExperimentEditData_Backing.editing}" />
+                
+                    <p:ajaxStatus id="statusPage" style="width:16px;height:16px;" >  
+                        <f:facet name="start">  
+                            <h:graphicImage  value="../images/bhi_ball.gif"/>
+                        </f:facet>
+                        <f:facet name="complete">  
+                            <h:graphicImage value="../images/bhi_ball_white.gif" />  
+                        </f:facet>  
+                    </p:ajaxStatus>
+                    &nbsp;&nbsp;
+            <!-- Top Buttons-->
+
+                    <h:panelGrid columns="3" rendered="#{ExperimentEditData_Backing.showEditData}">    
+                        <h:column>
+                            <p:commandButton
+                                value="#{msgs['common.save']}"
+                                styleClass="mediumButton"
+                                rendered="#{!ExperimentEditData_Backing.editing}"
+                                actionListener="#{ExperimentEditData_Backing.insertExpDataAction}"
+                                update="MouseInfoPanel"/>
+                            <p:commandButton
+                                value="#{msgs['common.save']}"
+                                styleClass="mediumButton"
+                                rendered="#{ExperimentEditData_Backing.editing}"
+                                actionListener="#{ExperimentEditData_Backing.updateExpDataAction}"
+                                update="MouseInfoPanel, changeLifeStatus, newLifeStatus"/>
+                        </h:column>
+                        <h:column>
+                            <p:commandButton
+                                value="Clear All"
+                                styleClass="mediumButton"
+                                actionListener="#{ExperimentEditData_Backing.clearAllAction}"
+                                update="dataID mouseId MouseInfoPanel age testType owner experimentDate ageDetermination 
+                                    ageIn abnormalData dataPanel2, fieldList"/>
+                        </h:column>
+                        <h:column>
+                            <p:commandButton
+                                value="Clear Results"
+                                styleClass="mediumButton"
+                                actionListener="#{ExperimentEditData_Backing.clearResultsAction}"
+                                update="dataPanel2, fieldList"/>
+                         </h:column>
+                   </h:panelGrid>
+            
+                    <p:messages id="expDataEditMessages" for="expDataEditDataMessages" autoUpdate="true"/>
+                    <hr /><br />
+
+        <!--Data Entry section -->
+
+                    <h:panelGrid id="dataPanel" 
+                                 rendered="#{ExperimentEditData_Backing.showEditData}"
+                                 columns ="2">
+                        <h:column>
+                            <h:panelGrid columns="3"
+                                         columnClasses="rowHeader, innerTableTD, innerTableTD"
+                                         styleClass="innerTable">
+
+                                <h:panelGroup rendered="#{ExperimentEditData_Backing.editing}">
+                                    <h:outputLabel for="dataID" value="Data ID " />
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                </h:panelGroup>
+
+                                <p:autoComplete id="dataID" 
+                                                value="#{ExperimentEditData_Backing.selectedDataID}" 
+                                                label="Data ID"
+                                                rendered="#{ExperimentEditData_Backing.editing}"
+                                                effect="fade" 
+                                                dropdown="true" scrollHeight="400"
+                                                forceSelection="true"
+                                                var="dm"
+                                                itemLabel="#{dm.dataID}"
+                                                itemValue="#{dm}"
+                                                completeMethod="#{ExperimentEditData_Backing.completeDataID}"
+                                                converter="expDataDTOConverter">
+                                        <p:ajax event="itemSelect" 
+                                              listener="#{ExperimentEditData_Backing.initializeDataIDAction}"
+                                              update="mouseId MouseInfoPanel age testType owner experimentDate ageDetermination ageIn abnormalData,
+                                                dataPanel2, fieldList"/> 
+                                </p:autoComplete>
+                                <h:outputLabel value="" rendered="#{ExperimentEditData_Backing.editing}"/>
+<!-- desirement                                <p:commandButton styleClass="mediumButton" type="submit" value="Select Data" rendered="#{ExperimentEditData_Backing.editing}"
+                                                 actionListener="#{ExperimentEditData_Backing.selectDataButtonAction}"
+                                                 global="true"/>
+-->
+                                <h:panelGroup>
+                                    <h:outputLabel value="Mouse ID " />
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                </h:panelGroup>
+
+                                <h:panelGroup>
+                                    <h:inputText id="mouseId" value="#{ExperimentEditData_Backing.mouseID}" 
+                                                 maxlength="#{restrict['size.general.id']}"
+                                                 size="#{restrict['size.general.id']}"
+                                                 disabled="#{ExperimentEditData_Backing.editing}">
+                                        <p:ajax event="change" listener="#{ExperimentEditData_Backing.mouseIDChangeListener(event)}"
+                                               update="MouseInfoPanel age"/>
+                                     </h:inputText>
+                                </h:panelGroup> 
+                                
+                                <h:panelGroup>
+                                    <h:outputLabel value="" rendered="#{!ExperimentEditData_Backing.editing}"/>
+        <!-- desirement                           
+                                    <p:commandButton styleClass="mediumButton" type="submit" value="Select Mouse" rendered="#{!ExperimentEditData_Backing.editing}"
+                                                     actionListener="#{ExperimentEditData_Backing.selectMouseButtonAction}"
+                                                     global="true"/>
+        -->
+                                </h:panelGroup>
+
+                                <h:panelGroup>
+                                    <h:outputLabel for="testType" value="Test Type " />
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                </h:panelGroup>
+                                <p:autoComplete id="testType" value="#{ExperimentEditData_Backing.expDataDescriptorDTO}" label="testType"  
+                                               dropdown="true" scrollHeight="400"
+                                               var="dm"
+                                               itemLabel="#{dm.testType}"
+                                               itemValue="#{dm}"
+                                               completeMethod="#{ExperimentEditData_Backing.completeTestType}"
+                                               converter="testTypeConverter"
+                                               forceSelection="true"
+                                               disabled="#{ExperimentEditData_Backing.editing}">
+                                    <p:ajax event="itemSelect" 
+                                              listener="#{ExperimentEditData_Backing.testTypeChangeListener}"
+                                              update="dataPanel2, fieldList"/>                                         
+                                </p:autoComplete>
+                                <h:outputLabel value=""/>
+        <!-- desirement                            <p:commandButton type="button" value="Select Test Type" rendered="#{ExperimentEditData_Backing.editing}"/> 
+        -->
+                                <h:panelGroup>
+                                    <h:outputLabel value="#{msgs['owner']}" />
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                </h:panelGroup>
+
+                                <h:selectOneMenu id="owner" value="#{ExperimentEditData_Backing.ownerEntity}">
+                                    <f:selectItems value="#{ExperimentEditData_Backing.selectItemWrapper.colonyManageOwnerItemsOptional}"/>
+                                    <f:converter converterId="ownerConverter" />
+                                </h:selectOneMenu>
+                                <h:outputLabel value=""/>
+
+                                <h:panelGroup>
+                                    <h:outputLabel value="Date Data Collected " />
+                                </h:panelGroup>
+                             
+                                <p:calendar id="experimentDate"
+                                            pattern="#{ExperimentEditData_Backing.date_format}"
+                                            value="#{ExperimentEditData_Backing.expDate}">
+                                    <p:ajax event="change" listener="#{ExperimentEditData_Backing.expDateChangeListener}" update="age" />
+                                    <p:ajax event="dateSelect" listener="#{ExperimentEditData_Backing.expDateSelectListener}" update="age" />
+                                </p:calendar>
+                                <h:outputLabel value=""/>
+
+                                <h:outputLabel value="Age Determination"/>
+                                <h:selectOneRadio id="ageDetermination" value="#{ExperimentEditData_Backing.ageDetermination}">      
+                                    <f:selectItem id="autoCalculate" itemValue="true" itemLabel="Auto-calculate" />
+                                    <f:selectItem id="enterManually" itemValue="false" itemLabel="Enter Manually" />
+                                    <p:ajax event="change" listener="#{ExperimentEditData_Backing.ageDeterminationChangeListener(event)}"
+                                              update="age"/>
+                                </h:selectOneRadio>
+                                <h:outputLabel value=""/>
+
+                                <h:outputLabel value="Age in"/>
+                                <h:selectOneRadio id="ageIn" value="#{ExperimentEditData_Backing.ageIn}">      
+                                    <f:selectItem id="days" itemValue="days" itemLabel="Days" />
+                                    <f:selectItem id="weeks" itemValue="weeks" itemLabel="Weeks" />
+                                    <f:selectItem id="months" itemValue="months" itemLabel="Months" />
+                                    <p:ajax event="change" listener="#{ExperimentEditData_Backing.ageInChangeListener(event)}"
+                                              update="age"/>
+                                </h:selectOneRadio>
+                                <h:inputText id="age"
+                                             value="#{ExperimentEditData_Backing.age}"
+                                             disabled="#{ExperimentEditData_Backing.ageDetermination == true}"/>
+
+                                <h:panelGroup>
+                                    <h:outputLabel value="Data is Abnormal"></h:outputLabel>
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                </h:panelGroup>
+                                <h:selectBooleanCheckbox 
+                                    id="abnormalData"
+                                    value="#{ExperimentEditData_Backing.abnormalData}">
+                                </h:selectBooleanCheckbox> 
+                                <h:outputLabel value=""/>
+
+                                <h:outputLabel value="Change Mouse Life Status "/>
+                                <h:selectOneRadio id="changeLifeStatus" value="#{ExperimentEditData_Backing.changeLifeStatus}">      
+                                    <f:selectItem id="yes" itemValue="true" itemLabel="Yes" />
+                                    <f:selectItem id="no" itemValue="false" itemLabel="No" />
+                                        <p:ajax event="valueChange"  
+                                             update="newLifeStatus"/>
+                                </h:selectOneRadio>
+
+                                <h:selectOneMenu id="newLifeStatus"
+                                                 value="#{ExperimentEditData_Backing.lifeStatusEntity}"
+                                                 disabled="#{!ExperimentEditData_Backing.changeLifeStatus == true}">
+                                    <f:selectItems value="#{ExperimentEditData_Backing.selectItemWrapper.cvLifeStatusItems}"/>
+                                <f:converter converterId="lifeStatusConverter" />
+                                </h:selectOneMenu>
+                                
+<!--DESIREMENT                                <h:outputLabel value="Auto-increment ID"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="autoIncrement"
+                                    value="#{ExperimentEditData_Backing.autoIncrement}">
+                                </h:selectBooleanCheckbox> 
+                                <h:outputLabel value=""/>-->
+                            </h:panelGrid>
+                        </h:column>
+        <!--Panel giving the mouse details located to right of edit area -->
+                        <h:column>
+                            <p:panel>
+                                <h:panelGrid id="MouseInfoPanel" columns="1">
+                                    <h:outputText value="Mouse ID: #{ExperimentEditData_Backing.mouseID}"/>
+                                    <h:outputText value="Strain: #{ExperimentEditData_Backing.strain}"/>
+                                    <h:outputText value="Generation: #{ExperimentEditData_Backing.generation}"/>
+                                    <h:outputText value="Sex: #{ExperimentEditData_Backing.sex}"/>
+                                    <h:outputText value="Birth Date: #{ExperimentEditData_Backing.birthDate}"/>
+                                    <h:outputText value="Age in Days: #{ExperimentEditData_Backing.mouseAge}"/>
+                                    <h:outputText value="Life Status: #{ExperimentEditData_Backing.lifeStatus}"/>
+                                    <h:outputText value="Owner/Workgroup: #{ExperimentEditData_Backing.mouseOwner}"/>
+                                    <h:outputText value="Genotype: #{ExperimentEditData_Backing.genotype}"/>
+                                </h:panelGrid>    
+                            </p:panel>
+                        </h:column>
+                    </h:panelGrid>
+        <!--Rows for entering data results -->
+               <p:panel styleClass="expDataPanelStyle">           
+        <br /><hr />
+                    <h:panelGrid id="dataPanel2" 
+                                 columns ="1">
+
+                        <h:column>
+                            <p:dataTable id="fieldList" value="#{ExperimentEditData_Backing.resultsListDTO.ttWithDataResult}"
+                                 var="fieldRow"
+                                 scrollable="true"
+                                 rowIndexVar="fieldRowIndex"
+                                 emptyMessage="No fields defined for this test type."> 
+                                <f:facet name="header">
+                                     <h:outputText value="Data Field Definitions and Data Results Entry"/>
+                                </f:facet>
+                                <p:column headerText="Caption">
+                                    <h:outputText value="#{fieldRow.caption}" />
+                                </p:column>
+                                <p:column headerText="Format" style="width:50px;">
+                                    <h:outputText value="#{fieldRow.dataFormat}"  />
+                                </p:column>
+                                <p:column headerText="Required" style="text-align: center; width:60px;">
+                                    <p:selectBooleanCheckbox value="#{fieldRow.required}" disabled="true"/>
+                                </p:column>
+                                <p:column headerText="Minimum Value" style="width:50px;">
+                                    <h:outputText id="minValueId" value="#{fieldRow.minValue}"/>
+                                </p:column>
+                                <p:column headerText="Maximum Value" style="width:50px;">
+                                    <h:outputText id="maxValueId" value="#{fieldRow.maxValue}"/>
+                                </p:column>
+                                <p:column headerText="Data Results" style="width:300px;">
+                                    <h:inputText value="#{fieldRow.d_Value}" disabled="#{fieldRow.dataFormat == 'file'}" style="width:275px;"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:column>
+                 </h:panelGrid>
+        </p:panel> 
+        
+        <!-- Bottom Buttons-->
+                <br /><hr />
+                <h:panelGrid columns="3" rendered="#{ExperimentEditData_Backing.showEditData}">    
+                    <h:column>
+                        <p:commandButton
+                            value="#{msgs['common.save']}"
+                            styleClass="mediumButton"
+                            rendered="#{!ExperimentEditData_Backing.editing}"
+                            actionListener="#{ExperimentEditData_Backing.insertExpDataAction}"
+                            update="MouseInfoPanel"/>
+                        <p:commandButton
+                            value="#{msgs['common.save']}"
+                            styleClass="mediumButton"
+                            rendered="#{ExperimentEditData_Backing.editing}"
+                            actionListener="#{ExperimentEditData_Backing.updateExpDataAction}"
+                            update="MouseInfoPanel, changeLifeStatus, newLifeStatus"/>
+                    </h:column>
+                    <h:column>
+                        <p:commandButton
+                            value="Clear All"
+                            styleClass="mediumButton"
+                            actionListener="#{ExperimentEditData_Backing.clearAllAction}"
+                            update="dataID mouseId MouseInfoPanel age testType owner experimentDate ageDetermination 
+                                ageIn abnormalData dataPanel2, fieldList"/>
+                    </h:column>
+                    <h:column>
+                        <p:commandButton
+                            value="Clear Results"
+                            styleClass="mediumButton"
+                            actionListener="#{ExperimentEditData_Backing.clearResultsAction}"
+                            update="dataPanel2, fieldList"/>
+                     </h:column>
+                </h:panelGrid>
+
+                </h:form>  
+            </h:panelGroup>
+            
+        </h:panelGrid>
+
+        <p:confirmDialog >   
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" global="true"/>  
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" global="true"/>       
+        </p:confirmDialog>  
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+    </h:body>
+</html>

@@ -1,0 +1,1162 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>
+            <h:outputText value="#{msgs['colonyManagement.addMouse']}"
+                          rendered="#{Mouse_Backing.mouseKey == 0}"  />
+            <h:outputText value="#{msgs['colonyManagement.editMouse']}"
+                          rendered="#{Mouse_Backing.mouseKey != 0}"  />
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js" >
+        </script>
+        <script type="text/javascript">
+            function penIDcheck(){
+                var theTarget = document.getElementById('addMouseFormId').target;
+                document.getElementById('addMouseFormId').target='_blank';
+                document.getElementById('addMouseFormId:secretButton').click();
+                document.getElementById('addMouseFormId').target=theTarget;
+            }
+        </script>
+    </h:head>
+    <h:body>  
+        <h:form id="addMouseFormId">
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+
+            <div style="margin-left:10px;margin-right:10px">
+                <h1>
+                    <h:outputText value="#{msgs['colonyManagement.header']}" style="h1"/>
+                    </h1><hr />
+
+                    <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5" width="100%" 
+                             columnClasses="colonyManagementSideBar,detailPane">
+
+                    <h:panelGroup>
+                        <f:subview id="adminSideBar"><ui:include src="/colonyManagement/colonyManagementSideBar.xhtml"/></f:subview>
+                    </h:panelGroup>
+
+                    <!-- RIGHT SIDE OF PAGE -->
+                    <h:panelGroup styleClass="formTitle">
+                        <h:outputText value="#{msgs['colonyManagement.addMouse']}"
+                                      rendered="#{Mouse_Backing.mouseKey == 0}"  />
+                        <h:outputText value="#{msgs['colonyManagement.editMouse']}"
+                                      rendered="#{Mouse_Backing.mouseKey != 0}"  />
+
+                        <img src="../images/bhi_ball_white.gif" alt="" />
+
+                        <!-- STATUS -->
+                        <a4j:status name="statusPage" >
+                            <f:facet name="start">
+                                <h:graphicImage  value="../images/bhi_ball.gif"/>
+                            </f:facet>
+                        </a4j:status>
+
+                        <div align="left">
+                            <br />
+                            <h:panelGrid columns="3" border="0" title="actionButtons">    
+                                <h:column>
+                                    <a4j:commandButton
+                                        id="btnSave1"
+                                        value="#{msgs['common.save']}"
+                                        styleClass="mediumButton"
+                                        rendered="#{Mouse_Backing.mouseKey == 0}"
+                                        action="#{Mouse_Backing.insertMouseAction}"
+                                        render="mouseIDOut, penIDPanel, roomPanel" 
+                                        status="statusPage"/>
+                                    <a4j:commandButton
+                                        value="#{msgs['common.save']}"
+                                        styleClass="mediumButton"
+                                        rendered="#{Mouse_Backing.mouseKey != 0}"
+                                        action="#{Mouse_Backing.updateMouseAction}" 
+                                        render="useSchedulePicklist"
+                                        status="statusPage"/>
+                                    &nbsp;&nbsp;
+                                </h:column>
+                                <h:column>
+                                    <a4j:commandButton 
+                                        id="SaveAndPreview1"
+                                        value="Save and Preview Cage Card"
+                                        styleClass="largeButton"
+                                        rendered="#{Mouse_Backing.mouseKey==0}"
+                                        action="#{Mouse_Backing.insertMouseAction}"
+                                        oncomplete="if ('#{facesContext.maximumSeverity}'.indexOf('ERROR') == -1) penIDcheck()" 
+                                        render="mouseIDOut, penIDPanel, roomPanel" 
+                                        status="statusPage"/>
+                                    <a4j:commandButton
+                                        value="Return to Search"
+                                        styleClass="mediumButton"
+                                        rendered="#{Mouse_Backing.mouseKey != 0 and Mouse_Backing.showReturnToSearchButton}"
+                                        immediate="true"
+                                        action="#{MouseList_Backing.returnToSearchAction}" 
+                                        status="statusPage"/>
+                                    &nbsp;&nbsp;
+                                </h:column>
+                                <h:column>
+                                    <a4j:commandButton 
+                                        id="preview1"
+                                        value="Preview Cage Card"
+                                        styleClass="largeButton"
+                                        action="#{Mouse_Backing.validatePreviewCageCard}"
+                                        oncomplete="if ('#{facesContext.maximumSeverity}'.indexOf('ERROR') == -1) penIDcheck()" 
+                                        status="statusPage"/>
+                                    <h:commandButton 
+                                        id = "secretButton1" 
+                                        action = "#{Mouse_Backing.downloadCageCardAction}"
+                                        style="visibility:hidden;"/>
+                                </h:column>
+                            </h:panelGrid>
+                        </div><hr />                              
+                            <!-- Messages -->
+                        <rich:messages />
+                        <br />
+                        <h:panelGrid columns="2"
+                                     columnClasses="rowHeader, innerTableTD"
+                                     styleClass="innerTable">
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['mouseId']}" />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                            </h:panelGroup>                                  
+
+                            <h:panelGroup id="mouseIDOut">
+                                <h:inputText required="#{!empty param['addMouseFormId:btnSave'] and 
+                                                         !empty param['addMouseFormId:btnSave2'] and 
+                                                         !empty param['addMouseFormId:SaveAndPreview1'] and
+                                                         !empty param['addMouseFormId:SaveAndPreview2']}" 
+                                             id="mouseId"
+                                             requiredMessage="#{customMessage['mouse.id.missing']}"
+                                             value="#{Mouse_Backing.mouseEntity.id}"
+                                             maxlength="#{restrict['size.general.id']}"
+                                             size="#{restrict['size.general.id']}" >
+                                </h:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{Mouse_Backing.mouseKey != 0}">
+                                <h:outputLabel value="Genotype" />
+                            </h:panelGroup> 
+                            <h:panelGroup id="mouseGenotype" 
+                                          rendered="#{Mouse_Backing.mouseKey != 0}">
+                                <h:outputText value="#{Mouse_Backing.mouseGenotype}"/>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hideProtocolID}">
+                                <h:outputLabel value="#{msgs['protocolID']}" rendered="#{!Mouse_Backing.pageBuilder.hideProtocolID}"/>
+                                <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                    <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                </a4j:commandLink>
+                            </h:panelGroup>
+                                <h:selectOneMenu value="#{Mouse_Backing.mouseProtocolEntity}" rendered="#{!Mouse_Backing.pageBuilder.hideProtocolID}">
+                            
+                                    <f:selectItems value="#{Mouse_Backing.selectItemWrapper.cvMouseProtocolItemsOptional}"/>
+                                    <f:converter converterId="mouseProtocolConverter" />
+                                </h:selectOneMenu>
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hideUseSchedules}">
+                                <h:outputLabel value="Use Schedules " rendered="#{!Mouse_Backing.pageBuilder.hideUseSchedules}" />
+                                <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                    <h:graphicImage value="../images/hide.png" alt="" width="16" height="16"/>
+                                </a4j:commandLink>
+                            </h:panelGroup>
+                            <rich:collapsiblePanel header="Use Schedules" expanded="false" rendered="#{!Mouse_Backing.pageBuilder.hideUseSchedules}">
+                                <p:pickList id="useSchedulePicklist" value="#{Mouse_Backing.useSchedulesModel}" filterMatchMode="contains"
+                                            showSourceFilter="true" showTargetFilter="true" var="ust"
+                                            itemLabel="#{ust.useScheduleTermName}" itemValue="#{ust}" converter="useScheduleTermConverter"
+                                            rendered="#{!Mouse_Backing.pageBuilder.hideUseSchedules}">
+                                    <f:facet name="sourceCaption"><h:outputText value="Use Schedules"/></f:facet>                                
+                                    <f:facet name="targetCaption"><h:outputText value="Selected Schedules"/></f:facet>
+                                </p:pickList>
+                            </rich:collapsiblePanel>
+                            
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hideLitterID}" >
+                                <h:outputLabel value="#{msgs['litter#']}" rendered="#{!Mouse_Backing.pageBuilder.hideLitterID}" />
+                                <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                    <h:graphicImage value="../images/hide.png" alt="" width="16" height="16"/>
+                                </a4j:commandLink>
+                            </h:panelGroup>
+                            <h:panelGroup id="litterIDPanel" rendered="#{!Mouse_Backing.pageBuilder.hideLitterID}">                                            
+                                <h:inputText id="litterIDText"
+                                             rendered="#{!Mouse_Backing.pageBuilder.hideLitterID}"
+                                             value="#{Mouse_Backing.litterID}"
+                                             maxlength="#{restrict['size.general.id']}"
+                                             size="#{restrict['size.general.id']}" 
+                                             valueChangeListener="#{Mouse_Backing.populateLitterInfoValueChangeListener}">
+                                    <a4j:ajax event="change" render="strainOut, generationOut, birthDate" />
+                                </h:inputText>
+                                &nbsp;&nbsp;                                    
+                                <a4j:commandButton 
+                                    id="addlitterID"
+                                    rendered="#{!Mouse_Backing.pageBuilder.hideLitterID}"
+                                    action="#{Mouse_Backing.clearLitterPopupAction}"
+                                    oncomplete="#{rich:component('addLitterPanel')}.show()"
+                                    value="#{msgs['litter.selectLitter']}"
+                                    render="litterIDText"
+                                    styleClass="mediumButton" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['strain']}" />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup id="StrainId">
+                                <h:selectOneRadio value="#{Mouse_Backing.strainStatus}" >
+                                    <f:selectItem id="all" itemValue="All" itemLabel="All" />
+                                    <f:selectItem id="active" itemValue="Active only" itemLabel="Active only" />
+                                    <a4j:ajax event="valueChange" execute="@this" render="strainOut"  
+                                              listener="#{Mouse_Backing.setStrainStatusAction}" />
+                                </h:selectOneRadio>
+                                <h:panelGroup id="strainOut" >
+                                    <h:selectOneMenu value="#{Mouse_Backing.mouseEntity.strainKey}" 
+                                                     rendered="#{Mouse_Backing.tempStrainStatus == 'All'}"
+                                                     required="#{!empty param['addMouseFormId:btnSave'] || 
+                                                                !empty param['addMouseFormId:btnSave2']|| 
+                                                                !empty param['addMouseFormId:SaveAndPreview1'] ||
+                                                                !empty param['addMouseFormId:SaveAndPreview2']}"
+                                                     requiredMessage="#{customMessage['mouse.strain.missing']}">
+                                        <f:selectItems value="#{Mouse_Backing.selectItemWrapper.allStrains}" />
+                                        <f:converter converterId="strainConverter" />
+                                    </h:selectOneMenu>
+                                    <h:selectOneMenu value="#{Mouse_Backing.mouseEntity.strainKey}" 
+                                                     rendered="#{Mouse_Backing.tempStrainStatus == 'Active only'}"
+                                                     required="#{!empty param['addMouseFormId:btnSave'] || 
+                                                                !empty param['addMouseFormId:btnSave2']|| 
+                                                                !empty param['addMouseFormId:SaveAndPreview1'] ||
+                                                                !empty param['addMouseFormId:SaveAndPreview2']}"
+                                                     requiredMessage="#{customMessage['mouse.strain.missing']}">
+                                        <f:selectItems value="#{Mouse_Backing.selectItemWrapper.activeStrainsOptional}" />
+                                        <f:converter converterId="strainConverter" />
+                                    </h:selectOneMenu>
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['generation']}" />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup id="generationOut" >
+                                <h:selectOneMenu value="#{Mouse_Backing.generationEntity}" id="genrationId">
+                                    <f:selectItems value="#{Mouse_Backing.selectItemWrapper.cvGenerationItemsOptional}" />
+                                    <f:converter converterId="generationConverter" />
+                                </h:selectOneMenu> 
+                            </h:panelGroup>                                
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['dateOfBirth']}" />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                            </h:panelGroup>    
+
+                            <rich:calendar id="birthDate"
+                                           required="#{!empty param['addMouseFormId:btnSave'] || 
+                                                       !empty param['addMouseFormId:btnSave2'] || 
+                                                       !empty param['addMouseFormId:SaveAndPreview1'] ||
+                                                       !empty param['addMouseFormId:SaveAndPreview2']}"                                              
+                                           requiredMessage="#{customMessage['mouse.dateOfBirth.missing']}"
+                                           value="#{Mouse_Backing.mouseEntity.birthDate}"
+                                           inputSize="#{msgs['common.minMaxSize']}"
+                                           datePattern="#{Mouse_Backing.date_format}" 
+                                           showInput="true"
+                                           showWeeksBar="true"
+                                           enableManualInput="true" 
+                                           valueChangeListener="#{Mouse_Backing.validateDateAction}" >
+                                <a4j:ajax event="change"  
+                                          render="mouseAgeId birthDate" 
+                                          listener="#{Mouse_Backing.validateDateAction}" >
+                                </a4j:ajax>
+                            </rich:calendar>
+
+                            <h:outputLabel value="#{msgs['age']}" 
+                                           rendered="#{Mouse_Backing.mouseKey != 0}" />
+                            <h:panelGroup rendered="#{Mouse_Backing.mouseKey != 0}">
+                                <h:panelGrid>
+                                    <h:selectOneRadio value="#{Mouse_Backing.ageMeasure}" 
+                                                      valueChangeListener="#{Mouse_Backing.calculateMouseAgeAction}">
+                                        <f:selectItems value="#{Mouse_Backing.selectItemWrapper.ageMeasures}" />
+                                        <a4j:ajax event="valueChange" render="mouseAgeId" />
+                                    </h:selectOneRadio>
+                                </h:panelGrid>
+
+                                <h:panelGroup id="mouseAgeId">
+                                    <h:inputText value="#{Mouse_Backing.mouseAge1}" 
+                                                 readonly="true"
+                                                 rendered="#{Mouse_Backing.ageMeasure == 'Days'}" />
+
+                                    <h:inputText value="#{Mouse_Backing.mouseAge}" 
+                                                 readonly="true"
+                                                 rendered="#{Mouse_Backing.ageMeasure != 'Days'}" />
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['sex']}" />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                            </h:panelGroup>
+
+                            <h:selectOneRadio value="#{Mouse_Backing.sexEntity}">
+                                <f:selectItems value="#{Mouse_Backing.selectItemWrapper.cvSexItems}"/>
+                                <f:converter converterId="sexConverter" />
+                                <a4j:ajax event="change" listener="#{Mouse_Backing.sexChangeListener}"/>
+                            </h:selectOneRadio>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['lifeStatus']}" />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" /> 
+                            </h:panelGroup>
+
+                            <h:selectOneMenu value="#{Mouse_Backing.lifeStatusEntity}"
+                                             required="#{!empty param['addMouseFormId:btnSave'] || 
+                                                         !empty param['addMouseFormId:btnSave2'] || 
+                                                         !empty param['addMouseFormId:SaveAndPreview1'] ||
+                                                         !empty param['addMouseFormId:SaveAndPreview2']}"                                                
+                                             requiredMessage="#{customMessage['mouse.lifeStatus.missing']}">
+                                <f:selectItems value="#{Mouse_Backing.selectItemWrapper.cvLifeStatusItems}"/>
+                                <f:converter converterId="lifeStatusConverter" />
+                                <a4j:ajax event="valueChange"  
+                                             render="exitDateId, exitDate, codLabelId, codId, codNotesLabelId, codNotesId"
+                                             listener="#{Mouse_Backing.setLifeStatusAction}" 
+                                             status="statusPage"/>
+                            </h:selectOneMenu>
+
+                            <h:panelGroup id="exitDateId">
+                                <h:outputLabel value="#{msgs['exitDate']}" 
+                                               rendered="#{Mouse_Backing.tempLifeStatus == true}"/>
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" 
+                                               rendered="#{Mouse_Backing.tempLifeStatus == true}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup id="exitDate">
+                                <rich:calendar
+                                               required="#{!empty param['addMouseFormId:btnSave'] || 
+                                                           !empty param['addMouseFormId:btnSave2']|| 
+                                                           !empty param['addMouseFormId:SaveAndPreview1'] ||
+                                                           !empty param['addMouseFormId:SaveAndPreview2']}"                                                   
+                                               requiredMessage="#{customMessage['mouse.exitDate.missing']}"
+                                               value="#{Mouse_Backing.mouseEntity.exitDate}"
+                                               inputSize="#{msgs['common.minMaxSize']}"
+                                               datePattern="#{Mouse_Backing.date_format}" 
+                                               showInput="true"
+                                               showWeeksBar="true"
+                                               enableManualInput="true" 
+                                               rendered="#{Mouse_Backing.tempLifeStatus == true}" >
+                                    <a4j:ajax event="change"  
+                                                 render="exitDate, mouseAgeId"
+                                                 listener="#{Mouse_Backing.validateExitDateAction}" 
+                                                 status="statusPage">
+                                    </a4j:ajax>
+                                </rich:calendar>
+                            </h:panelGroup>
+
+                            <h:panelGroup id="codLabelId" >
+                                <h:outputLabel value="#{msgs['causeOfDeath']}" rendered="#{(Mouse_Backing.tempLifeStatus == true and !Mouse_Backing.pageBuilder.hideCOD) || (Mouse_Backing.tempLifeStatus == true and Mouse_Backing.tempShowCOD == true)}"/>
+                                <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                    <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" 
+                                                    rendered="#{(Mouse_Backing.tempLifeStatus == true and !Mouse_Backing.pageBuilder.hideCOD) || (Mouse_Backing.tempLifeStatus == true and Mouse_Backing.tempShowCOD == true)}"/> 
+                                </a4j:commandLink>              
+                            </h:panelGroup>
+
+                            <h:panelGroup id="codId" >
+                                 <h:selectOneMenu value="#{Mouse_Backing.causeOfDeathEntity}" 
+                                                  rendered="#{(Mouse_Backing.tempLifeStatus == true and !Mouse_Backing.pageBuilder.hideCOD) || (Mouse_Backing.tempLifeStatus == true and Mouse_Backing.tempShowCOD == true)}"
+                                                 required="#{!empty param['addMouseFormId:btnSave'] || 
+                                                             !empty param['addMouseFormId:btnSave2']|| 
+                                                         !empty param['addMouseFormId:SaveAndPreview1'] ||
+                                                         !empty param['addMouseFormId:SaveAndPreview2']}"                                                    
+                                                 requiredMessage="#{customMessage['mouse.cod.missing']}">
+                                    <f:selectItems value="#{Mouse_Backing.selectItemWrapper.cvCauseOfDeathItemsOptional}"/>
+                                    <f:converter converterId="causeOfDeathConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+
+                            <h:panelGroup id="codNotesLabelId" >
+                                <h:outputLabel value="#{msgs['codNotes']}" rendered="#{Mouse_Backing.tempLifeStatus == true and !Mouse_Backing.pageBuilder.hideCODNotes}"/>
+                                <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                    <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" 
+                                                    rendered="#{Mouse_Backing.tempLifeStatus == true and !Mouse_Backing.pageBuilder.hideCODNotes}"/> 
+                                </a4j:commandLink>
+                            </h:panelGroup>
+
+                            <h:panelGroup id="codNotesId" >
+                                <h:inputTextarea cols="50" rows="3" value="#{Mouse_Backing.mouseEntity.codNotes }"
+                                                 rendered="#{Mouse_Backing.tempLifeStatus == true and !Mouse_Backing.pageBuilder.hideCODNotes}"/>
+                            </h:panelGroup>             
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['breedingStatus']}" />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                            </h:panelGroup>
+
+                            <h:selectOneRadio value="#{Mouse_Backing.breedingStatusEntity}"
+                                              required="#{!empty param['addMouseFormId:btnSave'] || 
+                                                          !empty param['addMouseFormId:btnSave2']|| 
+                                                         !empty param['addMouseFormId:SaveAndPreview1'] ||
+                                                         !empty param['addMouseFormId:SaveAndPreview2']}"                                                 
+                                              requiredMessage="#{customMessage['mouse.breedingStatus.missing']}">      
+                                <f:selectItems value="#{Mouse_Backing.selectItemWrapper.cvBreedingStatusItems}"/>
+                                <f:converter converterId="breedingStatusConverter" />
+                            </h:selectOneRadio>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['pen#']}" />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                            </h:panelGroup>
+
+                            <h:panelGroup id="penIDPanel"> 
+                                <h:inputText 
+                                    id="penIDinput"
+                                    value="#{Mouse_Backing.penID}"
+                                    maxlength="#{restrict['size.general.id']}"
+                                    size="#{restrict['size.general.id']}" 
+                                    disabled="#{Mouse_Backing.newPen.nextPen == true}">
+                                    <a4j:ajax event="change" listener="#{Mouse_Backing.penValueChangeListener}"
+                                              render="roomPanel"/>
+                                </h:inputText>
+
+                                &nbsp;&nbsp;      
+                                <h:selectBooleanCheckbox
+                                    id="useNextID"
+                                    value="#{Mouse_Backing.newPen.nextPen}" 
+                                    rendered="#{Mouse_Backing.mouseKey == 0}"
+                                    onclick="$('.triggerChangeEvent').first().focus();"> 
+                                    <a4j:ajax event="change" render="penIDinput addPenID addNewPenID"
+                                              listener="#{Mouse_Backing.sexChangeListener}"/>
+                                </h:selectBooleanCheckbox>
+                                <h:outputLabel 
+                                    value="Use Next ID" 
+                                    rendered="#{Mouse_Backing.mouseKey == 0}" />
+
+                                &nbsp;&nbsp;                            
+                                <a4j:commandButton 
+                                    id="addPenID"
+                                    disabled="#{Mouse_Backing.newPen.nextPen == true and Mouse_Backing.mouseKey == 0}"   
+                                    action="#{Mouse_Backing.clearPenPopupAction}"
+                                    oncomplete="#{rich:component('addPenPanel')}.show()"
+                                    render="penIDPanel, searchResultsGridId"
+                                    value="#{msgs['pen.selectPen']}"
+                                    styleClass="mediumButton" />
+                                &nbsp;&nbsp;   
+                                <a4j:commandButton 
+                                    id="addNewPenID"
+                                    disabled="#{Mouse_Backing.newPen.nextPen == true and Mouse_Backing.mouseKey == 0}"   
+                                    action="#{Mouse_Backing.clearNewPenPopupAction}"
+                                    oncomplete="#{rich:component('addNewPenPanel')}.show()"
+                                    render="penIDPanel"
+                                    value="#{msgs['pen.addNewPen']}"
+                                    styleClass="smallButton" />
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hideRoomName}">
+                                <h:outputLabel value="#{msgs['room']}" />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                    <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                </a4j:commandLink>
+                            </h:panelGroup>
+
+                            <h:panelGroup id="roomPanel" rendered="#{!Mouse_Backing.pageBuilder.hideRoomName}">
+                                <h:selectOneMenu value="#{Mouse_Backing.newPen.room}" id="roomId" class="triggerChangeEvent">
+                                    <f:selectItems value="#{Mouse_Backing.selectItemWrapper.cvRoomItems}"/>
+                                    <f:converter converterId="roomConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hideCoatColor}" >
+                                <h:outputLabel value="#{msgs['coatColor']}" />
+                                <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                    <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                </a4j:commandLink>
+                            </h:panelGroup> 
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hideCoatColor}" >
+                                <h:selectOneMenu value="#{Mouse_Backing.coatColorEntity}">
+                                    <f:selectItems value="#{Mouse_Backing.selectItemWrapper.cvCoatColorItems}" />
+                                    <f:converter converterId="coatColorConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hideDiet}" >
+                                <h:outputLabel value="#{msgs['diet']}" />
+                                <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                    <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                </a4j:commandLink>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hideDiet}" >
+                                <h:selectOneMenu value="#{Mouse_Backing.dietEntity}">
+                                    <f:selectItems value="#{Mouse_Backing.selectItemWrapper.cvDietItems}" />
+                                    <f:converter converterId="dietConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['owner']}" />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" /> 
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:selectOneMenu value="#{Mouse_Backing.ownerEntity}" 
+                                             required="#{!empty param['addMouseFormId:btnSave'] || 
+                                                         !empty param['addMouseFormId:btnSave2']|| 
+                                                         !empty param['addMouseFormId:SaveAndPreview1'] ||
+                                                         !empty param['addMouseFormId:SaveAndPreview2']}"                                                
+                                             requiredMessage="#{customMessage['mouse.owner.missing']}">
+                                <f:selectItems value="#{Mouse_Backing.selectItemWrapper.colonyManageOwnerItems}"/>
+                                <f:converter converterId="ownerConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hideOrigin}">
+                                <h:outputLabel value="#{msgs['origin']}" />
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" rendered="#{!Mouse_Backing.pageBuilder.hideOrigin}"/>
+                                <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                    <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                </a4j:commandLink>
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hideOrigin}">
+                                <h:selectOneMenu value="#{Mouse_Backing.mouseOriginEntity}">
+                                    <f:selectItems value="#{Mouse_Backing.selectItemWrapper.cvMouseOriginItemsOptional}"/>
+                                    <f:converter converterId="mouseOriginConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup rendered="#{Mouse_Backing.mouseKey != 0 and !Mouse_Backing.pageBuilder.hideSampleVialID}">
+                                <h:outputLabel value="#{msgs['vialID']}" />
+                                <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                    <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                </a4j:commandLink>
+                            </h:panelGroup>  
+                            <h:panelGroup rendered="#{Mouse_Backing.mouseKey != 0 and !Mouse_Backing.pageBuilder.hideSampleVialID}">
+                                <h:inputText value="#{Mouse_Backing.mouseEntity.sampleVialID}"
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" />
+                            </h:panelGroup>
+                            
+                            <h:panelGroup rendered="#{Mouse_Backing.mouseKey != 0 and !Mouse_Backing.pageBuilder.hideSampleVialTagPosition}">
+                                <h:outputLabel value="#{msgs['vialPosition']}" />
+                                <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                    <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                </a4j:commandLink>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{Mouse_Backing.mouseKey != 0 and !Mouse_Backing.pageBuilder.hideSampleVialTagPosition}">
+                                <h:inputText required="false" id="sampleVialTagPositionId"
+                                         value="#{Mouse_Backing.mouseEntity.sampleVialTagPosition}"
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" />
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hideReplacementTag}">
+                                <h:outputLabel value="#{msgs['replacementTag']}"/>
+                                <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                    <h:graphicImage value="../images/hide.png" alt="" width="16" height="16"/> 
+                                </a4j:commandLink>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hideReplacementTag}">
+                                <h:inputText required="false" id="newTagId"
+                                         value="#{Mouse_Backing.newTag}"
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}">
+                                </h:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hidePhenotypes}">
+                                <h:outputLabel value="Phenotypes "  />
+                                <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                    <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                </a4j:commandLink>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hidePhenotypes}">
+                                <rich:collapsiblePanel header="Phenotypes" expanded="false">
+                                    <p:pickList id="phenotypePicklist" value="#{Mouse_Backing.phenotypeModel}" filterMatchMode="contains"
+                                            showSourceFilter="true" showTargetFilter="true" var="ust"
+                                            itemLabel="#{ust.phenotypeTermName}" itemValue="#{ust}" converter="cvPhenotypeConverter">
+                                        <f:facet name="sourceCaption"><h:outputText value="Phenotypes"/></f:facet>                                
+                                        <f:facet name="targetCaption"><h:outputText value="Selected Phenotypes"/></f:facet>
+                                    </p:pickList>
+                                </rich:collapsiblePanel>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hideMouseComment}">
+                                <h:outputLabel value="#{msgs['comments']}" />
+                                <a4j:commandLink action="#{Preferences_Backing.initializePreferences()}">
+                                    <h:graphicImage value="../images/hide.png" alt="" width="16" height="16" /> 
+                                </a4j:commandLink>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{!Mouse_Backing.pageBuilder.hideMouseComment}">
+                                <h:inputTextarea cols="50" rows="5" value="#{Mouse_Backing.mouseEntity.comment}"/>
+                            </h:panelGroup>
+                            <h:outputLabel value="Auto Increment ID" 
+                                           rendered="#{Mouse_Backing.mouseKey == 0}" />
+                            <h:selectBooleanCheckbox
+                                id="autoIncrement"
+                                value="#{Mouse_Backing.autoIncrement}" 
+                                rendered="#{Mouse_Backing.mouseKey == 0}" /> 
+                            <h:outputLabel value="Cage Card"/>
+                            <h:selectOneMenu id="cageCard" value = "#{Mouse_Backing.entityKey}"
+                                             required="#{!empty param['addMouseFormId:preview1'] || 
+                                                         !empty param['addMouseFormId:preview2']|| 
+                                                         !empty param['addMouseFormId:SaveAndPreview1'] ||
+                                                         !empty param['addMouseFormId:SaveAndPreview2']}"
+                                             requiredMessage="#{customMessage['cagecard.cardID.missing']}">
+                                <f:selectItems value="#{Mouse_Backing.selectItemWrapper.detailCards}"/>
+                            </h:selectOneMenu>
+                        </h:panelGrid>
+
+                        <hr /><div align="left">
+                            <h:panelGrid columns="3" border="0" title="actionButtons">    
+                                <h:column>
+                                    <a4j:commandButton
+                                        id="btnSave"
+                                        value="#{msgs['common.save']}"
+                                        styleClass="mediumButton"
+                                        rendered="#{Mouse_Backing.mouseKey == 0}"
+                                        action="#{Mouse_Backing.insertMouseAction}"
+                                        render="mouseIDOut, penIDPanel, roomPanel" 
+                                        status="statusPage" />
+                                    <a4j:commandButton
+                                        value="#{msgs['common.save']}"
+                                        styleClass="mediumButton"
+                                        rendered="#{Mouse_Backing.mouseKey != 0}"
+                                        action="#{Mouse_Backing.updateMouseAction}" 
+                                        render="useSchedulePicklist"
+                                        status="statusPage"/>
+                                    &nbsp;&nbsp;
+                                </h:column>
+                                <h:column>
+                                    <a4j:commandButton 
+                                        id="SaveAndPreview2"
+                                        value="Save and Preview Cage Card"
+                                        styleClass="largeButton"
+                                        rendered="#{Mouse_Backing.mouseKey==0}"
+                                        action="#{Mouse_Backing.insertMouseAction}"
+                                        render="mouseIDOut, penIDPanel, roomPanel" 
+                                        oncomplete="if ('#{facesContext.maximumSeverity}'.indexOf('ERROR') == -1) penIDcheck()" 
+                                        status="statusPage"/>
+                                    <a4j:commandButton
+                                        value="Return to Search"
+                                        styleClass="mediumButton"
+                                        rendered="#{Mouse_Backing.mouseKey != 0 and Mouse_Backing.showReturnToSearchButton}"
+                                        immediate="true"
+                                        action="#{MouseList_Backing.returnToSearchAction}" 
+                                        status="statusPage"/>
+                                    &nbsp;&nbsp;
+                                </h:column>
+                                <h:column>
+                                    <a4j:commandButton 
+                                        id="preview2"
+                                        value="Preview Cage Card"
+                                        styleClass="largeButton"
+                                        action="#{Mouse_Backing.validatePreviewCageCard}"
+                                        oncomplete="if ('#{facesContext.maximumSeverity}'.indexOf('ERROR') == -1) penIDcheck()" 
+                                        status="statusPage"/>
+                                    <h:commandButton 
+                                        id = "secretButton" 
+                                        action = "#{Mouse_Backing.downloadCageCardAction}"
+                                        style="visibility:hidden;"/>
+                                </h:column>
+                            </h:panelGrid>
+                        </div>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </div>
+        </h:form>
+
+    <!-- select pen ID modal panel -->            
+    <rich:popupPanel id="addPenPanel" autosized="true" width="800"
+                     onshow="document.getElementById('searchFormId:lookForTextId').focus();"
+                     top="10">
+        <f:facet name="header">
+            <h:outputText value="#{msgs['pen.penInfo']}" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="/images/delete.gif" id="hidelinkId1"  alt="#{msgs['common.close']}" 
+                                onclick="#{rich:component('addPenPanel')}.hide();return false;" title="#{msgs['common.close']}"
+                                height="20" width="20" styleClass="hidelink" />
+            </h:panelGroup>
+        </f:facet>
+        <h:form id="searchFormId">
+            <rich:messages style="color:red;"></rich:messages>
+
+            <h:outputLabel value="#{msgs['pen#']}" id="lookForTextId" />
+            &nbsp;&nbsp;
+            <h:selectOneMenu id="penIDFilter" value="#{Mouse_Backing.penSearch.penFilter}" >
+                <f:selectItems value="#{Mouse_Backing.selectItemWrapper.integerFilters}"/>
+            </h:selectOneMenu>
+            <h:inputText id="searchById" value="#{Mouse_Backing.penSearch.penID}" 
+                         maxlength="#{restrict['size.general.id']}"
+                         size="#{restrict['size.general.id']}" />
+            &nbsp;&nbsp;
+
+            <h:outputLabel value="#{msgs['penName']}" id="lookForNameId" />
+            &nbsp;&nbsp;
+            <h:inputText id="searchByName" value="#{Mouse_Backing.penSearch.containerName}" 
+                         maxlength="#{restrict['size.general.id']}"
+                         size="#{restrict['size.general.id']}" />
+            &nbsp;&nbsp;
+
+            <h:outputLabel value="#{msgs['penStatus']}" id="penStatusId" />
+            &nbsp;&nbsp;
+            <h:selectOneMenu value="#{Mouse_Backing.penSearch.containerStatus}" >
+                <f:selectItems value="#{Mouse_Backing.selectItemWrapper.cvContainerStatusItemsOptional}"/>
+                <f:converter converterId="containerStatusConverter" />
+            </h:selectOneMenu>
+            &nbsp;&nbsp;
+
+            <h:outputLabel value="#{msgs['room']}"  id="penRoomId" />
+            &nbsp;&nbsp;
+            <h:selectOneMenu value="#{Mouse_Backing.penSearch.room}" >
+                <f:selectItems value="#{Mouse_Backing.selectItemWrapper.roomItems}"/>
+                <f:converter converterId="roomConverter" />
+            </h:selectOneMenu>
+
+            <br />
+            <br />
+
+            <a4j:commandButton
+                id="searchId"
+                value="#{msgs['line.search']}"
+                action="#{Mouse_Backing.penSearchAction}"
+                styleClass="mediumButton"
+                type="submit"
+                render="searchResultsGridId, resultsTextId" />
+            &nbsp;&nbsp;
+            <a4j:commandButton
+                id="clearId"
+                value="#{msgs['filter.clear']}"
+                action="#{Mouse_Backing.clearPenPopupAction}"
+                oncomplete="document.getElementById('searchFormId:lookForTextId').focus();"
+                styleClass="mediumButton"
+                render="searchResultsGridId,lookForTextId" />
+
+            <hr />
+
+            <h:panelGrid columns="1" id="searchResultsGridId">
+                <h:panelGroup id="resultsId">
+                    <h:outputText id="resultsTextId"
+                                  rendered="#{Mouse_Backing.isPenResultCountDisplayed}"
+                                  value="#{msgs['search.results']} #{Mouse_Backing.penInfoDataModel.rowCount}" />
+                </h:panelGroup>
+
+                <h:panelGroup id="resultsPanelId1" rendered="#{Mouse_Backing.penInfoDataModel.rowCount > 0}">
+                    <hr />
+                    <rich:extendedDataTable 
+                        id="penResultsTableId"
+                        value="#{Mouse_Backing.penInfoDataModel}"
+                        var="penInfo"
+                        rows="15"
+                        styleClass="largeExtendedDataTable"
+                        selection="#{Mouse_Backing.penSelectionETB.selection}"
+                        sortMode="#{Mouse_Backing.penSelectionETB.sortMode}"
+                        selectionMode="#{Mouse_Backing.penSelectionETB.selectionMode}">
+
+                        <f:facet name="footer" class="dataScroller" >
+                            <rich:dataScroller for="penResultsTableId" renderIfSinglePage="false" maxPages="5"/>
+                        </f:facet>                     
+                        <rich:column sortBy="#{penInfo.containerID}">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['pen.pen#']}" id="containerId" />
+                            </f:facet>
+                            <h:outputText value="#{penInfo.containerID}" />
+                        </rich:column>
+                        <rich:column sortBy="#{penInfo.containerName}">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['pen.penName']}" id="containerNameId" />
+                            </f:facet>
+                            <h:outputText value="#{penInfo.containerName}" />
+                        </rich:column>
+                        <rich:column sortBy="#{penInfo.actionDate}">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['pen.actionDate']}" id="actionDateId" />
+                            </f:facet>
+                            <h:outputText value="#{penInfo.actionDate}" />
+                        </rich:column>
+                        <rich:column sortBy="#{penInfo.containerStatus}">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['pen.status']}" id="containerStatusId" />
+                            </f:facet>
+                            <h:outputText value="#{penInfo.containerStatus}" />
+                        </rich:column>
+                        <rich:column sortBy="#{penInfo.room}">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['pen.room']}" id="roomId2" />
+                            </f:facet>
+                            <h:outputText value="#{penInfo.room}" />
+                        </rich:column>
+                        <f:facet name="footer">
+                        </f:facet>                     
+                    </rich:extendedDataTable>
+
+                    <hr /><div align="center">
+
+                        <h:panelGrid id="okCancelGrid1" columns="1"
+                                     rendered="#{Mouse_Backing.penInfoDataModel.rowCount > 0}">
+                            <h:panelGroup id="okCancelGroupId">
+                                <a4j:commandButton id="okPenId"
+                                                   value="#{msgs['common.ok']}"
+                                                   oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('addPenPanel')}.hide();return false;"   
+                                                   action="#{Mouse_Backing.selectPenAction}"
+                                                   render="penIDPanel, roomPanel"
+                                                   styleClass="mediumButton">                                       
+                                </a4j:commandButton>
+                                &nbsp;&nbsp;
+                                <a4j:commandButton id="cancelId"
+                                                   value="#{msgs['common.cancel']}"
+                                                   oncomplete="#{rich:component('addPenPanel')}.hide();return false;"
+                                                   styleClass="mediumButton">
+                                </a4j:commandButton>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </div>
+                </h:panelGroup>
+            </h:panelGrid>
+        </h:form>
+    </rich:popupPanel>
+
+    <!-- select litter ID modal panel -->
+    <rich:popupPanel id="addLitterPanel" autosized="true" width="900"
+                     onshow="document.getElementById('litterSearchFormId:searchByLitterId').focus();"
+                     top="10">
+        <f:facet name="header">
+            <h:outputText value="#{msgs['litter.litterInfo']}" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="/images/delete.gif" id="hidelinkId2"  alt="#{msgs['common.close']}" 
+                                onclick="#{rich:component('addLitterPanel')}.hide();return false;"
+                                height="20" width="20" styleClass="hidelink" title="#{msgs['common.close']}" />
+            </h:panelGroup>
+        </f:facet>
+        <h:form id="litterSearchFormId">
+            <rich:messages style="color:red;"></rich:messages>
+
+            <h:outputLabel value="#{msgs['litter#']}" id="lookForLitterTextId" />
+            &nbsp;&nbsp;
+            <h:inputText id="searchByLitterId" value="#{Mouse_Backing.litterSearch.litterID}" 
+                         maxlength="#{restrict['size.general.id']}"
+                         size="#{restrict['size.general.id']}" />
+            &nbsp;&nbsp;
+
+            <h:outputLabel value="#{msgs['litter.matingID']}" id="lookForMatingId" />
+            &nbsp;&nbsp;
+            <h:selectOneMenu id="matingIDFilter" value="#{Mouse_Backing.litterSearch.matingFilter}" >
+                <f:selectItems value="#{Mouse_Backing.selectItemWrapper.integerFilters}"/>
+            </h:selectOneMenu>
+            &nbsp;&nbsp;
+            <h:inputText id="searchByMatingID" value="#{Mouse_Backing.litterSearch.matingID}"
+                         maxlength="#{restrict['size.general.id']}"
+                         size="#{restrict['size.general.id']}" /> 
+
+            &nbsp;&nbsp;
+            <h:outputLabel value="Born After" />                                       
+            &nbsp;&nbsp;
+            <rich:calendar id="litterBirthDate"
+                           value="#{Mouse_Backing.litterSearch.birthDate}"
+                           inputSize="#{msgs['common.minMaxSize']}"
+                           datePattern="#{Mouse_Backing.date_format}" 
+                           showInput="true"
+                           showWeeksBar="true"
+                           enableManualInput="true">
+            </rich:calendar>
+            &nbsp;&nbsp;
+
+            <br />
+            <br />
+
+            <h:outputLabel value="#{msgs['strain']}" id="strainId" />
+            &nbsp;&nbsp;
+            <h:selectOneMenu value="#{Mouse_Backing.litterSearch.strain}" >
+                <f:selectItems value="#{Mouse_Backing.selectItemWrapper.activeStrainsOptional}"/>
+                <f:converter converterId="strainConverter" />
+            </h:selectOneMenu>
+
+            <br />
+            <br />
+
+            <a4j:commandButton
+                id="litterSearchId1"
+                value="#{msgs['line.search']}"
+                action="#{Mouse_Backing.litterSearchAction}"
+                styleClass="mediumButton"
+                type="submit"
+                render="litterSearchResultsGridId, litterResultsTextId" />
+            &nbsp;&nbsp;
+            <a4j:commandButton
+                id="clearId1"
+                value="#{msgs['filter.clear']}"
+                action="#{Mouse_Backing.clearLitterPopupAction}"
+                oncomplete="document.getElementById('litterSearchFormId:lookForLitterTextId').focus();"
+                styleClass="mediumButton"
+                render="litterSearchResultsGridId, litterResultsTextId" />
+
+            <hr />
+
+            <h:panelGrid columns="1" id="litterSearchResultsGridId">
+                <h:panelGroup id="litterResultsId">
+                    <h:outputText id="litterResultsTextId"
+                                  rendered="#{Mouse_Backing.isLitterResultCountDisplayed}"
+                                  value="#{msgs['search.results']} #{Mouse_Backing.litterInfoDataModel.rowCount}" />
+                </h:panelGroup>
+
+                <h:panelGroup id="resultsPanelId2"
+                              rendered="#{Mouse_Backing.litterInfoDataModel.rowCount > 0}">
+                    <hr />
+
+                    <rich:extendedDataTable 
+                        id="litterResultsTableId"
+                        value="#{Mouse_Backing.litterInfoDataModel}"
+                        var="litterInfo"
+                        rows="15"
+                        styleClass=".largestSizeExtendedDataTable"
+                        sortMode="#{Mouse_Backing.litterSelectionETB.sortMode}"
+                        selectionMode="#{Mouse_Backing.litterSelectionETB.selectionMode}"
+                        selection="#{Mouse_Backing.litterSelectionETB.selection}">
+
+                        <f:facet name="footer" class="dataScroller" >
+                            <rich:dataScroller for="litterResultsTableId" renderIfSinglePage="false"/>
+                        </f:facet>                     
+                        
+                        <rich:column sortBy="#{litterInfo.birthDate}">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['litter.birthDate']}" id="birthDateId" />
+                            </f:facet>
+<!--                            <h:outputText value="#{litterInfo.birthDate}" />-->
+                            <h:outputFormat value="{0, date, yyyy-MM-dd}">
+                                <f:param value="#{litterInfo.birthDate}" />
+                            </h:outputFormat>                                
+                        </rich:column>
+                        
+                        <rich:column sortBy="#{litterInfo.matingID}">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['litter.matingID']}" id="matingId" />
+                            </f:facet>
+                            <h:outputText value="#{litterInfo.matingID}" />
+                        </rich:column>
+                        
+                        <rich:column sortBy="#{litterInfo.litterID}">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['litter.litter#']}" id="litterId" />
+                            </f:facet>
+                            <h:outputText value="#{litterInfo.litterID}" />
+                        </rich:column>
+
+                        <rich:column sortBy="#{litterInfo.status}">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['litter.status']}" id="litterStatusId" />
+                            </f:facet>
+                            <h:outputText value="#{litterInfo.status}" />
+                        </rich:column>
+
+                        <rich:column sortBy="#{litterInfo.strain}">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['litter.strain']}" id="litterStrainId" />
+                            </f:facet>
+                            <h:outputText value="#{litterInfo.strain}" />
+                        </rich:column>
+
+                        <rich:column sortBy="#{litterInfo.totalBorn}">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['litter.totalBorn']}" id="littertotalBornId" />
+                            </f:facet>
+                            <h:outputText value="#{litterInfo.totalBorn}" />
+                        </rich:column>
+
+                        <rich:column sortBy="#{litterInfo.numMale}">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['litter.numMale']}" id="litternumMaleId" />
+                            </f:facet>
+                            <h:outputText value="#{litterInfo.numMale}" />
+                        </rich:column>
+
+                        <rich:column sortBy="#{litterInfo.numFemale}">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['litter.numFemale']}" id="litternumFemaleId" />
+                            </f:facet>
+                            <h:outputText value="#{litterInfo.numFemale}" />
+                        </rich:column>
+
+                    </rich:extendedDataTable>
+
+                    <hr /><div align="center">
+
+                        <h:panelGrid id="okCancelGrid2" columns="1" rendered="#{Mouse_Backing.litterInfoDataModel.rowCount > 0}">
+                            <h:panelGroup id="oklitterCancelGroupId">
+                                <a4j:commandButton id="oklitterId"
+                                                   value="#{msgs['common.ok']}"
+                                                   oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('addLitterPanel')}.hide();"   
+                                                   action="#{Mouse_Backing.selectLitterAction}"
+                                                   render="litterIDPanel, strainOut, generationOut"
+                                                   styleClass="mediumButton">                                            
+                                </a4j:commandButton>
+                                &nbsp;&nbsp;
+                                <a4j:commandButton id="cancellitterId"
+                                                   value="#{msgs['common.cancel']}"
+                                                   oncomplete="#{rich:component('addLitterPanel')}.hide();"
+                                                   styleClass="mediumButton">
+                                </a4j:commandButton>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </div>
+                </h:panelGroup>
+            </h:panelGrid>
+        </h:form>
+    </rich:popupPanel>
+    
+    <!-- pop up Add panel to create new cage -->
+    <rich:popupPanel id="addNewPenPanel" autosized="true" width="450"
+                     top="10">
+        <f:facet name="header">
+            <h:outputText value="New Cage" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="/images/delete.gif" id="hidelink4" title="Close"  
+                                onclick="#{rich:component('addNewPenPanel')}.hide();return false;"
+                                alt="Close Window" height="20" width="20"
+                                styleClass="hidelink" />
+            </h:panelGroup>
+        </f:facet>
+
+        <h:form id="AddNewPenId" style="white-space: nowrap;">
+            <h:outputText value="#{msgs['pen.addPen']}"></h:outputText>
+            <hr />
+            <rich:messages />
+            <br />
+            <h:panelGrid columns="2"
+                         columnClasses="rowHeader, innerTableTD"
+                         styleClass="innerTable">
+
+                <h:panelGroup>
+                    <h:outputLabel value="#{msgs['pen#']}" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+
+                <h:panelGroup>
+                    <h:panelGroup id="OutID">
+                        <h:inputText 
+                            id="penId"
+                            value="#{Mouse_Backing.newPen.penEntity.containerID}"
+                            maxlength="#{restrict['size.general.id']}"
+                            size="#{restrict['size.general.id']}" 
+                            rendered="#{Mouse_Backing.newPen.nextPen == false}">
+                        </h:inputText>
+
+                        <h:inputText 
+                            id="penId1"
+                            value="#{Mouse_Backing.newPen.penEntity.containerID}"
+                            maxlength="#{restrict['size.general.id']}"
+                            size="#{restrict['size.general.id']}" 
+                            disabled="true" 
+                            rendered="#{Mouse_Backing.newPen.nextPen == true}">
+                        </h:inputText>
+                    </h:panelGroup>
+                    &nbsp;&nbsp;                                                    
+                    <h:selectBooleanCheckbox
+                        id="nextPen"
+                        value="#{Mouse_Backing.newPen.nextPen}" >
+                        <a4j:ajax event="change" render="OutID" />
+                    </h:selectBooleanCheckbox>
+                    <h:outputLabel value="Use next available ID" />
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{Mouse_Backing.newPen.penNameFlag}">
+                    <h:outputLabel value="#{msgs['penName']}" />
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{Mouse_Backing.newPen.penNameFlag}">
+                <h:inputText required="false" id="penNameId"
+                             value="#{Mouse_Backing.newPen.penEntity.containerName}"
+                             maxlength="#{restrict['size.general.id']}"
+                             size="25" >
+                </h:inputText>
+                </h:panelGroup>
+
+                <h:panelGroup>
+                    <h:outputLabel value="#{msgs['penStatus']}" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+
+                <h:selectOneMenu required="true" 
+                                 requiredMessage="#{customMessage['pen.status.missing']}"
+                                 value="#{Mouse_Backing.newPen.status}" >
+                    <f:selectItems value="#{Mouse_Backing.selectItemWrapper.cvContainerStatusItemsOptional}"/>
+                    <f:converter converterId="containerStatusConverter" />
+                </h:selectOneMenu>
+
+                <h:panelGroup>
+                    <h:outputLabel value="#{msgs['pen.actionDate']}" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                </h:panelGroup>    
+
+                <rich:calendar id="actionDate" 
+                               required="true"  
+                               requiredMessage="#{customMessage['mouse.date.missing']}"
+                               value="#{Mouse_Backing.newPen.actionDate}"
+                               inputSize="#{msgs['common.minMaxSize']}"
+                               datePattern="#{Mouse_Backing.date_format}" 
+                               showInput="true"
+                               showWeeksBar="true"
+                               enableManualInput="true"
+                               valueChangeListener="#{Mouse_Backing.newPen.validateDateAction}">
+                    <a4j:ajax event="change" render="actionDate"/>
+                </rich:calendar>
+
+                <h:panelGroup>
+                    <h:outputLabel value="#{msgs['room']}" id="penRoomId2" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                </h:panelGroup>
+
+                <h:selectOneMenu value="#{Mouse_Backing.newPen.room}" >
+                    <f:selectItems value="#{Mouse_Backing.selectItemWrapper.cvRoomItems}"/>
+                    <f:converter converterId="roomConverter" />
+                </h:selectOneMenu>
+
+                <h:panelGroup rendered="#{Mouse_Backing.newPen.penCommentsFlag}">
+                    <h:outputLabel value="#{msgs['pen.comments']}" />
+                </h:panelGroup>
+                <h:panelGroup rendered="#{Mouse_Backing.newPen.penCommentsFlag}">
+                    <h:inputTextarea cols="50" rows="5" value="#{Mouse_Backing.newPen.penEntity.comment}" />
+                </h:panelGroup>
+            </h:panelGrid>
+
+            &nbsp;&nbsp;
+
+            <div align="center">
+                <h:panelGrid id="okCancelGrid4" columns="1">
+                    <h:panelGroup id="okCancelGroupId1">
+                        <a4j:commandButton value="#{msgs['common.save']}"
+                                           action="#{Mouse_Backing.savePenAction}"
+                                           oncomplete="if ('#{facesContext.maximumSeverity}'.indexOf('ERROR') == -1) #{rich:component('addNewPenPanel')}.hide();"
+                                           render="penIDPanel, roomPanel"
+                                           styleClass="mediumButton">
+                        </a4j:commandButton>                            
+                        &nbsp;&nbsp;
+                        <a4j:commandButton value="Cancel"
+                                           oncomplete="if ('#{facesContext.maximumSeverity}'.indexOf('ERROR') == -1) #{rich:component('addNewPenPanel')}.hide();"
+                                           styleClass="mediumButton">
+                        </a4j:commandButton>                            
+                    </h:panelGroup>
+                </h:panelGrid>
+                </div>
+            </h:form>
+        </rich:popupPanel>
+
+    <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+    </h:body>
+</html>

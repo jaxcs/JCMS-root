@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!-- 
+  JCMS Web Installer Build Script
+  
+  
+
+-->
+<project name="jcmswebinstaller" basedir="." default="main">
+  
+  <!--  all properties are in build.properties --> 
+  <property file="build.properties" /> 
+  
+  <!-- path to the ant libraries. Usually they will be located in ANT_HOME/lib -->
+  <path id="ant.classpath">
+    <fileset dir="${ant.home.lib}">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>  
+  
+  <!-- path to the svnant libraries. -->
+  <path id="svnant.classpath">
+    <fileset dir="${svnant.home.lib}">
+      <include name="**/*.jar"/>
+    </fileset>
+    <fileset dir="${ant.optional.lib}">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>  
+  
+  <!-- load the svnant task -->
+  <typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="svnant.classpath" />
+  
+  <target name="main" depends="clean, init, get, build, compress, update">
+
+    <echo message="Build JCMS Web Installer Zip File complete" />
+  </target>
+
+
+  <target name="clean">
+    <echo message="--- Cleaning Previous Build ---"/>
+    <delete dir="${jcms.jcmsinstallzip.dir}"/>
+    <delete dir="${jcms.jcmsjbossjar.dir}"/>
+    <delete dir="${jcms.upgradescripts.dir}"/>  
+    <delete dir="./deploy" />
+    <echo message="--- Clean Complete ---"/>
+
+  </target>
+
+  <target name="init">
+     <echo message="--- Creating directory structure ---"/>
+     <mkdir dir="${jcms.jcmsinstallzip.dir}"/>  
+     <mkdir dir="${jcms.docs.dir}"/>  
+     <mkdir dir="${jcms.jcmslib.dir}"/>  
+
+     <mkdir dir="${jcms.jcmsjbossjar.dir}"/>  
+     <mkdir dir="${jcms.jcmsjbossjar.dir}/jcmsweb"/>  
+
+     <mkdir dir="./deploy"/> 
+     <echo message="--- Create directory structure complete ---"/>
+  </target>
+
+  <target name="get">
+     <echo message="--- Exporting Files ---"/>
+     <svn username="${ant.svn.username}" password="${ant.svn.password}" svnkit="false"> 
+        <!-- Getting files to build jcmsJboss.jar -->
+        <export srcUrl="${cs.repos.dir}/JCMSWeb/trunk/dev/buildfiles/jcmsweb.cmd" revision="HEAD" destPath="./${jcms.jcmsjbossjar.dir}/jcmsweb/jcmsweb.cmd" />          
+        <export srcUrl="${cs.repos.dir}/JCMSWeb/trunk/dev/buildfiles/jcmsWeb.command" revision="HEAD" destPath="./${jcms.jcmsjbossjar.dir}/jcmsweb/jcmsWeb.command" />     
+        <export srcUrl="${cs.repos.dir}/JCMSWeb/trunk/dev/jbossv610" revision="HEAD" destPath="./${jcms.jcmsjbossjar.dir}/jcmsweb/jcmsJboss" />     
+
+	<!-- JCMS Web documents -->
+        <export srcUrl="${cs.repos.dir}/JCMSWeb/trunk/docs/Release Docs/JCMSWeb_Installation_Guide.pdf" revision="HEAD" destPath="./${jcms.docs.dir}/JCMSWeb_Installation_Guide.pdf" />          
+        <export srcUrl="${cs.repos.dir}/JCMSWeb/trunk/docs/Release Docs/JCMSWebQuickStartInstructions.pdf" revision="HEAD" destPath="./${jcms.docs.dir}/JCMSWebQuickStartInstructions.pdf" />          
+        <export srcUrl="${cs.repos.dir}/JCMSWeb/trunk/docs/Release Docs/JCMSWeb_UserGuide.pdf" revision="HEAD" destPath="./${jcms.docs.dir}/JCMSWeb_UserGuide.pdf" />          
+        <export srcUrl="${cs.repos.dir}/JCMSWeb/trunk/docs/Release Docs/Release.txt" revision="HEAD" destPath="./${jcms.docs.dir}/Release.txt" />  
+        <export srcUrl="${cs.repos.dir}/JCMS_DB/trunk/dev/scripts" revision="HEAD" destPath="./${jcms.upgradescripts.dir}" />          
+
+	<!-- JCMS Web jars and war file -->
+        <export srcUrl="${cs.repos.dir}/JCMSWeb/trunk/dev/buildfiles/JCMSIntegrationTier.jar" revision="HEAD" destPath="./${jcms.jcmslib.dir}/JCMSIntegrationTier.jar" />          
+        <export srcUrl="${cs.repos.dir}/JCMSWeb/trunk/dev/buildfiles/JCMSMiddleTier.jar" revision="HEAD" destPath="./${jcms.jcmslib.dir}/JCMSMiddleTier.jar" />          
+        <export srcUrl="${cs.repos.dir}/JCMSWeb/trunk/dev/buildfiles/JCMSWebTier.war" revision="HEAD" destPath="./${jcms.jcmslib.dir}/JCMSWebTier.war" />          
+
+	<!-- JCMS Web Installer files -->
+        <export srcUrl="${cs.repos.dir}/JCMSWeb/trunk/dev/buildfiles/JCMSWebInstaller.jar" revision="HEAD" destPath="./${jcms.jcmsinstallzip.dir}/JCMSWebInstaller.jar" />          
+        <export srcUrl="${cs.repos.dir}/JCMSWeb/trunk/dev/buildfiles/lib" revision="HEAD" destPath="./${jcms.jcmsinstallzip.dir}/lib" />          
+
+	<!-- Checkout JCMS Web Installer Zip File -->
+        <checkout recurse="false" url="${cs.repos.dir}/JCMSWeb/trunk/deploy" revision="HEAD" destPath="./deploy" />          
+     </svn>
+     <echo message="--- Export Files Complete ---"/>
+  </target>
+
+  <target name="build" >
+     <echo message="--- Building JCMS JBOSS jar ---"/>
+        <jar destfile="./${jcms.jcmslib.dir}/jcmsJboss.jar" basedir="./${jcms.jcmsjbossjar.dir}/jcmsweb" >
+        </jar>
+     <echo message="--- Build JCMS JBOSS jar complete ---"/>
+  </target>
+
+  <target name="deploy" >
+     <echo message="--- Deploying JCMS Application ---"/>
+	<!--
+        <copy file="./${jcms.jcmslib.dir}/JCMSIntegrationTier.jar" todir="/usr/local/jboss/server/default/deploy" />
+        <copy file="./${jcms.jcmslib.dir}/JCMSMiddleTier.jar" todir="/usr/local/jboss/server/default/deploy" />
+        <copy file="./${jcms.jcmslib.dir}/JCMSWebTier.jar" todir="/usr/local/jboss/server/default/deploy" />
+        <scp file="./${jcms.jcmslib.dir}/JCMSIntegrationTier.jar" todir="jboss@jcms-dev:server/default/deploy/"   password="M055yLane"  />
+        <scp file="./${jcms.jcmslib.dir}/JCMSMiddleTier.jar" todir="jboss@jcms-dev:server/default/deploy/"   password="M055yLane"  />
+        <scp file="./${jcms.jcmslib.dir}/JCMSWebTier.war" todir="jboss@jcms-dev:server/default/deploy/"   password="M055yLane"  />
+	-->
+     <echo message="--- Deploy JCMS Application complete ---"/>
+  </target>
+
+  <target name="compress">
+     <echo message="--- Creating zip file ---"/>
+        <zip destfile="./deploy/${jcms.jcmswebinstall.filename}" basedir="./${jcms.jcmsinstallzip.dir}" update="false" >
+        </zip>
+     <echo message="--- Create zip file complete ---"/>
+  </target>
+
+  <target name="update">
+     <echo message="--- Checking IN JCMS Web Installer Zip File ---"/>
+     <svn username="${ant.svn.username}" password="${ant.svn.password}">
+        <commit recurse="false" file="./deploy/${jcms.jcmswebinstall.filename}" message="JCMS ANT BUILD updating JCMS Web Installer Zip File"/>
+     </svn>
+     <echo message="--- Check IN JCMS Web Installer Zip File complete ---"/>
+  </target>
+
+ </project>
+

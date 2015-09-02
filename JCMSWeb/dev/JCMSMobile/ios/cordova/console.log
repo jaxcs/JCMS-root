@@ -1,0 +1,90 @@
+2014-08-21 09:45:36.760 JCMS Mobile[12147:90b] Multi-tasking -> Device: YES, App: YES
+2014-08-21 09:45:36.876 JCMS Mobile[12147:90b] Unlimited access to network resources
+2014-08-21 09:45:36.917 JCMS Mobile[12147:90b] Fix applied for database locations?: YES
+2014-08-21 09:45:36.919 JCMS Mobile[12147:90b] 
+
+Started backup to iCloud! Please be careful.
+Your application might rejected by Apple if you store too much data.
+For more information please read "iOS Data Storage Guidelines"
+You could find it at the following address https://developer.apple.com/icloud/documentation/data-storage/ .
+
+2014-08-21 09:45:38.484 JCMS Mobile[12147:90b] Resetting plugins due to page load.
+2014-08-21 09:45:38.974 JCMS Mobile[12147:90b] Finished load of: file:///Users/cssc/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B72A1559-30A9-42D9-BFDB-564F2E0DF628/JCMS%20Mobile.app/www/index.html
+2014-08-21 09:46:27.783 JCMS Mobile[12304:90b] Multi-tasking -> Device: YES, App: YES
+2014-08-21 09:46:27.791 JCMS Mobile[12304:90b] Unlimited access to network resources
+2014-08-21 09:46:27.794 JCMS Mobile[12304:90b] 
+
+Started backup to iCloud! Please be careful.
+Your application might rejected by Apple if you store too much data.
+For more information please read "iOS Data Storage Guidelines"
+You could find it at the following address https://developer.apple.com/icloud/documentation/data-storage/ .
+
+2014-08-21 09:46:27.849 JCMS Mobile[12304:90b] Resetting plugins due to page load.
+2014-08-21 09:46:27.890 JCMS Mobile[12304:90b] Finished load of: file:///Users/cssc/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B72A1559-30A9-42D9-BFDB-564F2E0DF628/JCMS%20Mobile.app/www/index.html
+2014-08-21 09:52:08.722 JCMS Mobile[12541:90b] Multi-tasking -> Device: YES, App: YES
+2014-08-21 09:52:08.737 JCMS Mobile[12541:90b] Unlimited access to network resources
+2014-08-21 09:52:08.741 JCMS Mobile[12541:90b] 
+
+Started backup to iCloud! Please be careful.
+Your application might rejected by Apple if you store too much data.
+For more information please read "iOS Data Storage Guidelines"
+You could find it at the following address https://developer.apple.com/icloud/documentation/data-storage/ .
+
+2014-08-21 09:52:08.980 JCMS Mobile[12541:90b] Resetting plugins due to page load.
+2014-08-21 09:52:09.644 JCMS Mobile[12541:90b] Finished load of: file:///Users/cssc/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B72A1559-30A9-42D9-BFDB-564F2E0DF628/JCMS%20Mobile.app/www/index.html
+2014-08-21 09:59:41.292 JCMS Mobile[12541:5203] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9843)
+2014-08-21 10:00:24.700 JCMS Mobile[12541:5203] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9814)
+2014-08-21 10:05:55.027 JCMS Mobile[12541:5203] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9843)
+2014-08-21 10:08:08.663 JCMS Mobile[12541:5203] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9843)
+2014-08-21 10:08:16.981 JCMS Mobile[12541:5203] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9843)
+2014-08-21 10:10:32.278 JCMS Mobile[12541:4303] void SendDelegateMessage(NSInvocation *): delegate (webView:runJavaScriptAlertPanelWithMessage:initiatedByFrame:) failed to return after waiting 10 seconds. main run loop mode: kCFRunLoopDefaultMode
+2014-08-21 10:12:31.447 JCMS Mobile[12541:5203] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9843)
+2014-08-21 10:13:25.526 JCMS Mobile[12541:5203] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9843)
+2014-08-21 10:22:00.733 JCMS Mobile[12541:5203] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9813)
+2014-08-21 10:24:11.679 JCMS Mobile[12541:5203] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9813)
+2014-08-21 10:28:38.458 JCMS Mobile[12541:5203] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9813)
+2014-08-26 14:28:20.270 JCMS Mobile[58036:90b] Multi-tasking -> Device: YES, App: YES
+2014-08-26 14:28:20.306 JCMS Mobile[58036:90b] Unlimited access to network resources
+2014-08-26 14:28:20.309 JCMS Mobile[58036:90b] 
+
+Started backup to iCloud! Please be careful.
+Your application might rejected by Apple if you store too much data.
+For more information please read "iOS Data Storage Guidelines"
+You could find it at the following address https://developer.apple.com/icloud/documentation/data-storage/ .
+
+2014-08-26 14:28:20.494 JCMS Mobile[58036:90b] Resetting plugins due to page load.
+2014-08-26 14:28:20.589 JCMS Mobile[58036:90b] Finished load of: file:///Users/cssc/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B72A1559-30A9-42D9-BFDB-564F2E0DF628/JCMS%20Mobile.app/www/index.html
+2014-08-26 14:29:01.716 JCMS Mobile[58036:4e07] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9843)
+2014-08-26 16:12:22.551 JCMS Mobile[60014:90b] Multi-tasking -> Device: YES, App: YES
+2014-08-26 16:12:22.570 JCMS Mobile[60014:90b] 
+
+Started backup to iCloud! Please be careful.
+Your application might rejected by Apple if you store too much data.
+For more information please read "iOS Data Storage Guidelines"
+You could find it at the following address https://developer.apple.com/icloud/documentation/data-storage/ .
+
+2014-08-26 16:12:22.846 JCMS Mobile[60014:90b] Resetting plugins due to page load.
+2014-08-26 16:12:23.162 JCMS Mobile[60014:90b] Finished load of: file:///Users/cssc/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B72A1559-30A9-42D9-BFDB-564F2E0DF628/JCMS%20Mobile.app/www/index.html
+2014-08-26 16:12:45.522 JCMS Mobile[60014:4203] ERROR whitelist rejection: url='https://wli-headgame:8443/jcms/login/login?userName=mtsadmin&password=changeMe'
+2014-08-26 16:12:45.523 JCMS Mobile[60014:4203] ERROR whitelist rejection: url='https://wli-headgame:8443/jcms/login/login?userName=mtsadmin&password=changeMe'
+2014-08-26 16:12:45.523 JCMS Mobile[60014:4203] ERROR whitelist rejection: url='https://wli-headgame:8443/jcms/login/login?userName=mtsadmin&password=changeMe'
+2014-08-26 16:35:06.528 JCMS Mobile[60440:90b] Multi-tasking -> Device: YES, App: YES
+2014-08-26 16:35:06.537 JCMS Mobile[60440:90b] Unlimited access to network resources
+2014-08-26 16:35:06.540 JCMS Mobile[60440:90b] 
+
+Started backup to iCloud! Please be careful.
+Your application might rejected by Apple if you store too much data.
+For more information please read "iOS Data Storage Guidelines"
+You could find it at the following address https://developer.apple.com/icloud/documentation/data-storage/ .
+
+2014-08-26 16:35:06.650 JCMS Mobile[60440:90b] Resetting plugins due to page load.
+2014-08-26 16:35:06.715 JCMS Mobile[60440:90b] Finished load of: file:///Users/cssc/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B72A1559-30A9-42D9-BFDB-564F2E0DF628/JCMS%20Mobile.app/www/index.html
+2014-08-26 16:36:07.665 JCMS Mobile[60440:4e0b] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9843)
+2014-08-26 16:37:11.854 JCMS Mobile[60440:4e0b] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9843)
+2014-08-26 16:37:26.969 JCMS Mobile[60440:4103] void SendDelegateMessage(NSInvocation *): delegate (webView:runJavaScriptAlertPanelWithMessage:initiatedByFrame:) failed to return after waiting 10 seconds. main run loop mode: kCFRunLoopDefaultMode
+2014-08-26 16:37:45.028 JCMS Mobile[60440:4e0b] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9843)
+2014-08-26 16:37:56.652 JCMS Mobile[60440:4103] void SendDelegateMessage(NSInvocation *): delegate (webView:runJavaScriptAlertPanelWithMessage:initiatedByFrame:) failed to return after waiting 10 seconds. main run loop mode: kCFRunLoopDefaultMode
+2014-08-26 16:43:43.568 JCMS Mobile[60440:4e0b] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9843)
+2014-08-26 16:43:58.971 JCMS Mobile[60440:4e0b] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9843)
+2014-08-26 16:44:11.575 JCMS Mobile[60440:4e0b] NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9843)
+2014-08-26 16:47:17.503 JCMS Mobile[60440:90b] Received memory warning.

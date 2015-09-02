@@ -1,0 +1,242 @@
+/*
+ * Standard fonts are sans-serif throughout, verdana preferably. The first rule
+ * should be enough, but as long as we're supporting NS4, we need the second
+ * rule to ensure consistent fonts througout. <code> elements move us to
+ * monospace font.
+ */
+
+* {
+  font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+body, p, h1, h2, h3, h4, h5, h6, a, td, th, ol, ul, li, dl, dt, dd, blockquote {
+  font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+pre, code, pre *, code *, pre a, code a, .monospace {
+  font-family : monospace;
+}
+
+
+/*
+ * This ensures that all heading elements can be flush with the top of a cell,
+ * which is particularly important in the Molecule Pages.
+ */
+h1, h2, h3, h4, h5, h6 {
+  margin-top : 0px;
+}
+
+
+/*
+ * This gives us forwards compatibility with respect to the day when we can drop 
+ * the margin* attributes from the <body> element, and ensures that any pages 
+ * missing those attributes will render correctly right now in the majority of 
+ * browsers.
+ */
+body {
+  margin             : 5px;
+  background-color   : white;
+}
+
+
+/*
+ * Standard link formatting.
+ *   Inline links (i.e., within blocks of text) appear in standard blue (unvisited)
+ *    and magenta (visited) but underline only on mouseover or on click.
+ */
+a:link,        a:visited         { text-decoration : none; }
+a:link:hover,  a:visited:hover   { text-decoration : underline; }
+a:link:active, a:visited:active  { text-decoration : underline; }
+
+
+/*
+ * Various additional hyperlink formatting rules (add colour and font info).
+ *   .greenlink: non-inline links (i.e., those outside blocks of text)
+ *     (e.g., the "resources" and "other highlights" links on this page:
+ *      http://www.signaling-gateway.org/update/)
+ *   .whitelink: links to other subsections in  second-level horiz nav bar
+ *     (e.g., the "updates" and "news" links in the page quoted above)
+ *   .orangelink: currently selected link in the second-level horiz nav bar
+ *     (e.g., the "signaling update home" link on the page quoted above)
+ *   .articlelink: links to articles within Signaling Update sections such as
+ *     Updates and News (e.g, article titles/links in this page:
+ *      http://www.signaling-gateway.org/update/updates/updatecurrent.html)
+ */
+.bluelink, .whitelink, .orangelink, .articlelink {
+  font-family       : Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-weight       : bold;
+}
+
+.bluelink     { font-size : 14px; color : #0000C8; }
+.grayedoutlink { font-size : 11px; color : #666666; }
+.whitelink     { font-size : 11px; color : #FFFFFF; }
+.redlink    { font-size : 11px; color : #DC143C; }
+.articlelink   { font-size : 12px; color : #669999; }
+.greenishlink  {font-size: 13px; color: #336666; font-weight: bold;}
+.bluishlink  {font-size: 13px; color: #336666; font-weight: bold;}
+.redlink     { font-size : 11px; color : #CC0000; }
+
+    
+/*
+ * Headings.
+ *   .h2: page headings 
+ *   .h3: subheadings   
+ *   .h4: occasional use in other subheadings 
+ */
+.head1, h2  { font-size: 15px; color: #000000; font-weight: bold; }
+.head2, h3  { font-size: 14px; color: #336666; font-weight: bold; }
+.head3, h4  { font-size: 13px; color: #804000; font-weight: bold; }
+/*.head3, h4  { font-size: 13px; color: #B22222; font-weight: bold; }*/
+
+
+/*
+ * Other.
+ *   .reftext: paper type heading (e.g., "article") in Research Library (see:
+ *     http://www.signaling-gateway.org/update/library/apoptosis.html)
+ *   .sh1: standfirsts for Update articles (e.g.:
+ *     http://www.signaling-gateway.org/update/updates/200211/nrm963.html)
+ *   .sh2: author names for Update articles (e.g.:
+ *     http://www.signaling-gateway.org/update/updates/200211/nrm963.html)
+ *   .medium: medium-sized text throughout the site (e.g., descriptions here:
+ *     http://www.signaling-gateway.org/update/updates/updatecurrent.html)
+ *   .small: small text throughout the site (e.g., (C) statements in footers)
+ *   .date: date of publication (e.g., for Update articles; see:
+ *     http://www.signaling-gateway.org/update/updates/updatecurrent.html)
+ *   .bottomnav: global nav links in footers of all pages
+ *   .green: formerly used in Molecule Page search results but now deprecated
+ *   .white: white text such as dates in Conference Calendar (see:
+ *     http://www.signaling-gateway.org/update/meetings/)
+ *   .label can be used for the labels of form elements (see for example:
+ *     http://www.signaling-gateway.org/molecule/search)
+ */
+.reftext {font-size: 12px; color: #CC0000; font-weight: bold;}
+.body, p, ul, li, body, .body1, .sh2, .text, blockquote {font-size: 12px;}
+.sh1  {font-size: 12px; font-weight: bold;}
+.medium, input, select, option, textarea {font-size: 11px;}
+.small, a.small:visited  {font-size: 10px; color: #000000;}
+.date {font-size: 11px; color: #000000; font-style: italic;}
+a.small:hover, a.small:active  {font-size: 10px; color: #000000; text-decoration: underline;}
+.bottomnav, a.bottomnav:visited  {font-size: 11px; color: #336666;}
+a.bottomnav:hover, a.bottomnav:active  {font-size: 11px; color: #336666; text-decoration: underline;}
+.blue {font-size: 10px; color: #6495ED;}
+.white  {font-size: 11px; color: #FFFFFF;}
+.label {font-size: 11px; font-weight: bold;}
+.thLabel {text-align:right; vertical-align:top; color:white; background-color:#696969; } 
+
+/*
+ * Horizontal dots in headers and footers.
+ *   .dothoriz: horizontal dotted line under 'utility' links (e.g., contact us)
+ *     at the top of each page
+ *   .dothoriz1: horizontal dotted line at the bottom of each page
+ *     and to delimit resources lists in the left-hand nav bar of some pages (e.g.:
+ *     http://www.signaling-gateway.org/update/)
+ *   .dothoriz2: horizontal dotted line under main site nav at top of each page.
+ *   .nav-blank: white space to the right of the main global nav at the top of each page
+ */
+.dothoriz {background-image: url(/slices/dot_horiz.gif); background-repeat: repeat-x; font-size: 1px;}
+.dothoriz1 {background-image: url(/slices/dot_horiz.gif); background-repeat: repeat-x; font-size: 1px;}
+.dothoriz2 {background-image: url(/slices/dot_horiz_2.gif); background-repeat: repeat-x; font-size: 1px;}
+.nav-blank {background-image: url(/slices/nav_blank.gif); background-repeat: repeat-x; font-size: 1px;}
+
+
+/*
+ * For AfCS compatibility.
+ *   Classes previously used at http://www.afcs.org/ and redefined here
+ *    to assist in porting HTML from that site.
+ */
+.center, a.center  {font-size: 12px; text-align: center; color: #000000;}
+a.center:hover  {font-size: 12px; text-align: center; color: #0000FF;}
+a.center:visited  {font-size: 12px; text-align: center; color: #800080;}
+.left, a.left  {font-size: 12px; text-align: left; color: #000000;}
+a.left:hover  {font-size: 12px; text-align: left; color: #0000FF;}
+a.left:visited  {font-size: 12px; text-align: left; color: #800080;}
+/* This rule is not particularly useful and has been deprecated.    
+th {font-size: 11px; color: #FFFFFF; text-align: center; font-weight:normal;}
+*/
+
+
+/* For tables containing data. (Contact: Warren Hedley <whedley@sdsc.edu>)
+ *   To maintain Netscape 4.7* compatibility, all cells in the table must be
+ *   assigned a class value that determines its celltype (heading, data, or
+ *   tinted) and the alignment of the content within the cell (left or center).
+ *   Rules that span the outer product of cell type and alignment are defined.
+ *   By defining no class attribute on a cell, a spacer row can be added to a table.
+ *
+ *   For best results, set the cellspacing attribute to 1, and the cellpadding
+ *   attribute to 3 on the table element.
+ *
+ *   When NS4.7* compatibility stops being an issue we can save on bandwidth
+ *   by defining two classes of table 'data-top', and 'data-left' and set default
+ *   text alignments based on that information.
+ *
+ * EXAMPLE HTML :
+ *
+ *   <table width="100%" border="0" cellspacing="1" cellpadding="3">
+ *     <tr>
+ *       <th class="dth-cnt">Column 1</th>
+ *       <th class="dth-cnt">Column 2</th>
+ *     </tr>
+ *     <tr>
+ *       <td class="dtd-cnt">Value 1</td>
+ *       <td class="dtt-cnt">Special Value 2 (Tinted)</td>
+ *     </tr>
+ *   </table>
+ */
+
+
+.dt, .dth, .dth-cnt, .dth-lft, .dth-rgt, .dtd, .dtd-cnt, .dtd-lft, .dtd-rgt, .dtt, .dtt-cnt, .dtt-lft, .dtt-rgt {
+  font-weight        : normal;
+  font-size          : 12px;
+}
+
+.dth, .dth-cnt, .dth-lft {
+  color              : white;
+  background-color   : #999999;
+}
+
+.dtd, .dtd-cnt, .dtd-lft {
+  color              : black;
+  background-color   : #808080;
+}
+
+
+.dtt, .dtt-cnt, .dtt-lft {
+  color              : #0000cc;
+  background-color   : #eedddd;
+}
+
+.dth-cnt, .dtd-cnt, .dtt-cnt {
+  text-align         : center;
+}
+
+.dth-lft, .dtd-lft, .dtt-lft {
+  text-align         : left;
+}
+
+.dth-rgt, .dtd-rgt, .dtt-rgt {
+  text-align         : right;
+}
+
+
+table.mp-data th {
+  background-color   : #b0b0f0;
+  color              : #0000cc;
+}
+
+table.mp-data td {
+  background-color   : #dddddd;
+  color              : #0000cc;
+}
+
+.evenrow {
+	background-color: #FFEBCD;
+}
+
+.oddrow {
+	background-color: #DCDCDC;
+}
+
+.subheader {
+	background-color: #D2691E;
+        color: white;
+}

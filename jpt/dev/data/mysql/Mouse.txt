@@ -1,0 +1,44 @@
+\N,1,2,3,2008-02-29 00:00:00,B,Agouti,\N,\N,\N,4%,\N,F01,GenA001,A,\N,JAX,nobody,\N,\N,\N,F
+\N,2,2,3,2008-02-29 00:00:00,B,Agouti,\N,\N,\N,4%,\N,F01,GenA002,A,\N,JAX,nobody,\N,\N,\N,F
+\N,3,1,3,2008-02-29 00:00:00,V,Agouti,\N,\N,\N,4%,\N,F01,GenA003,A,\N,JAX,nobody,\N,\N,\N,M
+\N,4,2,3,2008-02-29 00:00:00,B,Agouti,\N,\N,\N,4%,\N,F01,GenA004,A,\N,JAX,nobody,\N,\N,\N,M
+1,5,5,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,F02,A1,A,\N,JAX,nobody,\N,\N,\N,F
+1,6,5,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,F02,A2,A,\N,JAX,nobody,\N,\N,\N,F
+1,7,4,3,2008-02-29 00:00:00,V,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,F02,A3,A,\N,JAX,nobody,\N,\N,\N,M
+1,8,5,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,F02,A4,A,\N,JAX,nobody,\N,\N,\N,M
+2,9,8,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,F03,A5,A,\N,JAX,nobody,\N,\N,\N,F
+2,10,8,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,F03,A6,A,\N,JAX,nobody,\N,\N,\N,F
+2,11,8,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,F03,A7,A,\N,JAX,nobody,\N,\N,\N,M
+2,12,7,3,2008-02-29 00:00:00,V,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,F03,A8,A,\N,JAX,nobody,\N,\N,\N,M
+3,13,11,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,F03,A9,A,\N,JAX,nobody,\N,\N,\N,F
+3,14,11,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,F03,A10,A,\N,JAX,nobody,\N,\N,\N,F
+3,15,11,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,F03,A11,A,\N,JAX,nobody,\N,\N,\N,M
+3,16,10,3,2008-02-29 00:00:00,V,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,F03,A12,A,\N,JAX,nobody,\N,\N,\N,M
+4,17,14,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N02,A13,A,\N,JAX,nobody,\N,\N,\N,F
+4,18,14,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N02,A14,A,\N,JAX,nobody,\N,\N,\N,F
+4,19,14,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N02,A15,A,\N,JAX,nobody,\N,\N,\N,M
+4,20,13,3,2008-02-29 00:00:00,V,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N02,A16,A,\N,JAX,nobody,\N,\N,\N,M
+5,21,17,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N04,A17,A,\N,JAX,nobody,\N,\N,\N,F
+5,22,17,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N04,A18,A,\N,JAX,nobody,\N,\N,\N,F
+5,23,17,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N04,A19,A,\N,JAX,nobody,\N,\N,\N,M
+5,24,16,3,2008-02-29 00:00:00,V,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N04,A20,A,\N,JAX,nobody,\N,\N,\N,M
+6,25,20,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N05,A21,A,\N,JAX,nobody,\N,\N,\N,F
+6,26,20,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N05,A22,A,\N,JAX,nobody,\N,\N,\N,F
+6,27,20,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N05,A23,A,\N,JAX,nobody,\N,\N,\N,M
+6,28,19,3,2008-02-29 00:00:00,V,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N05,A24,A,\N,JAX,nobody,\N,\N,\N,M
+7,29,23,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N06,A25,A,\N,JAX,nobody,\N,\N,\N,F
+7,30,23,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N06,A26,A,\N,JAX,nobody,\N,\N,\N,F
+7,31,22,3,2008-02-29 00:00:00,V,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N06,A27,A,\N,JAX,nobody,\N,\N,\N,M
+7,32,23,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N06,A28,A,\N,JAX,nobody,\N,\N,\N,M
+8,33,26,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N07,A29,A,\N,JAX,nobody,\N,\N,\N,F
+8,34,26,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N07,A30,A,\N,JAX,nobody,\N,\N,\N,F
+8,35,26,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N07,A31,A,\N,JAX,nobody,\N,\N,\N,M
+8,36,25,3,2008-02-29 00:00:00,V,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N07,A32,A,\N,JAX,nobody,\N,\N,\N,M
+9,37,29,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N08,A33,A,\N,JAX,nobody,\N,\N,\N,F
+9,38,29,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N08,A34,A,\N,JAX,nobody,\N,\N,\N,F
+9,39,29,3,2008-02-29 00:00:00,B,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N08,A35,A,\N,JAX,nobody,\N,\N,\N,M
+9,40,28,3,2008-02-29 00:00:00,V,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N08,A36,A,\N,JAX,nobody,\N,\N,\N,M
+10,41,30,3,2008-02-29 00:00:00,V,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N09,A37,A,\N,JAX,nobody,\N,\N,\N,F
+10,42,30,3,2008-02-29 00:00:00,V,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N09,A38,A,\N,JAX,nobody,\N,\N,\N,F
+10,43,31,3,2008-02-29 00:00:00,V,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N09,A39,A,\N,JAX,nobody,\N,\N,\N,M
+10,44,31,3,2008-02-29 00:00:00,V,\N,\N,\N,ADDED IN BULK AS LITTER by user: mtsadmin,\N,\N,N09,A40,A,\N,JAX,nobody,\N,\N,\N,M

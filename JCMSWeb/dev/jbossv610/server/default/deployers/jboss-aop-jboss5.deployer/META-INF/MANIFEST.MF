@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: smcgowan
+Build-Jdk: 1.6.0_21
+Specification-Title: JBoss Application Server Aspects
+Specification-Version: 6.1.0.Final
+Specification-Vendor: JBoss, a division of Red Hat, Inc.
+Implementation-Title: JBoss Application Server Aspects
+Implementation-Version: 6.1.0.Final
+Implementation-Vendor-Id: org.jboss.jbossas
+Implementation-Vendor: JBoss, a division of Red Hat, Inc.
+Implementation-URL: http://www.jboss.org/jbossas
+
+Name: Build-Information
+Build-Time: August 16, 2011 8:40:01 AM EDT
+Java-Vendor: Sun Microsystems Inc.
+Java-Version: 1.6.0_21
+Maven-Version: 3.0
+Os-Arch: amd64
+Os-Name: Linux
+Os-Version: 2.6.32-71.14.1.el6.x86_64
+Scm-Revision: 112075
+Scm-Url: scm:svn:https://svn.jboss.org/repos/jbossas/trunk/jboss-as-as
+ pects
+

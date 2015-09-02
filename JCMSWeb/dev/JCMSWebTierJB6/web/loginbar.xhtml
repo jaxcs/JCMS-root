@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"
+       xmlns:h="http://java.sun.com/jsf/html">
+    <tr>
+        <td bgcolor="#808000">
+            <h:graphicImage url="#{msgs['mainbar.spacer']}" alt="" width="1" height="2"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="right">
+            <table width="100%" class="barBackground">
+                <tr>                        
+                    <td align="center" class="menu">
+                        <h:commandLink action="login" immediate="true"
+                                       disabled="#{!(welcomeBean.environmentCheck)}">
+                            <h:outputText value="#{msgs['loginbar.login']}"/>
+                        </h:commandLink>
+                    </td>
+                    <td class="menu">
+                        <h:outputLink onclick="window.open('/jcms/jcmsWeb/homeAbout.xhtml', 'AboutBox', 'height=550, width=750, dependent=yes, menubar=no, toolbar=no'); return false;" value="#">
+                            <h:outputText value="#{msgs['about.about']}" />
+                        </h:outputLink>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td bgcolor="#808000">
+            <h:graphicImage url="#{msgs['mainbar.spacer']}" alt="" width="1" height="2"/>
+        </td>
+    </tr>
+</table>
+</ui:composition>

@@ -1,0 +1,138 @@
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\Interop.WindowsInstaller.dll
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.csproj.ResolveComReference.cache
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\MySQLInstaller.msi
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\MySQLODBC32.msi
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\JCMSAccessInstaller.exe
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\JCMSAccessInstaller.pdb
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\ResolveAssemblyReference.cache
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.processProgress.resources
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.installSuccess.resources
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.initialForm.resources
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.installMySQL.resources
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.jcmsInstallForm.resources
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.jcmsUpgradeForm.resources
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.ODBCWarning.resources
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.Properties.Resources.resources
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\GenerateResource.read.1.tlog
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\GenerateResource.write.1.tlog
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.exe
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.pdb
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\JCMSItems\jcms_db.sql
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\obj\Release\Interop.ADOX.dll
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\JCMSItems\interface
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\UpgradeScripts\j3.0.0-j3.0.2.mysql.sql
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\UpgradeScripts\j3.0.2-j3.0.3.mysql.sql
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\UpgradeScripts\j3.1.0-j3.2.0.mysql.sql
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\UpgradeScripts\j3.2.0-j3.3.0.mysql.sql
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\UpgradeScripts\j3.3.0-j3.4.0.mysql.sql
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\UpgradeScripts\j3.4.0-j4.0.0.mysql.sql
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.0.0-j4.1.0.mysql.sql
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.1.0-j4.2.0.mysql.sql
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.2.0-j4.2.1.mysql.sql
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.2.1-j4.3.0.mysql.sql
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.3.0-j4.4.0.mysql.sql
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.4.0-j4.5.0.mysql.sql
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.5.0-j4.6.0.mysql.sql
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\UpgradeScripts\jdbInfoUpdate.mysql.sql
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\JCMSExtras\Dark-side-of-the-icon.ico
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\JCMSExtras\Essence-of-Icon.ico
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\JCMSExtras\Pixel-Stock-2.ico
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\JCMSExtras\red-x.ico
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMSAccessInstaller\JCMSAccessInstaller\bin\Release\JCMSExtras\typical.ico
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMS Upgrader-Installer\JCMSAccessInstaller\obj\Release\Interop.ADOX.dll
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMS Upgrader-Installer\JCMSAccessInstaller\obj\Release\Interop.WindowsInstaller.dll
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMS Upgrader-Installer\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.csproj.ResolveComReference.cache
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMS Upgrader-Installer\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.exe
+C:\Users\mkamato\Documents\Visual Studio 2010\Projects\JCMS Upgrader-Installer\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.pdb
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\Interop.ADOX.dll
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\Interop.WindowsInstaller.dll
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.csproj.ResolveComReference.cache
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.exe
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.pdb
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\Docs\license.txt
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_103.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_104.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_105.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_106.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_107.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_108.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_109.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_110.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_111.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_112.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_113.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_114.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_115.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_116.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_117.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_118.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_119.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_120.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_121.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_122.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_123.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_124.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_125.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_126.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_127.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_128.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_129.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_130.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_131.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_132.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_133.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_134.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_135.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_136.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_137.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_138.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_139.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_140.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_141.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dbChange_142.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\dropConstraintWithoutName.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j3.0.0-j3.0.2.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j3.0.2-j3.0.3.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j3.1.0-j3.2.0.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j3.2.0-j3.3.0.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j3.3.0-j3.4.0.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j3.4.0-j4.0.0.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.0.0-j4.1.0.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.1.0-j4.2.0.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.2.0-j4.2.1.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.2.1-j4.3.0.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.3.0-j4.4.0.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.4.0-j4.5.0.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.5.0-j4.6.0.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.6.0-j4.8.3.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.8.3-j4.8.4.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\UpgradeScripts\j4.8.4-j5.0.0.mysql.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\JCMSExtras\Dark-side-of-the-icon.ico
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\JCMSExtras\Essence-of-Icon.ico
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\JCMSItems\jcms_db.sql
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\JCMSExtras\Pixel-Stock-2.ico
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\JCMSExtras\red-x.ico
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\JCMSExtras\typical.ico
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\MySQLInstaller.msi
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\MySQLODBC32.msi
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\Docs\JCMSInstall-Upgrade-guide.pdf
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\Docs\JCMS_ReleaseNotes.pdf
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\Docs\JCMS_UserGuide.docx
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\Docs\JCMS_UserGuide.pdf
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\Docs\ReadMe.pdf
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\JCMSItems\interface
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\JCMSAccessInstaller.exe
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\JCMSAccessInstaller.pdb
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\bin\Release\MySql.Data.dll
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\ResolveAssemblyReference.cache
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.mySQLPathWarning.resources
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.processProgress.resources
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.installSuccess.resources
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.initialForm.resources
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.installMySQL.resources
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.jcmsInstallForm.resources
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.jcmsUpgradeForm.resources
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.ODBCWarning.resources
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\JCMSAccessInstaller.Properties.Resources.resources
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\GenerateResource.read.1.tlog
+C:\dev\JCMSAccessInstaller\dev\JCMSAccessInstaller\obj\Release\GenerateResource.write.1.tlog

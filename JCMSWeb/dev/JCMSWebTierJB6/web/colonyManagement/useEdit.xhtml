@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>                
+            <h:outputText value="Mouse Scheduling"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <style type="text/css" media="screen">
+            input[type="text"][disabled]{
+                color: black;
+            }
+        </style>
+        <script type="text/javascript" src="/jcms/javascript/jcmsWeb.js" >
+        </script>
+        <script type="text/javascript">
+            function deleteUseWarning(){
+                var r = false;
+                var r=confirm("Are you sure you wish to delete this Mouse Use? Once completed this cannot be undone");
+                if(r){
+                    document.getElementById('buttonsForm:secretDeleteUseButton').click();
+                }
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <h:form>
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+        </h:form>
+        <div style="margin-left:10px;margin-right:10px">
+            <h:form>
+                <h1>
+                    <h:outputText value="#{msgs['colonyManagement.header']}" style="h1"/>
+                </h1>
+                <hr />
+            </h:form>
+            <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="5" width="100%"
+                                columnClasses="colonyManagementSideBar,detailPane">
+                <h:panelGroup>
+                    <h:form>
+                        <f:subview id="adminSideBar"><ui:include src="/colonyManagement/colonyManagementSideBar.xhtml"/></f:subview>
+                    </h:form>
+                </h:panelGroup>
+                
+                <h:panelGroup>
+                    <!-- form contains top save buttons -->
+                    <h:form id="buttonsForm">
+                        <h2>
+                            <h:outputText value="Add Mouse Use" rendered="#{!Use_Backing.editing}"/>
+                            <h:outputText value="Edit Mouse Use" rendered="#{Use_Backing.editing}"  />
+                        </h2>
+                        <br/>
+                        <a4j:commandButton id="saveUseButton"
+                                           value="Save"
+                                           styleClass="mediumButton"
+                                           rendered="#{!Use_Backing.editing}"
+                                           render="usesTable"
+                                           oncomplete="document.getElementById('mouseUseForm:secretSaveUseButton').click();"/>
+                        <a4j:commandButton id="editUseButton"
+                                           value="Save"
+                                           styleClass="mediumButton"
+                                           rendered="#{Use_Backing.editing}"
+                                           oncomplete="document.getElementById('mouseUseForm:secretEditUseButton').click();"/>
+                        <a4j:commandButton id="secretDeleteUseButton" 
+                                           style="visibility: hidden"
+                                           action="#{Use_Backing.deleteUseAction}"
+                                           render="usesTable"/>
+                        <hr/>
+                    </h:form>
+                    
+                    <img src="../images/bhi_ball_white.gif" />
+                    <a4j:status>
+                        <f:facet name="start">
+                            <h:graphicImage  value="../images/bhi_ball.gif"/>
+                        </f:facet>
+                    </a4j:status>
+                    
+                    <!-- form contains all the fields you want to submit -->
+                    <h:form id="mouseUseForm">
+                        <h:commandButton id="secretSaveUseButton"
+                                           style="visibility: hidden"
+                                           action="#{Use_Backing.saveUseAction}"/>
+                                        <!--   render="usePanel usesTable"/> -->
+                        <h:commandButton id="secretEditUseButton"
+                                           style="visibility: hidden"
+                                           action="#{Use_Backing.editUseAction}"/>
+                                      <!--     render="usePanel usesTable"/> -->
+                        <rich:messages />
+                        <br />
+                        <h:panelGrid columns="2" rendered="#{!Use_Backing.editing}">
+                            <h:outputText value="On Submit Don't Clear Data"/>
+                            <h:selectBooleanCheckbox label="On Submit Don't Clear Data" 
+                                                     value="#{Use_Backing.dontClearData}"/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" styleClass="useTable">
+                            <h:panelGrid columns="2"
+                                         columnClasses="rowHeader, innerTableTD"
+                                         styleClass="innerTable, border-collapse:collapse"
+                                         width="600px"
+                                         border="0"
+                                         id="usePanel">
+                                <!-- Mouse ID -->
+                                <h:panelGroup>
+                                    <h:outputText value="Mouse ID"/>
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                                </h:panelGroup>  
+                                <h:panelGroup id="idPanel">
+                                    <h:inputText value="#{Use_Backing.mouseID}" disabled="#{Use_Backing.editing}">
+                                        <a4j:ajax event="change" listener="#{Use_Backing.mouseValueChangeListener(event)}"
+                                                  render="usePanel mouseUsesInfo saveUseButton editUseButton saveUseButton2 editUseButton2"/>
+                                    </h:inputText>
+                                    &nbsp; &nbsp;
+                                    <a4j:commandButton value="Select Mouse" styleClass="mediumButton"
+                                                       disabled="#{Use_Backing.editing}"
+                                                       oncomplete="#{rich:component('findMousePanel')}.show()"/>
+                                </h:panelGroup>
+
+                                <!-- Use -->
+                                <h:panelGroup>
+                                    <h:outputText value="Use"/>
+                                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />     
+                                </h:panelGroup>   
+                                <h:selectOneMenu value="#{Use_Backing.useKey}">
+                                    <f:selectItems value="#{Use_Backing.wrapper.cvMouseUseItemsStringKey}"/>
+                                    <a4j:ajax event="change" listener="#{Use_Backing.useValueChangeListener}"
+                                              render="useDataGrid"/>
+                                </h:selectOneMenu>   
+                                
+                                <!-- Use Age Determination -->
+                                <h:outputText value="Use Age Determination"/>
+                                <h:selectOneRadio styleClass="blackTextStyle" value="#{Use_Backing.useAgeDetermination}">
+                                    <f:selectItem itemLabel="Manually Enter" itemValue="manual" />
+                                    <f:selectItem itemLabel="Calculate from plug date and DPC" itemValue="calculate"/>
+                                    <a4j:ajax event="change" render="useAgeMethod useAgeInPanel"/>
+                                </h:selectOneRadio>
+                                <!--holder to occupy LHS of panelGrid -->
+                                <h:panelGroup>
+                                    <h:outputText value="" rendered="#{Use_Backing.useAgeDetermination eq 'calculate'}"/>
+                                </h:panelGroup>
+                                <h:panelGroup id="useAgeMethod">
+                                    <h:panelGroup id="calculateUseAge" rendered="#{Use_Backing.useAgeDetermination eq 'calculate'}">
+                                        <h:outputText value="DPC" styleClass="blackTextStyle"/>
+                                        &nbsp;
+                                        <h:selectOneMenu value="#{Use_Backing.DPC}">
+                                            <f:selectItems value="#{Use_Backing.daysPostConception}"/>
+                                            <a4j:ajax event="change" listener="#{Use_Backing.daysAfterBirthChangeListener}"
+                                                      render="projectedDate useAgeInPanel"/>
+                                        </h:selectOneMenu>
+                                        &nbsp;&nbsp;
+                                        <h:outputText value="Plug Date" styleClass="blackTextStyle"/>
+                                        &nbsp;
+                                        <h:selectOneMenu value="#{Use_Backing.plugdate}">
+                                            <f:selectItems value="#{Use_Backing.plugDates}"/>
+                                            <a4j:ajax event="change" listener="#{Use_Backing.daysAfterBirthChangeListener}"
+                                                      render="projectedDate useAgeInPanel"/>
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:outputText value="Use Age In"/>
+                                <h:panelGroup>
+                                    <f:ajax event="valueChange" render="useAge">
+                                        <h:panelGrid columns="2" styleClass="blackTextStyle"
+                                                     id="useAgeInPanel">
+                                            <h:selectOneRadio border="0" value="#{Use_Backing.useAgeIn}" 
+                                                              disabled="#{Use_Backing.useAgeDetermination ne 'manual'}">
+                                                <f:selectItem itemLabel="Days" itemValue="days"/>
+                                                <f:selectItem itemLabel="Weeks" itemValue="weeks"/>
+                                                <f:selectItem itemLabel="Months" itemValue="months"/>
+                                            </h:selectOneRadio>
+                                            <h:inputText value="#{Use_Backing.useAge}" id="useAge"
+                                                         disabled="#{Use_Backing.useAgeDetermination ne 'manual'}">
+                                                <a4j:ajax event="change" listener="#{Use_Backing.daysAfterBirthChangeListener}"
+                                                          render="projectedDate"/>
+                                            </h:inputText>
+                                        </h:panelGrid>
+                                    </f:ajax>
+                                </h:panelGroup>
+                                <h:outputText value="Projected Date"/>
+                                <rich:calendar id="projectedDate" 
+                                               inputSize="#{msgs['common.minMaxSize']}"
+                                               datePattern="#{Use_Backing.date_format}"
+                                               showInput="true"
+                                               value="#{Use_Backing.mouseUsage.projectedDate}"
+                                               disabled="true"/>
+                                <h:outputText value="Actual Date"/>
+                                <rich:calendar id="actualDate"
+                                               inputSize="#{msgs['common.minMaxSize']}"
+                                               datePattern="#{Use_Backing.date_format}"
+                                               showInput="true"
+                                               value="#{Use_Backing.mouseUsage.actualDate}"
+                                               showWeeksBar="true"
+                                               enableManualInput="true">
+                                </rich:calendar>
+                                <h:outputText value="Done"/>
+                                <h:selectBooleanCheckbox value="#{Use_Backing.mouseUsage.done}">
+                                    <f:ajax event="valueChange"/>
+                                </h:selectBooleanCheckbox>
+                                <h:outputText value="Comments"/>
+                                <h:inputTextarea value="#{Use_Backing.mouseUsage.comment}"/>
+                                <h:outputText value="Auto Increment ID" rendered="#{!Use_Backing.editing}"/>
+                                <h:selectBooleanCheckbox value="#{Use_Backing.autoIncrementId}" rendered="#{!Use_Backing.editing}"/>
+                                <h:outputText value="Observed Data"/>
+                                <h:panelGrid id="useDataGrid" border="0" columns="4" styleClass="blackTextStyle">
+                                    <h:outputText value="#{Use_Backing.selectedUse.d1Caption}"/>
+                                    <h:inputTextarea value="#{Use_Backing.mouseUsage.d1}"/>
+                                    <h:outputText value="#{Use_Backing.selectedUse.d6Caption}"/>
+                                    <h:inputTextarea value="#{Use_Backing.mouseUsage.d6}"/>
+                                    <h:outputText value="#{Use_Backing.selectedUse.d2Caption}"/>
+                                    <h:inputTextarea value="#{Use_Backing.mouseUsage.d2}"/>
+                                    <h:outputText value="#{Use_Backing.selectedUse.d7Caption}"/>
+                                    <h:inputTextarea value="#{Use_Backing.mouseUsage.d7}"/>
+                                    <h:outputText value="#{Use_Backing.selectedUse.d3Caption}"/>
+                                    <h:inputTextarea value="#{Use_Backing.mouseUsage.d3}"/>
+                                    <h:outputText value="#{Use_Backing.selectedUse.d8Caption}"/>
+                                    <h:inputTextarea value="#{Use_Backing.mouseUsage.d8}"/>
+                                    <h:outputText value="#{Use_Backing.selectedUse.d4Caption}"/>
+                                    <h:inputTextarea value="#{Use_Backing.mouseUsage.d4}"/>
+                                    <h:outputText value="#{Use_Backing.selectedUse.d9Caption}"/>
+                                    <h:inputTextarea value="#{Use_Backing.mouseUsage.d9}"/>
+                                    <h:outputText value="#{Use_Backing.selectedUse.d5Caption}"/>
+                                    <h:inputTextarea value="#{Use_Backing.mouseUsage.d5}"/>
+                                    <h:outputText value="#{Use_Backing.selectedUse.d10Caption}"/>
+                                    <h:inputTextarea value="#{Use_Backing.mouseUsage.d10}"/>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                            <!-- Mouse Info panel, no input options here, only displaying info from DB -->
+                            <h:panelGrid id="mouseUsesInfo" columns="1" style="vertical-align: top;"
+                                         styleClass="customCardColumn, blackTextStyle">
+                                <h:outputText value="Mouse Owner: #{Use_Backing.mouse.owner}"/>
+                                <h:panelGroup>
+                                    <h:outputText value="Birth Date: "/>
+                                    <rich:calendar value="#{Use_Backing.mouse.birthDate}"
+                                                   datePattern="#{Use_Backing.date_format}"
+                                                   disabled="true"/>
+                                </h:panelGroup>
+                                <h:outputText value="Sex: #{Use_Backing.mouse.sex}"/>
+                                <h:outputText value="Strain: #{Use_Backing.mouse.strainKey.strainName}"/>
+                                <h:outputText value="Genotype: #{Use_Backing.mouseGenotype}"/>
+                                <rich:dataTable value="#{Use_Backing.uses}" var="use" 
+                                                rowKeyVar="tableRowIndex" id="usesTable">
+                                    <rich:column id="actions" style="white-space: nowrap;" 
+                                                 width="30px" rendered="#{Use_Backing.editingRowKey ne tableRowIndex}">
+                                        <h:commandLink id="editLink" title="#{msgs['common.edit']}"
+                                                       styleClass="smallText"
+                                                       action="#{Use_Backing.editUseListener}">
+                                            <h:graphicImage value="/images/edit.gif" style="border:0" />
+                                            <f:param name="paramUsageKey" value="#{use.usageKey}" />
+                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        </h:commandLink>
+                                        <a4j:commandButton image="/images/delete.gif"
+                                                           action="#{Use_Backing.deleteUseListener}"
+                                                           oncomplete="deleteUseWarning();" rendered="#{use.useScheduleKey eq ''}">
+                                            <f:param name="paramUsageKey" value="#{use.usageKey}" />
+                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        </a4j:commandButton>
+                                    </rich:column>
+                                    <rich:column id="actions2" style="white-space: nowrap;" 
+                                                 rendered="#{Use_Backing.editingRowKey eq tableRowIndex}">
+                                        <h:commandLink id="cancelLink" title="Cancel Edit"
+                                                       styleClass="smallText"
+                                                       action="#{Use_Backing.cancelEditUseListener}">
+                                            <h:graphicImage value="/images/cancel.png" style="border:0; width:16px; height:16px;" />
+                                            <f:param name="paramUsageKey" value="#{use.usageKey}" />
+                                            <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                                        </h:commandLink>
+                                    </rich:column>
+                                    <rich:column id="id1" style="white-space: nowrap;" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Use" />
+                                        </f:facet>
+                                        <h:outputText value="#{use.use}"/>
+                                    </rich:column>
+                                    <rich:column id="useSchedule" style="white-space: nowrap;" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Use Schedule" />
+                                        </f:facet>
+                                        <h:outputText value="#{use.useSchedule.useScheduleTerm.useScheduleTermName}"/>
+                                    </rich:column>
+                                    <rich:column id="id2" width="60px" style="white-space: nowrap;" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Use Age (Days)" />
+                                        </f:facet>
+                                        <h:outputText value="#{use.useAge}"/>
+                                    </rich:column>
+                                    <rich:column id="id3" style="white-space: nowrap;" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Proj Date" />
+                                        </f:facet>
+                                        <rich:calendar disabled ="true"
+                                                       datePattern="#{Use_Backing.date_format}"
+                                                       value="#{use.projectedDate}"/>
+                                    </rich:column>     
+                                    <rich:column id="id4" style="white-space: nowrap;" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Act Date" />
+                                        </f:facet>
+                                        <rich:calendar disabled="true" 
+                                                       datePattern="#{Use_Backing.date_format}"
+                                                       value="#{use.actualDate}"/>
+                                    </rich:column>   
+                                    <rich:column id="id5" width="60px">
+                                        <f:facet name="header">
+                                            <h:outputText value="Done?" />
+                                        </f:facet>
+                                        <h:outputText value="#{use.done}"/>
+                                    </rich:column>   
+                                </rich:dataTable>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </h:form>
+                    
+                    <!-- form contains bottom save buttons -->
+                    <h:form id="buttonsForm2">
+                        <hr/>
+                        <a4j:commandButton id="saveUseButton2"
+                                           value="Save"
+                                           styleClass="mediumButton"
+                                           oncomplete="document.getElementById('mouseUseForm:secretSaveUseButton').click();"
+                                           rendered="#{!Use_Backing.editing}"/>    
+                        <a4j:commandButton id="editUseButton2"
+                                           value="Save"
+                                           styleClass="mediumButton"
+                                           oncomplete="document.getElementById('mouseUseForm:secretEditUseButton').click();"
+                                           rendered="#{Use_Backing.editing}"/>
+                    </h:form>
+                </h:panelGroup>
+            </h:panelGrid>
+        </div>
+        <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+        <rich:popupPanel id="findMousePanel" width="700" height="550"
+                         keepVisualState="true" resizeable="true" 
+                         top="10">
+            <f:facet name="header">
+                <h:outputText value="Find Mouse" />
+            </f:facet>
+            <f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="/images/delete.gif" id="hidelinkId2"  alt="#{msgs['common.close']}" 
+                                onclick="#{rich:component('findMousePanel')}.hide();return false;"
+                                height="20" width="20" styleClass="hidelink" title="#{msgs['common.close']}" />
+            </h:panelGroup>
+        </f:facet>
+            <h:form id="findMousePanelForm">
+                <rich:messages style="color:red;"></rich:messages>
+                <table class="white-space: nowrap; width:800px;">
+                    <tr>
+                            <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['mouseId']}" id="lookForMouseId" />
+                            </td>
+                            <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="mouseIDFilter" value="#{Use_Backing.mouseSearch.mouseFilter}" >
+                                <f:selectItems value="#{Use_Backing.wrapper.mouseFilters}"/>
+                            </h:selectOneMenu>
+                            <h:inputText id="searchById" value="#{Use_Backing.mouseSearch.mouseID}" 
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" />
+                            </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['strain']}" id="lookForStrainId" />
+                            </td>
+                            <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="searchByStrain" value="#{Use_Backing.mouseSearch.strain}" >
+                                <f:selectItems value="#{Use_Backing.wrapper.allStrains}"/>
+                                <f:converter converterId="strainConverter" />
+                            </h:selectOneMenu>
+                            </td>
+                        </tr>
+                    <tr>
+                            <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['lifeStatus']}" id="lifeStatusId" />
+                            </td>
+                            <!-- Value -->
+                        <td>
+                            <h:selectOneMenu value="#{Use_Backing.mouseSearch.lifeStatus}" >
+                                <f:selectItems value="#{Use_Backing.wrapper.cvLifeStatusItemsOptional}"/>
+                                <f:converter converterId="lifeStatusConverter" />
+                            </h:selectOneMenu>
+                            </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['dateOfBirth']}" />
+                            </td>
+                            <!-- Value -->
+                        <td>
+                            <rich:calendar id="birthDate1"
+                                           value="#{Use_Backing.mouseSearch.DOBStartDate}"
+                                           inputSize="#{msgs['common.minMaxSize']}"
+                                           datePattern="#{Use_Backing.date_format}"
+                                           showInput="true"
+                                           showWeeksBar="true"
+                                           enableManualInput="true">
+                            </rich:calendar>                            
+                            &nbsp;&nbsp;
+                            <h:outputLabel value="To" />
+                            &nbsp;&nbsp;
+                            <rich:calendar id="birthDate2"
+                                           value="#{Use_Backing.mouseSearch.DOBEndDate}"
+                                           inputSize="#{msgs['common.minMaxSize']}"
+                                           datePattern="#{Use_Backing.date_format}"
+                                           showInput="true"
+                                           showWeeksBar="true"
+                                           enableManualInput="true">
+                            </rich:calendar>
+                            </td>
+                        </tr>
+                    <tr>
+                            <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['pen#']}" />
+                            </td>
+                            <!-- Value -->
+                        <td style="white-space: nowrap;">
+                            <h:selectOneMenu id="penIDFilter" value="#{Use_Backing.mouseSearch.penFilter}" >
+                                <f:selectItems value="#{Use_Backing.wrapper.integerFilters}"/>
+                            </h:selectOneMenu>
+                            <h:inputText id="searchByPenId" value="#{Use_Backing.mouseSearch.penID}" 
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" />
+                            </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['sex']}" id="sexId" />
+                            </td>
+                            <!-- Value -->
+                        <td>
+                            <h:selectOneMenu value="#{Use_Backing.mouseSearch.sex}" >
+                                <f:selectItems value="#{Use_Backing.wrapper.cvSexItemsOptional}"/>
+                                <f:converter converterId="sexConverter" />
+                            </h:selectOneMenu>
+                            </td>
+                        </tr>
+
+                    <tr>
+                            <!-- Label -->
+                            <td>
+                                <h:outputLabel value="#{msgs['generation']}" id="generationId" />
+                            </td>
+                            <!-- Value -->
+                            <td>
+                                <h:selectOneMenu value="#{Use_Backing.mouseSearch.generation}" >
+                                    <f:selectItems value="#{Use_Backing.wrapper.cvGenerationItemsOptional}"/>
+                                    <f:converter converterId="generationConverter" />
+                                </h:selectOneMenu>
+                            </td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <!-- Label -->
+                            <td>&nbsp;</td>
+                            <!-- Value -->
+                            <td>&nbsp;</td>
+                        </tr>
+
+                    <tr>
+                            <!-- Label -->
+                        <td colspan="5">
+                            <h:outputLabel value="#{msgs['owner']}" />
+                            </td>
+                        </tr>
+                    <tr>
+                        <td colspan="5">
+                            <h:panelGroup id="ownersId">   
+                                <rich:pickList value="#{Use_Backing.mouseSearch.owners}" 
+                                               disabled="false"  >
+                                    <f:selectItems value="#{Use_Backing.wrapper.colonyManageOwnerItems}"/>
+                                    <f:converter converterId="ownerConverter" />
+                                </rich:pickList>
+                            </h:panelGroup>
+                            </td></tr></table>
+                <br />
+                <a4j:commandButton id="search"
+                                   value="#{msgs['line.search']}"
+                                   styleClass="mediumButton"
+                                   action="#{Use_Backing.executeMouseSearch}"
+                                   type="submit"
+                                   render="holder"/>
+                <a4j:status name="statusTable">
+                    <f:facet name="start">
+                        &nbsp;&nbsp;
+                        <h:graphicImage  value="../images/bhi_ball.gif"/>
+                    </f:facet>
+                </a4j:status>    
+                <br />
+                <h:panelGrid columns="1" id="holder">
+                    <h:outputText id="mouseResultsTextId1"
+                                  rendered="#{Use_Backing.mouseDataModel != null}"
+                                  value="#{msgs['search.results']} #{Use_Backing.mouseDataModel.rowCount}" />
+                    <rich:extendedDataTable
+                        rendered="#{Use_Backing.mouseDataModel != null}"
+                        id="mouseSearchResultsTable"
+                        value="#{Use_Backing.mouseDataModel}"
+                        styleClass="mediumSizeExtendedDataTable"
+                        var="dm" 
+                        rows="10"
+                        frozenColumns="1"
+                        sortMode="#{Use_Backing.mouseSelectionETB.sortMode}"
+                        selectionMode="#{Use_Backing.mouseSelectionETB.selectionMode}"
+                        selection="#{Use_Backing.mouseSelectionETB.selection}">
+                        <f:facet name="footer" class="dataScroller">
+                            <rich:dataScroller for="mouseSearchResultsTable" 
+                                               id="userResultsDataScroller"
+                                               maxPages="5"                                    
+                                               renderIfSinglePage="false" />
+                        </f:facet> 
+                        <rich:column id="id"
+                                     sortBy="#{dm.id}"
+                                     sortOrder="#{sortingBean.column1Order}"
+                                     filterValue="#{filterBean.column1Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.id, filterBean.column1Filter)}"  
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['mouseId']}" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column1Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn1}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column1Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.id}"/>
+                        </rich:column>
+                        <rich:column id="birthDate"
+                                     sortBy="#{dm.birthDate}"
+                                     sortOrder="#{sortingBean.column2Order}"
+                                     filterValue="#{filterBean.column2Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.birthDate, filterBean.column2Filter)}"   
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['dateOfBirth']}" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column2Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn2}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column2Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.birthDate}"/>
+                        </rich:column>
+                        <rich:column id="generation"
+                                     sortBy="#{dm.generation}"
+                                     sortOrder="#{sortingBean.column3Order}"
+                                     filterValue="#{filterBean.column3Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.generation, filterBean.column3Filter)}"   
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['generation']}" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column3Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn3}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column3Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.generation}"/>
+                        </rich:column>
+                        <rich:column id="owner"
+                                     sortBy="#{dm.owner}"
+                                     sortOrder="#{sortingBean.column4Order}"
+                                     filterValue="#{filterBean.column4Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.owner, filterBean.column4Filter)}"  
+                                     width="150px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['owner']}" style="white-space: nowrap;" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column4Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn4}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column4Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.owner}"/>
+                        </rich:column>
+                        <rich:column id="lifeStatus"
+                                     sortBy="#{dm.lifeStatus}"
+                                     sortOrder="#{sortingBean.column5Order}"
+                                     filterValue="#{filterBean.column5Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.lifeStatus, filterBean.column5Filter)}"   
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="#{msgs['lifeStatus']}" />
+                                    <br />
+                                    <a4j:commandButton image="#{sortingBean.column5Image}" 
+                                                       render="mouseSearchResultsTable" 
+                                                       action="#{sortingBean.sortByColumn5}" 
+                                                       status="statusTable"/>
+                                    <br />
+                                    <h:inputText value="#{filterBean.column5Filter}" styleClass="w100">
+                                        <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{dm.lifeStatus}"/>
+                        </rich:column>
+                        <rich:column id="breedingStatus"
+                                     sortBy="#{dm.breedingStatus}"
+                                     sortOrder="#{sortingBean.column6Order}"
+                                     filterValue="#{filterBean.column6Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.breedingStatus, filterBean.column6Filter)}"   
+                                     width="150px">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="#{msgs['breedingStatus']}" style="white-space: nowrap;" />
+                                    <br />
+                                    <a4j:commandButton image="#{sortingBean.column6Image}" 
+                                                       render="mouseSearchResultsTable" 
+                                                       action="#{sortingBean.sortByColumn6}" 
+                                                       status="statusTable"/>
+                                    <br />
+                                    <h:inputText value="#{filterBean.column6Filter}" styleClass="w100">
+                                        <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{dm.breedingStatus}" />
+                        </rich:column>
+                    </rich:extendedDataTable>
+                    <br />
+                    <h:panelGrid columns = "2">
+                        <a4j:commandButton id="selectMouseButton"
+                                           value="#{msgs['common.ok']}"
+                                           oncomplete="if (#{facesContext.maximumSeverity ==null}) #{rich:component('findMousePanel')}.hide();"   
+                                           action="#{Use_Backing.selectMouseAction}"
+                                           render="idPanel, findMousePanelForm, mouseUsesInfo"
+                                           rendered="#{Use_Backing.mouseDataModel != null}"
+                                           styleClass="mediumButton"/>
+                        <a4j:commandButton id="cancel"
+                                           value="Cancel"
+                                           styleClass="mediumButton"
+                                           rendered="#{Use_Backing.mouseDataModel != null}"
+                                           immediate="true"
+                                           render="findMousePanelForm"
+                                           oncomplete="#{rich:component('findMousePanel')}.hide();"/>
+                    </h:panelGrid>
+                    </h:panelGrid>
+            </h:form>
+        </rich:popupPanel>
+    </h:body>
+</html>

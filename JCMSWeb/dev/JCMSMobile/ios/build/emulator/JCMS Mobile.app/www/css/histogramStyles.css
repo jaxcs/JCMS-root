@@ -1,0 +1,55 @@
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+.stack1 {
+    fill: none;
+    stroke-width: 1.5px;
+    stroke: blue;
+}
+rect.stack1 {
+    fill: blue;
+    stroke: steelblue;
+}
+rect.stack2 {
+    fill: red;
+    stroke: steelblue;
+}
+rect.stack3 {
+    fill: green;
+    stroke: steelblue;
+}
+rect.stack4 {
+    fill: purple;
+    stroke: steelblue;
+}
+rect.stack5 {
+    fill: orange;
+    stroke: steelblue;
+}
+rect.stack6 {
+    fill: yellow;
+    stroke: steelblue;
+}
+rect.stack7 {
+    fill: black;
+    stroke: steelblue;
+}
+.activeGrouping{
+    fill: blue;
+    font-weight: bold;
+}
+.inactiveGrouping{
+    fill: gray;
+    cursor: pointer;
+}
+text.focused{
+    font-weight: bold;
+}
+rect.focused{
+    stroke: black;
+    stroke-width: 5px;
+}

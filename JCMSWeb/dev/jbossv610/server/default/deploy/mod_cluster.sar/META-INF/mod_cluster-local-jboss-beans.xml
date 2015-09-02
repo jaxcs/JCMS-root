@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Beans that provide JBoss AS-side functionality for mod_cluster. These
+  beans are all "On Demand", i.e. that are not installed unless requested.
+-->
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+  <bean name="ModClusterListener" class="org.jboss.modcluster.catalina.CatalinaEventHandlerAdapter">
+    <constructor>
+      <!-- To use the HA singleton version of mod_cluster, change this injection to HAModClusterService -->
+      <parameter class="org.jboss.modcluster.ContainerEventHandler"><inject bean="ModClusterService"/></parameter>
+      <parameter class="javax.management.MBeanServer"><inject bean="JMXKernel" property="mbeanServer"/></parameter>
+    </constructor>
+    <depends>WebServer</depends>
+  </bean>
+
+</deployment>

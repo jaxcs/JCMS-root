@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<!-- BUILD INSTRUCTIONS -->
+<!-- 1. This build requires SVNANT v1.3 jar files.  Add to your ANT_HOME/lib folder -->
+<!--    .../ThirdPartyLibraries/svnant_1.3 -->
+<!-- 2. Set ANT_HOME environment variable -->
+<!-- 3. Set BUILDFILES environment variable to point to buildfiles checkout from -->
+<!--        .../buildfiles -->
+<!-- 4. Clean and Build JCMS Web Installer then commit buildfiles folder in step 3. -->        
+
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<!-- By default, only the Clean and Build commands use this build script. -->
+<!-- Commands such as Run, Debug, and Test only use this build script if -->
+<!-- the Compile on Save feature is turned off for the project. -->
+<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
+<!-- in the project's Project Properties dialog box.-->
+<project name="JCMSWebInstaller" default="default" basedir=".">
+    <description>Builds, tests, and runs the project JCMSWebInstaller.</description>
+    <import file="nbproject/build-impl.xml"/>
+    <property environment="env" />
+    
+    <!-- *************************************************************** -->
+    <!--   Set-Up of SVN-ANT classpath                                   -->
+    <!-- *************************************************************** -->  
+    <path id="svnant.classpath">
+     <fileset dir="${env.ANT_HOME}">     
+      <include name="**/*.jar" />
+     </fileset>
+    </path>
+    <!-- load the svnant task -->
+    <typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="svnant.classpath" />
+    
+    <target name="-pre-init">
+        <echo message=""/>
+        <echo message="==========================================================="/>
+        <echo message="--- MAY NEED TO SET YOUR USERNAME AND PASSWORD FIRST!!! ---"/>
+        <echo message="--- IN FILE build.xml                                   ---"/>
+        <echo message="--- ALSO FILL IN YOUR cs.repos.dir location             ---"/>
+        <echo message="--- and modify other local properties                   ---"/>
+        <echo message="==========================================================="/>
+        <echo message=""/>
+
+        <!-- local properties -->
+        <property name="ant.svn.username" value="" />
+        <property name="ant.svn.password" value="" />
+        <property name="cs.repos.dir" value="https:// ... csrepos" />
+        <property name="ReleaseDocs" value="JCMSWeb/trunk/docs/Release Docs" />
+        <property name="buildfiles" value="JCMSWeb/trunk/dev/buildfiles" />
+        <property name="UpgradeScripts" location="UpgradeScripts" />
+        <property name="Docs" location="Docs" />
+        <property name="jcms.jcmslib.dir" location="jcmslib" />
+
+        <echo message="--- Cleaning Previous Build ---"/>
+        <delete dir="${UpgradeScripts}"/>
+        <delete dir="${Docs}"/>
+        <delete dir="${jcms.jcmslib.dir}"/>
+        <echo message="--- Clean Complete ---"/>
+        
+        <echo message="--- Creating directory structure ---"/>
+        <mkdir dir="${UpgradeScripts}"/>  
+        <mkdir dir="${Docs}"/>  
+        <mkdir dir="${jcms.jcmslib.dir}"/>
+        <echo message="--- Create directory structure complete ---"/>
+        
+        <echo message="--- Exporting Files ---"/> 
+
+        <svnSetting
+            id="svn.settings" 
+            javahl="false"
+            svnkit="true"
+            username="${ant.svn.username}"
+            password="${ant.svn.password}" />        
+        <svn refid="svn.settings"> 
+        <!-- <svn username="${ant.svn.username}" password="${ant.svn.password}" svnkit="true"> -->
+            <!-- JCMS Web documents --> 
+            <export srcUrl="${cs.repos.dir}/${ReleaseDocs}/JCMSWeb_Installation_Guide.pdf" revision="HEAD" destPath="${Docs}/JCMSWeb_Installation_Guide.pdf" />          
+            <export srcUrl="${cs.repos.dir}/${ReleaseDocs}/JCMSWebQuickStartInstructions.pdf" revision="HEAD" destPath="${Docs}/JCMSWebQuickStartInstructions.pdf" />          
+            <export srcUrl="${cs.repos.dir}/${ReleaseDocs}/JCMSWeb_UserGuide.pdf" revision="HEAD" destPath="${Docs}/JCMSWeb_UserGuide.pdf" />          
+            <export srcUrl="${cs.repos.dir}/${ReleaseDocs}/Release.txt" revision="HEAD" destPath="${Docs}/Release.txt" />  
+            <export srcUrl="${cs.repos.dir}/JCMS_DB/trunk/dev/scripts" revision="HEAD" destPath="${UpgradeScripts}" />    
+
+            <!-- JCMS Web jars and war file -->
+            <export srcUrl="${cs.repos.dir}/${buildfiles}/JCMSIntegrationTier.jar" revision="HEAD" destPath="${jcms.jcmslib.dir}/JCMSIntegrationTier.jar" />          
+            <export srcUrl="${cs.repos.dir}/${buildfiles}/JCMSMiddleTier.jar" revision="HEAD" destPath="${jcms.jcmslib.dir}/JCMSMiddleTier.jar" />          
+            <export srcUrl="${cs.repos.dir}/${buildfiles}/JCMSWebTier.war" revision="HEAD" destPath="${jcms.jcmslib.dir}/JCMSWebTier.war" />       
+            <export srcUrl="${cs.repos.dir}/${buildfiles}/jcmsJboss.jar" revision="HEAD" destPath="${jcms.jcmslib.dir}/jcmsJboss.jar" />       
+            
+        </svn>
+        <echo message="--- Export Files Complete ---"/>   
+        
+    </target>
+    
+    <target name="-post-jar">
+        <!-- *************************************************************** -->
+        <!--   Set-Up of SVN-ANT classpath                                   -->
+        <!-- *************************************************************** -->  
+        <path id="svnant.classpath">
+         <fileset dir="${env.ANT_HOME}">     
+          <include name="**/*.jar" />
+         </fileset>
+        </path>
+        <!-- load the svnant task -->
+        <typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="svnant.classpath" />
+        
+        <copy file="dist/JCMSWebInstaller.jar" todir="${env.BUILDFILES}" />
+        <copy todir="${env.BUILDFILES}/lib">
+          <fileset dir="dist/lib"/>
+        </copy>
+        
+        <!-- <echo message=" checking in buildfiles ... " /> 
+        -->
+        <svnSetting
+            id="svn.settings" 
+            javahl="false"
+            svnkit="true"
+            username="${ant.svn.username}"
+            password="${ant.svn.password}" />        
+        <svn refid="svn.settings"> 
+        <!-- <svn username="${ant.svn.username}" password="${ant.svn.password}" svnkit="true"> -->
+        <!-- 
+            <commit recurse="true" message="JCMS Web Installer automatically committing a new JCMS Web Installer jar file and any JCMS Application files (jars, war)">
+                <fileset dir="${env.BUILDFILES}"/>
+            </commit>
+        -->
+        </svn>
+        <!-- <echo message=" checking in buildfiles complete " /> -->
+    </target>
+    
+    <!--
+
+    There exist several targets which are by default empty and which can be 
+    used for execution of your tasks. These targets are usually executed 
+    before and after some main targets. They are: 
+
+      -pre-init:                 called before initialization of project properties
+      -post-init:                called after initialization of project properties
+      -pre-compile:              called before javac compilation
+      -post-compile:             called after javac compilation
+      -pre-compile-single:       called before javac compilation of single file
+      -post-compile-single:      called after javac compilation of single file
+      -pre-compile-test:         called before javac compilation of JUnit tests
+      -post-compile-test:        called after javac compilation of JUnit tests
+      -pre-compile-test-single:  called before javac compilation of single JUnit test
+      -post-compile-test-single: called after javac compilation of single JUunit test
+      -pre-jar:                  called before JAR building
+      -post-jar:                 called after JAR building
+      -post-clean:               called after cleaning build products
+
+    (Targets beginning with '-' are not intended to be called on their own.)
+
+    Example of inserting an obfuscator after compilation could look like this:
+
+        <target name="-post-compile">
+            <obfuscate>
+                <fileset dir="${build.classes.dir}"/>
+            </obfuscate>
+        </target>
+
+    For list of available properties check the imported 
+    nbproject/build-impl.xml file. 
+
+
+    Another way to customize the build is by overriding existing main targets.
+    The targets of interest are: 
+
+      -init-macrodef-javac:     defines macro for javac compilation
+      -init-macrodef-junit:     defines macro for junit execution
+      -init-macrodef-debug:     defines macro for class debugging
+      -init-macrodef-java:      defines macro for class execution
+      -do-jar-with-manifest:    JAR building (if you are using a manifest)
+      -do-jar-without-manifest: JAR building (if you are not using a manifest)
+      run:                      execution of project 
+      -javadoc-build:           Javadoc generation
+      test-report:              JUnit report generation
+
+    An example of overriding the target for project execution could look like this:
+
+        <target name="run" depends="JCMSWebInstaller-impl.jar">
+            <exec dir="bin" executable="launcher.exe">
+                <arg file="${dist.jar}"/>
+            </exec>
+        </target>
+
+    Notice that the overridden target depends on the jar target and not only on 
+    the compile target as the regular run target does. Again, for a list of available 
+    properties which you can use, check the target you are overriding in the
+    nbproject/build-impl.xml file. 
+
+    -->
+</project>

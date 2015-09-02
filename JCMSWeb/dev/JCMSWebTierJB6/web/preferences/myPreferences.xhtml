@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <h:head>
+      <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+      <title>
+        <h:outputText value="#{msgs.title} - #{msgs['welcome.pageTitle']}"/>
+      </title>
+      <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+      <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+    </h:head>
+    <h:body>
+      <h:form id="myPreferencesHomeID">
+        <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+        <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+
+        <div style="margin-left:10px;margin-right:10px">
+            <h1>
+                <h:outputText value="#{msgs['preferences.header']}" styleClass="h1"/>
+            </h1><hr />
+            <h:panelGrid columns="1" border="0" cellpadding="5" cellspacing="5"
+                             columnClasses="detailPane, detailPane">
+
+                <!-- Messages -->
+                    <rich:messages />
+                    <br />
+                    <h:panelGroup>
+                        <div align="left">
+                            <a4j:commandButton
+                                value="#{msgs['common.save']}"
+                                styleClass="mediumButton"
+                                action="#{Preferences_Backing.savePreferences}"
+                                id="save1"
+                                status="statusPage"/>
+                                
+                            &nbsp;&nbsp;
+                        </div>
+                    </h:panelGroup> 
+                    
+                    <h:panelGroup styleClass="formTitle" rendered="#{Login_Backing.hasColonyManagement}">
+
+                        <h3><h:outputText value="Global Changes"></h:outputText></h3>
+                        
+                        <h:panelGrid columns="2"
+                                     columnClasses="rowHeader, innerTableTD, innerTableTD"
+                                     styleClass="innerTable">
+                        
+                        
+                        <h:panelGroup>
+                                <h:outputLabel value="Field " />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                                <h:outputLabel value="Default Value" />
+                        </h:panelGroup>
+                        
+                            <h:panelGroup>
+                                <h:outputLabel value="Display Strain Name First Followed by Stock #" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:selectOneRadio value="#{Preferences_Backing.strainFirst}">      
+                                    <f:selectItem id="firstTrue" itemValue="true" itemLabel="True" />
+                                    <f:selectItem id="firstFalse" itemValue="false" itemLabel="False" />
+                                </h:selectOneRadio>
+                            </h:panelGroup>
+                        
+                        </h:panelGrid>
+                        
+                        <h3><h:outputText value="Add and Edit Mouse Screen"></h:outputText></h3>
+
+                        <h:panelGrid columns="3"
+                                     columnClasses="rowHeader, innerTableTD, innerTableTD"
+                                     styleClass="innerTable">
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Field " />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Visibility " />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Default Value" />
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['litter#']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideLitterID"
+                                    value="#{Preferences_Backing.hideLitterID}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for litter ID -->
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Protocol ID" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideProtocolID"
+                                    value="#{Preferences_Backing.hideProtocolID}">
+                                </h:selectBooleanCheckbox>                
+                            </h:panelGroup>   
+                            <h:panelGroup>
+                                <h:selectOneMenu value="#{Preferences_Backing.mouseProtocolEntity}">
+                                    <f:selectItems value="#{Preferences_Backing.selectItemWrapper.cvMouseProtocolItemsOptional}"/> 
+                                    <f:converter converterId="mouseProtocolConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Use Schedules" />   
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideUseSchedules"
+                                    value="#{Preferences_Backing.hideUseSchedules}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for use schedules -->
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Cause of Death" />   
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideCOD"
+                                    value="#{Preferences_Backing.hideCOD}"
+                                    title="Hide">
+                                </h:selectBooleanCheckbox>
+                            </h:panelGroup> 
+                            <h:panelGroup>
+                                <h:selectOneMenu value="#{Preferences_Backing.mouseCODEntity}" >
+                                    <f:selectItems value="#{Preferences_Backing.selectItemWrapper.cvCauseOfDeathItemsOptional}"/>
+                                    <f:converter converterId="causeOfDeathConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                            
+                             <h:panelGroup>
+                                <h:outputLabel value="#{msgs['codNotes']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideCODNotes"
+                                    value="#{Preferences_Backing.hideCODNotes}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for Cause of Death Notes -->
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Room Name" />   
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideRoomName"
+                                    value="#{Preferences_Backing.hideRoomName}"
+                                    title="Hide">
+                                </h:selectBooleanCheckbox>
+                            </h:panelGroup> 
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                <h:outputLabel value=" " />
+                                <h:selectOneMenu value="#{Preferences_Backing.roomEntity}" >
+                                    <f:selectItems value="#{Preferences_Backing.selectItemWrapper.cvRoomItems}"/>
+                                    <f:converter converterId="roomConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Mouse Origin" />   
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideMouseOrigin"
+                                    value="#{Preferences_Backing.hideMouseOrigin}"
+                                    title="Hide">
+                                </h:selectBooleanCheckbox>
+                            </h:panelGroup> 
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                <h:outputLabel value=" " />
+                                <h:selectOneMenu value="#{Preferences_Backing.mouseOriginEntity}" >
+                                    <f:selectItems value="#{Preferences_Backing.selectItemWrapper.cvMouseOriginItemsOptional}"/>
+                                    <f:converter converterId="mouseOriginConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Phenotypes" />   
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hidePhenotypes"
+                                    value="#{Preferences_Backing.hidePhenotypes}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for phenotypes -->
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Mouse Comments" />   
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideMouseComment"
+                                    value="#{Preferences_Backing.hideMouseComment}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for mouse comments -->
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['coatColor']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideCoatColor"
+                                    value="#{Preferences_Backing.hideCoatColor}">
+                                </h:selectBooleanCheckbox>                
+                            </h:panelGroup>   
+                            <h:panelGroup>
+                                <h:selectOneMenu value="#{Preferences_Backing.coatColorEntity}">
+                                    <f:selectItems value="#{Preferences_Backing.selectItemWrapper.cvCoatColorItems}"/> 
+                                    <f:converter converterId="coatColorConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['diet']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideDiet"
+                                    value="#{Preferences_Backing.hideDiet}">
+                                </h:selectBooleanCheckbox>                
+                            </h:panelGroup>   
+                            <h:panelGroup>
+                                <h:selectOneMenu value="#{Preferences_Backing.dietEntity}">
+                                    <f:selectItems value="#{Preferences_Backing.selectItemWrapper.cvDietItems}"/> 
+                                    <f:converter converterId="dietConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['vialID']}"  />   
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideSampleVialID"
+                                    value="#{Preferences_Backing.hideSampleVialID}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for vial ID -->
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['vialPosition']}" />   
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideSampleVialTagPosition"
+                                    value="#{Preferences_Backing.hideSampleVialTagPosition}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for vial position -->
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['sex']}" />   
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value=""></h:outputLabel> <!--no hide for sex -->                       
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:selectOneMenu value="#{Preferences_Backing.sexEntity}">
+                                    <f:selectItems value="#{Preferences_Backing.selectItemWrapper.cvSexItemsOptional}"/> 
+                                    <f:converter converterId="sexConverter" />
+                                </h:selectOneMenu>  
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['breedingStatus']}" />   
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value=""></h:outputLabel> <!--no hide for breeding status -->                       
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:selectOneMenu value="#{Preferences_Backing.breedingStatusEntity}">
+                                    <f:selectItems value="#{Preferences_Backing.selectItemWrapper.cvBreedingStatusItemsOptional}"/> 
+                                    <f:converter converterId="breedingStatusConverter" />
+                                </h:selectOneMenu>  
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['replacementTag']}" />   
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideReplacementTag"
+                                    value="#{Preferences_Backing.hideReplacementTag}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for replacement tag -->
+                            </h:panelGroup>
+
+                        </h:panelGrid>
+                    
+                    <h3><h:outputText value="Add and Edit Mating Screen"></h:outputText></h3>
+
+                        <h:panelGrid columns="3"
+                                     columnClasses="rowHeader, innerTableTD, innerTableTD"
+                                     styleClass="innerTable">
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Field " />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Visibility " />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Default Value" />
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['mating.weanNote']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideWeanNote"
+                                    value="#{Preferences_Backing.hideWeanNote}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for wean note -->
+                            </h:panelGroup>
+                        
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['mating.comments']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideMatingComment"
+                                    value="#{Preferences_Backing.hideMatingComment}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for mating comment -->
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['mating.weanTime']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideWeanTime"
+                                    value="#{Preferences_Backing.hideWeanTime}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:selectOneRadio value="#{Preferences_Backing.weanTime}">      
+                                    <f:selectItem id="weanStandard" itemValue="true" itemLabel="Standard" />
+                                    <f:selectItem id="weanExtended" itemValue="false" itemLabel="Extended" />
+                                </h:selectOneRadio>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['mating.needGenotyping']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideNeedsTyping"
+                                    value="#{Preferences_Backing.hideNeedsTyping}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:selectOneRadio value="#{Preferences_Backing.needsTyping}">      
+                                    <f:selectItem id="typingTrue" itemValue="true" itemLabel="Yes" />
+                                    <f:selectItem id="typingFalse" itemValue="false" itemLabel="No" />
+                                </h:selectOneRadio>  
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['mouse.newDiet']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideMatingDiet"
+                                    value="#{Preferences_Backing.hideMatingDiet}">
+                                </h:selectBooleanCheckbox>                
+                            </h:panelGroup>   
+                            <h:panelGroup>
+                                <h:selectOneMenu value="#{Preferences_Backing.matingDietEntity}">
+                                    <f:selectItems value="#{Preferences_Backing.selectItemWrapper.cvDietItems}"/> 
+                                    <f:converter converterId="dietConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['mating.dam2']}" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideMatingDam2"
+                                    value="#{Preferences_Backing.hideMatingDam2}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for mating dam 2 -->
+                            </h:panelGroup>
+                            
+                        </h:panelGrid>
+                    <h3><h:outputText value="Add and Edit Litter Screen"></h:outputText></h3>
+
+                        <h:panelGrid columns="3"
+                                     columnClasses="rowHeader, innerTableTD, innerTableTD"
+                                     styleClass="innerTable">
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Field " />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Visibility " />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Default Value" />
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Number Born Dead" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideNumberBornDead"
+                                    value="#{Preferences_Backing.hideNumberBornDead}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for number born dead -->
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Number Culled at Wean" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideNumberCulledAtWean"
+                                    value="#{Preferences_Backing.hideNumberCulledAtWean}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for number culled at wean -->
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Number Missing at Wean" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideNumberMissingAtWean"
+                                    value="#{Preferences_Backing.hideNumberMissingAtWean}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for number missing at wean -->
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Litter Type" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideLitterType"
+                                    value="#{Preferences_Backing.hideLitterType}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Live Birth" />   <!--no choices for litter type -->
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['litter.comments']}"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideLitterComments"
+                                    value="#{Preferences_Backing.hideLitterComments}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for number litter comments -->
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Mouse Origin" />   
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideLitterOrigin"
+                                    value="#{Preferences_Backing.hideLitterOrigin}"
+                                    title="Hide">
+                                </h:selectBooleanCheckbox>
+                            </h:panelGroup> 
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                                <h:outputLabel value=" " />
+                                <h:selectOneMenu value="#{Preferences_Backing.litterOriginEntity}" >
+                                    <f:selectItems value="#{Preferences_Backing.selectItemWrapper.cvMouseOriginItemsOptional}"/>
+                                    <f:converter converterId="mouseOriginConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Protocol ID" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideLitterProtocol"
+                                    value="#{Preferences_Backing.hideLitterProtocol}">
+                                </h:selectBooleanCheckbox>                
+                            </h:panelGroup>   
+                            <h:panelGroup>
+                                <h:selectOneMenu value="#{Preferences_Backing.litterProtocolEntity}">
+                                    <f:selectItems value="#{Preferences_Backing.selectItemWrapper.cvMouseProtocolItemsOptional}"/> 
+                                    <f:converter converterId="mouseProtocolConverter" />
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <h:outputLabel value="Use Schedules " />   
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideLitterUseSchedules"
+                                    value="#{Preferences_Backing.hideLitterUseSchedules}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="" />   <!--no defaults for use schedules -->
+                            </h:panelGroup>
+                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Leave Pups in Mating Cage" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Hide"></h:outputLabel>
+                                <h:selectBooleanCheckbox 
+                                    id="hideLeavePupsInMatingPen"
+                                    value="#{Preferences_Backing.hideLeavePupsInMatingPen}">
+                                </h:selectBooleanCheckbox>                          
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:selectOneRadio value="#{Preferences_Backing.leavePupsInMatingPen}">      
+                                    <f:selectItem id="leaveTrue" itemValue="true" itemLabel="Yes" />
+                                    <f:selectItem id="leaveFalse" itemValue="false" itemLabel="No" />
+                                </h:selectOneRadio>
+                            </h:panelGroup>
+                    
+                        </h:panelGrid>
+                    &nbsp;&nbsp;
+                    <h:panelGroup>
+                        <div align="left">
+                            <a4j:commandButton
+                                value="#{msgs['common.save']}"
+                                styleClass="mediumButton"
+                                action="#{Preferences_Backing.savePreferences}"
+                                id="save"
+                                status="statusPage"/>
+                                
+                            &nbsp;&nbsp;
+                        </div>
+                    </h:panelGroup>  
+                </h:panelGroup>
+           </h:panelGrid>
+           </div> 
+            <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+        </h:form>
+    </h:body>
+</html>

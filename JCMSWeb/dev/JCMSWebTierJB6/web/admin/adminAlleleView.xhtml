@@ -1,0 +1,227 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich">
+    <h:panelGroup id="addPanel">
+        <a4j:commandButton
+            value="Add"
+            title="Add"
+            styleClass="mediumButton"
+            action="#{adminAlleleBean.addAction}"
+            render="alleleTable totalResulsId"
+            disabled="#{adminAlleleBean.disableAdd}"
+            onclick="#{rich:component('alleleDS')}.first()"
+            oncomplete="setNumberOfFilteredRows(); moveFocusToInput();">
+        </a4j:commandButton>
+    </h:panelGroup>
+    <br />
+    <h:panelGroup>
+        <h:panelGrid columns="2" columnClasses="rowHeader innerTableTD" style="vertical-align: top;">
+            <h:outputText value="Associate Allele with ...  " />
+            <h:selectOneRadio value="#{adminAlleleBean.alleleOption}" style="color:black;">
+                <f:selectItems value="#{adminAlleleBean.selectItemWrapper.alleleItemsString}"/>
+                <a4j:ajax event="valueChange" 
+                            execute="@this" 
+                            render="selections alleleTable addPanel totalResulsId" 
+                            listener="#{adminAlleleBean.loadVocabularyAction}"/>
+            </h:selectOneRadio>
+        </h:panelGrid>
+    </h:panelGroup>
+    <h:panelGroup id="selections" layout="block" style="vertical-align: top;">
+        <h:panelGrid columns="2" columnClasses="rowHeader innerTableTD">
+            <h:outputText value="Select a #{adminAlleleBean.alleleOption}" 
+                            rendered="#{!(empty adminAlleleBean.alleleOption)}"/>
+            <h:selectOneMenu title="Select a gene"
+                                value="#{adminAlleleBean.gene}"
+                                rendered="#{adminAlleleBean.alleleOption == adminAlleleBean.GENE}">
+                <a4j:ajax event="valueChange" 
+                            execute="@this" 
+                            render="alleleTable addPanel totalResulsId" 
+                            oncomplete="setNumberOfFilteredRows();"
+                            listener="#{adminAlleleBean.loadVocabularyByGene}"/>
+                <f:selectItems value="#{adminAlleleBean.selectItemWrapper.genesItemsOptional}"/>
+                <f:converter converterId="genesConverter" />
+            </h:selectOneMenu>
+            <h:selectOneMenu title="Select a gene class"
+                                value="#{adminAlleleBean.geneClass}"
+                                rendered="#{adminAlleleBean.alleleOption == adminAlleleBean.GENE_CLASS}">
+                <a4j:ajax event="valueChange" 
+                            execute="@this" 
+                            oncomplete="setNumberOfFilteredRows();"
+                            render="alleleTable addPanel selections totalResulsId" 
+                            listener="#{adminAlleleBean.loadVocabularyByGeneClass}"/>
+                <f:selectItems value="#{adminAlleleBean.selectItemWrapper.cvGeneClassStringItemsOptional}"
+                                var="gc"
+                                itemValue="#{gc.value}"
+                                itemLabel="#{gc.label}"
+                                itemDisabled="#{gc.disabled}" 
+                                itemLabelEscaped="false" />                                
+            </h:selectOneMenu>
+        </h:panelGrid>
+    </h:panelGroup>   
+    <h:panelGroup id="totalResulsId">
+        <div align="right">
+            <h:outputText value="Results " /><h:outputText id="alleleFilterCount"/>&nbsp;
+            <h:outputText value="of #{adminAlleleBean.vocabularyDataModel.rowCount}" />
+        </div>
+    </h:panelGroup>    
+    <h:panelGroup styleClass="nowrap">
+        <rich:dataTable
+            id="alleleTable"
+            value="#{adminAlleleBean.vocabularyDataModel}"
+            sortMode="single"
+            var="dm"
+            rowKeyVar="tableRowIndex"
+            rows="15"
+            styleClass="maxSizeDataTable" 
+            headerClass="tableSortHeader">
+
+            <f:facet name="footer" class="dataScroller" >
+                <rich:dataScroller id="alleleDS" for="alleleTable" renderIfSinglePage="false" status="statusTable" />
+            </f:facet>                     
+
+            <rich:column rendered="#{adminAlleleBean.rowIndex == tableRowIndex}">
+                <f:facet name="header">
+                    <h:outputText value="#{msgs['common.actions']}" />
+                </f:facet>
+                <a4j:commandButton title="#{msgs['common.save']}"
+                                    image="/images/icon-save.gif"
+                                    action="#{adminAlleleBean.saveAction}"
+                                    oncomplete="setNumberOfFilteredRows();"
+                                    render="alleleTable">
+                    <f:param name="paramPrimaryKey" value="#{dm.alleleKey}" />
+                    <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                </a4j:commandButton>
+                &nbsp;&nbsp;                                            
+                <a4j:commandButton title="Cancel"
+                                    image="/images/cancel.png"
+                                    action="#{adminAlleleBean.cancelAction}"
+                                    oncomplete="setNumberOfFilteredRows();"
+                                    style="width:16px; height:16px;"
+                                    render="alleleTable">
+                </a4j:commandButton>
+            </rich:column>
+            <rich:column rendered="#{!(adminAlleleBean.rowIndex == tableRowIndex)}">
+                <f:facet name="header">
+                    <h:outputText value="#{msgs['common.actions']}" />
+                </f:facet>
+                <a4j:commandButton title="#{msgs['common.edit']} Disabled"
+                                    image="/images/edit-disable.gif"
+                                    disabled="true"
+                                    rendered="#{!(dm.alleleKey == '0')}">
+                </a4j:commandButton>
+                &nbsp;&nbsp;                                            
+                <a4j:commandButton title="#{msgs['common.delete']}"
+                                    image="/images/delete.gif"
+                                    action="#{adminAlleleBean.deleteAction}"
+                                    oncomplete="setNumberOfFilteredRows();"
+                                    render="alleleTable"
+                                    rendered="#{!((adminAlleleBean.alleleOption == 'Gene') and !(empty dm.genericAlleleGeneClass))}">
+                    <f:param name="paramPrimaryKey" value="#{dm.alleleKey}" />
+                    <f:param name="paramRowIndex" value="#{tableRowIndex}" />
+                </a4j:commandButton>
+                <a4j:commandButton title="#{msgs['common.delete']} Disabled"
+                                    image="/images/delete-disable.gif"
+                                    disabled="true"
+                                    rendered="#{((adminAlleleBean.alleleOption == 'Gene') and !(empty dm.genericAlleleGeneClass))}">
+                </a4j:commandButton>
+            </rich:column>
+
+            <rich:column sortBy="#{dm.allele}"
+                            sortOrder="#{adminAlleleBean.sortBO.column1Order}"
+                            filterValue="#{adminAlleleBean.filterBO.column1Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.allele, adminAlleleBean.filterBO.column1Filter)}" 
+                            rendered="#{dm.alleleKey == '0'}">
+                <f:facet name="header">
+                    <h:outputText value="Allele" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminAlleleBean.sortBO.column1Image}" 
+                                        render="alleleTable" 
+                                        rendered="#{adminAlleleBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminAlleleBean.sortBO.sortByColumn1}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminAlleleBean.filterBO.column1Filter}" 
+                                    rendered="#{adminAlleleBean.vocabularyDataModel.rowCount gt 0}" 
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="alleleTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+
+                <h:inputText  value="#{dm.allele}"
+                                class="startHere"/>
+            </rich:column>
+            <rich:column sortBy="#{dm.allele}"
+                            sortOrder="#{adminAlleleBean.sortBO.column1Order}"
+                            filterValue="#{adminAlleleBean.filterBO.column1Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.allele, adminAlleleBean.filterBO.column1Filter)}"  
+                            rendered="#{!(dm.alleleKey == '0')}">
+                <f:facet name="header">
+                    <h:outputText value="Allele" />
+                    <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    <br />
+                    <a4j:commandButton image="#{adminAlleleBean.sortBO.column1Image}" 
+                                        render="alleleTable"
+                                        rendered="#{adminAlleleBean.vocabularyDataModel.rowCount gt 0}"  
+                                        action="#{adminAlleleBean.sortBO.sortByColumn1}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminAlleleBean.filterBO.column1Filter}" 
+                                    rendered="#{adminAlleleBean.vocabularyDataModel.rowCount gt 0}" 
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="alleleTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+
+                <h:outputText value="#{dm.allele}"/>
+            </rich:column>
+
+            <rich:column sortBy="#{dm.genericAlleleGeneClass}"
+                            sortOrder="#{adminAlleleBean.sortBO.column2Order}"
+                            filterValue="#{adminAlleleBean.filterBO.column2Filter}" 
+                            filterExpression="#{fn:containsIgnoreCase(dm.genericAlleleGeneClass, adminAlleleBean.filterBO.column2Filter)}">
+                <f:facet name="header">
+                    <h:outputText value="Class" />
+                    <br />
+                    <a4j:commandButton image="#{adminAlleleBean.sortBO.column2Image}" 
+                                        render="alleleTable" 
+                                        rendered="#{adminAlleleBean.vocabularyDataModel.rowCount gt 0}" 
+                                        action="#{adminAlleleBean.sortBO.sortByColumn2}" 
+                                        status="statusTable"/>
+                    <br />
+                    <h:inputText value="#{adminAlleleBean.filterBO.column2Filter}" 
+                                    rendered="#{adminAlleleBean.vocabularyDataModel.rowCount gt 0}"  
+                                    styleClass="w100">
+                        <a4j:ajax event="blur" render="alleleTable" status="statusTable" oncomplete="setNumberOfFilteredRows();"/>
+                    </h:inputText>
+                </f:facet>
+
+                <h:outputText value="#{dm.genericAlleleGeneClass}" />
+            </rich:column>
+
+        </rich:dataTable>
+    </h:panelGroup>
+</ui:composition>

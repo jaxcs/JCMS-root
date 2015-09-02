@@ -1,0 +1,20 @@
+Agouti,Agouti
+Albino,Albino
+Black,Black (non-agouti)
+Brown,Brown
+BrAgouti,Brown agouti
+Buff,Buff
+Chinchil,Light-bellied chinchilla
+DlBrown,Dilute brown
+DlBrPieb,Dilute brown\, Piebald
+DarkGrey,Dark grey
+Fawn,Fawn
+GreyWhit,Greyish white
+Gunmetal,Gunmetal
+Lagouti,Light agouti
+Lchinchi,Light-bellied\, Light chinchilla
+Leaden,Leaden (grey)
+Misty,Misty (grey)
+Piebald,Piebald\, White-bellied agouti
+Sandy,Sandy
+Yellow,Yellow

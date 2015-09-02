@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Weld + JBossAS integration
+-->
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+
+  <!-- Weld libs lookup service -->
+
+  <bean name="LibsDiscoveryService" class="org.jboss.weld.integration.deployer.env.bda.LibraryDiscoveryService">
+     <constructor>
+        <parameter><inject bean="WeldLibsLookupDeployer"/></parameter>
+     </constructor>
+     <property name="excludedUrls">
+        <set elementClass="java.net.URL">
+           <value>${jboss.server.home.url}deployers/resteasy.deployer</value>
+        </set>
+     </property>
+     <!--
+         Disable Weld libs lookup from now on; the libs should already be picekd up by now.
+         If this is not the case - e.g. some lib is part of deployer/ - create "disable" bean in deploy/.
+     -->
+     <install bean="WeldLibsLookupDeployer" method="setActive">
+        <parameter>false</parameter>
+     </install>
+  </bean>
+
+   <bean name="WeldClasspathFactory" class="org.jboss.weld.integration.deployer.env.bda.ClasspathFactory">
+      <constructor factoryMethod="getInstance" />
+      <property name="system"><inject bean="ClassLoaderSystem"/></property>
+      <property name="libArchivesProvider"><inject bean="LibsDiscoveryService"/></property>
+   </bean>
+
+  <!-- Weld deployers -->
+  
+  <!-- Responsible for discovering Weld files -->
+  <bean name="WeldFilesDeployer" class="org.jboss.weld.integration.deployer.metadata.WeldFilesDeployer"/>
+
+  <!-- Responsible for discovering Weld classes
+  <bean name="ArchiveInfoDeployer" class="org.jboss.weld.integration.deployer.env.ArchiveInfoDeployer"/>
+  <bean name="ArchiveDiscoveryDeployer" class="org.jboss.weld.integration.deployer.env.ArchiveDiscoveryDeployer"/>
+  -->
+
+  <!-- Let the new MC scanning take over -->
+  <bean name="WeldScanningPluginFactory" class="org.jboss.weld.integration.deployer.scanning.HackWeldScanningPluginFactory"/>
+
+  <!-- Responsible for Weld + EJB integration -->
+  <bean name="EjbServicesDeployer" class="org.jboss.weld.integration.deployer.env.EjbServicesDeployer"/>
+
+  <!-- Responsible for hierarchy deployment creation -->
+   <bean name="DeploymentDeployer" class="org.jboss.weld.integration.deployer.env.JBossDeploymentDeployer"/>
+
+  <!-- Responsible for dynamic ejb dependency creation -->
+  <bean name="DynamicDependencyCreator" class="org.jboss.weld.integration.deployer.env.DynamicDependencyCreator">
+    <constructor>
+      <parameter><inject bean="jboss.kernel:service=KernelController"/></parameter>
+    </constructor>
+  </bean>
+
+  <bean name="JBossSingletonProvider" class="org.jboss.weld.integration.provider.JBossSingletonProvider"/>
+
+  <!-- Responsible for booting Weld -->
+  <bean name="WeldBootstrapDeployer" class="org.jboss.weld.integration.deployer.env.WeldBootstrapDeployer">
+     <property name="singletonProvider"><inject bean="JBossSingletonProvider"/></property>
+  </bean>
+
+  <!-- Responsible for pushing the JSF faces-config.xml onto the application classpath -->
+  <bean name="WeldFacesIntegrationDeployer" class="org.jboss.weld.integration.deployer.cl.WeldFacesIntegrationDeployer"/>
+  
+  <!-- Responsible for pushing the webtier integration jar onto the application classpath -->
+  <bean name="WeldWebTierIntegrationDeployer" class="org.jboss.weld.integration.deployer.cl.WeldWebTierIntegrationDeployer"/>
+  
+  <!-- Responsible for pushing Weld onto the application classpath -->
+  <bean name="WeldCoreIntegrationDeployer" class="org.jboss.weld.integration.deployer.cl.WeldCoreIntegrationDeployer"/>
+
+  <bean name="WeldMcExtensionsIntegrationDeployer" class="org.jboss.weld.integration.deployer.cl.WeldMcExtensionsIntegrationDeployer"/>
+
+  <!-- Responsible for inserting the Weld EJB interceptor -->
+  <bean name="PostEjbJarMetadataDeployer" class="org.jboss.weld.integration.deployer.metadata.WeldEjbInterceptorMetadataDeployer"/>
+  
+  <!-- Responsible for enabling classloader isolation for Weld jars -->
+  <bean name="PostJBossMetadataDeployer" class="org.jboss.weld.integration.deployer.metadata.PostJBossMetadataDeployer"/>
+  
+  <!-- Responsible for enabling classloader isolation for Weld wars -->
+  <bean name="PostJBossWebMetadataDeployer" class="org.jboss.weld.integration.deployer.metadata.PostJBossWebMetadataDeployer"/>
+  
+  <!-- Responsible for adding the Weld listener to the Servlet -->
+  <bean name="PostWebMetadataDeployer" class="org.jboss.weld.integration.deployer.metadata.PostWebMetadataDeployer"/>
+
+  <!-- Responsible for ignoring users Javassist -->
+  <!-- bean name="ExcludeAppJavassistDeployer" class="org.jboss.weld.integration.deployer.metadata.ExcludeAppJavassistDeployer"/ -->
+
+  <!-- Responsible for making sure that the CDI container is started before the web application(s)-->
+  <bean name="WebContainerDependencyDeployer" class="org.jboss.weld.integration.deployer.env.WebContainterIntegrationDeployer"/>
+  
+  <!-- Responsible for adding the Weld Manager object factory to JNDI -->
+   <!--<bean name="WeldJndiBinder" class="org.jboss.weld.integration.deployer.env.WeldJndiBinder">-->
+      <!--<start method="startService">-->
+         <!--<parameter>java:app/BeanManager</parameter>-->
+         <!--<parameter>org.jboss.weld.resources.ManagerObjectFactory</parameter>-->
+      <!--</start>-->
+      <!--<stop method="stopService"/>-->
+   <!--</bean>-->
+
+   <!-- For non-flat deployments, comment this definition and uncomment the next one -->
+
+   <bean name="BeanDeploymentArchiveLocator" class="org.jboss.weld.integration.deployer.jndi.JBossBeanDeploymentArchiveLocator"/>
+   
+
+  <!-- Responsible for binding bean managers -->
+  <bean name="JndiBinder" class="org.jboss.weld.integration.deployer.jndi.JndiBinder">
+      <depends>jboss:service=Naming</depends>
+      <property name="nameSpaces"><inject bean="NameSpaces"/></property>
+     <property name="moduleInformer"><inject bean="NamingJavaEEModuleInformer"/></property>
+  </bean>
+
+  <!--&lt;!&ndash;  UNCOMMENT THIS TO ENABLE WELD/MC INJECTION - This feature is currently very experimental and so not enabled by default  &ndash;&gt;-->
+  <!-- Adds plugin to BeanMetaDataDeployer that installs WeldKernelControllerContexts -->
+  <!-- bean name="WeldBeanMetaDataDeployerPlugin" class="org.jboss.weld.integration.deployer.mc.WeldBeanMetaDataDeployerPlugin"/ -->  
+
+    <!-- BeanInstantiatorDeployer supporting CDI constructor injection  -->
+    <bean name="org.jboss.ejb3.BeanInstantiatorDeployer" class="org.jboss.weld.integration.instantiator.RedirectingBeanInstantiatorDeployer">
+      <constructor>
+        <parameter class="org.jboss.ejb3.instantiator.spi.BeanInstantiator"><inject bean="org.jboss.ejb3.BeanInstantiator"/></parameter>
+        <parameter class="org.jboss.kernel.Kernel"><inject bean="jboss.kernel:service=Kernel"/></parameter>
+        <parameter class="org.jboss.reloaded.naming.deployers.javaee.JavaEEComponentInformer"><inject bean="NamingJavaEEComponentInformer"/></parameter>
+      </constructor>
+    </bean>
+
+  <bean name="org.jboss.switchboard.BeanManagerResourceProvider" class="org.jboss.weld.integration.deployer.jndi.BeanManagerResourceProvider">
+      <property name="moduleInformer"><inject bean="NamingJavaEEModuleInformer"/></property>
+  </bean>
+
+  <bean name="org.jboss.weld.integration.injection.Jsr299InjectorDeployer" class="org.jboss.weld.integration.injection.Jsr299InjectorDeployer">
+      <property name="kernelController"><inject bean="jboss.kernel:service=KernelController"/></property>
+  </bean>
+
+</deployment>

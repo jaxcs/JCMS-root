@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui">
+    <h:panelGrid columns="1">
+        <p:ajaxStatus id="ajaxStatusPanel">  
+            <f:facet name="start">  
+                <h:graphicImage value="../images/bhi_ball.gif"/>  
+            </f:facet>  
+            <f:facet name="complete">  
+                <h:graphicImage value="../images/bhi_ball_white.gif" />  
+            </f:facet>
+        </p:ajaxStatus>
+        <h:selectOneRadio value="#{Level_Backing.function}" styleClass="blackTextStyle">
+            <f:selectItem itemLabel="Add Vivaria Layout" itemValue="addLevel"/>
+            <f:selectItem itemLabel="Edit Vivaria" itemValue="editLevel"/>
+            <f:selectItem itemLabel="Move Vivaria Layout" itemValue="move"/>
+            <f:selectItem itemLabel="Duplicate Vivaria Layout" itemValue="duplicate"/>
+            <a4j:ajax event="change" execute="@this" render="panels"/>
+        </h:selectOneRadio>
+        <h:panelGrid columns="2" columnClasses="listColumnEven, listColumnEven">
+            <p:tree value="#{Level_Backing.root}" id="levelTree" selectionMode="single" var="node">
+                <p:ajax event="collapse" listener="#{Level_Backing.nodeCollapse}" /> 
+                <p:ajax event="expand" listener="#{Level_Backing.nodeExpand}" />                 
+                <p:ajax event="select" listener="#{Level_Backing.onNodeSelect}" update="@(.panels)"/>
+                <p:treeNode type="room">
+                    <h:outputText value="#{node.label}" style="color:blue"/>
+                    <h:inputHidden id="hiddenKeyRoom" value="#{node.roomKey}"/>
+                    <h:inputHidden id="hiddenClass1" value="#{Level_Backing.roomClass}"/>
+                </p:treeNode>
+                <p:treeNode type="level">
+                    <h:panelGroup id="levelText">
+                        <h:outputText value="#{node.label}" style="#{node.style}"/>
+                        <h:inputHidden id="hiddenKey" value="#{node.level_key}"/>
+                        <h:inputHidden id="hiddenClass2" value="#{Level_Backing.levelClass}"/>
+                    </h:panelGroup>
+                </p:treeNode>
+            </p:tree>
+            <h:panelGroup id="panels" styleClass="panels">
+                <p:panel header="Add Vivaria Layout" rendered="#{Level_Backing.function eq 'addLevel'}">
+                    <h:panelGrid columns="4">
+                        <h:outputText value="Vivaria Layout Name: "/> 
+                        <h:inputText value="#{Level_Backing.levelName}"/>
+                        <h:outputText value="Vivaria Layout Detail: "/>
+                        <h:inputText value="#{Level_Backing.levelDetail}"/>
+                        <h:outputText value="Rows: "/> 
+                        <h:inputText value="#{Level_Backing.ymax}"/>
+                        <h:outputText value="Columns: "/> 
+                        <h:inputText value="#{Level_Backing.xmax}"/>
+                        <h:outputText value="Parent Room: "/>
+                        <h:outputText value="#{Level_Backing.parentRoom}"/>
+                        <h:outputText value="Parent Vivaria Layout "/>
+                        <h:outputText value="#{Level_Backing.parentLevel}"/>
+                    </h:panelGrid>
+                    <a4j:commandButton value="Save" 
+                                       action="#{Level_Backing.addLevel}"
+                                       render="levelTree"
+                                       oncomplete="applyLevelJQuery()"
+                                       styleClass="smallButton"/>
+                </p:panel>
+                <p:panel header="Edit Vivaria Layout" rendered="#{Level_Backing.function eq 'editLevel'}">
+                    <h:panelGrid columns="4">
+                        <h:outputText value="Vivaria Layout Name: "/> 
+                        <h:inputText value="#{Level_Backing.editLevelName}"/>
+                        <h:outputText value="Vivaria Layout Detail: "/>
+                        <h:inputText value="#{Level_Backing.editLevelDetail}"/>
+                        <h:outputText value="Rows: "/> 
+                        <h:inputText value="#{Level_Backing.editRows}"/>
+                        <h:outputText value="Columns: "/> 
+                        <h:inputText value="#{Level_Backing.editColumns}"/>
+                        <h:outputText value="Active: "/>
+                        <h:selectBooleanCheckbox value="#{Level_Backing.editIsActive}"/>
+                        <h:outputText value="Apply status to associated vivaria layouts: "/>
+                        <h:selectBooleanCheckbox value="#{Level_Backing.editApplyToAllLevels}"/>
+                        <h:outputText value="Parent Room: "/>
+                        <h:outputText value="#{Level_Backing.parentRoom}"/>
+                        <h:outputText value="Parent Vivaria Layout "/>
+                        <h:outputText value="#{Level_Backing.parentLevel}"/>
+                    </h:panelGrid>
+                    <a4j:commandButton value="Save" 
+                                       action="#{Level_Backing.updateLevel}"
+                                       render="levelTree"
+                                       oncomplete="applyLevelJQuery()"
+                                       styleClass="smallButton"/>
+                </p:panel>
+                <br/>
+                <a4j:commandButton value="Delete"
+                                   styleClass="smallButton"
+                                   action="#{Level_Backing.deleteLevel}"
+                                   rendered="#{Level_Backing.deleteDisplayed}"
+                                   render="levelTree"
+                                   oncomplete="applyLevelJQuery()"/>
+            </h:panelGroup>
+        </h:panelGrid>
+    </h:panelGrid>
+    <input type="hidden" name="levelDragKey" value=""/>
+    <input type="hidden" name="dropKey" value=""/>
+    <input type="hidden" name="dropClass" value=""/>
+    <p:remoteCommand name="dropNode" update="levelTree"
+                     action="#{Level_Backing.onNodeDrop}"  
+                     oncomplete="applyLevelJQuery();"/>
+</ui:composition>

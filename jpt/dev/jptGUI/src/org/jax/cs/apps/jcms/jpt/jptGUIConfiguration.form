@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.6" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lbMySQLPassword" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbMySQLUsername" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="1" groupAlignment="1" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lbReportTreeDepth" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="51" max="32767" attributes="0"/>
+                                  <Component id="reportTreeDepth" min="-2" pref="98" max="-2" attributes="1"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lbReportType" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                                  <Component id="reportType" pref="102" max="32767" attributes="1"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lbApplicationTreeDepth" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="32" max="32767" attributes="0"/>
+                                  <Component id="applicationTreeDepth" min="-2" pref="98" max="-2" attributes="1"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lbDatabaseType" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lbMySQLPort" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lbMySQLHostname" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lbMSAccessDSN" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lbMySQLDatabase" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="dbDatabase" alignment="0" pref="123" max="32767" attributes="1"/>
+                                      <Component id="dbHostname" alignment="1" pref="123" max="32767" attributes="1"/>
+                                      <Component id="dbPort" alignment="1" pref="123" max="32767" attributes="1"/>
+                                      <Component id="msAccessDSN" alignment="1" pref="123" max="32767" attributes="1"/>
+                                      <Component id="databaseType" alignment="0" pref="123" max="32767" attributes="1"/>
+                                      <Component id="dbUsername" alignment="0" pref="123" max="32767" attributes="1"/>
+                                      <Component id="dbPassword" alignment="0" pref="123" max="32767" attributes="1"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jbSave" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jbReload" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="statusMessage" pref="250" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="databaseType" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="msAccessDSN" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbMSAccessDSN" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="dbPort" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbMySQLPort" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="dbHostname" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbMySQLHostname" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Component id="lbDatabaseType" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="dbDatabase" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbMySQLDatabase" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lbMySQLUsername" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="dbUsername" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lbMySQLPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="dbPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lbApplicationTreeDepth" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="applicationTreeDepth" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="reportType" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbReportType" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lbReportTreeDepth" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="reportTreeDepth" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jbSave" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbReload" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="statusMessage" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="25" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="lbDatabaseType">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="lbDatabaseType.text"/>
+        <Property name="name" type="java.lang.String" value="lbDatabaseType" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="msAccessDSN">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="msAccessDSN.text"/>
+        <Property name="name" type="java.lang.String" value="msAccessDSN" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="msAccessDSNKeyPressed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="databaseType">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="2">
+            <StringItem index="0" value="MS Access"/>
+            <StringItem index="1" value="MySQL"/>
+          </StringArray>
+        </Property>
+        <Property name="name" type="java.lang.String" value="databaseType" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="databaseTypeActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbMSAccessDSN">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="lbMSAccessDSN.text"/>
+        <Property name="name" type="java.lang.String" value="lbMSAccessDSN" noResource="true"/>
+        <Property name="opaque" type="boolean" value="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbMySQLPort">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="lbMySQLPort.text"/>
+        <Property name="name" type="java.lang.String" value="lbMySQLPort" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="dbPort">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="dbPort.text"/>
+        <Property name="name" type="java.lang.String" value="dbPort" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="dbPortInputMethodTextChanged"/>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="dbPortKeyPressed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbMySQLHostname">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="lbMySQLHostname.text"/>
+        <Property name="name" type="java.lang.String" value="lbMySQLHostname" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="dbHostname">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="dbHostname.text"/>
+        <Property name="name" type="java.lang.String" value="dbHostname" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="dbHostnameKeyPressed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbMySQLUsername">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="lbMySQLUsername.text"/>
+        <Property name="name" type="java.lang.String" value="lbMySQLUsername" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="dbUsername">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="dbUsername.text"/>
+        <Property name="name" type="java.lang.String" value="dbUsername" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="dbUsernameKeyPressed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbMySQLPassword">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="lbMySQLPassword.text"/>
+        <Property name="name" type="java.lang.String" value="lbMySQLPassword" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbReportType">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="lbReportType.text"/>
+        <Property name="name" type="java.lang.String" value="lbReportType" noResource="true"/>
+        <Property name="opaque" type="boolean" value="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="reportType">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="2">
+            <StringItem index="0" value="TEXT"/>
+            <StringItem index="1" value="HTML"/>
+          </StringArray>
+        </Property>
+        <Property name="name" type="java.lang.String" value="reportType" noResource="true"/>
+        <Property name="opaque" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reportTypeActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbReportTreeDepth">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="lbReportTreeDepth.text"/>
+        <Property name="name" type="java.lang.String" value="lbReportTreeDepth" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="reportTreeDepth">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="9">
+            <StringItem index="0" value="2"/>
+            <StringItem index="1" value="3"/>
+            <StringItem index="2" value="4"/>
+            <StringItem index="3" value="5"/>
+            <StringItem index="4" value="6"/>
+            <StringItem index="5" value="7"/>
+            <StringItem index="6" value="8"/>
+            <StringItem index="7" value="9"/>
+            <StringItem index="8" value="10"/>
+          </StringArray>
+        </Property>
+        <Property name="name" type="java.lang.String" value="reportTreeDepth" noResource="true"/>
+        <Property name="opaque" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reportTreeDepthActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbApplicationTreeDepth">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="lbApplicationTreeDepth.text"/>
+        <Property name="name" type="java.lang.String" value="lbApplicationTreeDepth" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="applicationTreeDepth">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="5">
+            <StringItem index="0" value="2"/>
+            <StringItem index="1" value="3"/>
+            <StringItem index="2" value="4"/>
+            <StringItem index="3" value="5"/>
+            <StringItem index="4" value="6"/>
+          </StringArray>
+        </Property>
+        <Property name="name" type="java.lang.String" value="applicationTreeDepth" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="applicationTreeDepthActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="dbPassword">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="dbPassword.text"/>
+        <Property name="name" type="java.lang.String" value="dbPassword" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="dbPasswordKeyPressed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbMySQLDatabase">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="lbMySQLDatabase.text"/>
+        <Property name="name" type="java.lang.String" value="lbMySQLDatabase" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="dbDatabase">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="dbDatabase" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="dbDatabaseKeyPressed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jbSave">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jbSave.text"/>
+        <Property name="name" type="java.lang.String" value="jbSave" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbSaveActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jbReload">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jbReload.text"/>
+        <Property name="name" type="java.lang.String" value="jbReload" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbReloadActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="statusMessage">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="statusMessage.text"/>
+        <Property name="name" type="java.lang.String" value="statusMessage" noResource="true"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

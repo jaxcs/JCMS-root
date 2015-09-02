@@ -1,0 +1,624 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--***
+Copyright (c) 2015 The Jackson Laboratory
+
+This is free software: you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.
+ 
+This software is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with this software.  If not, see <http://www.gnu.org/licenses/>.
+***-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+        <title>
+            <h:outputText value="JCMSWeb Pedigree Tracker"/>
+        </title>
+        <link href="/jcms/stylesheet/jcmsStyles.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="/jcms/images/favicon.ico" />
+        <script type="text/javascript">
+            function setStyle(event){
+                if(event.screenY != null){
+                    jQuery(document.getElementById('jptForm:outer')).removeClass();
+                    jQuery(document.getElementById('jptForm:outer')).addClass('position:fixed; top:' + event.screenY + ';');
+                } 
+            }
+        </script>
+        <style type="text/css" media="screen">
+            .tooltip {
+                position: absolute;
+                text-align: left;
+                padding: 8px;
+                font: 10px sans-serif;
+                background: #ddd;
+                border: solid 1px #aaa;
+                border-radius: 8px;
+                pointer-events: none;
+            }
+            
+            .node circle {
+                fill: #fff;
+                stroke: steelblue;
+                stroke-width: 1.5px;
+            }
+
+            .node rect {
+                fill: #fff;
+                stroke: steelblue;
+                stroke-width: 1.5px;
+            }
+
+            .node {
+                font: 10px sans-serif;
+            }
+
+            .link {
+                fill: none;
+                stroke: #ccc;
+                stroke-width: 1.5px;
+            }
+        </style>
+        <script src="/jcms/javascript/pedigreeTree.js" type="text/javascript"></script>
+        <script type="text/javascript" src="/jcms/javascript/d3.v3.js"></script>
+    </h:head>
+    <h:body>
+        <rich:popupPanel id="findMousePanel" width="700" height="550"
+                         keepVisualState="true" resizeable="true" 
+                         top="10">
+            <f:facet name="header">
+                <h:outputText value="Find Mouse" />
+            </f:facet>
+            <f:facet name="controls">
+                <h:panelGroup>
+                    <h:graphicImage value="/images/delete.gif" id="hidelinkId2"  alt="#{msgs['common.close']}" 
+                                    onclick="#{rich:component('findMousePanel')}.hide();return false;"
+                                    height="20" width="20" styleClass="hidelink" title="#{msgs['common.close']}" />
+                </h:panelGroup>
+            </f:facet>
+            <img src="../images/bhi_ball_white.gif" alt="" />
+            <a4j:status >
+                <f:facet name="start" class="loadingIcon">
+                    <h:graphicImage  value="../images/bhi_ball.gif"/>
+                </f:facet>
+            </a4j:status> 
+            <h:form id="findMousePanelForm">
+                <rich:messages style="color:red;"></rich:messages>
+                <table class="white-space: nowrap; width:800px;">
+                    <tr>
+                            <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['mouseId']}" id="lookForMouseId" />
+                            </td>
+                            <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="mouseIDFilter" value="#{JPT_Backing.mouseSearch.mouseFilter}" >
+                                <f:selectItems value="#{JPT_Backing.selectItemWrapper.mouseFilters}"/>
+                            </h:selectOneMenu>
+                            <h:inputText id="searchById" value="#{JPT_Backing.mouseSearch.mouseID}" 
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" />
+                            </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['strain']}" id="lookForStrainId" />
+                            </td>
+                            <!-- Value -->
+                        <td>
+                            <h:selectOneMenu id="searchByStrain" value="#{JPT_Backing.mouseSearch.strain}" >
+                                <f:selectItems value="#{JPT_Backing.selectItemWrapper.allStrains}"/>
+                                <f:converter converterId="strainConverter" />
+                            </h:selectOneMenu>
+                            </td>
+                        </tr>
+                    <tr>
+                            <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['lifeStatus']}" id="lifeStatusId" />
+                            </td>
+                            <!-- Value -->
+                        <td>
+                            <h:selectOneMenu value="#{JPT_Backing.mouseSearch.lifeStatus}" >
+                                <f:selectItems value="#{JPT_Backing.selectItemWrapper.cvLifeStatusItemsOptional}"/>
+                                <f:converter converterId="lifeStatusConverter" />
+                            </h:selectOneMenu>
+                            </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['dateOfBirth']}" style="white-space:nowrap;" />
+                            </td>
+                            <!-- Value -->
+                        <td>
+                            <rich:calendar id="birthDate1"
+                                           value="#{JPT_Backing.mouseSearch.DOBStartDate}"
+                                           inputSize="#{msgs['common.minMaxSize']}"
+                                           datePattern="#{JPT_Backing.date_format}"
+                                           showInput="true"
+                                           showWeeksBar="true"
+                                           enableManualInput="true">
+                            </rich:calendar>                            
+                            &nbsp;&nbsp;
+                            <h:outputLabel value="To" />
+                            &nbsp;&nbsp;
+                            <rich:calendar id="birthDate2"
+                                           value="#{JPT_Backing.mouseSearch.DOBEndDate}"
+                                           inputSize="#{msgs['common.minMaxSize']}"
+                                           datePattern="#{JPT_Backing.date_format}"
+                                           showInput="true"
+                                           showWeeksBar="true"
+                                           enableManualInput="true">
+                            </rich:calendar>
+                            </td>
+                        </tr>
+                    <tr>
+                            <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['pen#']}" />
+                            </td>
+                            <!-- Value -->
+                        <td style="white-space: nowrap;">
+                            <h:selectOneMenu id="penIDFilter" value="#{JPT_Backing.mouseSearch.penFilter}" >
+                                <f:selectItems value="#{JPT_Backing.selectItemWrapper.integerFilters}"/>
+                            </h:selectOneMenu>
+                            <h:inputText id="searchByPenId" value="#{JPT_Backing.mouseSearch.penID}" 
+                                         maxlength="#{restrict['size.general.id']}"
+                                         size="#{restrict['size.general.id']}" />
+                            </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <!-- Label -->
+                        <td>
+                            <h:outputLabel value="#{msgs['sex']}" id="sexId" />
+                            </td>
+                            <!-- Value -->
+                        <td>
+                            <h:selectOneMenu value="#{JPT_Backing.mouseSearch.sex}" >
+                                <f:selectItems value="#{JPT_Backing.selectItemWrapper.cvSexItemsOptional}"/>
+                                <f:converter converterId="sexConverter" />
+                            </h:selectOneMenu>
+                            </td>
+                        </tr>
+
+                    <tr>
+                            <!-- Label -->
+                            <td>
+                                <h:outputLabel value="#{msgs['generation']}" id="generationId" />
+                            </td>
+                            <!-- Value -->
+                            <td>
+                                <h:selectOneMenu value="#{JPT_Backing.mouseSearch.generation}" >
+                                    <f:selectItems value="#{JPT_Backing.selectItemWrapper.cvGenerationItemsOptional}"/>
+                                    <f:converter converterId="generationConverter" />
+                                </h:selectOneMenu>
+                            </td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <!-- Label -->
+                            <td>&nbsp;</td>
+                            <!-- Value -->
+                            <td>&nbsp;</td>
+                        </tr>
+
+                    <tr>
+                            <!-- Label -->
+                        <td colspan="5">
+                            <h:outputLabel value="#{msgs['owner']}" />
+                            </td>
+                        </tr>
+                    <tr>
+                        <td colspan="5">
+                            <h:panelGroup id="ownersId">   
+                                <rich:pickList value="#{JPT_Backing.mouseSearch.owners}" 
+                                               disabled="false"  >
+                                    <f:selectItems value="#{JPT_Backing.selectItemWrapper.guestOwnerItems}"/>
+                                    <f:converter converterId="ownerConverter" />
+                                </rich:pickList>
+                            </h:panelGroup>
+                            </td></tr></table>
+                <br />
+                <a4j:commandButton id="search"
+                                   value="#{msgs['line.search']}"
+                                   styleClass="mediumButton"
+                                   action="#{JPT_Backing.executeMouseSearch}"
+                                   type="submit"
+                                   render="holder"/>
+                <a4j:status name="statusTable">
+                    <f:facet name="start">
+                        &nbsp;&nbsp;
+                        <h:graphicImage  value="../images/bhi_ball.gif"/>
+                    </f:facet>
+                </a4j:status>    
+                <br />
+                <h:panelGrid columns="1" id="holder">
+                    <h:outputText id="mouseResultsTextId1"
+                                  rendered="#{JPT_Backing.mouseDataModel != null}"
+                                  value="#{msgs['search.results']} #{JPT_Backing.mouseDataModel.rowCount}" />
+                    <rich:extendedDataTable
+                        rendered="#{JPT_Backing.mouseDataModel != null}"
+                        id="mouseSearchResultsTable"
+                        value="#{JPT_Backing.mouseDataModel}"
+                        styleClass="mediumSizeExtendedDataTable"
+                        var="dm" 
+                        rows="10"
+                        frozenColumns="1"
+                        sortMode="#{JPT_Backing.mouseSelectionETB.sortMode}"
+                        selectionMode="#{JPT_Backing.mouseSelectionETB.selectionMode}"
+                        selection="#{JPT_Backing.mouseSelectionETB.selection}">
+                        <f:facet name="footer" class="dataScroller">
+                            <rich:dataScroller for="mouseSearchResultsTable"  
+                                               id="userResultsDataScroller"
+                                               maxPages="5"                                    
+                                               renderIfSinglePage="false" 
+                                               render="mouseSearchResultsTable"/>
+                        </f:facet> 
+                        <rich:column id="id"
+                                     sortBy="#{dm.id}"
+                                     sortOrder="#{sortingBean.column1Order}"
+                                     filterValue="#{filterBean.column1Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.id, filterBean.column1Filter)}"  
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['mouseId']}" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column1Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn1}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column1Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.id}"/>
+                        </rich:column>
+                        <rich:column id="birthDate"
+                                     sortBy="#{dm.birthDate}"
+                                     sortOrder="#{sortingBean.column2Order}"
+                                     filterValue="#{filterBean.column2Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.birthDate, filterBean.column2Filter)}"   
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['dateOfBirth']}" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column2Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn2}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column2Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.birthDate}"/>
+                        </rich:column>
+                        <rich:column id="generation"
+                                     sortBy="#{dm.generation}"
+                                     sortOrder="#{sortingBean.column3Order}"
+                                     filterValue="#{filterBean.column3Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.generation, filterBean.column3Filter)}"   
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['generation']}" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column3Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn3}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column3Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.generation}"/>
+                        </rich:column>
+                        <rich:column id="owner"
+                                     sortBy="#{dm.owner}"
+                                     sortOrder="#{sortingBean.column4Order}"
+                                     filterValue="#{filterBean.column4Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.owner, filterBean.column4Filter)}"  
+                                     width="150px">
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['owner']}" style="white-space: nowrap;" />
+                                <br />
+                                <a4j:commandButton image="#{sortingBean.column4Image}" 
+                                                   render="mouseSearchResultsTable" 
+                                                   action="#{sortingBean.sortByColumn4}" 
+                                                   status="statusTable"/>
+                                <br />
+                                <h:inputText value="#{filterBean.column4Filter}" styleClass="w100">
+                                    <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                </h:inputText>
+                            </f:facet>
+                            <h:outputText value="#{dm.owner}"/>
+                        </rich:column>
+                        <rich:column id="lifeStatus"
+                                     sortBy="#{dm.lifeStatus}"
+                                     sortOrder="#{sortingBean.column5Order}"
+                                     filterValue="#{filterBean.column5Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.lifeStatus, filterBean.column5Filter)}"   
+                                     width="120px">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="#{msgs['lifeStatus']}" />
+                                    <br />
+                                    <a4j:commandButton image="#{sortingBean.column5Image}" 
+                                                       render="mouseSearchResultsTable" 
+                                                       action="#{sortingBean.sortByColumn5}" 
+                                                       status="statusTable"/>
+                                    <br />
+                                    <h:inputText value="#{filterBean.column5Filter}" styleClass="w100">
+                                        <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{dm.lifeStatus}"/>
+                        </rich:column>
+                        <rich:column id="breedingStatus"
+                                     sortBy="#{dm.breedingStatus}"
+                                     sortOrder="#{sortingBean.column6Order}"
+                                     filterValue="#{filterBean.column6Filter}" 
+                                     filterExpression="#{fn:containsIgnoreCase(dm.breedingStatus, filterBean.column6Filter)}"   
+                                     width="150px">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="#{msgs['breedingStatus']}" style="white-space: nowrap;" />
+                                    <br />
+                                    <a4j:commandButton image="#{sortingBean.column6Image}" 
+                                                       render="mouseSearchResultsTable" 
+                                                       action="#{sortingBean.sortByColumn6}" 
+                                                       status="statusTable"/>
+                                    <br />
+                                    <h:inputText value="#{filterBean.column6Filter}" styleClass="w100">
+                                        <a4j:ajax event="blur" render="mouseSearchResultsTable" status="statusTable" />
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{dm.breedingStatus}" />
+                        </rich:column>
+                    </rich:extendedDataTable>
+                    <br />
+                    <h:panelGrid columns = "2">
+                        <a4j:commandButton id="selectMouseButton"
+                                           value="#{msgs['common.ok']}"
+                                           oncomplete="if (#{facesContext.maximumSeverity ==null}) #{rich:component('findMousePanel')}.hide();"   
+                                           action="#{JPT_Backing.selectMouseAction}"
+                                           render="mouseID, findMousePanelForm"
+                                           rendered="#{JPT_Backing.mouseDataModel != null}"
+                                           styleClass="mediumButton"/>
+                        <a4j:commandButton id="cancel"
+                                           value="Cancel"
+                                           styleClass="mediumButton"
+                                           rendered="#{JPT_Backing.mouseDataModel != null}"
+                                           immediate="true"
+                                           render="findMousePanelForm"
+                                           oncomplete="#{rich:component('findMousePanel')}.hide();"/>
+                    </h:panelGrid>
+                </h:panelGrid>    
+            </h:form>
+        </rich:popupPanel>
+        <h:form id="jptForm">
+            <f:subview id="mainheader"><ui:include src="../mainheader.xhtml"/></f:subview>
+            <f:subview id="mainbar"><ui:include src="../mainbar.xhtml"/></f:subview>
+            <div style="margin-left:10px;margin-right:10px">
+            <rich:messages />
+            <br />
+            <h2><h:outputText value="JCMS Pedigree Tracker: "/></h2>
+            <br />
+            <img src="../images/bhi_ball_white.gif" alt="" />
+
+            <a4j:status >
+                <f:facet name="start" class="loadingIcon">
+                    <h:graphicImage  value="../images/bhi_ball.gif"/>
+                </f:facet>
+            </a4j:status> 
+            <rich:collapsiblePanel header="Search"
+                                   styleClass="collapsibleSearchPanel" 
+                                   expanded="true" >
+                <h:panelGrid columns="2" border="0"
+                             columnClasses="left, right">
+                    <h:panelGrid columns="2" border="0">
+                        <h:outputText value="Mouse ID: "/>
+                        <h:inputText value="#{JPT_Backing.mouseID}" id="mouseID"/>
+                        <h:outputText value="Tree Depth: "/>
+                        <h:selectOneMenu value="#{JPT_Backing.depth}">
+                            <f:selectItem itemValue="1" itemLabel="1"/>
+                            <f:selectItem itemValue="2" itemLabel="2"/>
+                            <f:selectItem itemValue="3" itemLabel="3"/>
+                            <f:selectItem itemValue="4" itemLabel="4"/>
+                            <f:selectItem itemValue="5" itemLabel="5"/>                          
+                            <f:selectItem itemValue="6" itemLabel="6"/>
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" border="0" columnClasses="float:right;"
+                                 style="float:right;">
+                        <a4j:commandButton value="Show Tree"
+                                           id="jptButton"
+                                           styleClass="mediumButton"
+                                           onbegin="d3.select('svg').remove();"
+                                           action="#{JPT_Backing.generateTreeData}"
+                                           render="JPTTree, outer"
+                                           oncomplete="showTree();"/>
+                        <a4j:commandButton value="Find Mouse"
+                                           styleClass="mediumButton"
+                                           id="findMouseButton"
+                                           oncomplete="#{rich:component('findMousePanel')}.show()"/>    
+                    </h:panelGrid>
+                    <h:panelGroup >
+                        <h:panelGrid columnClasses="center" headerClass="center">
+                            <f:facet name="header">
+                                <h:outputText value="Pedigree Type"/>
+                            </f:facet>
+                            <h:selectOneRadio id="typeRadio"
+                                              value="#{JPT_Backing.pedigreeType}"
+                                              required="true">
+                                <f:selectItem itemValue="ancestry" itemLabel="Ancestors"/>
+                                <f:selectItem itemValue="progeny" itemLabel="Progeny"/>
+                                <a4j:ajax event="change"
+                                          render="origins"/>
+                            </h:selectOneRadio>
+                        </h:panelGrid>
+                    </h:panelGroup>
+                    <h:panelGrid columnClasses="center" headerClass="center">
+                        <f:facet name="header">
+                            <h:outputText value="Display Options" styleClass="center"/>
+                        </f:facet>
+                        <h:panelGrid columns="2" border="0"
+                                     columnClasses="left, left">
+                            <h:panelGrid id="litterID" columns="2" border="0">
+                                <h:selectBooleanCheckbox value="#{JPT_Backing.displayLitterID}">
+                                </h:selectBooleanCheckbox>
+                                <h:outputText value="Litter ID"/>
+                            </h:panelGrid>
+                            <h:panelGrid id="matingID" columns="2" border="0">
+                                <h:selectBooleanCheckbox value="#{JPT_Backing.displayMatingID}">
+                                </h:selectBooleanCheckbox>
+                                <h:outputText value="Mating ID"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" border="0">
+                                <h:selectBooleanCheckbox value="#{JPT_Backing.displaySex}">
+                                </h:selectBooleanCheckbox>
+                                <h:outputText value="Sex"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" border="0">
+                                <h:selectBooleanCheckbox value="#{JPT_Backing.displayStrain}">
+                                </h:selectBooleanCheckbox>
+                                <h:outputText value="Strain"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" border="0">
+                                <h:selectBooleanCheckbox value="#{JPT_Backing.displayGenotype}">
+                                </h:selectBooleanCheckbox>
+                                <h:outputText value="Genotype"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <h:panelGrid columns="6">
+                    <f:facet name="header">
+                        <h:outputText value="Genotype" styleClass="center"/>
+                    </f:facet>
+                    <h:panelGroup>
+                        <h:outputText value="Gene"/>
+                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    </h:panelGroup>
+                    <h:selectOneMenu value="#{JPT_Backing.gene}" converter="genesConverter">
+                        <f:selectItems value="#{JPT_Backing.selectItemWrapper.genesItemsOptional}"/>
+                        <a4j:ajax event="change" listener="#{JPT_Backing.geneChangeListener}" render="allele1, allele2"/>
+                    </h:selectOneMenu>
+                    <h:panelGroup>
+                        &nbsp;&nbsp;
+                        <h:outputText value="First Allele"/>
+                        <h:outputLabel value="#{msgs['common.reqIcon']}" styleClass="reqColor" />
+                    </h:panelGroup>
+                    <h:selectOneMenu id="allele1" value="#{JPT_Backing.allele1}">
+                        <f:selectItems value="#{JPT_Backing.allele1s}"/>
+                    </h:selectOneMenu>
+                    <h:panelGroup>
+                        &nbsp;&nbsp;
+                        <h:outputText value="Second Allele"/>
+                    </h:panelGroup>
+                    <h:selectOneMenu id="allele2" value="#{JPT_Backing.allele2}">
+                        <f:selectItems value="#{JPT_Backing.allele2s}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+            </rich:collapsiblePanel>
+            <h:panelGrid columns="2"
+                         columnClasses="top, top"
+                         id="infoGrid">
+
+                <rich:tree id="JPTTree"
+                           value="#{JPT_Backing.rootNode}"
+                           var="item"
+                           selectionType="ajax"
+                           toggleType="client"
+                           nodeType="#{item.data.type}"
+                           selectionChangeListener="#{JPT_Backing.processSelection}">                    
+                    <rich:treeNode type="type1"
+                                   iconLeaf="#{item.data.iconPath}"
+                                   iconCollapsed="#{item.data.iconPath}"
+                                   iconExpanded="#{item.data.iconPath}"
+                                   expanded="true"
+                                   id="node2">
+                        <h:outputText value="#{item.data.displayString}" id="displayString"/>
+                    </rich:treeNode>
+                    <a4j:ajax event="dblclick"
+                              listener="#{JPT_Backing.changeMouseIDtoSelected()}"
+                              render="mouseID"/>
+                    <a4j:ajax event="click"
+                                 render="outer, tipGrid"/>
+                </rich:tree>
+                <h:panelGrid columns="1" id="outer">
+                    <rich:panel id="mouseInfoPanel"
+                                rendered="#{JPT_Backing.selectedData.ID != ''}">              
+                        <h:panelGrid columns = "1">
+                            <h:outputText value = "Mouse ID: #{JPT_Backing.selectedData.ID}" id="mouse"/>
+                            <h:outputText value = "Sex: #{JPT_Backing.selectedData.sex}"/>
+                            <h:outputText value = "Birthdate: #{JPT_Backing.selectedData.birthDate}" /> 
+                            <h:outputText value = "Generation: #{JPT_Backing.selectedData.generation}" />
+                            <h:outputText value = "Strain Name: #{JPT_Backing.selectedData.strainName}"/>
+                            <h:outputText value = "Genotype: #{JPT_Backing.selectedData.genotype}" /> 
+                            <h:outputText value = "Exit Date: #{JPT_Backing.selectedData.exitDate}" /> 
+                            <h:outputText value = "Owner: #{JPT_Backing.selectedData.owner}" /> 
+                            <h:outputText value = "Litter ID: #{JPT_Backing.selectedData.litterID}" /> 
+                            <h:outputText value = "Mating ID: #{JPT_Backing.selectedData.matingID}" /> 
+                            <h:outputText value = "Life Status: #{JPT_Backing.selectedData.lifeStatus}"/>
+                            <h:outputText value = "Origin: #{JPT_Backing.selectedData.origin}" /> 
+                            <h:outputText value = "COD: #{JPT_Backing.selectedData.COD}" /> 
+                            <h:outputText value = "COD Notes: #{JPT_Backing.selectedData.CODNotes}" /> 
+                            <h:outputText value = "Breeding Status: #{JPT_Backing.selectedData.breedingStatus}" /> 
+                            <h:outputText value = "Coat Color: #{JPT_Backing.selectedData.coatColor}" /> 
+                            <h:outputText value = "Comment: #{JPT_Backing.selectedData.comment}" /> 
+                            <h:outputText value = "Diet: #{JPT_Backing.selectedData.diet}" /> 
+                            <h:outputText value = "Protocol: #{JPT_Backing.selectedData.protocol}" /> 
+                            <h:outputText value = "Siblings: #{JPT_Backing.selectedData.siblings}" />
+                            <h:outputText value = "Dam1 ID: #{JPT_Backing.selectedData.dam1ID}" 
+                                          rendered="#{JPT_Backing.selectedData.dam1ID != ''}"
+                                          id="dam1ID"/>
+                            <h:outputText value = "Dam1 Genotype: #{JPT_Backing.selectedData.dam1Genotype}"
+                                          rendered="#{JPT_Backing.selectedData.dam1ID != ''}"
+                                          id="dam1Genotype"/>
+                            <h:outputText value = "Dam2 ID: #{JPT_Backing.selectedData.dam2ID}" 
+                                          rendered="#{JPT_Backing.selectedData.dam1ID != ''}"
+                                          id="dam2ID"/>
+                            <h:outputText value = "Dam2 Genotype: #{JPT_Backing.selectedData.dam2Genotype}" 
+                                          rendered="#{JPT_Backing.selectedData.dam1ID != ''}"
+                                          id="dam2Genotype"/>
+                            <h:outputText value = "Sire ID: #{JPT_Backing.selectedData.sireID}" 
+                                          rendered="#{JPT_Backing.selectedData.dam1ID != ''}"
+                                          id="sireID"/>
+                            <h:outputText value = "Sire Genotype: #{JPT_Backing.selectedData.sireGenotype}" 
+                                          rendered="#{JPT_Backing.selectedData.dam1ID != ''}"
+                                          id="sireGenotype"/>
+                        </h:panelGrid>
+                    </rich:panel>
+                </h:panelGrid>
+                <a4j:ajax event="click"
+                             render="outer, tipGrid"/>
+            </h:panelGrid>
+            </div>
+            <div class="contentDiv">
+                
+            </div>
+            <p:remoteCommand name="showTree"
+                             action="#{JPT_Backing.returnJSON}"
+                             oncomplete="displayTree(xhr, status, args);"/>
+            <rich:jQuery selector="#infoGrid" query="mousedown(function(event){setStyle(event)})" />
+            <f:subview id="footer"><ui:include src="../footer.xhtml"/></f:subview>
+        </h:form>
+        
+    </h:body>
+</html>
+
