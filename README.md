@@ -1,7 +1,9 @@
-# JCMS-root
+﻿# JCMS-root
 The Jackson Laboratory Colony Management System
 
-The Jackson Laboratory Colony Management System (JCMS) source code is now available as an Open Source software product. The software is no longer in active development and is provided “as is.”
+The Jackson Laboratory Colony Management System (JCMS) source code is now available as an 
+Open Source software product. The software is no longer in active development and 
+is provided “as is.”
 
 Copyright (c) 2015 The Jackson Laboratory
 
@@ -15,7 +17,15 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
 General Public License for more details.
 
+*****************************************************************
+
 Synopsis of the folder contents:
+
+LatestRelease -- The subfolders contain the download files for installing the 
+     JCMSWeb interface and the JCMS Access Interface. 
+     The JCMS Access to MySQL Converter Tool and other helpful files are included. 
+     Read through the file: WhatFileToDownload.txt for helpful information about
+     what file(s) you need.
 
 JCMS -- the MS Access Interface source and documentation
 
