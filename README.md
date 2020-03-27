@@ -5,6 +5,10 @@ The Jackson Laboratory Colony Management System (JCMS) source code is now availa
 Open Source software product. The software is no longer in active development and 
 is provided “as is.”
 
+NOTE: THE JACKSON LABORATORY NO LONGER SUPPORTS THE SOURCE CODE AND IS NOT ABLE TO HELP WITH INSTALLATION. 
+DUE TO THE PASSAGE OF TIME, NEWER OPERATING SYSTEMS AND SOFTWARE UPGRADES CAN CAUSE INSTALLATION INCOMPATIBILITIES. 
+CHECK THE DOCUMENTATION FOR A LISTING OF THE ORIGINAL SOFTWARE REQUIREMENTS.
+
 Copyright (c) 2015 The Jackson Laboratory
 
 This is free software: you can redistribute it and/or modify it 
